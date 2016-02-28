@@ -14,16 +14,28 @@ var ButtonElement=React.createClass({
                 success: function(data) {
                     console.log();
                     console.log();
-                    console.log();
                     if(this.props.handle!==null&&this.props.handle!==undefined)
                         this.props.handle(data);
                 }.bind(this),
                 error: function(xhr, status, err) {
+                    if(xhr.readyStatus===4)
+                    {
+                        if(xhr.responseText!==undefined&&xht.responseText!==null) {
+                            var reg=/Cannot GET \/gradms\/authmsg.jsp/g;
+                            if(reg.test(xhr.responseText)==true)
+                            {
+                                //TODO:relogin to gradms
+
+                            }
+                        }
+                    }
                     console.error(this.props.url, status, err.toString());
                 }
             });
         }
-
+        else{
+            this.props.handle(evt);
+        }
     },
     render:function(){
         var marginStyle={

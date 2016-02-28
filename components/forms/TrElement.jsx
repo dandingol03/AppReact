@@ -32,7 +32,7 @@ var TrElement =React.createClass({
                 var item=rowData[field];
                 if(item===false||item===true)
                     item=""+item;
-                tds.push(<TdWrapper  width={width} tdBasic={tdBasic}
+                tds.push(<TdWrapper   width={width} tdBasic={tdBasic}
                                     tdData={item} multiEnable={multiEnable} key={index++}/>);
             }
         }
@@ -40,14 +40,18 @@ var TrElement =React.createClass({
            tds=(<TdWrapper  tdBasic={tdBasic}
                              multiEnable={multiEnable} />)
         }
+        var tr$color;
+        if(this.props["tr-color"]!==undefined&&this.props["tr-color"]!==null) {
+            tr$color = {backgroundColor:this.props["tr-color"]};
+        }
         if(isLineNumberVisible===true)
         {
-            return (<tr>
+            return (<tr  style={tr$color} >
                 <td>{this.props.rowIndex}</td>
                 {tds}
             </tr>)
         }else{
-            return (<tr>
+            return (<tr style={tr$color}>
                 {tds}
             </tr>)
         }

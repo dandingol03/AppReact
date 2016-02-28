@@ -8,6 +8,10 @@ import ButtonElement from '../basic/ButtonElement.jsx';
 import DropDownButtonElement from '../basic/DropDownButtonElement.jsx';
 import ComboBox from  '../basic/ComboBox.jsx';
 
+import '../../css/components/forms/Table/Table.css';
+
+
+
 var Table=React.createClass({
     queryCallBack:function(ob){
         var data=ob.data;
@@ -60,6 +64,8 @@ var Table=React.createClass({
         var widths;
         //components list
         var components;
+        //stripped style enable
+        var stripped=false;
         if(this.props["data-options"]!==null&&this.props["data-options"]!==undefined)
         {
             var options=this.props["data-options"];
@@ -73,20 +79,71 @@ var Table=React.createClass({
             {
                 components=options.components;
             }
+            if(options.stripped!==null&&options.stripped!==undefined)
+            {
+                stripped=true;
+            }
         }
 
         //cols should be changed since data injected every time
         var cols;
-        if(this.props.cols!==undefined&&this.props.cols!==null&&!isNaN(parseInt(this.props.cols)))
+        var titles;
+        if(this.props.data!==undefined&&this.props.data!==null&&this.props.data.length>0)
         {
-            cols=this.props.cols;
+            var injected=this.props.data;
+             titles=new Array();
+            for(var field in injected[0])
+            {
+                titles.push(field);
+            }
+            cols=titles.length;
+
         }
         else
             cols=1;
 
+        var align;
+        if(this.props.align!==undefined&&this.props.align!==null) {
+            switch(this.props.align)
+            {
+                case "left":
+                    align={textAlign:"left"};
+                    break;
+                case "right":
+                    align={textAlign:"right"};
+                    break;
+                case "center":
+                    align={textAlign:"center"};
+                    break;
+                default:
+                    align=null;
+                    break;
+            }
+
+        }
+
+        //property title-color,indicate the color of th in tbody
+        //1.we use '$' to replace - in string
+        var title$color;
+        if(this.props["title-color"]!==undefined&&this.props["title-color"]!==null) {
+            title$color ={backgroundColor:this.props["title-color"]};
+        }
+        //property tr-color,indicate the color of td in tbody
+        var tr$color;
+        if(this.props["tr-color"]!==undefined&&this.props["tr-color"]!==null) {
+            tr$color = this.props["tr-color"];
+        }
+
+        //property title-font-color ,indicate the color of font of th in tbody
+        var title$font$color;
+        if(this.props["title-font-color"]!==undefined&&this.props["title-font-color"]!==null) {
+            title$font$color = {color: this.props["title-font-color"]};
+        }
         return {
             width: width, widths:widths,cols:cols,components:components,
-            multiEnable: multiEnable, tdBasic: tdBasic, data: data
+            multiEnable: multiEnable, tdBasic: tdBasic, data: data,titles:titles,
+            align:align,title$color:title$color,tr$color:tr$color,title$font$color:title$font$color,
+            stripped:stripped
         };
     }
     ,
@@ -132,7 +189,7 @@ var Table=React.createClass({
         }
         if(titles!==null&&titles!==undefined)
         {
-            ths=(<tr>{titles}</tr>);
+            ths=(<tr style={Object.assign(this.state.title$font$color,this.state.title$color)}>{titles}</tr>);
         }
 
 
@@ -144,31 +201,28 @@ var Table=React.createClass({
 
         var widths=this.state.widths;
         var rows;
+
+
+        //tr$color indicate the color in th in tbody
+        var tr$color;
+        if(this.state.tr$color!==undefined&&this.state.tr$color!==null)
+            tr$color=this.state.tr$color;
+
+
         if(this.state.data!==undefined&&this.state.data!==null){
              rows=this.state.data.map(function(item,i) {
-                return (<TrElement  tdBasic={tdBasic} rowData={item} rowIndex={i}
+                return (<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={i}
                                     multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
                                     widths={widths}  key={i}/>);
             });
         }
         else{
-            rows=<TrElement  tdBasic={tdBasic}
+            rows=<TrElement tr-color={tr$color}  tdBasic={tdBasic}
                              multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
                              widths={widths}  />
         }
 
-        {/*var queryOb={
-            url:'.do',
-            params:{formName:'getEditPanel',pageName:'balabala'},
-            handle:this.queryHandle
-        }*/}
 
-
-        {/*<input type="text" className="form-control" placeholder="Search"/>-->*/}
-        {/*   <DropDownButtonElement
-         title="请选择年级"
-         menus={menus}
-         />*/}
         var querycb=this.queryCallBack;
         var components;
         if(this.state.components!==undefined&&this.state.components!==null)
@@ -195,8 +249,8 @@ var Table=React.createClass({
         <table className="table table-bordered center" style={Object.assign(centerStyle,widthStyle)}>
             <thead>
             <tr>
-
-                <th colSpan={this.state.cols}>
+                <th colSpan={this.state.cols}
+                    style={this.state.align}>
                     {components}
                 </th>
             </tr>

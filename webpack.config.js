@@ -24,8 +24,8 @@ module.exports = {
         port:3000,
         hot:true,
         proxy:{
-            '/gradms/bsreactPageDataRequest.do':{
-                    target: 'http://localhost:8090',
+            '/gradms/bsuims/*.do':{
+                    target: 'http://192.168.0.197:8090/',
                     secure: false
             }
         }
