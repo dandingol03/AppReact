@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0580e57c8c130250cdc3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "13543e535f8ff6b19931"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -591,28 +591,31 @@
 	
 	var _Table2 = _interopRequireDefault(_Table);
 	
+	var _ListElement = __webpack_require__(174);
+	
+	var _ListElement2 = _interopRequireDefault(_ListElement);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	Boot(); /**
-	         * Created by dandi_000 on 2016/2/23.
-	         */
+	/**
+	 * Created by dandi_000 on 2016/2/23.
+	 */
+	
+	Boot();
 	
 	function Boot() {
-	    var columns = {
-	        titles: ['d1', 'd2', 'd3'],
-	        fields: ['name', 'age', 'sex'],
-	        cols: 3
-	    };
 	
-	    /*    var data=[
-	            {'name':'wjj','age':18,'sex':'man'},
-	            {'name':'zyy','age':25,'sex':'woman'}
-	        ]*/
+	    var data = [{ 'name': 'wjj', 'age': 18, 'sex': 'man' }, { 'name': 'zyy', 'age': 25, 'sex': 'woman' }];
 	    var data_options = {
 	        widths: ["25%", "25%", "25%", "25%"],
-	        components: [{ name: "查询", type: "query", params: { reactPageName: 'newCultivateTeachSchedulePage',
-	                reactActionName: 'reactGetTestData' },
-	            url: "gradms/bsreactPageDataRequest.do" }, {
+	        components: [{
+	            name: "查询", type: "query",
+	            params: {
+	                reactPageName: 'newCultivateTeachSchedulePage',
+	                reactActionName: 'reactGetTestData'
+	            },
+	            url: "gradms/bsuims/reactPageDataRequest.do"
+	        }, {
 	            name: "年级", type: "dropdown", params: [{ link: "www.baidu.com", title: "baidu" }, { link: "www.sohu.com", title: "sohu" }, { link: "www.kuaibo.com", title: "kuaibo" }, { link: "www.shanda.com", title: "shanda" }]
 	        }]
 	    };
@@ -629,9 +632,36 @@
 	            { className: 'container' },
 	            _react2.default.createElement(_Table2.default, { tdBasic: true, multiEnable: 1,
 	                width: width, center: true,
-	                'data-options': data_options })
+	                'data-options': data_options, data: data, align: 'right', 'title-color': '#968D8D',
+	                'title-font-color': '#fff' })
 	        )
 	    ), document.getElementById('root'));
+	    BootList();
+	}
+	
+	function BootList() {
+	    function cancelCb(evt) {
+	        console.log("cancel is back");
+	    }
+	    function applyCb(evt) {
+	        console.log("apply is back");
+	    }
+	    var data_options = { params: [" metro is good", "Dapibus ac facilisis in", "Morbi leo risus", "Porta ac consectetur ac", "Vestibulum at eros"],
+	        components: [{
+	            name: "提交", type: "apply",
+	            params: {
+	                reactPageName: 'newCultivateTeachSchedulePage',
+	                reactActionName: 'reactGetTestData'
+	            },
+	            url: "gradms/bsuims/reactPageDataRequest.do",
+	            cb: applyCb
+	        }, {
+	            name: "返回", type: "cancel",
+	            cb: cancelCb
+	        }]
+	    };
+	
+	    (0, _reactDom.render)(_react2.default.createElement(_ListElement2.default, { 'data-options': data_options }), document.getElementById("list-render"));
 	}
 
 /***/ },
@@ -20318,7 +20348,13 @@
 	
 	var _ComboBox2 = _interopRequireDefault(_ComboBox);
 	
+	__webpack_require__(172);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Created by dandi_000 on 2016/2/25.
+	 */
 	
 	var Table = _react2.default.createClass({
 	    displayName: 'Table',
@@ -20363,6 +20399,8 @@
 	        var widths;
 	        //components list
 	        var components;
+	        //stripped style enable
+	        var stripped = false;
 	        if (this.props["data-options"] !== null && this.props["data-options"] !== undefined) {
 	            var options = this.props["data-options"];
 	            //widths fetch
@@ -20373,17 +20411,63 @@
 	            if (options.components !== null && options !== undefined) {
 	                components = options.components;
 	            }
+	            if (options.stripped !== null && options.stripped !== undefined) {
+	                stripped = true;
+	            }
 	        }
 	
 	        //cols should be changed since data injected every time
 	        var cols;
-	        if (this.props.cols !== undefined && this.props.cols !== null && !isNaN(parseInt(this.props.cols))) {
-	            cols = this.props.cols;
+	        var titles;
+	        if (this.props.data !== undefined && this.props.data !== null && this.props.data.length > 0) {
+	            var injected = this.props.data;
+	            titles = new Array();
+	            for (var field in injected[0]) {
+	                titles.push(field);
+	            }
+	            cols = titles.length;
 	        } else cols = 1;
 	
+	        var align;
+	        if (this.props.align !== undefined && this.props.align !== null) {
+	            switch (this.props.align) {
+	                case "left":
+	                    align = { textAlign: "left" };
+	                    break;
+	                case "right":
+	                    align = { textAlign: "right" };
+	                    break;
+	                case "center":
+	                    align = { textAlign: "center" };
+	                    break;
+	                default:
+	                    align = null;
+	                    break;
+	            }
+	        }
+	
+	        //property title-color,indicate the color of th in tbody
+	        //1.we use '$' to replace - in string
+	        var title$color;
+	        if (this.props["title-color"] !== undefined && this.props["title-color"] !== null) {
+	            title$color = { backgroundColor: this.props["title-color"] };
+	        }
+	        //property tr-color,indicate the color of td in tbody
+	        var tr$color;
+	        if (this.props["tr-color"] !== undefined && this.props["tr-color"] !== null) {
+	            tr$color = this.props["tr-color"];
+	        }
+	
+	        //property title-font-color ,indicate the color of font of th in tbody
+	        var title$font$color;
+	        if (this.props["title-font-color"] !== undefined && this.props["title-font-color"] !== null) {
+	            title$font$color = { color: this.props["title-font-color"] };
+	        }
 	        return {
 	            width: width, widths: widths, cols: cols, components: components,
-	            multiEnable: multiEnable, tdBasic: tdBasic, data: data
+	            multiEnable: multiEnable, tdBasic: tdBasic, data: data, titles: titles,
+	            align: align, title$color: title$color, tr$color: tr$color, title$font$color: title$font$color,
+	            stripped: stripped
 	        };
 	    },
 	
@@ -20425,7 +20509,7 @@
 	        if (titles !== null && titles !== undefined) {
 	            ths = _react2.default.createElement(
 	                'tr',
-	                null,
+	                { style: Object.assign(this.state.title$font$color, this.state.title$color) },
 	                titles
 	            );
 	        }
@@ -20436,29 +20520,23 @@
 	
 	        var widths = this.state.widths;
 	        var rows;
+	
+	        //tr$color indicate the color in th in tbody
+	        var tr$color;
+	        if (this.state.tr$color !== undefined && this.state.tr$color !== null) tr$color = this.state.tr$color;
+	
 	        if (this.state.data !== undefined && this.state.data !== null) {
 	            rows = this.state.data.map(function (item, i) {
-	                return _react2.default.createElement(_TrElement2.default, { tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
 	                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
 	                    widths: widths, key: i });
 	            });
 	        } else {
-	            rows = _react2.default.createElement(_TrElement2.default, { tdBasic: tdBasic,
+	            rows = _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic,
 	                multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
 	                widths: widths });
 	        }
 	
-	        {/*var queryOb={
-	               url:'.do',
-	               params:{formName:'getEditPanel',pageName:'balabala'},
-	               handle:this.queryHandle
-	            }*/}
-	
-	        {/*<input type="text" className="form-control" placeholder="Search"/>-->*/}
-	        {/*   <DropDownButtonElement
-	            title="请选择年级"
-	            menus={menus}
-	            />*/}
 	        var querycb = this.queryCallBack;
 	        var components;
 	        if (this.state.components !== undefined && this.state.components !== null) {
@@ -20491,7 +20569,8 @@
 	                    null,
 	                    _react2.default.createElement(
 	                        'th',
-	                        { colSpan: this.state.cols },
+	                        { colSpan: this.state.cols,
+	                            style: this.state.align },
 	                        components
 	                    )
 	                )
@@ -20504,9 +20583,7 @@
 	            )
 	        );
 	    }
-	}); /**
-	     * Created by dandi_000 on 2016/2/25.
-	     */
+	});
 	
 	exports.default = Table;
 
@@ -20566,10 +20643,14 @@
 	            tds = _react2.default.createElement(_TdWrapper2.default, { tdBasic: tdBasic,
 	                multiEnable: multiEnable });
 	        }
+	        var tr$color;
+	        if (this.props["tr-color"] !== undefined && this.props["tr-color"] !== null) {
+	            tr$color = { backgroundColor: this.props["tr-color"] };
+	        }
 	        if (isLineNumberVisible === true) {
 	            return _react2.default.createElement(
 	                'tr',
-	                null,
+	                { style: tr$color },
 	                _react2.default.createElement(
 	                    'td',
 	                    null,
@@ -20580,7 +20661,7 @@
 	        } else {
 	            return _react2.default.createElement(
 	                'tr',
-	                null,
+	                { style: tr$color },
 	                tds
 	            );
 	        }
@@ -21060,13 +21141,23 @@
 	                success: function (data) {
 	                    console.log();
 	                    console.log();
-	                    console.log();
 	                    if (this.props.handle !== null && this.props.handle !== undefined) this.props.handle(data);
 	                }.bind(this),
 	                error: function error(xhr, status, err) {
+	                    if (xhr.readyStatus === 4) {
+	                        if (xhr.responseText !== undefined && xht.responseText !== null) {
+	                            var reg = /Cannot GET \/gradms\/authmsg.jsp/g;
+	                            if (reg.test(xhr.responseText) == true) {
+	                                //TODO:relogin to gradms
+	
+	                            }
+	                        }
+	                    }
 	                    console.error(this.props.url, status, err.toString());
 	                }
 	            });
+	        } else {
+	            this.props.handle(evt);
 	        }
 	    },
 	    render: function render() {
@@ -21227,6 +21318,269 @@
 	});
 	
 	exports.default = ComboBox;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(173);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(167)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(173, function() {
+				var newContent = __webpack_require__(173);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(166)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "tbody>tr:hover {\r\n    background-color: #eee;\r\n    border-color: #eee;\r\n}\r\ntbody>tr.un-render:hover{\r\n    background-color:transparent;\r\n    border-color:transparent;\r\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ButtonElement = __webpack_require__(168);
+	
+	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
+	
+	var _LinkElement = __webpack_require__(175);
+	
+	var _LinkElement2 = _interopRequireDefault(_LinkElement);
+	
+	__webpack_require__(176);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @convention 1,register u callback if u want to get noticed when event trigged in data-option["components"]
+	 * @convention 2,let's make a deal u callback func should named with key \'cb\'
+	 * @convention 3,that is ,the responsibility to handle event should owe to Parent component
+	 */
+	var ListElement = _react2.default.createClass({
+	    displayName: 'ListElement',
+	
+	    linkCb: function linkCb(evt) {
+	        var target = evt.target;
+	        var selected = $(target).attr("data-index");
+	        this.setState({ selected: selected });
+	    },
+	    applyCb: function applyCb() {
+	        if (this.props.cb !== undefined && this.props.cb !== null) {
+	            if (this.state.selected !== null && this.state.selected !== undefined && !isNaN(parseInt(this.state.selected))) {
+	                if (this.state.li$items !== undefined && this.state.li$items !== null) {
+	                    this.props.cb(this.state.li$items[this.state.selected]);
+	                }
+	            }
+	        }
+	    },
+	    cancelCb: function cancelCb(evt) {
+	        //cancel callback
+	        this.setState({ selected: -1 });
+	        if (this.props.cb !== undefined && this.props.cb !== null) this.props.cb(evt);
+	    },
+	    getInitialState: function getInitialState() {
+	
+	        var components;
+	        var li$items;
+	
+	        if (this.props["data-options"] !== undefined && this.props["data-options"] !== null) {
+	            //component fetch
+	            if (this.props["data-options"].components !== undefined && this.props["data-options"].components !== null && this.props["data-options"].components.length > 0) {
+	                components = this.props["data-options"].components;
+	            }
+	
+	            //ui item
+	            if (this.props["data-options"].params !== undefined && this.props["data-options"].params !== null && this.props["data-options"].params.length > 0) {
+	                li$items = this.props["data-options"].params;
+	            }
+	
+	            //selected item
+	            var selected;
+	            if (this.props["data-options"].selected !== undefined && this.props["data-options"].selected !== null && !isNaN(parseInt(this.props["data-options"].selected))) {
+	                selected = this.props["data-options"].selected;
+	            }
+	        }
+	
+	        return { components: components, li$items: li$items, selected: selected };
+	    },
+	    render: function render() {
+	
+	        //selected
+	        var selected;
+	        if (this.state.selected !== undefined && this.state.selected !== null) {
+	            selected = this.state.selected;
+	        }
+	
+	        //list-group-item
+	        var li$items;
+	        var linkCb = this.linkCb;
+	        if (this.state.li$items !== null && this.state.li$items !== undefined) {
+	            li$items = this.state.li$items.map(function (item, i) {
+	                if (selected !== null && selected !== undefined) {
+	                    if (selected == i) return _react2.default.createElement(
+	                        _LinkElement2.default,
+	                        { linkClass: "list-group-item active", 'data-index': i, clickCb: linkCb, key: i },
+	                        item
+	                    );else return _react2.default.createElement(
+	                        _LinkElement2.default,
+	                        { linkClass: "list-group-item", 'data-index': i, clickCb: linkCb, key: i },
+	                        item
+	                    );
+	                } else return _react2.default.createElement(
+	                    _LinkElement2.default,
+	                    { linkClass: "list-group-item", 'data-index': i, clickCb: linkCb, key: i },
+	                    item
+	                );
+	            });
+	        }
+	
+	        //components
+	        var components;
+	        var applyCb = this.applyCb;
+	        var cancelCb = this.cancelCb;
+	        if (this.state.components !== undefined && this.state.components !== null) {
+	            components = this.state.components.map(function (item, i) {
+	                if (item.type == "apply") //提交
+	                    {
+	                        return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                            buttonClass: 'btn btn-default', title: item.name,
+	                            handle: applyCb, key: i });
+	                    }
+	                if (item.type == "cancel") //返回
+	                    {
+	                        return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                            buttonClass: 'btn btn-default', title: item.name,
+	                            handle: cancelCb, key: i });
+	                    }
+	            });
+	        }
+	
+	        //centerStyle
+	        var centerStyle = { textAlign: "center" };
+	        return _react2.default.createElement(
+	            'div',
+	            { align: 'center', style: centerStyle },
+	            _react2.default.createElement(
+	                'ul',
+	                { className: 'list-group' },
+	                li$items
+	            ),
+	            components
+	        );
+	    }
+	});
+	exports.default = ListElement;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var LinkElement = _react2.default.createClass({
+	    displayName: "LinkElement",
+	
+	    clickCb: function clickCb(evt) {
+	        console.log();
+	        this.props.clickCb(evt);
+	    },
+	    render: function render() {
+	        //list-group-item
+	        var data$index;
+	        if (this.props["data-index"] !== null && this.props["data-index"] !== undefined) data$index = this.props["data-index"];
+	        return _react2.default.createElement(
+	            "a",
+	            { href: "#", className: this.props.linkClass, "data-index": data$index, onClick: this.clickCb, blued: true },
+	            this.props.children
+	        );
+	    }
+	});
+	
+	exports.default = LinkElement;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(177);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(167)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(177, function() {
+				var newContent = __webpack_require__(177);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(166)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".list-group-item.active, .list-group-item.active:hover,.list-group-item.active:focus\r\n{\r\n    background-color:#968D8D;\r\n    border-color:#968D8D;\r\n}", ""]);
+	
+	// exports
+
 
 /***/ }
 /******/ ]);
