@@ -7,7 +7,7 @@ var webpack = require('webpack');
 module.exports = {
     devtool: 'source-map',
     entry: [
-        path.resolve(__dirname, 'main.jsx')
+        path.resolve(__dirname, 'mainCompound.jsx')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -25,7 +25,7 @@ module.exports = {
         hot:true,
         proxy:{
             '/gradms/bsuims/*.do':{
-                    target: 'http://192.168.0.197:8090/',
+                    target: 'http://localhost:8090/',
                     secure: false
             }
         }

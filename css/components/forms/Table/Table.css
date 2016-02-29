@@ -2,6 +2,9 @@ tbody>tr:hover {
     background-color: #eee;
     border-color: #eee;
 }
+tbody>tr:hover>td>input[type="checkbox"]{
+    cursor: pointer;
+}
 tbody>tr.un-render:hover{
     background-color:transparent;
     border-color:transparent;

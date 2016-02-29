@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "13543e535f8ff6b19931"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cb4868b0570c85536333"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -591,22 +591,42 @@
 	
 	var _Table2 = _interopRequireDefault(_Table);
 	
-	var _ListElement = __webpack_require__(174);
+	var _ListElement = __webpack_require__(175);
 	
 	var _ListElement2 = _interopRequireDefault(_ListElement);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _ButtonElement = __webpack_require__(169);
 	
-	/**
-	 * Created by dandi_000 on 2016/2/23.
-	 */
+	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
+	
+	var _CoupleTableElement = __webpack_require__(179);
+	
+	var _CoupleTableElement2 = _interopRequireDefault(_CoupleTableElement);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	Boot();
 	
 	function Boot() {
 	
-	    var data = [{ 'name': 'wjj', 'age': 18, 'sex': 'man' }, { 'name': 'zyy', 'age': 25, 'sex': 'woman' }];
-	    var data_options = {
+	    function check$apply$1(ob) {
+	        console.log("ob=" + ob);
+	    }
+	
+	    var check$apply$2 = function check$apply$2(ob) {
+	        console.log("ob=" + ob);
+	    };
+	
+	    var data1 = [{ 'name': 'wjj', 'age': 18, 'sex': 'man' }, { 'name': 'zyy', 'age': 25, 'sex': 'woman' }];
+	    var data2 = [{ 'name': 'wjj', 'age': 18, 'sex': 'man' }, { 'name': 'zyy', 'age': 25, 'sex': 'woman' }, { 'name': 'jb', 'age': 23, 'sex': 'man' }];
+	    var data$options = {
+	        url: "gradms/bsuims/reactPageDataRequest.do",
+	        params: {
+	            reactPageName: 'newCultivateTeachSchedulePage',
+	            reactActionName: 'reactGetCoupleData'
+	        }
+	    };
+	    var data$options$1 = {
 	        widths: ["25%", "25%", "25%", "25%"],
 	        components: [{
 	            name: "查询", type: "query",
@@ -617,51 +637,46 @@
 	            url: "gradms/bsuims/reactPageDataRequest.do"
 	        }, {
 	            name: "年级", type: "dropdown", params: [{ link: "www.baidu.com", title: "baidu" }, { link: "www.sohu.com", title: "sohu" }, { link: "www.kuaibo.com", title: "kuaibo" }, { link: "www.shanda.com", title: "shanda" }]
-	        }]
-	    };
-	
-	    var width = "600px";
-	    var divRowStyle = {
-	        marginTop: 20
-	    };
-	    (0, _reactDom.render)(_react2.default.createElement(
-	        'div',
-	        { className: 'row', style: divRowStyle },
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'container' },
-	            _react2.default.createElement(_Table2.default, { tdBasic: true, multiEnable: 1,
-	                width: width, center: true,
-	                'data-options': data_options, data: data, align: 'right', 'title-color': '#968D8D',
-	                'title-font-color': '#fff' })
-	        )
-	    ), document.getElementById('root'));
-	    BootList();
-	}
-	
-	function BootList() {
-	    function cancelCb(evt) {
-	        console.log("cancel is back");
-	    }
-	    function applyCb(evt) {
-	        console.log("apply is back");
-	    }
-	    var data_options = { params: [" metro is good", "Dapibus ac facilisis in", "Morbi leo risus", "Porta ac consectetur ac", "Vestibulum at eros"],
-	        components: [{
-	            name: "提交", type: "apply",
+	        }],
+	        checked: {
+	            url: "gradms/bsuims/reactPageDataRequest.do",
 	            params: {
 	                reactPageName: 'newCultivateTeachSchedulePage',
 	                reactActionName: 'reactGetTestData'
 	            },
-	            url: "gradms/bsuims/reactPageDataRequest.do",
-	            cb: applyCb
-	        }, {
-	            name: "返回", type: "cancel",
-	            cb: cancelCb
-	        }]
+	            name: "增加上表选择"
+	        }
+	
 	    };
 	
-	    (0, _reactDom.render)(_react2.default.createElement(_ListElement2.default, { 'data-options': data_options }), document.getElementById("list-render"));
+	    var data$options$2 = {
+	        widths: ["25%", "25%", "25%", "25%"],
+	        components: [{
+	            name: "查询", type: "query",
+	            params: {
+	                reactPageName: 'newCultivateTeachSchedulePage',
+	                reactActionName: 'reactGetTestData'
+	            },
+	            url: "gradms/bsuims/reactPageDataRequest.do"
+	        }, {
+	            name: "年级", type: "dropdown", params: [{ link: "www.baidu.com", title: "baidu" }, { link: "www.sohu.com", title: "sohu" }, { link: "www.kuaibo.com", title: "kuaibo" }, { link: "www.shanda.com", title: "shanda" }]
+	        }],
+	        checked: {
+	            url: "gradms/bsuims/reactPageDataRequest.do",
+	            params: {
+	                reactPageName: 'newCultivateTeachSchedulePage',
+	                reactActionName: 'reactGetTestData'
+	            },
+	            name: "增加下表选择"
+	        }
+	
+	    };
+	
+	    /*    var tags=[{"data":data1,"data-options":data$options$1}
+	        ,{"data":data2,"data-options":data$options$2}];*/
+	    var tags = [{ "data-options": data$options$1 }, { "data-options": data$options$2 }];
+	    var containerStyle = { textAlign: "center" };
+	    (0, _reactDom.render)(_react2.default.createElement(_CoupleTableElement2.default, { tags: tags, 'data-options': data$options }), document.getElementById('root'));
 	}
 
 /***/ },
@@ -20336,19 +20351,19 @@
 	
 	var _TrElement2 = _interopRequireDefault(_TrElement);
 	
-	var _ButtonElement = __webpack_require__(168);
+	var _ButtonElement = __webpack_require__(169);
 	
 	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
 	
-	var _DropDownButtonElement = __webpack_require__(169);
+	var _DropDownButtonElement = __webpack_require__(170);
 	
 	var _DropDownButtonElement2 = _interopRequireDefault(_DropDownButtonElement);
 	
-	var _ComboBox = __webpack_require__(171);
+	var _ComboBox = __webpack_require__(172);
 	
 	var _ComboBox2 = _interopRequireDefault(_ComboBox);
 	
-	__webpack_require__(172);
+	__webpack_require__(173);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20359,6 +20374,25 @@
 	var Table = _react2.default.createClass({
 	    displayName: 'Table',
 	
+	    checkCb: function checkCb(ob) {
+	
+	        console.log("select index=" + ob);
+	        this.setState({ checkedIndex: parseInt(ob) });
+	    },
+	    checkHandle: function checkHandle() {
+	        var data = this.state.data;
+	        var checkedIndex = this.state.checkedIndex;
+	        if (checkedIndex !== undefined && checkedIndex !== null && checkedIndex > -1) {
+	            if (this.props.notifyCb !== undefined && this.props.notifyCb !== null) {
+	                var ob = {
+	                    content: data[checkedIndex],
+	                    method: 'addHandle',
+	                    index: this.props.index
+	                };
+	                this.props.notifyCb(ob);
+	            }
+	        }
+	    },
 	    queryCallBack: function queryCallBack(ob) {
 	        var data = ob.data;
 	        var titles = new Array();
@@ -20401,6 +20435,12 @@
 	        var components;
 	        //stripped style enable
 	        var stripped = false;
+	        //checkbox enable
+	        var checked;
+	        //checkedIndex ,this checkbox will be checked when first-render
+	        var checkedIndex;
+	        //group type
+	        var groupType;
 	        if (this.props["data-options"] !== null && this.props["data-options"] !== undefined) {
 	            var options = this.props["data-options"];
 	            //widths fetch
@@ -20411,8 +20451,18 @@
 	            if (options.components !== null && options !== undefined) {
 	                components = options.components;
 	            }
+	            //style stripped
 	            if (options.stripped !== null && options.stripped !== undefined) {
 	                stripped = true;
+	            }
+	            //property checked,indicate where the table should be filled with checkbox
+	            if (options.checked !== null && options.checked !== undefined) {
+	                checked = options.checked;
+	                if (options.checked.index !== undefined && options.checked.index !== null && !isNaN(parseInt(options.checked.index))) checkedIndex = parseInt(options.checked.index);else checkedIndex = -1;
+	            }
+	            //groupType options,rows would be groupd with groupType
+	            if (options.groupType !== null && options.groupType !== undefined) {
+	                groupType = options.groupType;
 	            }
 	        }
 	
@@ -20463,11 +20513,13 @@
 	        if (this.props["title-font-color"] !== undefined && this.props["title-font-color"] !== null) {
 	            title$font$color = { color: this.props["title-font-color"] };
 	        }
+	
 	        return {
 	            width: width, widths: widths, cols: cols, components: components,
 	            multiEnable: multiEnable, tdBasic: tdBasic, data: data, titles: titles,
 	            align: align, title$color: title$color, tr$color: tr$color, title$font$color: title$font$color,
-	            stripped: stripped
+	            stripped: stripped, checked: checked, groupType: groupType,
+	            checkedIndex: checkedIndex
 	        };
 	    },
 	
@@ -20507,7 +20559,16 @@
 	            });
 	        }
 	        if (titles !== null && titles !== undefined) {
-	            ths = _react2.default.createElement(
+	            if (this.state.checked !== undefined && this.state.checked !== null) ths = _react2.default.createElement(
+	                'tr',
+	                { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                _react2.default.createElement(
+	                    'th',
+	                    null,
+	                    '选择'
+	                ),
+	                titles
+	            );else ths = _react2.default.createElement(
 	                'tr',
 	                { style: Object.assign(this.state.title$font$color, this.state.title$color) },
 	                titles
@@ -20523,18 +20584,49 @@
 	
 	        //tr$color indicate the color in th in tbody
 	        var tr$color;
+	        //checked indicate whether checkbox should be placed in first column
+	        var checkedIndex;
+	        var checkCb;
+	        var checkButton;
 	        if (this.state.tr$color !== undefined && this.state.tr$color !== null) tr$color = this.state.tr$color;
-	
+	        if (this.state.checked !== undefined && this.state.checked !== null) {
+	            checkedIndex = this.state.checkedIndex;
+	            checkCb = this.checkCb;
+	            checkButton = _react2.default.createElement(
+	                'tr',
+	                { className: 'un-render' },
+	                _react2.default.createElement(
+	                    'td',
+	                    { colSpan: this.state.cols + 1 },
+	                    _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                        buttonClass: 'btn btn-default', title: this.state.checked.name,
+	                        handle: this.checkHandle })
+	                )
+	            );
+	        }
 	        if (this.state.data !== undefined && this.state.data !== null) {
+	            var checked = this.state.checked;
+	
 	            rows = this.state.data.map(function (item, i) {
-	                return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
-	                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                    widths: widths, key: i });
+	                if (checkedIndex !== undefined && checkedIndex !== null && checkedIndex > -1 && checkedIndex == i) {
+	                    return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                        multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                        widths: widths, key: i, checkCb: checkCb, insertCheck: true, checked: true });
+	                } else {
+	                    if (checked !== undefined && checked !== null) {
+	                        return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                            multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                            widths: widths, key: i, checkCb: checkCb, insertCheck: true });
+	                    }
+	                    return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                        multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                        widths: widths, key: i });
+	                }
 	            });
 	        } else {
 	            rows = _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic,
 	                multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                widths: widths });
+	                widths: widths, checkCb: checkCb });
 	        }
 	
 	        var querycb = this.queryCallBack;
@@ -20558,28 +20650,45 @@
 	            });
 	        }
 	
+	        var th$head;
+	        if (this.state.checked !== undefined && this.state.checked !== null) {
+	            th$head = _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                    'th',
+	                    { colSpan: this.state.cols + 1,
+	                        style: this.state.align },
+	                    components
+	                )
+	            );
+	        } else {
+	            th$head = _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                    'th',
+	                    { colSpan: this.state.cols,
+	                        style: this.state.align },
+	                    components
+	                )
+	            );
+	        }
+	
 	        return _react2.default.createElement(
 	            'table',
 	            { className: 'table table-bordered center', style: Object.assign(centerStyle, widthStyle) },
 	            _react2.default.createElement(
 	                'thead',
 	                null,
-	                _react2.default.createElement(
-	                    'tr',
-	                    null,
-	                    _react2.default.createElement(
-	                        'th',
-	                        { colSpan: this.state.cols,
-	                            style: this.state.align },
-	                        components
-	                    )
-	                )
+	                th$head
 	            ),
 	            _react2.default.createElement(
 	                'tbody',
 	                null,
 	                ths,
-	                rows
+	                rows,
+	                checkButton
 	            )
 	        );
 	    }
@@ -20605,6 +20714,10 @@
 	
 	var _TdWrapper2 = _interopRequireDefault(_TdWrapper);
 	
+	var _CheckBoxElement = __webpack_require__(168);
+	
+	var _CheckBoxElement2 = _interopRequireDefault(_CheckBoxElement);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
@@ -20617,6 +20730,12 @@
 	var TrElement = _react2.default.createClass({
 	    displayName: 'TrElement',
 	
+	    clickCb: function clickCb(evt) {
+	        var target = evt.target;
+	        if (this.props.clickCb !== undefined && this.props.clickCb !== null) {
+	            this.props.clickCb(this.props.rowIndex);
+	        }
+	    },
 	    render: function render() {
 	        //TODO:urgent config un-support
 	        //1.var dw=React.createClass(className,classProps,child1,child2,...,childN)
@@ -20648,22 +20767,53 @@
 	            tr$color = { backgroundColor: this.props["tr-color"] };
 	        }
 	        if (isLineNumberVisible === true) {
-	            return _react2.default.createElement(
-	                'tr',
-	                { style: tr$color },
-	                _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    this.props.rowIndex
-	                ),
-	                tds
-	            );
+	            if (this.props.insertCheck === true) {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { style: tr$color },
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.props.checkCb, checked: this.props.checked })
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        this.props.rowIndex
+	                    ),
+	                    tds
+	                );
+	            } else {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { style: tr$color },
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        this.props.rowIndex
+	                    ),
+	                    tds
+	                );
+	            }
 	        } else {
-	            return _react2.default.createElement(
-	                'tr',
-	                { style: tr$color },
-	                tds
-	            );
+	            if (this.props.insertCheck === true) {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { style: tr$color },
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.props.checkCb, checked: this.props.checked })
+	                    ),
+	                    tds
+	                );
+	            } else {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { style: tr$color },
+	                    tds
+	                );
+	            }
 	        }
 	    }
 	});
@@ -21115,6 +21265,41 @@
 /* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var CheckBoxElement = _react2.default.createClass({
+	    displayName: "CheckBoxElement",
+	
+	    clickCb: function clickCb(evt) {
+	        var target = evt.target;
+	        if ($(target).attr("data-index") !== null && $(target).attr("data-index") !== undefined) {
+	            var index = $(target).attr("data-index");
+	            if (!isNaN(parseInt(index))) this.props.checkCb(index);
+	        }
+	    },
+	    render: function render() {
+	        if (this.props.checked === true) return _react2.default.createElement("input", { type: "checkbox", "aria-label": "...",
+	            value: this.props.value, onChange: this.clickCb, checked: "checked", "data-index": this.props["data-index"] });else return _react2.default.createElement("input", { type: "checkbox", "aria-label": "...",
+	            value: this.props.value, onChange: this.clickCb, "data-index": this.props["data-index"] });
+	    }
+	});
+	
+	exports.default = CheckBoxElement;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -21188,7 +21373,7 @@
 	exports.default = ButtonElement;
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21201,11 +21386,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ButtonElement = __webpack_require__(168);
+	var _ButtonElement = __webpack_require__(169);
 	
 	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
 	
-	var _MenuLinkElement = __webpack_require__(170);
+	var _MenuLinkElement = __webpack_require__(171);
 	
 	var _MenuLinkElement2 = _interopRequireDefault(_MenuLinkElement);
 	
@@ -21254,7 +21439,7 @@
 	exports.default = DropDownButtonElement;
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21289,7 +21474,7 @@
 	exports.default = MenuLinkElement;
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21320,13 +21505,13 @@
 	exports.default = ComboBox;
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(173);
+	var content = __webpack_require__(174);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(167)(content, {});
@@ -21335,8 +21520,8 @@
 	if(true) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept(173, function() {
-				var newContent = __webpack_require__(173);
+			module.hot.accept(174, function() {
+				var newContent = __webpack_require__(174);
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21346,7 +21531,7 @@
 	}
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(166)();
@@ -21354,13 +21539,13 @@
 	
 	
 	// module
-	exports.push([module.id, "tbody>tr:hover {\r\n    background-color: #eee;\r\n    border-color: #eee;\r\n}\r\ntbody>tr.un-render:hover{\r\n    background-color:transparent;\r\n    border-color:transparent;\r\n}", ""]);
+	exports.push([module.id, "tbody>tr:hover {\r\n    background-color: #eee;\r\n    border-color: #eee;\r\n}\r\ntbody>tr:hover>td>input[type=\"checkbox\"]{\r\n    cursor: pointer;\r\n}\r\ntbody>tr.un-render:hover{\r\n    background-color:transparent;\r\n    border-color:transparent;\r\n}\r\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21373,15 +21558,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ButtonElement = __webpack_require__(168);
+	var _ButtonElement = __webpack_require__(169);
 	
 	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
 	
-	var _LinkElement = __webpack_require__(175);
+	var _LinkElement = __webpack_require__(176);
 	
 	var _LinkElement2 = _interopRequireDefault(_LinkElement);
 	
-	__webpack_require__(176);
+	__webpack_require__(177);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21506,7 +21691,7 @@
 	exports.default = ListElement;
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21543,13 +21728,13 @@
 	exports.default = LinkElement;
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(177);
+	var content = __webpack_require__(178);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(167)(content, {});
@@ -21558,8 +21743,8 @@
 	if(true) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept(177, function() {
-				var newContent = __webpack_require__(177);
+			module.hot.accept(178, function() {
+				var newContent = __webpack_require__(178);
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -21569,7 +21754,7 @@
 	}
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(166)();
@@ -21581,6 +21766,142 @@
 	
 	// exports
 
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Table = __webpack_require__(160);
+	
+	var _Table2 = _interopRequireDefault(_Table);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var CoupleTableElement = _react2.default.createClass({
+	    displayName: 'CoupleTableElement',
+	
+	    initialDatas: function initialDatas() {
+	        if (this.state.data$options !== undefined && this.state.data$options !== null) {
+	            var url = this.state.data$options.url;
+	            var params = this.state.data$options.params;
+	            $.ajax({
+	                type: 'POST',
+	                url: url,
+	                dataType: 'json',
+	                data: params,
+	                cache: false,
+	                success: function (data) {
+	                    if (data !== undefined && data !== null) {
+	                        var dataS;
+	                        data.arr.map(function (item, i) {
+	                            datas.push(item);
+	                        });
+	                        this.setState({ dataS: dataS });
+	                    }
+	                }.bind(this),
+	                error: function (xhr, status, err) {
+	                    console.error(this.props.url, status, err.toString());
+	                }.bind(this)
+	            });
+	        }
+	    },
+	    addHandle: function addHandle(ob) {
+	        if (this.state.dataS !== undefined && this.state.dataS !== null) {
+	            var dataS = this.state.dataS;
+	            dataS.map(function (item, i) {
+	                if (i !== ob.index) {
+	                    dataS[i].push(ob.record);
+	                }
+	            });
+	            this.setState({ dataS: dataS });
+	        }
+	    },
+	    deleteHandle: function deleteHandle(ob) {},
+	    notifyCb: function notifyCb(ob) {
+	        //TODO:ob(content:{xxx:xxx},method:['addHandle','deleteHandle']}
+	        if (ob !== undefined && ob !== null) {
+	            if (ob.index !== undefined && ob.index !== null) {
+	                var methodName = ob.method;
+	                this[methodName]({ record: ob.content, index: ob.index });
+	            }
+	        }
+	    },
+	    getInitialState: function getInitialState() {
+	
+	        //property tags(name,data-options,data)
+	        var tags;
+	        var dataS;
+	        var initialDataS;
+	        if (this.props.tags !== undefined && this.props.tags !== null) {
+	
+	            tags = this.props.tags;
+	
+	            dataS = tags.map(function (item, i) {
+	                for (var field in item) {
+	                    if (field == "data") {
+	                        return item[field];
+	                    }
+	                }
+	            });
+	            if (dataS !== undefined && dataS !== null && dataS.length > 0 && dataS[0] !== undefined && dataS[0] !== null) initialDataS = true;else {
+	                dataS = null;
+	            }
+	            var data$options;
+	            if (this.props["data-options"] !== undefined && this.props["data-options"] !== null) data$options = this.props["data-options"];
+	        }
+	        return { tags: tags, dataS: dataS, initialDataS: initialDataS, data$options: data$options };
+	    },
+	    render: function render() {
+	
+	        var width = "600px";
+	        var divRowStyle = {
+	            marginTop: 20
+	        };
+	        var containerStyle = { textAlign: "center" };
+	
+	        var tags = null;
+	
+	        if (this.state.initialDataS === true) {
+	            if (this.state.tags !== undefined && this.state.tags !== null) {
+	                var notifyCb = this.notifyCb;
+	                tags = this.state.tags.map(function (item, i) {
+	                    var data$options = item["data-options"];
+	                    var data = item["data"];
+	
+	                    return _react2.default.createElement(_Table2.default, { tdBasic: true, multiEnable: 1, key: i, index: i,
+	                        width: width, center: true,
+	                        'data-options': data$options, data: data, align: 'right', 'title-color': '#968D8D',
+	                        'title-font-color': '#fff', notifyCb: notifyCb
+	                    });
+	                });
+	            }
+	        } else {
+	            this.initialDatas();
+	        }
+	
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'row', style: divRowStyle },
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'container', style: containerStyle },
+	                tags
+	            )
+	        );
+	    }
+	});
+	
+	exports.default = CoupleTableElement;
 
 /***/ }
 /******/ ]);

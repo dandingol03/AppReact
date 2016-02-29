@@ -13,6 +13,28 @@ import '../../css/components/forms/Table/Table.css';
 
 
 var Table=React.createClass({
+    checkCb:function(ob) {
+       console.log("select index="+ob);
+        this.setState({checkedIndex:parseInt(ob)});
+    },
+    checkHandle:function() {
+        var data=this.state.data;
+        var checkedIndex=this.state.checkedIndex;
+        if(checkedIndex!==undefined&&checkedIndex!==null&&checkedIndex>-1)
+        {
+            if(this.props.notifyCb!==undefined&&this.props.notifyCb!==null)
+            {
+                var ob={
+                    content:data[checkedIndex],
+                    method:'addHandle',
+                    index:this.props.index,
+                    checkedIndex:checkedIndex
+                };
+
+                this.props.notifyCb(ob);
+            }
+        }
+    },
     queryCallBack:function(ob){
         var data=ob.data;
         var titles=new Array();
@@ -66,6 +88,12 @@ var Table=React.createClass({
         var components;
         //stripped style enable
         var stripped=false;
+        //checkbox enable
+        var checked;
+        //checkedIndex ,this checkbox will be checked when first-render
+        var checkedIndex;
+        //group type
+        var group;
         if(this.props["data-options"]!==null&&this.props["data-options"]!==undefined)
         {
             var options=this.props["data-options"];
@@ -79,9 +107,23 @@ var Table=React.createClass({
             {
                 components=options.components;
             }
+            //style stripped
             if(options.stripped!==null&&options.stripped!==undefined)
             {
                 stripped=true;
+            }
+            //property checked,indicate where the table should be filled with checkbox
+            if(options.checked!==null&&options.checked!==undefined) {
+                checked=options.checked;
+                if(options.checked.index!==undefined&&options.checked.index!==null&&!isNaN(parseInt(options.checked.index)))
+                    checkedIndex=parseInt(options.checked.index);
+                else
+                    checkedIndex=-1;
+            }
+            //groupType options,rows would be groupd with groupType
+            if(options.group!==null&&options.group!==undefined)
+            {
+                group=options.group;
             }
         }
 
@@ -139,16 +181,19 @@ var Table=React.createClass({
         if(this.props["title-font-color"]!==undefined&&this.props["title-font-color"]!==null) {
             title$font$color = {color: this.props["title-font-color"]};
         }
+
         return {
             width: width, widths:widths,cols:cols,components:components,
             multiEnable: multiEnable, tdBasic: tdBasic, data: data,titles:titles,
             align:align,title$color:title$color,tr$color:tr$color,title$font$color:title$font$color,
-            stripped:stripped
+            stripped:stripped,checked:checked,
+            checkedIndex:checkedIndex,group:group
         };
-    }
-    ,
-    render:function(){
+    },
+    componentDidUpdate:function(ob){
 
+    },
+    render:function(){
 
         {/*css style width*/}
         var w=this.state.width;
@@ -189,7 +234,12 @@ var Table=React.createClass({
         }
         if(titles!==null&&titles!==undefined)
         {
-            ths=(<tr style={Object.assign(this.state.title$font$color,this.state.title$color)}>{titles}</tr>);
+            if(this.state.checked!==undefined&&this.state.checked!==null)
+            ths=(<tr style={Object.assign(this.state.title$font$color,this.state.title$color)}>
+                <th>选择</th>{titles}</tr>);
+            else
+            ths=(<tr style={Object.assign(this.state.title$font$color,this.state.title$color)}>
+                {titles}</tr>);
         }
 
 
@@ -200,26 +250,148 @@ var Table=React.createClass({
         var tdBasic=this.state.tdBasic;
 
         var widths=this.state.widths;
-        var rows;
 
 
         //tr$color indicate the color in th in tbody
         var tr$color;
+        //checked indicate whether checkbox should be placed in first column
+        var checkedIndex;
+        var checkCb;
+        var checkButton;
         if(this.state.tr$color!==undefined&&this.state.tr$color!==null)
             tr$color=this.state.tr$color;
+        if(this.state.checked!==undefined&&this.state.checked!==null)
+        {
+            checkedIndex=this.state.checkedIndex;
+            checkCb=this.checkCb;
+            checkButton=(<tr className="un-render"><td colSpan={this.state.cols+1}>
+                <ButtonElement  type="button"
+                                        buttonClass="btn btn-default" title={this.state.checked.name}
+                                         handle={this.checkHandle}/>
+            </td></tr>);
+        }
 
+        //group field
+        var group;
+        var groupTypes;
+        var groupFields;
+        if(this.state.group!==undefined&&this.state.group!==null)
+        {
 
-        if(this.state.data!==undefined&&this.state.data!==null){
-             rows=this.state.data.map(function(item,i) {
-                return (<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={i}
-                                    multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
-                                    widths={widths}  key={i}/>);
+            groupTypes=new Array();
+            groupFields=new Array();
+            var property=this.state.group.property;
+            this.state.data.map(function(item,i) {
+                if($.inArray(item[property], groupTypes)==-1)//如果groupTypes未包含对应type
+                {
+                    groupTypes.push(item[property]);
+                    var json={};
+                    json["field"]=item[property];
+                    json["count"]=1;
+                    groupFields.push(json);
+                }else{
+                    groupFields.map(function(record,i){
+                        if(record["field"]==item[property])
+                        {
+                            record["count"]++;
+                        }
+                    });
+                }
             });
+        }
+
+
+        var rows;
+        if(this.state.data!==undefined&&this.state.data!==null){
+             var checked=this.state.checked;
+             var data=this.state.data;
+             if(groupTypes!==null&&groupTypes!==undefined&&groupTypes.length>0)
+             {
+                 var rowIndex=0;
+                 rows=new Array();
+                 var property=this.state.group.property;
+                 var preField=null;
+
+
+                 groupTypes.map(function(field,i) {
+                     var updateFlag=false;
+
+                     if(field!==preField)
+                     {
+                         updateFlag=true;
+                         preField=field;
+                     }
+                     data.map(function(item,j) {
+                         if(item[property]==field)
+                         {
+                             var rowSpan;
+                             if(updateFlag==true)
+                             {
+                                 rowSpan=0;
+                                 groupFields.map(function(record,k) {
+                                     if(record["field"]==field)
+                                         rowSpan=record["count"];
+                                 });
+                             }
+
+                             if(checkedIndex!==undefined&&checkedIndex!==null&&checkedIndex>-1
+                                 &&checkedIndex==rowIndex)
+                             {
+                                 rows.push(<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={rowIndex}
+                                                    multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
+                                                    widths={widths}  key={rowIndex}  checkCb={checkCb}  insertCheck={true}
+                                                      checked={true} groupType={property} updateFlag={updateFlag}
+                                     rowSpan={rowSpan}/>);
+                             }else{
+                                 if(checked!==undefined&&checked!==null)
+                                 {
+                                     rows.push(<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={rowIndex}
+                                                        multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
+                                                        widths={widths}  key={rowIndex} checkCb={checkCb}
+                                                          insertCheck={true} groupType={property} updateFlag={updateFlag}
+                                         rowSpan={rowSpan}/>);
+                                 }
+                                 else
+                                 rows.push(<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={rowIndex}
+                                                    multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
+                                                    widths={widths} key={rowIndex} groupType={property}
+                                                      updateFlag={updateFlag} rowSpan={rowSpan}/>);
+                             }
+                             updateFlag=false;
+                             rowIndex++;
+                         }
+                     });
+
+                });
+             }else{
+                 rows=this.state.data.map(function(item,i) {
+                     if(checkedIndex!==undefined&&checkedIndex!==null&&checkedIndex>-1
+                         &&checkedIndex==i)
+                     {
+                         return (<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={i}
+                                            multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
+                                            widths={widths}  key={i}  checkCb={checkCb}  insertCheck={true} checked={true}/>);
+                     }else{
+                         if(checked!==undefined&&checked!==null)
+                         {
+                             return (<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={i}
+                                                multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
+                                                widths={widths}  key={i} checkCb={checkCb} insertCheck={true}/>);
+                         }
+                         else
+                         return (<TrElement tr-color={tr$color} tdBasic={tdBasic} rowData={item} rowIndex={i}
+                                            multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
+                                            widths={widths}  key={i}  />);
+                     }
+
+                 });
+             }
+
         }
         else{
             rows=<TrElement tr-color={tr$color}  tdBasic={tdBasic}
                              multiEnable={multiEnable} isLineNumberVisible={isLineNumberVisible}
-                             widths={widths}  />
+                             widths={widths}   checkCb={checkCb}/>
         }
 
 
@@ -245,19 +417,34 @@ var Table=React.createClass({
             })
         }
 
-    return(
-        <table className="table table-bordered center" style={Object.assign(centerStyle,widthStyle)}>
-            <thead>
-            <tr>
+        var th$head;
+        if(this.state.checked!==undefined&&this.state.checked!==null)
+        {
+            th$head=( <tr>
+                <th colSpan={this.state.cols+1}
+                    style={this.state.align}>
+                    {components}
+                </th>
+            </tr>);
+        }
+        else{
+            th$head=( <tr>
                 <th colSpan={this.state.cols}
                     style={this.state.align}>
                     {components}
                 </th>
-            </tr>
+            </tr>);
+        }
+
+    return(
+        <table className="table table-bordered center" style={Object.assign(centerStyle,widthStyle)}>
+            <thead>
+            {th$head}
             </thead>
             <tbody>
             {ths}
             {rows}
+            {checkButton}
              </tbody>
         </table>
     );

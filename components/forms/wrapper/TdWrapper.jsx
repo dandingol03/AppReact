@@ -21,7 +21,7 @@ var TdWrapper=React.createClass({
        {
            if(this.props.tdBasic===true)
            return (<TdBasicElement width={this.props.width}
-               clickHandler={this.clickHandler} tdData={this.props.tdData}/>);
+               clickHandler={this.clickHandler} tdData={this.props.tdData} rowSpan={this.props.rowSpan}/>);
            else{
                return (<td></td>);
            }
