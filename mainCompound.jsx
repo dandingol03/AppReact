@@ -5,7 +5,7 @@ import {render} from 'react-dom';
 import Table from './components/forms/Table.jsx';
 import ListElement from './components/basic/ListElement.jsx';
 import ButtonElement from './components/basic/ButtonElement.jsx';
-import CoupleTableElement from './components/compounds/CoupleTableElement.jsx';
+import CoupleTableElement from './components/compounds/coupleTable/CoupleTableElement.jsx';
 
 
 Boot()

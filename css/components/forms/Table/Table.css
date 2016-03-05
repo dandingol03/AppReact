@@ -1,6 +1,10 @@
+
 tbody>tr:hover {
     background-color: #eee;
     border-color: #eee;
+}
+tbody>tr:nth-child(1)>td:hover{
+    background-color:transparent;
 }
 tbody>tr:hover>td>input[type="checkbox"]{
     cursor: pointer;
@@ -8,4 +12,14 @@ tbody>tr:hover>td>input[type="checkbox"]{
 tbody>tr.un-render:hover{
     background-color:transparent;
     border-color:transparent;
+}
+tbody>tr:hover>td.un-render{
+    background-color:transparent;
+    background-image:url("../../../../icon/body.gif");
+}
+tbody>tr:nth-child(1):not>td.un-render{
+    background-color:transparent;
+}
+tbody{
+    background-image:url("../../../../icon/body.gif");
 }

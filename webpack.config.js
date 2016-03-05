@@ -7,7 +7,7 @@ var webpack = require('webpack');
 module.exports = {
     devtool: 'source-map',
     entry: [
-        path.resolve(__dirname, 'mainCompound.jsx')
+        path.resolve(__dirname, './entrys/201513569/diminishMainCompoundUnChecked.jsx')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -33,7 +33,13 @@ module.exports = {
     plugins: [
        new webpack.HotModuleReplacementPlugin()
     ],module: {
+
         loaders: [
+            {
+                test: /\.js$/,
+                exclude: '/node_modules/',
+                loader: 'jsx-loader?harmony'
+            },
             { test: /\.css$/, loader: "style!css" },
             {test:/\.json$/,loader:"json"},
             {
@@ -43,7 +49,9 @@ module.exports = {
                 query: {
                     presets: ['es2015','react']
                 }
-            }
+            },
+            {test: /\.png$/, loader: "url-loader?mimetype=image/png"},
+            {test: /\.gif$/, loader: "url-loader?mimetype=image/gif"}
         ]
     }
 };
