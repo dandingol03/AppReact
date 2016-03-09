@@ -7,7 +7,7 @@ var webpack = require('webpack');
 module.exports = {
     devtool: 'source-map',
     entry: [
-        path.resolve(__dirname, './entrys/201513569/diminishMainCompoundUnChecked.jsx')
+        path.resolve(__dirname, './entrys/201513569/nodata/diminishMainCompoundUnCheckedNoData.jsx')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -24,8 +24,8 @@ module.exports = {
         port:3000,
         hot:true,
         proxy:{
-            '/gradms/bsuims/*.do':{
-                    target: 'http://localhost:8090/',
+            '/react/*.do':{
+                    target: 'http://localhost:8090/D3SHOW',
                     secure: false
             }
         }

@@ -29,6 +29,10 @@ var Table=React.createClass({
             }
         });
     },
+    /**
+     * @description
+     * @param ob
+     */
     checkCb:function(ob) {
        console.log("select index="+ob);
         if(this.state.checked.multiCheck!==undefined&&this.state.checked.multiCheck!==null&&
@@ -81,7 +85,7 @@ var Table=React.createClass({
                 });
                 var ob={
                     content:record,
-                    method:'addHandle',//if you want other component to invoke this method,you can pass it over
+                    method:'addHandle',//if you want to trigger  other method,u can edit the value of property 'method'
                     index:this.props.index,
                     checkedIndex:checkedIndex,
                     multiCheck:true
@@ -133,35 +137,28 @@ var Table=React.createClass({
     opHandle:function(ob){
         if(ob!==undefined&&ob!==null)
         {
-                var rowIndex=ob.rowIndex;
-                var data$index=ob["data-index"];
-                var content=ob.content;//教学任务
-                var record=this.state.data[data$index];
-            var ob={
-                content:record,
-                method:'addHandle',//if you want other component to invoke this method,you can pass it over
-                index:this.props.index,
-                multiCheck:false
-            };
-            TodoStore.emit('fire',ob);
-            var data=this.state.data;
-            data.splice(data$index,1);
-            var titles;
-            if(data.length>0)
-            {
-                titles=new Array();
-                for(var field in data[0])
-                {
-                    titles.push(field);
-                }
-            }
-            this.setState({data:data,titles:titles});
+
+
+            var plan=ob.content;//教学任务
+            var task=this.state.data[ob["data-index"]];
+
+            var revenge={plan:plan,task:task};
+
             //操作提交后台
             if(this.state.op.query!==undefined&&this.state.op.query!==null)
             {
-                this.queryHandle({url:this.state.op.query.url,
-                    params:this.state.op.query.params});
+                this.queryHandle({
+                    url:this.state.op.query.url,
+                    params:this.state.op.query.params
+                })
             }
+            //重洗2表数据
+            if(this.props.opHandle!==undefined&&this.props.opHandle!==null) {
+                this.props.opHandle(this.state.op.trend);
+            }
+
+
+
         }
     },
     queryHandle:function(ob){
@@ -695,7 +692,7 @@ var Table=React.createClass({
                     checkedIndex=this.state.checkedIndex;
                     multiCheck=checked.multiCheck;
                 }
-                var data=this.state.data;
+                var data=this.props.data;
                 //op如果不为空即视选项有效
                 var op=this.state.op;
                 //进行分组,根据groupTypes的值集合进行数据添加
@@ -937,8 +934,7 @@ var Table=React.createClass({
                             />)
                     }
                     if(item.type=="input")//输入框组件
-                    {
-                        var subscribe;
+                    {                        var subscribe;
                         if(queryExist==true)
                         {
                             var emit=function emit(){

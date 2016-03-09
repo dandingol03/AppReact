@@ -71,6 +71,72 @@ var CoupleTableElement=React.createClass({
     deleteHandle:function(ob){
 
     },
+    reQHandle:function(ob){
+
+        if(ob!==undefined&&ob!==null) {
+            var type=ob.type;
+                if(this.state.data$options!==undefined&&this.state.data$options!==null)
+                {
+                    var url=this.state.data$options.url;
+                    var params=this.state.data$options.params;
+
+                    if(type==="add")
+                        params.reactActionName='reactAddRecord';
+                    else
+                        params.reactActionName = 'reactDiminishRecord';
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        dataType: 'json',
+                        data: params,
+                        cache: false,
+                        success: function(ob) {
+                            var data=ob.data;
+                            var group=ob.group;
+                            var op=ob.op;
+                            var tags=this.state.tags;
+                            if(data!==undefined&&data!==null)
+                            {
+                                var dataS=new Array();
+                                data.array.map(function(item,i) {
+                                    dataS.push(item);
+                                });
+                                if(group!==undefined&&group!==null)
+                                {
+                                    data.array.map(function(item,i){
+                                        tags[i]["data-options"].group=group;
+                                    });
+                                }
+                                //契约选项的更新
+                                if(op!==undefined&&op!==null)
+                                {
+                                    op.map(function(item,i) {
+                                        tags[item.index]["data-options"].op=item;
+                                    })
+                                }
+                                this.state.dataS=dataS;
+                                this.state.tags=tags;
+                                this.setState({dataS:dataS,tags:tags});
+                            }
+                        }.bind(this),
+                        error: function(xhr, status, err) {
+                            console.error(this.props.url, status, err.toString());
+                        }.bind(this)
+                    });
+
+                }
+
+
+
+
+        }
+
+
+
+
+
+
+    },
     notifyCb:function(ob) {
         //TODO:ob(content:{xxx:xxx},method:['addHandle','deleteHandle']}
         if(ob!==undefined&&ob!==null)
@@ -137,6 +203,10 @@ var CoupleTableElement=React.createClass({
                var tags=this.state.tags;
                //this loop based in dataS,so if u want to reset data in tabls
                //u can dynamiclly set dataS through setState method
+
+               var reQHandle=this.reQHandle;
+
+
                var tables=this.state.dataS.map(function(item,i) {
                    //fetch data-options of each table
                    var data$options=tags[i]["data-options"];
@@ -145,7 +215,7 @@ var CoupleTableElement=React.createClass({
                    return (<Table tdBasic={true} multiEnable={1} key={i} index={i}
                                   width={width} center={true}
                                   data-options={data$options} data={data} align="right" title-color="#968D8D"
-                                  title-font-color="#fff" notifyCb={notifyCb}
+                                  title-font-color="#fff" notifyCb={notifyCb} opHandle={reQHandle}
                        />)
                });
 
