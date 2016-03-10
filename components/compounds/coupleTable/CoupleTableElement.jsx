@@ -41,7 +41,7 @@ var CoupleTableElement=React.createClass({
                                 tags[item.index]["data-options"].op=item;
                             })
                         }
-                        this.setState({dataS:dataS,initialDataS:true,tags:tags});
+                        this.setProps({dataS:dataS,tags:tags});
                     }
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -114,9 +114,7 @@ var CoupleTableElement=React.createClass({
                                         tags[item.index]["data-options"].op=item;
                                     })
                                 }
-                                this.state.dataS=dataS;
-                                this.state.tags=tags;
-                                this.setState({dataS:dataS,tags:tags});
+                                this.setProps({dataS:dataS,tags:tags});
                             }
                         }.bind(this),
                         error: function(xhr, status, err) {
@@ -182,7 +180,27 @@ var CoupleTableElement=React.createClass({
                 data$options=this.props["data-options"];
 
         }
+
         return {tags:tags,dataS:dataS,initialDataS:initialDataS,data$options:data$options};
+    },
+    componentWillReceiveProps:function(props){
+        /**
+         * try to set state with new props
+         *
+         */
+        var dataS=props.dataS;
+        var tags=props.tags;
+        var initialDataS;
+        if(dataS!==undefined&&dataS!==null&&dataS.length>1) {
+            initialDataS=true;
+        }
+        if(initialDataS!==undefined&&initialDataS!==null) {
+            this.setState({dataS:dataS,tags:tags,initialDataS:initialDataS});
+        }
+        else
+            this.setState({tags:tags});
+
+        console.log("i got u props");
     },
    render:function(){
 
@@ -201,8 +219,7 @@ var CoupleTableElement=React.createClass({
            if(this.state.tags!==undefined&&this.state.tags!==null) {
                var notifyCb=this.notifyCb;
                var tags=this.state.tags;
-               //this loop based in dataS,so if u want to reset data in tabls
-               //u can dynamiclly set dataS through setState method
+
 
                var reQHandle=this.reQHandle;
 
