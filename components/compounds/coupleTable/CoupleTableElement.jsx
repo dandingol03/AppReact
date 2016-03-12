@@ -18,30 +18,36 @@ var CoupleTableElement=React.createClass({
                 data: params,
                 cache: false,
                 success: function(ob) {
-                    var data=ob.data;
+                    var data=ob.array;
                     var group=ob.group;
                     var op=ob.op;
+                    var title=ob.title;
+                    var title$index=ob.title$index;
                     var tags=this.state.tags;
-                    if(data!==undefined&&data!==null)
-                    {
-                        var dataS=new Array();
-                        data.array.map(function(item,i) {
+
+                    if(data!==undefined&&data!==null) {
+                        var dataS = new Array();
+                        data.map(function (item, i) {
                             dataS.push(item);
                         });
-                        if(group!==undefined&&group!==null)
-                        {
-                            data.array.map(function(item,i){
-                                tags[i]["data-options"].group=group;
+                        if (group !== undefined && group !== null) {
+                            data.map(function (item, i) {
+                                tags[i]["data-options"].group = group;
                             });
                         }
                         //契约选项的更新
-                        if(op!==undefined&&op!==null)
-                        {
-                            op.map(function(item,i) {
-                                tags[item.index]["data-options"].op=item;
+                        if (op !== undefined && op !== null) {
+                            op.map(function (item, i) {
+                                tags[item.index]["data-options"].op = item;
                             })
                         }
-                        this.setProps({dataS:dataS,tags:tags});
+                        if (title !== undefined && title !== null && !isNaN(parseInt(title$index)))
+                        {
+                            tags[parseInt(title$index)]["data-options"].title=title;
+                        }
+                        //suck
+                        this.setProps({dataS: dataS,tags:tags,initialDataS:true});
+
                     }
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -69,70 +75,6 @@ var CoupleTableElement=React.createClass({
 
     },
     deleteHandle:function(ob){
-
-    },
-    reQHandle:function(ob){
-
-        if(ob!==undefined&&ob!==null) {
-            var type=ob.type;
-                if(this.state.data$options!==undefined&&this.state.data$options!==null)
-                {
-                    var url=this.state.data$options.url;
-                    var params=this.state.data$options.params;
-
-                    if(type==="add")
-                        params.reactActionName='reactAddRecord';
-                    else
-                        params.reactActionName = 'reactDiminishRecord';
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        dataType: 'json',
-                        data: params,
-                        cache: false,
-                        success: function(ob) {
-                            var data=ob.data;
-                            var group=ob.group;
-                            var op=ob.op;
-                            var tags=this.state.tags;
-                            if(data!==undefined&&data!==null)
-                            {
-                                var dataS=new Array();
-                                data.array.map(function(item,i) {
-                                    dataS.push(item);
-                                });
-                                if(group!==undefined&&group!==null)
-                                {
-                                    data.array.map(function(item,i){
-                                        tags[i]["data-options"].group=group;
-                                    });
-                                }
-                                //契约选项的更新
-                                if(op!==undefined&&op!==null)
-                                {
-                                    op.map(function(item,i) {
-                                        tags[item.index]["data-options"].op=item;
-                                    })
-                                }
-                                this.setProps({dataS:dataS,tags:tags});
-                            }
-                        }.bind(this),
-                        error: function(xhr, status, err) {
-                            console.error(this.props.url, status, err.toString());
-                        }.bind(this)
-                    });
-
-                }
-
-
-
-
-        }
-
-
-
-
-
 
     },
     notifyCb:function(ob) {
@@ -180,32 +122,23 @@ var CoupleTableElement=React.createClass({
                 data$options=this.props["data-options"];
 
         }
-
         return {tags:tags,dataS:dataS,initialDataS:initialDataS,data$options:data$options};
     },
-    componentWillReceiveProps:function(props){
-        /**
-         * try to set state with new props
-         *
-         */
-        var dataS=props.dataS;
-        var tags=props.tags;
-        var initialDataS;
-        if(dataS!==undefined&&dataS!==null&&dataS.length>1) {
-            initialDataS=true;
+    componentWillReceiveProps:function(props)
+    {
+        if(props.dataS!==undefined&&props.dataS!==null)
+            this.setState({dataS:props.dataS});
+        if(props.tags!==undefined&&props.tags!==null) {
+            this.setState({tags:props.tags});
         }
-        if(initialDataS!==undefined&&initialDataS!==null) {
-            this.setState({dataS:dataS,tags:tags,initialDataS:initialDataS});
+        if(props.initialDataS!==undefined&&props.initialDataS!==null) {
+            this.setState({initialDataS:props.initialDataS});
         }
-        else
-            this.setState({tags:tags});
-
-        console.log("i got u props");
     },
    render:function(){
 
 
-       var width="800px";
+       var width="100%";
        var divRowStyle = {
            marginTop: 20
        };
@@ -219,11 +152,9 @@ var CoupleTableElement=React.createClass({
            if(this.state.tags!==undefined&&this.state.tags!==null) {
                var notifyCb=this.notifyCb;
                var tags=this.state.tags;
-
-
-               var reQHandle=this.reQHandle;
-
-
+               //this loop based in dataS,so if u want to reset data in tabls
+               //u can dynamiclly set dataS through setState method
+               var initial$dataS=this.initialDatas;
                var tables=this.state.dataS.map(function(item,i) {
                    //fetch data-options of each table
                    var data$options=tags[i]["data-options"];
@@ -231,8 +162,9 @@ var CoupleTableElement=React.createClass({
                    var data=item;
                    return (<Table tdBasic={true} multiEnable={1} key={i} index={i}
                                   width={width} center={true}
-                                  data-options={data$options} data={data} align="right" title-color="#968D8D"
-                                  title-font-color="#fff" notifyCb={notifyCb} opHandle={reQHandle}
+                                  data-options={data$options} data={data} align="left" title-color="transparent"
+                                  title-font-color="#fff" notifyCb={notifyCb}
+                                  initialDatas={initial$dataS}
                        />)
                });
 

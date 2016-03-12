@@ -5,12 +5,12 @@ import ContractElement from '../contract/ContractElement.jsx';
 
 var TdOpElement=React.createClass({
     checkHandle:function(){
-        if(this.state.data!==undefined&&this.state.data!==null&&this.state.data.length>1)
+        if(this.props.op.data!==undefined&&this.props.op.data!==null&&this.props.op.data.length>1)
         {
             this.setState({contractStatus:true});
         }
         else{
-            this.props.opHandle(this.state.data);
+            this.props.opHandle(this.props.op.data);
         }
     },
     opHandle:function(ob){
@@ -39,9 +39,9 @@ var TdOpElement=React.createClass({
         {
             var img$src;
             if(op.trend=="add")
-               img$src="./bootstrap/img/icon/add_0.png";
+               img$src="../bootstrap/img/icon/add_0.png";
             else
-                img$src="./bootstrap/img/icon/delete_0.png";
+                img$src="../bootstrap/img/icon/delete_0.png";
             //契约组件初始化
             var contract;
             if(op.data!==undefined&&op.data!==null)

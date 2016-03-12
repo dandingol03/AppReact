@@ -47,7 +47,7 @@ var ContractElement=React.createClass({
                         </div>);
                 }
                 var components=[
-                    {type:"apply",name:"选择"},
+                    {type:"apply",name:"添加"},
                     {type:"cancel",name:"返回"}
                 ];
                 var list=new Array();

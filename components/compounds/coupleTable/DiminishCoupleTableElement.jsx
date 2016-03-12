@@ -118,7 +118,7 @@ var DiminishCoupleTableElement =React.createClass({
                     return (<Table tdBasic={true} multiEnable={1} key={i} index={i}
                                    width={width} center={true}
                                    data-options={data$options} data={data} align="right" title-color="#968D8D"
-                                   title-font-color="#fff" notifyCb={notifyCb}
+                                   title-font-color="#fff" notifyCb={notifyCb} title="fuck u"
                         />)
                 });
 

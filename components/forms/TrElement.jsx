@@ -22,8 +22,6 @@ var TrElement =React.createClass({
     },
     opHandle:function(ob){
         var content=ob;
-        if(content==undefined||content==null)
-            return ;
         if(this.props.opHandle!==undefined&&this.props.opHandle!==null)
         {
             var rowIndex=this.props.rowIndex;

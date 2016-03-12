@@ -34,7 +34,7 @@ var LiElement=React.createClass({
 
         return(<li className={this.props.className} onClick={this.clickCb}
                    data-pos={this.props["data-pos"]} data-index={this.props["data-index"]}>
-            {span}
+            {span}<Title/>
             {this.props.children}
         </li>);
 

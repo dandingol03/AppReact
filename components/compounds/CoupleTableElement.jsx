@@ -21,6 +21,7 @@ var CoupleTableElement=React.createClass({
                         data.array.map(function(item,i) {
                             dataS.push(item);
                         });
+                        this.state.dataS=dataS;
                         this.setState({dataS:dataS,initialDataS:true});
                     }
                 }.bind(this),
@@ -98,7 +99,7 @@ var CoupleTableElement=React.createClass({
    render:function(){
 
 
-       var width="600px";
+       var width="100%";
        var divRowStyle = {
            marginTop: 20
        };
@@ -117,7 +118,7 @@ var CoupleTableElement=React.createClass({
                    var data=item;
                    return (<Table tdBasic={true} multiEnable={1} key={i} index={i}
                                   width={width} center={true}
-                                  data-options={data$options} data={data} align="right" title-color="#968D8D"
+                                  data-options={data$options} data={data}  title-color="#968D8D"
                                   title-font-color="#fff" notifyCb={notifyCb}
                        />)
                });
