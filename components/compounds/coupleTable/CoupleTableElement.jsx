@@ -3,7 +3,26 @@ import Table from '../../forms/Table.jsx';
 
 
 /**
- * @api,
+ * CoupleTableElement,作为父组件包含2个table组件，使它们的沟通更加方便,构造函数请使用&lt;CoupleTableElement /&gt;
+ * @author danding001
+ * @constructor CoupleTableElement
+ * @example
+ *      //参数tags,包含2个子表的data$options参数设置
+ *      var tags=[
+ *      {"data-options":data$options$1},
+ *      {"data-options":data$options$2}
+ *      ];
+ *      //本组件的data$options参数配置,你可以在这设置本组件向后台请求数据的*.do和method
+ *      var data$options={
+ *      url:"/react/getDataRequest.dp",
+ *      params:{
+ *          reactPageName:"servletPage",
+ *          reactActionName:"reactGetTriple"
+ *      }
+ *  <CoupleTableElement tags={tags} data-options={data$options}/>
+ *
+ *
+ *
  */
 var CoupleTableElement=React.createClass({
     initialDatas:function(){
@@ -11,6 +30,7 @@ var CoupleTableElement=React.createClass({
         {
             var url=this.state.data$options.url;
             var params=this.state.data$options.params;
+
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -18,10 +38,13 @@ var CoupleTableElement=React.createClass({
                 data: params,
                 cache: false,
                 success: function(ob) {
-                    var data=ob.data;
+                    var data=ob.array;
                     var group=ob.group;
                     var op=ob.op;
                     var tags=this.state.tags;
+                    var title=ob.title;
+                    var title$index=ob.title$index;
+
                     if(data!==undefined&&data!==null)
                     {
                         var dataS=new Array();
@@ -41,7 +64,11 @@ var CoupleTableElement=React.createClass({
                                 tags[item.index]["data-options"].op=item;
                             })
                         }
-                        this.setProps({dataS:dataS,tags:tags});
+                        if (title !== undefined && title !== null && !isNaN(parseInt(title$index)))
+                        {
+                            tags[parseInt(title$index)]["data-options"].title=title;
+                        }
+                        this.setProps({dataS:dataS,tags:tags,initialDataS:true});
                     }
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -184,28 +211,19 @@ var CoupleTableElement=React.createClass({
         return {tags:tags,dataS:dataS,initialDataS:initialDataS,data$options:data$options};
     },
     componentWillReceiveProps:function(props){
-        /**
-         * try to set state with new props
-         *
-         */
-        var dataS=props.dataS;
-        var tags=props.tags;
-        var initialDataS;
-        if(dataS!==undefined&&dataS!==null&&dataS.length>1) {
-            initialDataS=true;
+        if(props.dataS!==undefined&&props.dataS!==null)
+            this.setState({dataS:props.dataS});
+        if(props.tags!==undefined&&props.tags!==null) {
+            this.setState({tags:props.tags});
         }
-        if(initialDataS!==undefined&&initialDataS!==null) {
-            this.setState({dataS:dataS,tags:tags,initialDataS:initialDataS});
+        if(props.initialDataS!==undefined&&props.initialDataS!==null) {
+            this.setState({initialDataS:props.initialDataS});
         }
-        else
-            this.setState({tags:tags});
-
-        console.log("i got u props");
     },
    render:function(){
 
 
-       var width="800px";
+       var width="100%";
        var divRowStyle = {
            marginTop: 20
        };
@@ -219,11 +237,7 @@ var CoupleTableElement=React.createClass({
            if(this.state.tags!==undefined&&this.state.tags!==null) {
                var notifyCb=this.notifyCb;
                var tags=this.state.tags;
-
-
-               var reQHandle=this.reQHandle;
-
-
+               var initial$dataS=this.initialDatas;
                var tables=this.state.dataS.map(function(item,i) {
                    //fetch data-options of each table
                    var data$options=tags[i]["data-options"];
@@ -232,7 +246,8 @@ var CoupleTableElement=React.createClass({
                    return (<Table tdBasic={true} multiEnable={1} key={i} index={i}
                                   width={width} center={true}
                                   data-options={data$options} data={data} align="right" title-color="#968D8D"
-                                  title-font-color="#fff" notifyCb={notifyCb} opHandle={reQHandle}
+                                  title-font-color="#fff" notifyCb={notifyCb}
+                                  initialDataS={initial$dataS}
                        />)
                });
 

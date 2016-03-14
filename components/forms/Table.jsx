@@ -12,6 +12,13 @@ import TodoStore from '../_event/TodoStore.js';
 import '../../css/components/forms/Table/Table.css';
 
 
+/**
+ * Table,表格组件，请使用&lt;Table /&gt;进行实例化
+ * @author danding001
+ * @constructor Table
+ * @example
+ *
+ */
 var Table=React.createClass({
     initialData:function(){
         $.ajax({
@@ -21,8 +28,9 @@ var Table=React.createClass({
             data: this.props.query.params,
             cache: false,
             success: function(data) {
-                if(data!==undefined&&data!==null&&data.length>0)
-                    this.setState({data:data,data$initialed:true});
+                if(data!==undefined&&data!==null&&data.length>0) {
+                    this.setProps({data: data, data$initialed: true})
+                }
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -138,26 +146,18 @@ var Table=React.createClass({
         if(ob!==undefined&&ob!==null)
         {
 
-
-            var plan=ob.content;//教学任务
-            var task=this.state.data[ob["data-index"]];
-
-            var revenge={plan:plan,task:task};
-
+            var task=ob.content;//教学任务
+            var plan=this.props.data[ob["data-index"]];
+            var reverge={plan:plan,task:task};
+            var params=this.state.op.query.params;
+            params["plan"]=JSON.stringify(plan);
+            params["task"]=JSON.stringify(task);
             //操作提交后台
             if(this.state.op.query!==undefined&&this.state.op.query!==null)
             {
-                this.queryHandle({
-                    url:this.state.op.query.url,
-                    params:this.state.op.query.params
-                })
+                this.queryHandle({url:this.state.op.query.url,
+                    params:params,callback:  this.props.initialDatas});
             }
-            //重洗2表数据
-            if(this.props.opHandle!==undefined&&this.props.opHandle!==null) {
-                this.props.opHandle(this.state.op.trend);
-            }
-
-
 
         }
     },
@@ -177,6 +177,9 @@ var Table=React.createClass({
             success: function(data) {
                 if(this.props.handle!==null&&this.props.handle!==undefined)
                     this.props.handle(data);
+                //执行调用者插入的回调
+                if(ob.callback!==undefined&&ob.callback!==null)
+                    ob.callback();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -398,6 +401,35 @@ var Table=React.createClass({
            });
        }
     },
+    componentWillReceiveProps:function(props){
+        if(props["data-options"].op!==undefined&&props["data-options"].op!==null) {
+            this.setState({op:props["data-options"].op});
+            console.log();
+        }
+        if(props.data!==undefined&&props.data!==null) {
+            this.setState({data: props.data});
+            this.setState({data$initialed:true});
+            var data=props.data;
+            var titles;
+            if(data[0]!==undefined&&data[0]!==null)
+            {
+                titles=new Array();
+                for(var field in data[0])
+                {
+                    titles.push(field);
+                }
+                this.setState({titles:titles});
+                var cols=titles.length;
+                if(cols!==undefined&&cols!==null) {
+                    if(cols<1)
+                        cols=1;
+                }
+                else
+                    cols=1;
+                this.setState({cols:cols});
+            }
+        }
+    },
     render:function(){
         {/*css style width*/}
         var w=this.state.width;
@@ -420,6 +452,8 @@ var Table=React.createClass({
             marginRight:"auto"
         }
 
+
+        var data=this.state.data;
 
         //表格数据未初始化
         if(this.state.data$initialed!==true)
@@ -692,7 +726,7 @@ var Table=React.createClass({
                     checkedIndex=this.state.checkedIndex;
                     multiCheck=checked.multiCheck;
                 }
-                var data=this.props.data;
+
                 //op如果不为空即视选项有效
                 var op=this.state.op;
                 //进行分组,根据groupTypes的值集合进行数据添加

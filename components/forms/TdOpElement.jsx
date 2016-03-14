@@ -3,6 +3,21 @@ import '../../css/components/forms/TdOpElement/TdOpElement.css';
 import ContractElement from '../contract/ContractElement.jsx';
 
 
+/**
+ * TdOpElement,操作Td控件，你可以通过此控键订制执行表单操作时所需要满足的契约,请使用&lt;TdOpElement/&gt;进行组件的实例化
+ * @author,danding001
+ * @constructor TdOpElement
+ * @example
+ * //type:"add",图标替换为增加
+ * //type:"delete",图标替换为删除
+ * var op={
+ *  type:"add",
+ *  data:JSONArray
+ * }
+ * <TdOpElement op={op}/>
+ *
+ *  @see {@link http://www.w3school.com.cn/json/| learn more about JSONArray}
+ */
 var TdOpElement=React.createClass({
     checkHandle:function(){
         if(this.state.data!==undefined&&this.state.data!==null&&this.state.data.length>1)
@@ -23,16 +38,20 @@ var TdOpElement=React.createClass({
             this.setState({contractStatus:false});
     },
     getInitialState:function(){
+        return {contractStatus:false};
+    },
+    componentWillReceiveProps:function(props) {
         var data;
         var op;
-        if(this.props.op!==undefined&&this.props.op!==null)
-        {
-            op=this.props.op;
-            if(op.data!==undefined&&op.data!==null)
-                data=op.data;
+        if (props.op !== undefined && props.op !== null) {
+            op = this.props.op;
+            if (op.data !== undefined && op.data !== null) {
+                data = op.data;
+            }
         }
-        return {contractStatus:false,op:op,data:data};
-    },
+        this.setState({op: op, data: data});
+    }
+    ,
     render:function(){
         var op=this.state.op;
         if(op.trend!==undefined&&op.trend!==null)
