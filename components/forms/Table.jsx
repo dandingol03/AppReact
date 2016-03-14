@@ -37,10 +37,6 @@ var Table=React.createClass({
             }
         });
     },
-    /**
-     * @description
-     * @param ob
-     */
     checkCb:function(ob) {
        console.log("select index="+ob);
         if(this.state.checked.multiCheck!==undefined&&this.state.checked.multiCheck!==null&&
@@ -93,7 +89,7 @@ var Table=React.createClass({
                 });
                 var ob={
                     content:record,
-                    method:'addHandle',//if you want to trigger  other method,u can edit the value of property 'method'
+                    method:'addHandle',//if you want other component to invoke this method,you can pass it over
                     index:this.props.index,
                     checkedIndex:checkedIndex,
                     multiCheck:true
@@ -109,7 +105,7 @@ var Table=React.createClass({
                     data.splice(i,1);
                 }
                 var titles;
-                if(data[0]!==undefined&&data[0]!==null)
+                              if(data[0]!==undefined&&data[0]!==null)
                 {
                     titles=new Array();
                     for(var field in data[0])
@@ -177,7 +173,7 @@ var Table=React.createClass({
             success: function(data) {
                 if(this.props.handle!==null&&this.props.handle!==undefined)
                     this.props.handle(data);
-                //执行调用者插入的回调
+
                 if(ob.callback!==undefined&&ob.callback!==null)
                     ob.callback();
             }.bind(this),
@@ -229,7 +225,9 @@ var Table=React.createClass({
             if (!isNaN(width))
                 width += "px";
             var pattern = /px$/g;
-            if (!pattern.test(width))
+            var patt = /%$/g;
+            if (!patt.test(width))
+
                 throw "width invalid,you should pass a number or a string like .px";
         }
         //auto initialData enable
@@ -401,7 +399,9 @@ var Table=React.createClass({
            });
        }
     },
-    componentWillReceiveProps:function(props){
+    componentWillReceiveProps:function(props)
+    {
+
         if(props["data-options"].op!==undefined&&props["data-options"].op!==null) {
             this.setState({op:props["data-options"].op});
             console.log();
@@ -452,6 +452,7 @@ var Table=React.createClass({
             marginRight:"auto"
         }
 
+        var data=this.state.data;
 
         var data=this.state.data;
 
@@ -520,7 +521,7 @@ var Table=React.createClass({
                                 var content;
                                 if(selectedIndex!==undefined&&selectedIndex!==null)
                                 {
-                                    content=this.state.data[selectedIndex]['value'];
+                                    content=data[selectedIndex]['value'];
                                 }else
                                     content=null;
                                 var record={id:this.props.id,content:content};
@@ -693,7 +694,7 @@ var Table=React.createClass({
                 groupTypes=new Array();
                 groupFields=new Array();
                 var property=this.state.group.property;
-                this.state.data.map(function(item,i) {
+                data.map(function(item,i) {
                     if($.inArray(item[property], groupTypes)==-1)//如果groupTypes未包含对应type
                     {
                         groupTypes.push(item[property]);
@@ -716,7 +717,8 @@ var Table=React.createClass({
             //checked indicate whether checkbox should be placed in first column
             var checkedIndex;
             var rows;
-            if(this.state.data!==undefined&&this.state.data!==null){
+
+            if(data!==undefined&&data!==null){
                 var checked=this.state.checked;
 
                 var multiCheck;
@@ -764,10 +766,12 @@ var Table=React.createClass({
                                     opConfig={};
                                     opConfig.trend=op.trend;
                                     if(op.contract!==undefined&&op.contract!==null) {
+
                                         opConfig.data = op.contract[j].data;
                                         opConfig.type=op.contract[j].type;
                                     }
                                 }
+                                console.log();
                                 //如果当前存选中项
                                 if(checkedIndex!==undefined&&checkedIndex!==null&&checkedIndex!==-1)
                                 {
@@ -825,7 +829,7 @@ var Table=React.createClass({
                     });
                 }else{//如果不进行分组,则行号与该行数据所在data的下标是一致的
                     var opHandle=this.opHandle;
-                    rows=this.state.data.map(function(item,i) {
+                    rows=data.map(function(item,i) {
                         var opConfig;
                         if(op!==undefined&&op!==null)
                         {
@@ -952,7 +956,7 @@ var Table=React.createClass({
                                 var content;
                                 if(selectedIndex!==undefined&&selectedIndex!==null)
                                 {
-                                    content=this.state.data[selectedIndex]['value'];
+                                    content=data[selectedIndex]['value'];
                                 }else
                                     content=null;
                                 var record={id:this.props.id,content:content};
@@ -968,7 +972,8 @@ var Table=React.createClass({
                             />)
                     }
                     if(item.type=="input")//输入框组件
-                    {                        var subscribe;
+                    {
+                        var subscribe;
                         if(queryExist==true)
                         {
                             var emit=function emit(){
@@ -988,8 +993,33 @@ var Table=React.createClass({
                 })
             }
 
-            var th$head;
 
+            //标题
+            var title;
+            if(this.props["data-options"].title!==undefined&&this.props["data-options"].title!==null)
+            {
+                if(this.state.checked!==undefined&&this.state.checked!==null)
+                {
+
+                    title=( <tr>
+                        <th colSpan={this.state.cols+1+appendForOp}
+                            style={this.state.align}>
+                            {this.props["data-options"].title}
+                        </th>
+                    </tr>);
+                }
+                else{
+                    title=( <tr>
+                        <th colSpan={this.state.cols+appendForOp}
+                            style={this.state.align}>
+                            {this.props["data-options"].title}
+                        </th>
+                    </tr>);
+                }
+            }
+
+
+            var th$head;
             if(this.state.checked!==undefined&&this.state.checked!==null)
             {
 
@@ -1009,9 +1039,13 @@ var Table=React.createClass({
                 </tr>);
             }
 
+
+
+
             return(
                 <table className="table table-bordered center" style={Object.assign(centerStyle,widthStyle)}>
                     <thead>
+                    {title}
                     {th$head}
                     </thead>
                     <tbody>

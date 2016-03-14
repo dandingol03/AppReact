@@ -41,7 +41,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+<<<<<<< HEAD
 
 components/compounds/CoupleTableElement.jsx
 
 .idea/workspace.xml
+=======
+>>>>>>> c6d9a86803743b378c9b1b43375d4c494107e94e

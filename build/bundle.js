@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6924317ac40634106510"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f24fa00206c1572fa8a5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -591,15 +591,15 @@
 	
 	var _Table2 = _interopRequireDefault(_Table);
 	
-	var _ListElement = __webpack_require__(179);
+	var _ListElement = __webpack_require__(172);
 	
 	var _ListElement2 = _interopRequireDefault(_ListElement);
 	
-	var _ButtonElement = __webpack_require__(169);
+	var _ButtonElement = __webpack_require__(173);
 	
 	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
 	
-	var _CoupleTableElement = __webpack_require__(183);
+	var _CoupleTableElement = __webpack_require__(187);
 	
 	var _CoupleTableElement2 = _interopRequireDefault(_CoupleTableElement);
 	
@@ -631,7 +631,7 @@
 	                                titles.push(field);
 	                            }
 	                            cols = titles.length;
-	                            this.setState({ data: data, cols: cols, titles: titles });
+	                            this.setState({ data: data, cols: cols, titles: titles, data$initialed: true });
 	                        }
 	                }
 	        }
@@ -651,73 +651,27 @@
 	    var data1 = [{ 'name': 'wjj', 'age': 18, 'sex': 'man' }, { 'name': 'wang', 'age': 22, 'sex': 'man' }, { 'name': 'bigBang', 'age': 18, 'sex': 'man' }, { 'name': 'lalala', 'age': 14, 'sex': 'man' }, { 'name': 'zyy', 'age': 25, 'sex': 'woman' }, { 'name': 'bianfu', 'age': 20, 'sex': 'woman' }, { 'name': 'baomu', 'age': 18, 'sex': 'woman' }, { 'name': 'official', 'age': 17, 'sex': 'woman' }];
 	    var data2 = [];
 	    var data$options = {
-	        url: "gradms/bsuims/reactPageDataRequest.do",
+	        url: "../../gradms/bsuims/reactPageDataRequest.do",
 	        params: {
-	            reactPageName: 'newCultivateTeachSchedulePage',
-	            reactActionName: 'reactGetCoupleData'
+	            reactPageName: 'newCultivatePlanPage',
+	            reactActionName: 'newPlanSelectCourse'
 	        }
 	    };
 	    var data$options$1 = {
-	        widths: ["25%", "25%", "25%", "25%"],
-	        components: [{
-	            name: "查询", type: "query", id: "query1",
-	            params: {
-	                reactPageName: 'newCultivateTeachSchedulePage',
-	                reactActionName: 'reactGetTestData'
-	            },
-	            url: "gradms/bsuims/reactPageDataRequest.do"
-	        }, {
-	            name: "年级", type: "dropdown", data: [{ link: "javascript:void(0)", title: "baidu", value: "baidu" }, { link: "javascript:void(0)", title: "sohu", value: "sohu" }, { link: "javascript:void(0)", title: "kuaibo", value: "kuaibo" }, { link: "javascript:void(0)", title: "shanda", value: "shanda" }],
-	            id: "grade1"
-	        }, {
-	            type: "input",
-	            id: "personId1"
-	        }],
-	        checked: {
-	            url: "gradms/bsuims/reactPageDataRequest.do",
-	            params: {
-	                reactPageName: 'newCultivateTeachSchedulePage',
-	                reactActionName: 'reactGetTestData'
-	            },
-	            name: "增加上表选择",
-	            multiCheck: true
-	        },
-	        subscribe: [{ type: 'fire', callback: cb }],
-	        group: { property: 'sex' }
+	
+	        subscribe: [{ type: 'fire', callback: cb }]
 	
 	    };
 	
 	    var data$options$2 = {
-	        widths: ["25%", "25%", "25%", "25%"],
-	        components: [{
-	            name: "查询", type: "query", id: "query2",
-	            params: {
-	                reactPageName: 'newCultivateTeachSchedulePage',
-	                reactActionName: 'reactGetTestData'
-	            },
-	            url: "gradms/bsuims/reactPageDataRequest.do"
-	        }, {
-	            name: "年级", type: "dropdown", data: [{ link: "javascript:void(0)", title: "baidu", value: "baidu" }, { link: "www.sohu.com", title: "sohu", value: "sohu" }, { link: "www.kuaibo.com", title: "kuaibo", value: "kuaibo" }, { link: "www.shanda.com", title: "shanda", value: "shanda" }],
-	            id: "grade2"
-	        }],
-	        checked: {
-	            url: "gradms/bsuims/reactPageDataRequest.do",
-	            params: {
-	                reactPageName: 'newCultivateTeachSchedulePage',
-	                reactActionName: 'reactGetTestData'
-	            },
-	            name: "增加下表选择",
-	            multiCheck: true
-	        },
-	        subscribe: [{ type: 'fire', callback: cb }],
-	        group: { property: 'sex' }
+	        subscribe: [{ type: 'fire', callback: cb }]
 	    };
 	
 	    /*    var tags=[{"data":data1,"data-options":data$options$1}
 	     ,{"data":data2,"data-options":data$options$2}];*/
-	    var tags = [{ "data-options": data$options$1, "data": data1 }, { "data-options": data$options$2, "data": data2 }];
+	    var tags = [{ "data-options": data$options$1 }, { "data-options": data$options$2 }];
 	    var containerStyle = { textAlign: "center" };
-	    (0, _reactDom.render)(_react2.default.createElement(_CoupleTableElement2.default, { tags: tags, 'data-options': data$options }), document.getElementById('root'));
+	    (0, _reactDom.render)(_react2.default.createElement(_CoupleTableElement2.default, { tags: tags, 'data-options': data$options }), document.getElementById('cultivatePlanJsx'));
 	}
 
 /***/ },
@@ -20392,27 +20346,27 @@
 	
 	var _TrElement2 = _interopRequireDefault(_TrElement);
 	
-	var _ButtonElement = __webpack_require__(169);
+	var _ButtonElement = __webpack_require__(173);
 	
 	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
 	
-	var _DropDownButtonElement = __webpack_require__(172);
+	var _DropDownButtonElement = __webpack_require__(180);
 	
 	var _DropDownButtonElement2 = _interopRequireDefault(_DropDownButtonElement);
 	
-	var _ComboBox = __webpack_require__(174);
+	var _ComboBox = __webpack_require__(182);
 	
 	var _ComboBox2 = _interopRequireDefault(_ComboBox);
 	
-	var _InputElement = __webpack_require__(175);
+	var _InputElement = __webpack_require__(183);
 	
 	var _InputElement2 = _interopRequireDefault(_InputElement);
 	
-	var _TodoStore = __webpack_require__(170);
+	var _TodoStore = __webpack_require__(174);
 	
 	var _TodoStore2 = _interopRequireDefault(_TodoStore);
 	
-	__webpack_require__(176);
+	__webpack_require__(184);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20423,29 +20377,58 @@
 	var Table = _react2.default.createClass({
 	    displayName: 'Table',
 	
+	    initialData: function initialData() {
+	        $.ajax({
+	            type: 'POST',
+	            url: this.props.query.url,
+	            dataType: 'json',
+	            data: this.props.query.params,
+	            cache: false,
+	            success: function (data) {
+	                if (data !== undefined && data !== null && data.length > 0) this.setState({ data: data, data$initialed: true });
+	            }.bind(this),
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
 	    checkCb: function checkCb(ob) {
 	        console.log("select index=" + ob);
 	        if (this.state.checked.multiCheck !== undefined && this.state.checked.multiCheck !== null && this.state.checked.multiCheck !== false) {
 	            var checkedIndex = this.state.checkedIndex;
-	            if (checkedIndex !== -1) {
-	                var pos = $.inArray(parseInt(ob), checkedIndex);
-	                if (pos == -1) checkedIndex.push(parseInt(ob));else checkedIndex.splice(pos, 1);
-	            } else {
+	            var checkedMap = this.state.checkedMap;
+	            if (checkedIndex !== -1) //此时已有项选中
+	                {
+	                    var pos = $.inArray(parseInt(ob.rowIndex), checkedIndex);
+	                    var _pos = $.inArray(parseInt(ob.index), checkedMap);
+	                    if (pos == -1) {
+	                        checkedIndex.push(parseInt(ob.rowIndex));
+	                        checkedMap.push(parseInt(ob.index));
+	                    } else {
+	                        checkedIndex.splice(pos, 1);
+	                        checkedMap.splice(_pos, 1);
+	                    }
+	                } else {
 	                checkedIndex = new Array();
-	                checkedIndex.push(parseInt(ob));
+	                checkedIndex.push(parseInt(ob.rowIndex));
+	                checkedMap = new Array();
+	                checkedMap.push(parseInt(ob.index));
 	            }
-	            this.setState({ checkedIndex: checkedIndex });
+	            this.setState({ checkedIndex: checkedIndex, checkedMap: checkedMap });
 	        } else {
-	            this.setState({ checkedIndex: parseInt(ob) });
+	            this.setState({ checkedIndex: parseInt(ob.rowIndex), checkedMap: parseInt(ob.index) });
 	        }
 	    },
 	    checkHandle: function checkHandle() {
 	        var data = this.state.data;
 	        var checkedIndex = this.state.checkedIndex;
-	        if (checkedIndex !== undefined && checkedIndex !== null && data !== undefined && data !== null) {
+	        var checkedMap = this.state.checkedMap;
+	        if (checkedIndex !== undefined && checkedIndex !== null && checkedIndex !== -1 && data !== undefined && data !== null) {
 	            if (this.state.checked.multiCheck !== undefined && this.state.checked.multiCheck !== null && this.state.checked.multiCheck !== false) {
+	                if (checkedMap == undefined || checkedMap == null) return;
+	
 	                var record = new Array();
-	                checkedIndex.map(function (item, i) {
+	                checkedMap.map(function (item, i) {
 	                    record.push(data[item]);
 	                });
 	                var ob = {
@@ -20456,8 +20439,23 @@
 	                    multiCheck: true
 	                };
 	                _TodoStore2.default.emit('fire', ob);
-	                data.splice(checkedIndex, 1);
-	                this.setState({ data: data, checkedIndex: -1 });
+	                //给所有需要删除的位置标记
+	                checkedMap.map(function (item, i) {
+	                    data[item] = null;
+	                });
+	                for (var i = data.length - 1; i >= 0; i--) {
+	                    if (data[i] == null) data.splice(i, 1);
+	                }
+	                var titles;
+	                if (data[0] !== undefined && data[0] !== null) {
+	                    titles = new Array();
+	                    for (var field in data[0]) {
+	                        titles.push(field);
+	                    }
+	                }
+	
+	                if (titles == undefined || titles == null) titles = null;
+	                this.setState({ data: data, checkedIndex: -1, checkedMap: null, titles: titles });
 	            } else {
 	                if (checkedIndex > -1) {
 	                    var record = data[checkedIndex];
@@ -20470,13 +20468,46 @@
 	                        multiCheck: false
 	                    };
 	                    _TodoStore2.default.emit('fire', ob);
-	                    data.splice(checkedIndex, 1);
 	                    this.setState({ data: data, checkedIndex: -1 });
 	                }
 	            }
 	        }
 	    },
-	    queryHandle: function queryHandle() {},
+	    opHandle: function opHandle(ob) {
+	        if (ob !== undefined && ob !== null) {
+	
+	            var task = ob.content; //教学任务
+	            var plan = this.props.data[ob["data-index"]];
+	            var reverge = { plan: plan, task: task };
+	            var params = this.state.op.query.params;
+	            params["plan"] = JSON.stringify(plan);
+	            params["task"] = JSON.stringify(task);
+	            //操作提交后台
+	            if (this.state.op.query !== undefined && this.state.op.query !== null) {
+	                this.queryHandle({ url: this.state.op.query.url,
+	                    params: params, callback: this.props.initialDatas });
+	            }
+	        }
+	    },
+	    queryHandle: function queryHandle(ob) {
+	        var query;
+	        if (ob !== null && ob !== undefined) query = ob;else query = this.state.query;
+	        console.log();
+	        $.ajax({
+	            type: 'POST',
+	            url: query.url,
+	            dataType: 'json',
+	            data: query.params,
+	            cache: false,
+	            success: function (data) {
+	                if (this.props.handle !== null && this.props.handle !== undefined) this.props.handle(data);
+	                if (ob.callback !== undefined && ob.callback !== null) ob.callback();
+	            }.bind(this),
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
 	    queryCallBack: function queryCallBack(ob) {
 	        var data = ob.data;
 	        var titles = new Array();
@@ -20510,9 +20541,11 @@
 	        if (width !== undefined && width !== null) {
 	            if (!isNaN(width)) width += "px";
 	            var pattern = /px$/g;
-	            if (!pattern.test(width)) throw "width invalid,you should pass a number or a string like .px";
+	            var patt = /%$/g;
+	            if (!patt.test(width)) throw "width invalid,you should pass a number or a string like .px";
 	        }
-	
+	        //auto initialData enable
+	        var auto;
 	        //cell width customer
 	        var widths;
 	        //components list
@@ -20527,6 +20560,14 @@
 	        var group;
 	        //event subscribe enable
 	        var subscribe;
+	        //text-align set
+	        var align;
+	        //data inital-status
+	        var data$initialed;
+	        //property query,is used to descript the url and params when data-inital is allowed
+	        var query;
+	        //property op,enable to add operation control at the last column
+	        var op;
 	        if (this.props["data-options"] !== null && this.props["data-options"] !== undefined) {
 	            var options = this.props["data-options"];
 	            //widths fetch
@@ -20555,6 +20596,15 @@
 	            if (options.subscribe !== undefined && options.subscribe !== null) {
 	                subscribe = options.subscribe;
 	            }
+	
+	            //initial-data automaticaly
+	            if (options.auto !== undefined && options.auto !== null && options.auto !== false) auto = true;
+	
+	            //this property is only effective when options.auto==true
+	            if (options.query !== undefined && options.query !== null) query = options.query;
+	
+	            //property op,this append a control at the last of column
+	            if (options.op !== undefined && options.op !== null) op = options.op;
 	        }
 	
 	        //cols should be changed since data injected every time
@@ -20567,9 +20617,12 @@
 	                titles.push(field);
 	            }
 	            cols = titles.length;
-	        } else cols = 1;
+	            data$initialed = true;
+	        } else {
+	            cols = 1;
+	            data$initialed = false;
+	        }
 	
-	        var align;
 	        if (this.props.align !== undefined && this.props.align !== null) {
 	            switch (this.props.align) {
 	                case "left":
@@ -20605,12 +20658,16 @@
 	            title$font$color = { color: this.props["title-font-color"] };
 	        }
 	
+	        //property checkedMap,mapping rowIndex to real-index in data
+	        var checkedMap;
 	        return {
 	            width: width, widths: widths, cols: cols, components: components,
 	            multiEnable: multiEnable, tdBasic: tdBasic, data: data, titles: titles,
 	            align: align, title$color: title$color, tr$color: tr$color, title$font$color: title$font$color,
 	            stripped: stripped, checked: checked,
-	            checkedIndex: checkedIndex, group: group, subscribe: subscribe
+	            checkedIndex: checkedIndex, checkedMap: checkedMap, group: group, subscribe: subscribe,
+	            data$initialed: data$initialed, auto: auto, query: query,
+	            op: op
 	        };
 	    },
 	    componentDidMount: function componentDidMount(ob) {
@@ -20636,8 +20693,31 @@
 	            });
 	        }
 	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props) {
+	        if (props["data-options"].op !== undefined && props["data-options"].op !== null) {
+	            this.setState({ op: props["data-options"].op });
+	            console.log();
+	        }
+	        if (props.data !== undefined && props.data !== null) {
+	            this.setState({ data: props.data });
+	            this.setState({ data$initialed: true });
+	            var data = props.data;
+	            var titles;
+	            if (data[0] !== undefined && data[0] !== null) {
+	                titles = new Array();
+	                for (var field in data[0]) {
+	                    titles.push(field);
+	                }
+	                this.setState({ titles: titles });
+	                var cols = titles.length;
+	                if (cols !== undefined && cols !== null) {
+	                    if (cols < 1) cols = 1;
+	                } else cols = 1;
+	                this.setState({ cols: cols });
+	            }
+	        }
+	    },
 	    render: function render() {
-	
 	        {/*css style width*/}
 	        var w = this.state.width;
 	        var widthStyle = null;
@@ -20656,357 +20736,630 @@
 	            marginRight: "auto"
 	        };
 	
-	        var isLineNumberVisible = this.props.isLineNumberVisible;
-	        if (isLineNumberVisible === undefined || isLineNumberVisible === null) isLineNumberVisible = false;else isLineNumberVisible = true;
+	        var data = this.state.data;
 	
-	        //tbody表头
-	        var titles;
-	        var ths;
-	        if (this.state.titles !== null && this.state.titles !== undefined && this.state.titles.length > 0) {
-	            var group = this.state.group;
-	            titles = this.state.titles.map(function (item, i) {
-	                if (group !== undefined && group !== null && group.property !== undefined && group.property !== null) {
-	                    if (item != group.property) return _react2.default.createElement(
+	        //表格数据未初始化
+	        if (this.state.data$initialed !== true) {
+	            if (this.state.auto === true) this.initialData();
+	            //显示已配置的组件
+	            var querycb = this.queryCallBack;
+	            var components;
+	            if (this.state.components !== undefined && this.state.components !== null) {
+	
+	                var queryHandle = this.queryHandle;
+	                var queryExist = false;
+	                var queryType;
+	                //广播事件的命名以publish的type属性为标准
+	                var publish;
+	                var broadcastCount = 0;
+	                this.state.components.map(function (item, i) {
+	                    if (item.type == "query") {
+	                        if (queryExist == false) {
+	                            queryExist = true;
+	                            var type = 'query' + item.id;
+	                            var feedbackType = 'feedback' + item.id;
+	                            var feedback = { type: feedbackType };
+	                            publish = { cb: queryHandle, type: type,
+	                                feedback: feedback };
+	                        } else throw "query component duplicate!";
+	                    } else {
+	                        if (item.type == "dropdown") {
+	                            broadcastCount++;
+	                        } else if (item.type == "input") {
+	                            broadcastCount++;
+	                        }
+	                    }
+	                });
+	                publish.broadcastCount = broadcastCount;
+	
+	                components = this.state.components.map(function (item, i) {
+	                    if (item.type == "query") //查询组件
+	                        {
+	
+	                            return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                                buttonClass: 'btn btn-default', title: item.name,
+	                                query: item, handle: querycb, key: i,
+	                                publish: publish });
+	                        }
+	                    if (item.type == "dropdown") //下拉组件
+	                        {
+	                            var subscribe;
+	                            if (queryExist == true) {
+	                                var emit = function emit() {
+	                                    var selectedIndex = this.state.selectedIndex;
+	                                    var content;
+	                                    if (selectedIndex !== undefined && selectedIndex !== null) {
+	                                        content = data[selectedIndex]['value'];
+	                                    } else content = null;
+	                                    var record = { id: this.props.id, content: content };
+	                                    _TodoStore2.default.emit(publish.feedback.type, record);
+	                                };
+	                                subscribe = [{ type: publish.type, callback: emit }];
+	                            }
+	                            return _react2.default.createElement(_DropDownButtonElement2.default, {
+	                                title: item.name,
+	                                data: item.data, key: i,
+	                                id: item.id,
+	                                subscribe: subscribe
+	                            });
+	                        }
+	                    if (item.type == "input") //输入框组件
+	                        {
+	                            var subscribe;
+	                            if (queryExist == true) {
+	                                var emit = function emit() {
+	                                    var record = { id: this.props.id, content: this.state.content };
+	                                    _TodoStore2.default.emit(publish.feedback.type, record);
+	                                };
+	                                subscribe = [{ type: publish.type, callback: emit }];
+	                            }
+	                            return _react2.default.createElement(_InputElement2.default, {
+	                                type: 'text',
+	                                placeholder: 'Search',
+	                                id: item.id,
+	                                className: 'inline',
+	                                subscribe: subscribe,
+	                                key: i });
+	                        }
+	                });
+	            }
+	            //表头工具行
+	            var th$head;
+	            th$head = _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                    'th',
+	                    { colSpan: 1,
+	                        style: this.state.align },
+	                    components
+	                )
+	            );
+	
+	            return _react2.default.createElement(
+	                'table',
+	                { className: 'table table-bordered center', style: Object.assign(centerStyle, widthStyle) },
+	                _react2.default.createElement(
+	                    'thead',
+	                    null,
+	                    th$head
+	                ),
+	                _react2.default.createElement(
+	                    'tbody',
+	                    null,
+	                    _react2.default.createElement(
+	                        'tr',
+	                        null,
+	                        _react2.default.createElement('td', null)
+	                    )
+	                )
+	            );
+	        } else {
+	            //表格数据已初始化
+	
+	            var isLineNumberVisible = this.props.isLineNumberVisible;
+	            if (isLineNumberVisible === undefined || isLineNumberVisible === null) isLineNumberVisible = false;else isLineNumberVisible = true;
+	
+	            //tbody表头
+	            var titles;
+	            var ths;
+	            if (this.state.titles !== null && this.state.titles !== undefined && this.state.titles.length > 0) {
+	                var group = this.state.group;
+	                titles = new Array();
+	                this.state.titles.map(function (item, i) {
+	                    if (group !== undefined && group !== null && group.property !== undefined && group.property !== null) {
+	                        if (item != group.property) titles.push(_react2.default.createElement(
+	                            'th',
+	                            { key: i },
+	                            item
+	                        ));
+	                    } else titles.push(_react2.default.createElement(
 	                        'th',
 	                        { key: i },
 	                        item
-	                    );
-	                } else return _react2.default.createElement(
-	                    'th',
-	                    { key: i },
-	                    item
-	                );
-	            });
-	        }
-	        if (titles !== null && titles !== undefined) {
-	            if (this.state.checked !== undefined && this.state.checked !== null) {
-	                if (this.state.group !== undefined && this.state.group !== null) {
-	                    ths = _react2.default.createElement(
-	                        'tr',
-	                        { style: Object.assign(this.state.title$font$color, this.state.title$color) },
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            this.state.group.property
-	                        ),
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            '选择'
-	                        ),
-	                        titles
-	                    );
+	                    ));
+	                });
+	            }
+	            if (titles !== null && titles !== undefined && titles.length > 1) {
+	                if (this.state.checked !== undefined && this.state.checked !== null) {
+	                    if (this.state.group !== undefined && this.state.group !== null) {
+	                        //如果允许进行op操作
+	                        if (this.state.op !== undefined && this.state.op !== null) {
+	                            ths = _react2.default.createElement(
+	                                'tr',
+	                                { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    this.state.group.property
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '选择'
+	                                ),
+	                                titles,
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '操作'
+	                                )
+	                            );
+	                        } else {
+	                            //如果没有进行op操作
+	                            ths = _react2.default.createElement(
+	                                'tr',
+	                                { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    this.state.group.property
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '选择'
+	                                ),
+	                                titles
+	                            );
+	                        }
+	                    } else {
+	                        ths = _react2.default.createElement(
+	                            'tr',
+	                            { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                '选择'
+	                            ),
+	                            titles
+	                        );
+	                    }
 	                } else {
-	                    ths = _react2.default.createElement(
-	                        'tr',
-	                        { style: Object.assign(this.state.title$font$color, this.state.title$color) },
-	                        _react2.default.createElement(
-	                            'th',
-	                            null,
-	                            '选择'
-	                        ),
-	                        titles
-	                    );
+	                    //用户未设置checked选项
+	                    if (this.state.group !== undefined && this.state.group !== null) //用户设置了group
+	                        {
+	                            //如果允许进行op操作
+	                            if (this.state.op !== undefined && this.state.op !== null) {
+	                                ths = _react2.default.createElement(
+	                                    'tr',
+	                                    { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                                    _react2.default.createElement(
+	                                        'th',
+	                                        null,
+	                                        this.state.group.property
+	                                    ),
+	                                    titles,
+	                                    _react2.default.createElement(
+	                                        'th',
+	                                        null,
+	                                        '操作'
+	                                    )
+	                                );
+	                            } else {
+	                                //如果没有进行op操作
+	                                ths = _react2.default.createElement(
+	                                    'tr',
+	                                    { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                                    _react2.default.createElement(
+	                                        'th',
+	                                        null,
+	                                        this.state.group.property
+	                                    ),
+	                                    titles
+	                                );
+	                            }
+	                        } else {
+	                        //用户未设置group
+	                        //如果用户设置了op操作
+	                        if (this.state.op !== undefined && this.state.op !== null) {
+	                            ths = _react2.default.createElement(
+	                                'tr',
+	                                { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                                titles,
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '操作'
+	                                )
+	                            );
+	                        } else {
+	                            ths = _react2.default.createElement(
+	                                'tr',
+	                                { style: Object.assign(this.state.title$font$color, this.state.title$color) },
+	                                titles
+	                            );
+	                        }
+	                    }
 	                }
-	            } else {
-	                ths = _react2.default.createElement(
+	            }
+	
+	            if (isLineNumberVisible === true) titles.splice(0, 0, "<th>#<th>");
+	            var multiEnable = this.state.multiEnable;
+	            var tdBasic = this.state.tdBasic;
+	
+	            var widths = this.state.widths;
+	
+	            //tr$color indicate the color in th in tbody
+	            var tr$color;
+	            var checkCb;
+	            var checkButton;
+	            if (this.state.tr$color !== undefined && this.state.tr$color !== null) tr$color = this.state.tr$color;
+	            var appendForOp = this.state.op !== undefined && this.state.op !== null ? 1 : 0;
+	            if (this.state.checked !== undefined && this.state.checked !== null) {
+	                checkCb = this.checkCb;
+	                checkButton = _react2.default.createElement(
 	                    'tr',
-	                    { style: Object.assign(this.state.title$font$color, this.state.title$color) },
-	                    titles
+	                    { className: 'un-render' },
+	                    _react2.default.createElement(
+	                        'td',
+	                        { colSpan: this.state.cols + 1 + appendForOp },
+	                        _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                            buttonClass: 'btn btn-default', title: this.state.checked.name,
+	                            handle: this.checkHandle })
+	                    )
 	                );
 	            }
-	        }
 	
-	        if (isLineNumberVisible === true) titles.splice(0, 0, "<th>#<th>");
-	        var multiEnable = this.state.multiEnable;
-	        var tdBasic = this.state.tdBasic;
+	            //group field
+	            var group;
+	            var groupTypes;
+	            var groupFields;
+	            //如果表格允许排序
+	            if (this.state.group !== undefined && this.state.group !== null) {
 	
-	        var widths = this.state.widths;
-	
-	        //tr$color indicate the color in th in tbody
-	        var tr$color;
-	        var checkCb;
-	        var checkButton;
-	        if (this.state.tr$color !== undefined && this.state.tr$color !== null) tr$color = this.state.tr$color;
-	        if (this.state.checked !== undefined && this.state.checked !== null) {
-	            checkCb = this.checkCb;
-	            checkButton = _react2.default.createElement(
-	                'tr',
-	                { className: 'un-render' },
-	                _react2.default.createElement(
-	                    'td',
-	                    { colSpan: this.state.cols + 1 },
-	                    _react2.default.createElement(_ButtonElement2.default, { type: 'button',
-	                        buttonClass: 'btn btn-default', title: this.state.checked.name,
-	                        handle: this.checkHandle })
-	                )
-	            );
-	        }
-	
-	        //group field
-	        var group;
-	        var groupTypes;
-	        var groupFields;
-	        if (this.state.group !== undefined && this.state.group !== null) {
-	
-	            groupTypes = new Array();
-	            groupFields = new Array();
-	            var property = this.state.group.property;
-	            this.state.data.map(function (item, i) {
-	                if ($.inArray(item[property], groupTypes) == -1) //如果groupTypes未包含对应type
-	                    {
-	                        groupTypes.push(item[property]);
-	                        var json = {};
-	                        json["field"] = item[property];
-	                        json["count"] = 1;
-	                        groupFields.push(json);
-	                    } else {
-	                    groupFields.map(function (record, i) {
-	                        if (record["field"] == item[property]) {
-	                            record["count"]++;
-	                        }
-	                    });
-	                }
-	            });
-	        }
-	
-	        //checked indicate whether checkbox should be placed in first column
-	        var checkedIndex;
-	        var rows;
-	        if (this.state.data !== undefined && this.state.data !== null) {
-	            var checked = this.state.checked;
-	            var multiCheck = checked.multiCheck;
-	            //initial checkedIndex,this prop indicate which row had been checked
-	            if (checked !== undefined && checked !== null && checked !== false) checkedIndex = this.state.checkedIndex;
-	            var data = this.state.data;
-	            if (groupTypes !== null && groupTypes !== undefined && groupTypes.length > 0) {
-	                var rowIndex = 0;
-	                rows = new Array();
+	                groupTypes = new Array();
+	                groupFields = new Array();
 	                var property = this.state.group.property;
-	                var preField = null;
-	
-	                groupTypes.map(function (field, i) {
-	                    var updateFlag = false;
-	
-	                    if (field !== preField) {
-	                        updateFlag = true;
-	                        preField = field;
-	                    }
-	                    data.map(function (item, j) {
-	                        if (item[property] == field) {
-	                            var rowSpan;
-	                            if (updateFlag == true) {
-	                                rowSpan = 0;
-	                                groupFields.map(function (record, k) {
-	                                    if (record["field"] == field) rowSpan = record["count"];
-	                                });
+	                data.map(function (item, i) {
+	                    if ($.inArray(item[property], groupTypes) == -1) //如果groupTypes未包含对应type
+	                        {
+	                            groupTypes.push(item[property]);
+	                            var json = {};
+	                            json["field"] = item[property];
+	                            json["count"] = 1;
+	                            groupFields.push(json);
+	                        } else {
+	                        groupFields.map(function (record, i) {
+	                            if (record["field"] == item[property]) {
+	                                record["count"]++;
 	                            }
-	                            if (checkedIndex !== undefined && checkedIndex !== null && checkedIndex !== -1) {
-	                                //add multiCheck logic
-	                                if (multiCheck !== undefined && multiCheck !== null && multiCheck !== false) {
-	                                    if ($.inArray(rowIndex, checkedIndex) !== -1) //如果当前行非选中
-	                                        {
+	                        });
+	                    }
+	                });
+	            }
+	
+	            //checked indicate whether checkbox should be placed in first column
+	            var checkedIndex;
+	            var rows;
+	
+	            if (data !== undefined && data !== null) {
+	                var checked = this.state.checked;
+	
+	                var multiCheck;
+	                //initial checkedIndex,this prop indicate which row had been checked
+	                if (checked !== undefined && checked !== null && checked !== false) {
+	                    checkedIndex = this.state.checkedIndex;
+	                    multiCheck = checked.multiCheck;
+	                }
+	
+	                //op如果不为空即视选项有效
+	                var op = this.state.op;
+	                //进行分组,根据groupTypes的值集合进行数据添加
+	                if (groupTypes !== null && groupTypes !== undefined && groupTypes.length > 0) {
+	                    var rowIndex = 0;
+	                    rows = new Array();
+	                    var property = this.state.group.property;
+	                    var preField = null;
+	                    var opHandle = this.opHandle;
+	
+	                    groupTypes.map(function (field, i) {
+	                        var updateFlag = false;
+	
+	                        if (field !== preField) {
+	                            updateFlag = true;
+	                            preField = field;
+	                        }
+	                        data.map(function (item, j) {
+	                            if (item[property] == field) {
+	                                var rowSpan;
+	                                if (updateFlag == true) {
+	                                    rowSpan = 0;
+	                                    groupFields.map(function (record, k) {
+	                                        if (record["field"] == field) rowSpan = record["count"];
+	                                    });
+	                                }
+	                                var opConfig;
+	                                if (op !== undefined && op !== null) {
+	                                    opConfig = {};
+	                                    opConfig.trend = op.trend;
+	                                    if (op.contract !== undefined && op.contract !== null) {
+	
+	                                        opConfig.data = op.contract[j].data;
+	                                        opConfig.type = op.contract[j].type;
+	                                    }
+	                                }
+	                                console.log();
+	                                //如果当前存选中项
+	                                if (checkedIndex !== undefined && checkedIndex !== null && checkedIndex !== -1) {
+	                                    //允许多选
+	                                    if (multiCheck !== undefined && multiCheck !== null && multiCheck !== false) {
+	                                        if ($.inArray(rowIndex, checkedIndex) !== -1) //如果当前行选中
+	                                            {
+	                                                rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
+	                                                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                                                    widths: widths, key: rowIndex, checkCb: checkCb, insertCheck: true,
+	                                                    checked: true, groupType: property, updateFlag: updateFlag, 'data-index': j,
+	                                                    rowSpan: rowSpan, op: opConfig,
+	                                                    opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null }));
+	                                            } else {
 	                                            rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
 	                                                multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
 	                                                widths: widths, key: rowIndex, checkCb: checkCb, insertCheck: true,
-	                                                checked: true, groupType: property, updateFlag: updateFlag,
-	                                                rowSpan: rowSpan }));
-	                                        } else {
-	                                        rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
+	                                                groupType: property, updateFlag: updateFlag,
+	                                                rowSpan: rowSpan, 'data-index': j, op: opConfig,
+	                                                opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null }));
+	                                        }
+	                                    } else {
+	                                        //只允许单选
+	                                        if (checkedIndex > -1 && checkedIndex == rowIndex) rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
 	                                            multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
 	                                            widths: widths, key: rowIndex, checkCb: checkCb, insertCheck: true,
-	                                            groupType: property, updateFlag: updateFlag,
-	                                            rowSpan: rowSpan }));
+	                                            checked: true, groupType: property, updateFlag: updateFlag,
+	                                            rowSpan: rowSpan, 'data-index': j, op: opConfig,
+	                                            opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null }));
 	                                    }
 	                                } else {
-	                                    //add singleCheck logic
-	                                    if (checkedIndex > -1 && checkedIndex == rowIndex) rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
+	                                    //如果当前不存在选中项
+	                                    if (checked !== undefined && checked !== null) {
+	                                        rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
+	                                            multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                                            widths: widths, key: rowIndex, checkCb: checkCb,
+	                                            insertCheck: true, groupType: property, updateFlag: updateFlag,
+	                                            rowSpan: rowSpan, 'data-index': j, op: opConfig,
+	                                            opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null }));
+	                                    } else rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
 	                                        multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                                        widths: widths, key: rowIndex, checkCb: checkCb, insertCheck: true,
-	                                        checked: true, groupType: property, updateFlag: updateFlag,
-	                                        rowSpan: rowSpan }));
+	                                        widths: widths, key: rowIndex, groupType: property, 'data-index': j,
+	                                        updateFlag: updateFlag, rowSpan: rowSpan, op: opConfig,
+	                                        opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null }));
+	                                }
+	                                updateFlag = false;
+	                                rowIndex++;
+	                            }
+	                        });
+	                    });
+	                } else {
+	                    //如果不进行分组,则行号与该行数据所在data的下标是一致的
+	                    var opHandle = this.opHandle;
+	                    rows = data.map(function (item, i) {
+	                        var opConfig;
+	                        if (op !== undefined && op !== null) {
+	                            opConfig = {};
+	                            opConfig.type = op.type;
+	                            if (op.contract !== undefined && op.contract !== null) opConfig.contract = op.contract[i];
+	                        }
+	                        if (checkedIndex !== undefined && checkedIndex !== null) {
+	                            if (multiCheck !== undefined && multiCheck !== null && multiCheck !== false) {
+	                                if ($.inArray(i, checkedIndex) !== -1) {
+	                                    return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                                        multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                                        widths: widths, key: i, checkCb: checkCb,
+	                                        insertCheck: true, checked: true, op: opConfig,
+	                                        opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null });
+	                                } else {
+	                                    return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                                        multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                                        widths: widths, key: i, checkCb: checkCb,
+	                                        insertCheck: true, op: opConfig,
+	                                        opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null });
 	                                }
 	                            } else {
-	                                if (checked !== undefined && checked !== null) {
-	                                    rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
-	                                        multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                                        widths: widths, key: rowIndex, checkCb: checkCb,
-	                                        insertCheck: true, groupType: property, updateFlag: updateFlag,
-	                                        rowSpan: rowSpan }));
-	                                } else rows.push(_react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: rowIndex,
-	                                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                                    widths: widths, key: rowIndex, groupType: property,
-	                                    updateFlag: updateFlag, rowSpan: rowSpan }));
-	                            }
-	                            updateFlag = false;
-	                            rowIndex++;
-	                        }
-	                    });
-	                });
-	            } else {
-	                rows = this.state.data.map(function (item, i) {
-	                    if (checkedIndex !== undefined && checkedIndex !== null) {
-	                        if (multiCheck !== undefined && multiCheck !== null && multiCheck !== false) {
-	                            if ($.inArray(i, checkedIndex) !== -1) {
-	                                return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                                if (checkedIndex > -1 && checkedIndex == i) return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
 	                                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
 	                                    widths: widths, key: i, checkCb: checkCb,
-	                                    insertCheck: true, checked: true });
-	                            } else {
-	                                return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                                    insertCheck: true, checked: true, op: opConfig,
+	                                    opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null });else return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
 	                                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
 	                                    widths: widths, key: i, checkCb: checkCb,
-	                                    insertCheck: true });
+	                                    insertCheck: true, op: opConfig,
+	                                    opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null });
 	                            }
 	                        } else {
-	                            if (checkedIndex > -1 && checkedIndex == i) return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                            if (checked !== undefined && checked !== null) {
+	                                return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
+	                                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                                    widths: widths, key: i, checkCb: checkCb, insertCheck: true, op: opConfig,
+	                                    opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null });
+	                            } else return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
 	                                multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                                widths: widths, key: i, checkCb: checkCb,
-	                                insertCheck: true, checked: true });else return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
-	                                multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                                widths: widths, key: i, checkCb: checkCb,
-	                                insertCheck: true });
+	                                widths: widths, key: i, op: opConfig,
+	                                opHandle: opConfig !== undefined && opConfig !== null ? opHandle : null });
 	                        }
+	                    });
+	                }
+	            } else {
+	                rows = _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic,
+	                    multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
+	                    widths: widths, checkCb: checkCb, op: op,
+	                    opHandle: op !== undefined && op !== null ? opHandle : null });
+	            }
+	
+	            var querycb = this.queryCallBack;
+	            var components;
+	            if (this.state.components !== undefined && this.state.components !== null) {
+	
+	                var queryHandle = this.queryHandle;
+	                var queryExist = false;
+	                var queryType;
+	                //广播事件的命名以publish的type属性为标准
+	                var publish;
+	                var broadcastCount = 0;
+	                this.state.components.map(function (item, i) {
+	                    if (item.type == "query") {
+	                        if (queryExist == false) {
+	                            queryExist = true;
+	                            var type = 'query' + item.id;
+	                            var feedbackType = 'feedback' + item.id;
+	                            var feedback = { type: feedbackType };
+	                            publish = { cb: queryHandle, type: type,
+	                                feedback: feedback };
+	                        } else throw "query component duplicate!";
 	                    } else {
-	                        if (checked !== undefined && checked !== null) {
-	                            return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
-	                                multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                                widths: widths, key: i, checkCb: checkCb, insertCheck: true });
-	                        } else return _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic, rowData: item, rowIndex: i,
-	                            multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                            widths: widths, key: i });
+	                        if (item.type == "dropdown") {
+	                            broadcastCount++;
+	                        } else if (item.type == "input") {
+	                            broadcastCount++;
+	                        }
 	                    }
 	                });
+	                publish.broadcastCount = broadcastCount;
+	
+	                components = this.state.components.map(function (item, i) {
+	                    if (item.type == "query") //查询组件
+	                        {
+	
+	                            return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                                buttonClass: 'btn btn-default', title: item.name,
+	                                query: item, handle: querycb, key: i,
+	                                publish: publish });
+	                        }
+	                    if (item.type == "dropdown") //下拉组件
+	                        {
+	                            var subscribe;
+	                            if (queryExist == true) {
+	                                var emit = function emit() {
+	                                    var selectedIndex = this.state.selectedIndex;
+	                                    var content;
+	                                    if (selectedIndex !== undefined && selectedIndex !== null) {
+	                                        content = data[selectedIndex]['value'];
+	                                    } else content = null;
+	                                    var record = { id: this.props.id, content: content };
+	                                    _TodoStore2.default.emit(publish.feedback.type, record);
+	                                };
+	                                subscribe = [{ type: publish.type, callback: emit }];
+	                            }
+	                            return _react2.default.createElement(_DropDownButtonElement2.default, {
+	                                title: item.name,
+	                                data: item.data, key: i,
+	                                id: item.id,
+	                                subscribe: subscribe
+	                            });
+	                        }
+	                    if (item.type == "input") //输入框组件
+	                        {
+	                            var subscribe;
+	                            if (queryExist == true) {
+	                                var emit = function emit() {
+	                                    var record = { id: this.props.id, content: this.state.content };
+	                                    _TodoStore2.default.emit(publish.feedback.type, record);
+	                                };
+	                                subscribe = [{ type: publish.type, callback: emit }];
+	                            }
+	                            return _react2.default.createElement(_InputElement2.default, {
+	                                type: 'text',
+	                                placeholder: 'Search',
+	                                id: item.id,
+	                                className: 'inline',
+	                                subscribe: subscribe,
+	                                key: i });
+	                        }
+	                });
 	            }
-	        } else {
-	            rows = _react2.default.createElement(_TrElement2.default, { 'tr-color': tr$color, tdBasic: tdBasic,
-	                multiEnable: multiEnable, isLineNumberVisible: isLineNumberVisible,
-	                widths: widths, checkCb: checkCb });
-	        }
 	
-	        var querycb = this.queryCallBack;
-	        var components;
-	        if (this.state.components !== undefined && this.state.components !== null) {
+	            //标题
+	            var title;
+	            if (this.props["data-options"].title !== undefined && this.props["data-options"].title !== null) {
+	                if (this.state.checked !== undefined && this.state.checked !== null) {
 	
-	            var queryHandle = this.queryHandle;
-	            var queryExist = false;
-	            var queryType;
-	            //广播事件的命名以publish的type属性为标准
-	            var publish;
-	            var broadcastCount = 0;
-	            this.state.components.map(function (item, i) {
-	                if (item.type == "query") {
-	                    if (queryExist == false) {
-	                        queryExist = true;
-	                        var type = 'query' + item.id;
-	                        var feedbackType = 'feedback' + item.id;
-	                        var feedback = { type: feedbackType };
-	                        publish = { cb: queryHandle, type: type,
-	                            feedback: feedback };
-	                    } else throw "query component duplicate!";
+	                    title = _react2.default.createElement(
+	                        'tr',
+	                        null,
+	                        _react2.default.createElement(
+	                            'th',
+	                            { colSpan: this.state.cols + 1 + appendForOp,
+	                                style: this.state.align },
+	                            this.props["data-options"].title
+	                        )
+	                    );
 	                } else {
-	                    if (item.type == "dropdown") {
-	                        broadcastCount++;
-	                    } else if (item.type == "input") {
-	                        broadcastCount++;
-	                    }
+	                    title = _react2.default.createElement(
+	                        'tr',
+	                        null,
+	                        _react2.default.createElement(
+	                            'th',
+	                            { colSpan: this.state.cols + appendForOp,
+	                                style: this.state.align },
+	                            this.props["data-options"].title
+	                        )
+	                    );
 	                }
-	            });
-	            publish.broadcastCount = broadcastCount;
+	            }
 	
-	            components = this.state.components.map(function (item, i) {
-	                if (item.type == "query") //查询组件
-	                    {
+	            var th$head;
+	            if (this.state.checked !== undefined && this.state.checked !== null) {
 	
-	                        return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
-	                            buttonClass: 'btn btn-default', title: item.name,
-	                            query: item, handle: querycb, key: i,
-	                            publish: publish });
-	                    }
-	                if (item.type == "dropdown") //下拉组件
-	                    {
-	                        var subscribe;
-	                        if (queryExist == true) {
-	                            var emit = function emit() {
-	                                var selectedIndex = this.state.selectedIndex;
-	                                var content;
-	                                if (selectedIndex !== undefined && selectedIndex !== null) {
-	                                    content = this.state.data[selectedIndex]['value'];
-	                                } else content = null;
-	                                var record = { id: this.props.id, content: content };
-	                                _TodoStore2.default.emit(publish.feedback.type, record);
-	                            };
-	                            subscribe = [{ type: publish.type, callback: emit }];
-	                        }
-	                        return _react2.default.createElement(_DropDownButtonElement2.default, {
-	                            title: item.name,
-	                            data: item.data, key: i,
-	                            id: item.id,
-	                            subscribe: subscribe
-	                        });
-	                    }
-	                if (item.type == "input") //输入框组件
-	                    {
-	                        var subscribe;
-	                        if (queryExist == true) {
-	                            var emit = function emit() {
-	                                var record = { id: this.props.id, content: this.state.content };
-	                                _TodoStore2.default.emit(publish.feedback.type, record);
-	                            };
-	                            subscribe = [{ type: publish.type, callback: emit }];
-	                        }
-	                        return _react2.default.createElement(_InputElement2.default, {
-	                            type: 'text',
-	                            placeholder: 'Search',
-	                            id: item.id,
-	                            className: 'inline',
-	                            subscribe: subscribe,
-	                            key: i });
-	                    }
-	            });
-	        }
+	                th$head = _react2.default.createElement(
+	                    'tr',
+	                    null,
+	                    _react2.default.createElement(
+	                        'th',
+	                        { colSpan: this.state.cols + 1 + appendForOp,
+	                            style: this.state.align },
+	                        components
+	                    )
+	                );
+	            } else {
+	                th$head = _react2.default.createElement(
+	                    'tr',
+	                    null,
+	                    _react2.default.createElement(
+	                        'th',
+	                        { colSpan: this.state.cols + appendForOp,
+	                            style: this.state.align },
+	                        components
+	                    )
+	                );
+	            }
 	
-	        var th$head;
-	        if (this.state.checked !== undefined && this.state.checked !== null) {
-	            th$head = _react2.default.createElement(
-	                'tr',
-	                null,
+	            return _react2.default.createElement(
+	                'table',
+	                { className: 'table table-bordered center', style: Object.assign(centerStyle, widthStyle) },
 	                _react2.default.createElement(
-	                    'th',
-	                    { colSpan: this.state.cols + 1,
-	                        style: this.state.align },
-	                    components
+	                    'thead',
+	                    null,
+	                    title,
+	                    th$head
+	                ),
+	                _react2.default.createElement(
+	                    'tbody',
+	                    null,
+	                    ths,
+	                    rows,
+	                    checkButton
 	                )
 	            );
-	        } else {
-	            th$head = _react2.default.createElement(
-	                'tr',
-	                null,
-	                _react2.default.createElement(
-	                    'th',
-	                    { colSpan: this.state.cols,
-	                        style: this.state.align },
-	                    components
-	                )
-	            );
-	        }
-	
-	        return _react2.default.createElement(
-	            'table',
-	            { className: 'table table-bordered center', style: Object.assign(centerStyle, widthStyle) },
-	            _react2.default.createElement(
-	                'thead',
-	                null,
-	                th$head
-	            ),
-	            _react2.default.createElement(
-	                'tbody',
-	                null,
-	                ths,
-	                rows,
-	                checkButton
-	            )
-	        );
+	        } //match to data$initialed===true
 	    }
 	});
 	
@@ -21030,7 +21383,7 @@
 	
 	var _TdWrapper2 = _interopRequireDefault(_TdWrapper);
 	
-	var _CheckBoxElement = __webpack_require__(168);
+	var _CheckBoxElement = __webpack_require__(179);
 	
 	var _CheckBoxElement2 = _interopRequireDefault(_CheckBoxElement);
 	
@@ -21046,10 +21399,20 @@
 	var TrElement = _react2.default.createClass({
 	    displayName: 'TrElement',
 	
-	    clickCb: function clickCb(evt) {
-	        var target = evt.target;
-	        if (this.props.clickCb !== undefined && this.props.clickCb !== null) {
-	            this.props.clickCb(this.props.rowIndex);
+	    checkCb: function checkCb(ob) {
+	        if (this.props.checkCb !== undefined && this.props.checkCb !== null) {
+	            if (this.props["data-index"] !== undefined && this.props["data-index"] !== null) {
+	                var ob = { rowIndex: this.props.rowIndex, index: this.props["data-index"] };
+	                this.props.checkCb(ob);
+	            } else this.props.checkCb(ob);
+	        }
+	    },
+	    opHandle: function opHandle(ob) {
+	        var content = ob;
+	        if (this.props.opHandle !== undefined && this.props.opHandle !== null) {
+	            var rowIndex = this.props.rowIndex;
+	            var data$index = this.props["data-index"];
+	            this.props.opHandle({ rowIndex: rowIndex, "data-index": data$index, content: content });
 	        }
 	    },
 	    render: function render() {
@@ -21078,7 +21441,7 @@
 	            var updateFlag = this.props.updateFlag;
 	            for (var field in rowData) {
 	                var width = null;
-	                if (widths !== false && index < widths.length) width = widths[index];
+	                if (widths !== false && widths !== undefined && widths !== null && index < widths.length) width = widths[index];
 	                var item = rowData[field];
 	                if (item === false || item === true) item = "" + item;
 	                //exclude the group field
@@ -21095,10 +21458,19 @@
 	                multiEnable: multiEnable });
 	        }
 	
+	        //op$ele,
+	        //if parent component has pass op down,he op$ele will store the infomation
+	        var op$ele;
+	        if (this.props.op !== undefined && this.props.op !== null) {
+	            op$ele = _react2.default.createElement(_TdWrapper2.default, { tdBasic: "op", op: this.props.op,
+	                multiEnable: 1, opHandle: this.opHandle });
+	        }
+	
 	        var tr$color;
 	        if (this.props["tr-color"] !== undefined && this.props["tr-color"] !== null) {
 	            tr$color = { backgroundColor: this.props["tr-color"] };
 	        }
+	        //是否需要显示序号
 	        if (isLineNumberVisible === true) {
 	            if (this.props.insertCheck === true) {
 	                if (this.props.groupType !== undefined && this.props.groupType !== null) {
@@ -21109,14 +21481,15 @@
 	                        _react2.default.createElement(
 	                            'td',
 	                            null,
-	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.props.checkCb, checked: this.props.checked })
+	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.checkCb, checked: this.props.checked })
 	                        ),
 	                        _react2.default.createElement(
 	                            'td',
 	                            null,
 	                            this.props.rowIndex
 	                        ),
-	                        tds
+	                        tds,
+	                        op$ele
 	                    );
 	                } else {
 	                    return _react2.default.createElement(
@@ -21125,14 +21498,15 @@
 	                        _react2.default.createElement(
 	                            'td',
 	                            null,
-	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.props.checkCb, checked: this.props.checked })
+	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.checkCb, checked: this.props.checked })
 	                        ),
 	                        _react2.default.createElement(
 	                            'td',
 	                            null,
 	                            this.props.rowIndex
 	                        ),
-	                        tds
+	                        tds,
+	                        op$ele
 	                    );
 	                }
 	            } else {
@@ -21146,7 +21520,8 @@
 	                            null,
 	                            this.props.rowIndex
 	                        ),
-	                        tds
+	                        tds,
+	                        op$ele
 	                    );
 	                } else {
 	                    return _react2.default.createElement(
@@ -21157,7 +21532,8 @@
 	                            null,
 	                            this.props.rowIndex
 	                        ),
-	                        tds
+	                        tds,
+	                        op$ele
 	                    );
 	                }
 	            }
@@ -21171,9 +21547,10 @@
 	                        _react2.default.createElement(
 	                            'td',
 	                            null,
-	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.props.checkCb, checked: this.props.checked })
+	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.checkCb, checked: this.props.checked })
 	                        ),
-	                        tds
+	                        tds,
+	                        op$ele
 	                    );
 	                } else {
 	                    return _react2.default.createElement(
@@ -21182,9 +21559,10 @@
 	                        _react2.default.createElement(
 	                            'td',
 	                            null,
-	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.props.checkCb, checked: this.props.checked })
+	                            _react2.default.createElement(_CheckBoxElement2.default, { 'data-index': this.props.rowIndex, checkCb: this.checkCb, checked: this.props.checked })
 	                        ),
-	                        tds
+	                        tds,
+	                        op$ele
 	                    );
 	                }
 	            } else {
@@ -21192,7 +21570,8 @@
 	                    'tr',
 	                    { style: tr$color },
 	                    tgroups,
-	                    tds
+	                    tds,
+	                    op$ele
 	                );
 	            }
 	        }
@@ -21218,6 +21597,10 @@
 	
 	var _TdBasicElement2 = _interopRequireDefault(_TdBasicElement);
 	
+	var _TdOpElement = __webpack_require__(168);
+	
+	var _TdOpElement2 = _interopRequireDefault(_TdOpElement);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
@@ -21240,7 +21623,12 @@
 	        var multiEnable = this.props.multiEnable;
 	        if (multiEnable === 1 || multiEnable === false) {
 	            if (this.props.tdBasic === true) return _react2.default.createElement(_TdBasicElement2.default, { width: this.props.width, updateFlag: this.props.updateFlag,
-	                clickHandler: this.clickHandler, tdData: this.props.tdData, rowSpan: this.props.rowSpan });else {
+	                clickHandler: this.clickHandler, tdData: this.props.tdData, rowSpan: this.props.rowSpan });else if (this.props.tdBasic == "op") {
+	                return _react2.default.createElement(_TdOpElement2.default, { width: this.props.width,
+	                    opHandle: this.props.opHandle,
+	                    op: this.props.op
+	                });
+	            } else {
 	                return _react2.default.createElement('td', null);
 	            }
 	        } else {
@@ -21299,7 +21687,7 @@
 	                return _react2.default.createElement(
 	                    'td',
 	                    { rowSpan: this.props.rowSpan !== undefined && this.props.rowSpan !== null ? this.props.rowSpan : 1, colSpan: 1,
-	                        onClick: this.clickHandler, className: 'microsoft-font', Style: groupStyle },
+	                        onClick: this.clickHandler, className: 'microsoft-font un-render', style: groupStyle },
 	                    data
 	                );
 	            } else {
@@ -21668,7 +22056,7 @@
 /* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -21678,29 +22066,374 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	__webpack_require__(169);
+	
+	var _ContractElement = __webpack_require__(171);
+	
+	var _ContractElement2 = _interopRequireDefault(_ContractElement);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var CheckBoxElement = _react2.default.createClass({
-	    displayName: "CheckBoxElement",
+	var TdOpElement = _react2.default.createClass({
+	    displayName: 'TdOpElement',
 	
-	    clickCb: function clickCb(evt) {
-	        var target = evt.target;
-	        if ($(target).attr("data-index") !== null && $(target).attr("data-index") !== undefined) {
-	            var index = $(target).attr("data-index");
-	            if (!isNaN(parseInt(index))) this.props.checkCb(index);
+	    checkHandle: function checkHandle() {
+	        if (this.props.op.data !== undefined && this.props.op.data !== null && this.props.op.data.length > 1) {
+	            this.setState({ contractStatus: true });
+	        } else {
+	            this.props.opHandle(this.props.op.data);
 	        }
 	    },
+	    opHandle: function opHandle(ob) {
+	        if (ob !== undefined && ob !== null) {
+	            this.setState({ contractStatus: false });
+	            this.props.opHandle(ob);
+	        } else this.setState({ contractStatus: false });
+	    },
+	    getInitialState: function getInitialState() {
+	        var data;
+	        var op;
+	        if (this.props.op !== undefined && this.props.op !== null) {
+	            op = this.props.op;
+	            if (op.data !== undefined && op.data !== null) data = op.data;
+	        }
+	        return { contractStatus: false, op: op, data: data };
+	    },
 	    render: function render() {
-	        if (this.props.checked === true) return _react2.default.createElement("input", { type: "checkbox", "aria-label": "...",
-	            value: this.props.value, onChange: this.clickCb, checked: "checked", "data-index": this.props["data-index"] });else return _react2.default.createElement("input", { type: "checkbox", "aria-label": "...",
-	            value: this.props.value, onChange: this.clickCb, "data-index": this.props["data-index"] });
+	        var op = this.state.op;
+	        if (op.trend !== undefined && op.trend !== null) {
+	            var img$src;
+	            if (op.trend == "add") img$src = "../bootstrap/img/icon/add_0.png";else img$src = "../bootstrap/img/icon/delete_0.png";
+	            //契约组件初始化
+	            var contract;
+	            if (op.data !== undefined && op.data !== null) contract = _react2.default.createElement(_ContractElement2.default, { contract: op.data, type: op.type, opHandle: this.opHandle });
+	
+	            //显示增加或者删除图标
+	            if (this.state.contractStatus == false) {
+	                return _react2.default.createElement(
+	                    'td',
+	                    { rowSpan: 1, colSpan: 1,
+	                        width: this.props.width !== undefined && this.props.width !== null ? this.props.width : null,
+	                        className: 'microsoft-font' },
+	                    _react2.default.createElement(
+	                        'i',
+	                        null,
+	                        _react2.default.createElement('img', { src: img$src, onClick: this.checkHandle })
+	                    )
+	                );
+	            } else {
+	                //显示Contract组件
+	                return _react2.default.createElement(
+	                    'td',
+	                    { rowSpan: 1, colSpan: 1,
+	                        width: this.props.width !== undefined && this.props.width !== null ? this.props.width : null,
+	                        className: 'microsoft-font' },
+	                    contract
+	                );
+	            }
+	        } else {
+	            return _react2.default.createElement('td', { rowSpan: 1, colSpan: 1,
+	                width: this.props.width !== undefined && this.props.width !== null ? this.props.width : null,
+	                onClick: this.opHandle, className: 'microsoft-font' });
+	        }
 	    }
+	
 	});
 	
-	exports.default = CheckBoxElement;
+	exports.default = TdOpElement;
 
 /***/ },
 /* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(170);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(167)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(170, function() {
+				var newContent = __webpack_require__(170);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(166)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "td.microsoft-font.add{\r\n\r\n}\r\ntd.microsoft-font.delete{\r\n\r\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ListElement = __webpack_require__(172);
+	
+	var _ListElement2 = _interopRequireDefault(_ListElement);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ContractElement = _react2.default.createClass({
+	    displayName: 'ContractElement',
+	
+	    applyHandle: function applyHandle(ob) {
+	        if (ob !== undefined && ob !== null) {
+	            if (this.props.type == 'text') //当契约为文本类型时,认定用户就文本型列表进行选择
+	                {
+	                    var index = ob.index;
+	                    var record = this.state.contract[index];
+	                    //将记录回传
+	                    if (this.props.opHandle !== undefined && this.props.opHandle !== null) this.props.opHandle(record);
+	                }
+	        }
+	    },
+	    cancelHandle: function cancelHandle() {
+	        if (this.props.opHandle !== undefined && this.props.opHandle !== null) this.props.opHandle();
+	    },
+	    getInitialState: function getInitialState() {
+	
+	        var contract;
+	        if (this.props.contract !== undefined && this.props.contract !== null) {
+	            contract = this.props.contract;
+	        }
+	        var type;
+	        if (this.props.type !== undefined && this.props.type !== null && this.props.type !== "none") type = this.props.type;
+	        return { contract: contract, type: type };
+	    },
+	
+	    render: function render() {
+	        if (this.state.type !== undefined && this.state.type !== null) {
+	            if (this.state.type == 'text') {
+	                //如果契约类没有数据
+	                if (this.state.contract == undefined || this.state.contract == null) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'btn btn-default', onClick: this.props.opHandle },
+	                            '返回'
+	                        )
+	                    );
+	                }
+	                var components = [{ type: "apply", name: "添加" }, { type: "cancel", name: "返回" }];
+	                var list = new Array();
+	                this.state.contract.map(function (item, i) {
+	                    var content = "";
+	                    for (var field in item) {
+	                        content += field + ":" + item[field] + "\n";
+	                    }
+	                    list.push(content);
+	                });
+	
+	                var data$options = {
+	                    components: components,
+	                    params: list
+	                };
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(_ListElement2.default, { 'data-options': data$options, applyCb: this.applyHandle,
+	                        cancelCb: this.cancelHandle })
+	                );
+	            }
+	        } else {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-default', onClick: this.props.opHandle },
+	                    '返回'
+	                )
+	            );
+	        }
+	    }
+	});
+	
+	exports.default = ContractElement;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ButtonElement = __webpack_require__(173);
+	
+	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
+	
+	var _LinkElement = __webpack_require__(176);
+	
+	var _LinkElement2 = _interopRequireDefault(_LinkElement);
+	
+	__webpack_require__(177);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @property,explicit:option: data-options{undefined||null||Object}
+	 * @property,explicit:option:   data-options.params{Array},
+	 * this property will form the content of list;
+	 * @property,implicit:option:   data-options.components{customer}
+	 * @property,implicit:option:   data-options.selected:{Integer}
+	 * this prop will make the first menu in list to be choosed
+	 */
+	var ListElement = _react2.default.createClass({
+	    displayName: 'ListElement',
+	
+	    linkCb: function linkCb(evt) {
+	        var target = evt.target;
+	        var selected = $(target).attr("data-index");
+	        this.setState({ selected: selected });
+	    },
+	    applyCb: function applyCb() {
+	        if (this.props.applyCb !== undefined && this.props.applyCb !== null) {
+	            if (this.state.selected !== null && this.state.selected !== undefined && !isNaN(parseInt(this.state.selected))) {
+	                if (this.state.li$items !== undefined && this.state.li$items !== null) {
+	                    this.props.applyCb({ content: this.state.li$items[this.state.selected],
+	                        index: this.state.selected });
+	                }
+	            }
+	        }
+	    },
+	    cancelCb: function cancelCb(evt) {
+	        //cancel callback
+	        this.setState({ selected: -1 });
+	        if (this.props.cancelCb !== undefined && this.props.cancelCb !== null) this.props.cancelCb(evt);
+	    },
+	    getInitialState: function getInitialState() {
+	
+	        var components;
+	        var li$items;
+	
+	        if (this.props["data-options"] !== undefined && this.props["data-options"] !== null) {
+	            //component fetch
+	            if (this.props["data-options"].components !== undefined && this.props["data-options"].components !== null && this.props["data-options"].components.length > 0) {
+	                components = this.props["data-options"].components;
+	            }
+	
+	            //ui item
+	            if (this.props["data-options"].params !== undefined && this.props["data-options"].params !== null && this.props["data-options"].params.length > 0) {
+	                li$items = this.props["data-options"].params;
+	            }
+	
+	            //selected item
+	            var selected;
+	            if (this.props["data-options"].selected !== undefined && this.props["data-options"].selected !== null && !isNaN(parseInt(this.props["data-options"].selected))) {
+	                selected = this.props["data-options"].selected;
+	            }
+	        }
+	
+	        return { components: components, li$items: li$items, selected: selected };
+	    },
+	    render: function render() {
+	
+	        //selected
+	        var selected;
+	        if (this.state.selected !== undefined && this.state.selected !== null) {
+	            selected = this.state.selected;
+	        }
+	
+	        //list-group-item
+	        var li$items;
+	        var linkCb = this.linkCb;
+	        if (this.state.li$items !== null && this.state.li$items !== undefined) {
+	            li$items = this.state.li$items.map(function (item, i) {
+	                if (selected !== null && selected !== undefined) {
+	                    if (selected == i) return _react2.default.createElement(
+	                        _LinkElement2.default,
+	                        { linkClass: "list-group-item active", 'data-index': i, clickCb: linkCb, key: i },
+	                        item
+	                    );else return _react2.default.createElement(
+	                        _LinkElement2.default,
+	                        { linkClass: "list-group-item", 'data-index': i, clickCb: linkCb, key: i },
+	                        item
+	                    );
+	                } else return _react2.default.createElement(
+	                    _LinkElement2.default,
+	                    { linkClass: "list-group-item", 'data-index': i, clickCb: linkCb, key: i },
+	                    item
+	                );
+	            });
+	        }
+	
+	        //components
+	        var components;
+	        var applyCb = this.applyCb;
+	        var cancelCb = this.cancelCb;
+	        if (this.state.components !== undefined && this.state.components !== null) {
+	            components = this.state.components.map(function (item, i) {
+	                if (item.type == "apply") //提交
+	                    {
+	                        return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                            buttonClass: 'btn btn-default', title: item.name,
+	                            handle: applyCb, key: i });
+	                    }
+	                if (item.type == "cancel") //返回
+	                    {
+	                        return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
+	                            buttonClass: 'btn btn-default', title: item.name,
+	                            handle: cancelCb, key: i });
+	                    }
+	            });
+	        }
+	
+	        //centerStyle
+	        var centerStyle = { textAlign: "center" };
+	        return _react2.default.createElement(
+	            'div',
+	            { align: 'center', style: centerStyle },
+	            _react2.default.createElement(
+	                'ul',
+	                { className: 'list-group' },
+	                li$items
+	            ),
+	            components
+	        );
+	    }
+	});
+	exports.default = ListElement;
+
+/***/ },
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21713,7 +22446,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TodoStore = __webpack_require__(170);
+	var _TodoStore = __webpack_require__(174);
 	
 	var _TodoStore2 = _interopRequireDefault(_TodoStore);
 	
@@ -21844,12 +22577,12 @@
 	exports.default = ButtonElement;
 
 /***/ },
-/* 170 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var EventEmitter = __webpack_require__(171).EventEmitter;
+	var EventEmitter = __webpack_require__(175).EventEmitter;
 	var CHANGE_EVENT = 'fire';
 	
 	var TodoStore = Object.assign({}, EventEmitter.prototype, {
@@ -21877,7 +22610,7 @@
 	module.exports = TodoStore;
 
 /***/ },
-/* 171 */
+/* 175 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22151,7 +22884,127 @@
 	}
 
 /***/ },
-/* 172 */
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var LinkElement = _react2.default.createClass({
+	    displayName: "LinkElement",
+	
+	    clickCb: function clickCb(evt) {
+	        this.props.clickCb(evt);
+	    },
+	    render: function render() {
+	        var data$index;
+	        if (this.props["data-index"] !== null && this.props["data-index"] !== undefined) data$index = this.props["data-index"];
+	
+	        //link,上层组件传来的超链
+	        var link;
+	        if (this.props.link !== undefined && this.props.link !== null) link = this.props.link;else link = "javascript:void(0)";
+	
+	        var alignStyle;
+	        if (this.props.align !== undefined && this.props.align !== null) alignStyle = {
+	            textAlign: this.props.align
+	        };
+	        return _react2.default.createElement(
+	            "a",
+	            { href: link, className: this.props.linkClass, "data-index": data$index,
+	                onClick: this.clickCb, style: alignStyle },
+	            this.props.children
+	        );
+	    }
+	});
+	
+	exports.default = LinkElement;
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(178);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(167)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(178, function() {
+				var newContent = __webpack_require__(178);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(166)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".list-group-item.active, .list-group-item.active:hover,.list-group-item.active:focus\r\n{\r\n    background-color:#968D8D;\r\n    border-color:#968D8D;\r\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var CheckBoxElement = _react2.default.createClass({
+	    displayName: "CheckBoxElement",
+	
+	    clickCb: function clickCb(evt) {
+	        var target = evt.target;
+	        if ($(target).attr("data-index") !== null && $(target).attr("data-index") !== undefined) {
+	            var index = $(target).attr("data-index");
+	            if (!isNaN(parseInt(index))) this.props.checkCb(index);
+	        }
+	    },
+	    render: function render() {
+	        if (this.props.checked === true) return _react2.default.createElement("input", { type: "checkbox", "aria-label": "...",
+	            value: this.props.value, onChange: this.clickCb, checked: "checked", "data-index": this.props["data-index"] });else return _react2.default.createElement("input", { type: "checkbox", "aria-label": "...",
+	            value: this.props.value, onChange: this.clickCb, "data-index": this.props["data-index"] });
+	    }
+	});
+	
+	exports.default = CheckBoxElement;
+
+/***/ },
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22164,15 +23017,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ButtonElement = __webpack_require__(169);
+	var _ButtonElement = __webpack_require__(173);
 	
 	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
 	
-	var _MenuLinkElement = __webpack_require__(173);
+	var _MenuLinkElement = __webpack_require__(181);
 	
 	var _MenuLinkElement2 = _interopRequireDefault(_MenuLinkElement);
 	
-	var _TodoStore = __webpack_require__(170);
+	var _TodoStore = __webpack_require__(174);
 	
 	var _TodoStore2 = _interopRequireDefault(_TodoStore);
 	
@@ -22293,7 +23146,7 @@
 	exports.default = DropDownButtonElement;
 
 /***/ },
-/* 173 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22336,7 +23189,7 @@
 	exports.default = MenuLinkElement;
 
 /***/ },
-/* 174 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22367,7 +23220,7 @@
 	exports.default = ComboBox;
 
 /***/ },
-/* 175 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22380,7 +23233,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TodoStore = __webpack_require__(170);
+	var _TodoStore = __webpack_require__(174);
 	
 	var _TodoStore2 = _interopRequireDefault(_TodoStore);
 	
@@ -22438,13 +23291,13 @@
 	exports.default = InputElement;
 
 /***/ },
-/* 176 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(177);
+	var content = __webpack_require__(185);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(167)(content, {});
@@ -22453,8 +23306,8 @@
 	if(true) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept(177, function() {
-				var newContent = __webpack_require__(177);
+			module.hot.accept(185, function() {
+				var newContent = __webpack_require__(185);
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -22464,7 +23317,7 @@
 	}
 
 /***/ },
-/* 177 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(166)();
@@ -22472,248 +23325,19 @@
 	
 	
 	// module
-	exports.push([module.id, "\r\ntbody>tr:hover {\r\n    background-color: #eee;\r\n    border-color: #eee;\r\n}\r\ntbody>tr:hover>td>input[type=\"checkbox\"]{\r\n    cursor: pointer;\r\n}\r\ntbody>tr.un-render:hover{\r\n    background-color:transparent;\r\n    border-color:transparent;\r\n}\r\ntbody>tr:hover>td.un-render{\r\n    background-color:transparent;\r\n    background-image:url(" + __webpack_require__(178) + ");\r\n}\r\ntbody{\r\n    background-image:url(" + __webpack_require__(178) + ");\r\n}\r\n", ""]);
+	exports.push([module.id, "\r\ntbody>tr:hover {\r\n    background-color: #eee;\r\n    border-color: #eee;\r\n}\r\ntbody>tr:nth-child(1)>td:hover{\r\n     background-color:transparent;\r\n }\r\ntbody>tr:hover>td>input[type=\"checkbox\"]{\r\n    cursor: pointer;\r\n}\r\ntbody>tr.un-render:hover{\r\n    background-color:transparent;\r\n    border-color:transparent;\r\n}\r\ntbody>tr:hover>td.un-render{\r\n    background-color:transparent;\r\n    background-image:url(" + __webpack_require__(186) + ");\r\n}\r\ntbody>tr:nth-child(1):not>td.un-render{\r\n    background-color:transparent;\r\n}\r\ntbody{\r\n   /* background-image:url(\"../../../../icon/body.gif\");*/\r\n}\r\n.table.table-bordered.center>tbody>tr>td{\r\n    border:1px solid #336699;\r\n    font-family: lucida, verdana, arial, sans-serif;\r\n    font-size:12px;\r\n    background-color:#ffffff;\r\n}\r\n.table.table-bordered.center>tbody>tr>th{\r\n    border:1px solid #336699;\r\n    text-align:center;\r\n    font-family: lucida, verdana, arial, sans-serif;\r\n    font-size:12px;\r\n    color:#080808;\r\n}\r\n.table.table-bordered.center>thead>tr>td{\r\n    border:1px solid #336699;\r\n    font-family: lucida, verdana, arial, sans-serif;\r\n    font-size:12px;\r\n}\r\n.table.table-bordered.center>thead>tr>th{\r\n    border:1px solid #336699;\r\n    color:#FF4B6B;\r\n    text-align:center;\r\n    font-family: lucida, verdana, arial, sans-serif;\r\n    font-size:12px;\r\n}\r\n\r\n.table.table-bordered.center{\r\n    font-size:20px;\r\n    padding:5px;\r\n}\r\n.table.table-bordered.center>tbody>tr{\r\n    background-color:transparent;\r\n}\r\nbody{\r\n    background-image:url(" + __webpack_require__(186) + ");\r\n}", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 178 */
+/* 186 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/gif;base64,R0lGODlhkAGQAbMAAP//////AP8A//8AAAD//wD/AAAA/wAAAOLy//D4/////wAAAAAAAAAAAAAAAAAAACH5BAEAAAoALAAAAACQAZABAAT/EMlJq7046827/2AojmRpnmiqrmzrvnAsz3Rt33iu73zv/8CgcEgsGo/IpHLJbDqf0Kh0Sq1ar9isdsvter/gsHhMLpvP6LR6zW673/C4fE6v2+/4vH7P7/v/gIGCg4SFhoeIiYqLjI2Oj5CRkpOUlZaXmJmam5ydnp+goaKjpKWmp6ipqqusra6vsF4JsbRbCbe1uVW3uLq+Tby8v8NLwb3EyEXGs8nNQ8bO0UC4zNLWNcfCwtfcL9sI2sfd4ynfvd/k6SXBEuGz4hjo6uTQ4NT31RTL8PPc9fb23vELGDBfP3/nmN0raLDCwIP02E34d+EhxGvbxC2L1/BiN3Ya/zdasOgRIzpo/EiWNDnSncOOKz8OTFhNZUxr8gC2w3dTl0gPKfNR7EnrZwd48mwSVWWUQ1KYS18ZbLrhJNSoraYOdSr0KtZVSCWCUPqVVdicR72WNRsSLde1vqxuhYuw61y6JhXuU4sXWUaafPsOA5mNrOBf+ybePUysKdXAjJluHWo4cqq7ci2PWtzSLcGCmkWJ9MoZH+TQlf6StkkVtSfAKsS6DlXT8+xmsm/jtK17sMDeLCsDh6VwOM6dp42zRZ5c+WW9nJ2bVTy6ufTXzOsJv057b27upRqGyw6+E0mkipmX58QbLe/1qVV+fw9/Euvc9OtHUjrfun5F/Lnn3/9/hwQ404AEFkKWgAli8l0I+TWISHRVbSfhIBmZYOGFgfzFYXfieZjehw4mtdOJn5FoCX4oMoSgih1aNSJDMK4o44gR1jihWG2BpmOBXJmjVYY/YvggdUK+lFCRgixG2Izq5cgkHK0h1+JZR06JR5WdqUeeloBw2VJ20IEZpphKfkaNmTFSqI9AerHZJE8f/LShnGy4NBaPL+KJhp51LtSOn34ACtQ/fRJKBmHNjQeOonug1GhhiUIKhncjnGTplpJmeuemfxbGkQZSgkplR+1VamoYdvW4qiGtuqPqq2oI6d2stIZa26245lqGrS5m6esdN946bB8sklnqsbXalhj/s3F8+iy0b0jrJrVcaPepj9iakdiyY3a7BppAidvGtebmIWy6fIDLrhzuvntqr/J6GxS59abhGbr5Lurstv1m+y+9AUtBZ0UEFxzFkhkkrDAPyXX18BkvOjwxERVfzOpvGlqscQ/rvvWxLPHqNHIXAAN8shHZkKDyyhgzDKHHMOcg8541C2wykqTSnPMNcL7578+2UHYe0UUbTSrSSad4FNNaUAp1tS9PTUXVVhtcctZThMx1Frv6/LUPB4/dNV9em50Exz2LrbYLZfb89tW1VTj32VB2eTcUIbW99xEHOuT338oE9RJHWBNeDp/hdua24oc+hurWkHsz7UQIP155/+SYPro534ye8zngDQPr+eiFI04d6koYyHrraiX+OtyrzQ77VbLbzsK+muu+5+S9+x5oiMIXE1bxxh+OPOxvLp/8zs4jIWjOwQvBb76UW5G7r2lHvwO+3kN8ffhAj0++DeafT8Oa6k+zq9Pt2yx19vGLkCT89aOvGkH3VT+6tkETEPjyhzhRGWp13SOg3pZkGtz5z3YUKc0DWSciMo1KgYubXrAQhsEVyKZTyutgbEJUNuiJsGOTs1KLTpjBxh2QhScwHJImqLYBrhB+29OdDZ8Cw+FJ6UY9rIiSfiixIApRaKXKofOwZB0lIo+JnjJihWIlRcvFyoknlEsCq5gW6P/YkItTVOEWwVi6g9EPjNP6Ihkdx0TxrJFz9zreG7v4kMwYEV1Ogs0dtTPF88CJhjWkSRj7iEUKenGEhaQgz+ZoRUAScIyMfEsipajBSJZjUJbcnQozGcNDcrJjyvpkpmZYQVEuLVg3MyUh95LJo6UJMI7829D0gaMzni9VwFNl/0ioy9jhZ5LLMxDxTClMDoqymI1rJX0Y9Mn0bdKSRPJULBVXypmRMScS6ZsqF4k5nQhym17qJqVsicEP1u1L4DRn8/DXy/tZCZJcRNSQRPdGXzIOiTfcI++mhyV29jCPcbrh5Sh5LdWEbZpmGyAs47ZGhdKJffXcYdBMeE2J3nP/ji8kZN4qOtHhmQyhb8to28wRSZH6jZ4RLWEXV4fRJ9lPIy0daOQ4uZENkZN87gzhBXuZOXDGA4l28ekRQwnPho6TlUIVGillms75dS6pxXpqU9GjLGCGT1hMNSoKi1pOBKmxfgDspFU39y2VjdWQXO0mNNPaTpCq76YlPes/5QpDbGZ1qmWkq/ewqte9DiypzeMdRl+aT1rWE0Lr1GUMj8k2lxGzZH1FXVojK9k+UfZ/NXGZW2WZykPxlKIiY6wJ+brNjtKodKU1mgNTq7SG+dSkQ/2sP2ML1ct2FbDS3CxO4YpGbuIWtbzlqG4xu1LcNnanUH2mMWu7UaUCVlRlk3xuEVVH0xQaNnPDDeQwm8uttea0sGztIFIT69y2zue3QH1Wdl8nqWiWNq8sXS/h6ii137oOvfdBL3f3+1o/6pely/2vAP9bXv4aV44EJi9oBTzdBK/TtmA9roNnOGHUVvjCGM6whjfM4Q57+MMgDrGIR0ziEpv4xChOsYpXzOIWu/jFMI6xjGdM4xrb+MY47nAEAAA7"
 
 /***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _ButtonElement = __webpack_require__(169);
-	
-	var _ButtonElement2 = _interopRequireDefault(_ButtonElement);
-	
-	var _LinkElement = __webpack_require__(180);
-	
-	var _LinkElement2 = _interopRequireDefault(_LinkElement);
-	
-	__webpack_require__(181);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * @property
-	 */
-	var ListElement = _react2.default.createClass({
-	    displayName: 'ListElement',
-	
-	    linkCb: function linkCb(evt) {
-	        var target = evt.target;
-	        var selected = $(target).attr("data-index");
-	        this.setState({ selected: selected });
-	    },
-	    applyCb: function applyCb() {
-	        if (this.props.cb !== undefined && this.props.cb !== null) {
-	            if (this.state.selected !== null && this.state.selected !== undefined && !isNaN(parseInt(this.state.selected))) {
-	                if (this.state.li$items !== undefined && this.state.li$items !== null) {
-	                    this.props.cb(this.state.li$items[this.state.selected]);
-	                }
-	            }
-	        }
-	    },
-	    cancelCb: function cancelCb(evt) {
-	        //cancel callback
-	        this.setState({ selected: -1 });
-	        if (this.props.cb !== undefined && this.props.cb !== null) this.props.cb(evt);
-	    },
-	    getInitialState: function getInitialState() {
-	
-	        var components;
-	        var li$items;
-	
-	        if (this.props["data-options"] !== undefined && this.props["data-options"] !== null) {
-	            //component fetch
-	            if (this.props["data-options"].components !== undefined && this.props["data-options"].components !== null && this.props["data-options"].components.length > 0) {
-	                components = this.props["data-options"].components;
-	            }
-	
-	            //ui item
-	            if (this.props["data-options"].params !== undefined && this.props["data-options"].params !== null && this.props["data-options"].params.length > 0) {
-	                li$items = this.props["data-options"].params;
-	            }
-	
-	            //selected item
-	            var selected;
-	            if (this.props["data-options"].selected !== undefined && this.props["data-options"].selected !== null && !isNaN(parseInt(this.props["data-options"].selected))) {
-	                selected = this.props["data-options"].selected;
-	            }
-	        }
-	
-	        return { components: components, li$items: li$items, selected: selected };
-	    },
-	    render: function render() {
-	
-	        //selected
-	        var selected;
-	        if (this.state.selected !== undefined && this.state.selected !== null) {
-	            selected = this.state.selected;
-	        }
-	
-	        //list-group-item
-	        var li$items;
-	        var linkCb = this.linkCb;
-	        if (this.state.li$items !== null && this.state.li$items !== undefined) {
-	            li$items = this.state.li$items.map(function (item, i) {
-	                if (selected !== null && selected !== undefined) {
-	                    if (selected == i) return _react2.default.createElement(
-	                        _LinkElement2.default,
-	                        { linkClass: "list-group-item active", 'data-index': i, clickCb: linkCb, key: i },
-	                        item
-	                    );else return _react2.default.createElement(
-	                        _LinkElement2.default,
-	                        { linkClass: "list-group-item", 'data-index': i, clickCb: linkCb, key: i },
-	                        item
-	                    );
-	                } else return _react2.default.createElement(
-	                    _LinkElement2.default,
-	                    { linkClass: "list-group-item", 'data-index': i, clickCb: linkCb, key: i },
-	                    item
-	                );
-	            });
-	        }
-	
-	        //components
-	        var components;
-	        var applyCb = this.applyCb;
-	        var cancelCb = this.cancelCb;
-	        if (this.state.components !== undefined && this.state.components !== null) {
-	            components = this.state.components.map(function (item, i) {
-	                if (item.type == "apply") //提交
-	                    {
-	                        return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
-	                            buttonClass: 'btn btn-default', title: item.name,
-	                            handle: applyCb, key: i });
-	                    }
-	                if (item.type == "cancel") //返回
-	                    {
-	                        return _react2.default.createElement(_ButtonElement2.default, { type: 'button',
-	                            buttonClass: 'btn btn-default', title: item.name,
-	                            handle: cancelCb, key: i });
-	                    }
-	            });
-	        }
-	
-	        //centerStyle
-	        var centerStyle = { textAlign: "center" };
-	        return _react2.default.createElement(
-	            'div',
-	            { align: 'center', style: centerStyle },
-	            _react2.default.createElement(
-	                'ul',
-	                { className: 'list-group' },
-	                li$items
-	            ),
-	            components
-	        );
-	    }
-	});
-	exports.default = ListElement;
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var LinkElement = _react2.default.createClass({
-	    displayName: "LinkElement",
-	
-	    clickCb: function clickCb(evt) {
-	        this.props.clickCb(evt);
-	    },
-	    render: function render() {
-	        var data$index;
-	        if (this.props["data-index"] !== null && this.props["data-index"] !== undefined) data$index = this.props["data-index"];
-	
-	        //link,上层组件传来的超链
-	        var link;
-	        if (this.props.link !== undefined && this.props.link !== null) link = this.props.link;else link = "javascript:void(0)";
-	
-	        var alignStyle;
-	        if (this.props.align !== undefined && this.props.align !== null) alignStyle = {
-	            textAlign: this.props.align
-	        };
-	        return _react2.default.createElement(
-	            "a",
-	            { href: link, className: this.props.linkClass, "data-index": data$index,
-	                onClick: this.clickCb, style: alignStyle },
-	            this.props.children
-	        );
-	    }
-	});
-	
-	exports.default = LinkElement;
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(182);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(167)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(true) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept(182, function() {
-				var newContent = __webpack_require__(182);
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(166)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, ".list-group-item.active, .list-group-item.active:hover,.list-group-item.active:focus\r\n{\r\n    background-color:#968D8D;\r\n    border-color:#968D8D;\r\n}", ""]);
-	
-	// exports
-
-
-/***/ },
-/* 183 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22748,13 +23372,35 @@
 	                dataType: 'json',
 	                data: params,
 	                cache: false,
-	                success: function (data) {
+	                success: function (ob) {
+	                    var data = ob.array;
+	                    var group = ob.group;
+	                    var op = ob.op;
+	                    var title = ob.title;
+	                    var title$index = ob.title$index;
+	                    var tags = this.state.tags;
+	
 	                    if (data !== undefined && data !== null) {
 	                        var dataS = new Array();
-	                        data.array.map(function (item, i) {
+	                        data.map(function (item, i) {
 	                            dataS.push(item);
 	                        });
-	                        this.setState({ dataS: dataS, initialDataS: true });
+	                        if (group !== undefined && group !== null) {
+	                            data.map(function (item, i) {
+	                                tags[i]["data-options"].group = group;
+	                            });
+	                        }
+	                        //契约选项的更新
+	                        if (op !== undefined && op !== null) {
+	                            op.map(function (item, i) {
+	                                tags[item.index]["data-options"].op = item;
+	                            });
+	                        }
+	                        if (title !== undefined && title !== null && !isNaN(parseInt(title$index))) {
+	                            tags[parseInt(title$index)]["data-options"].title = title;
+	                        }
+	                        //suck
+	                        this.setProps({ dataS: dataS, tags: tags, initialDataS: true });
 	                    }
 	                }.bind(this),
 	                error: function (xhr, status, err) {
@@ -22791,8 +23437,11 @@
 	    getInitialState: function getInitialState() {
 	
 	        //property tags(name,data-options,data)
+	        //u can put data[] in this setting when component first be rendered
 	        var tags;
+	        //property dataS
 	        var dataS;
+	        //dataS initial status
 	        var initialDataS;
 	        if (this.props.tags !== undefined && this.props.tags !== null) {
 	
@@ -22813,9 +23462,18 @@
 	        }
 	        return { tags: tags, dataS: dataS, initialDataS: initialDataS, data$options: data$options };
 	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props) {
+	        if (props.dataS !== undefined && props.dataS !== null) this.setState({ dataS: props.dataS });
+	        if (props.tags !== undefined && props.tags !== null) {
+	            this.setState({ tags: props.tags });
+	        }
+	        if (props.initialDataS !== undefined && props.initialDataS !== null) {
+	            this.setState({ initialDataS: props.initialDataS });
+	        }
+	    },
 	    render: function render() {
 	
-	        var width = "600px";
+	        var width = "100%";
 	        var divRowStyle = {
 	            marginTop: 20
 	        };
@@ -22827,13 +23485,19 @@
 	            if (this.state.tags !== undefined && this.state.tags !== null) {
 	                var notifyCb = this.notifyCb;
 	                var tags = this.state.tags;
-	                tags = this.state.dataS.map(function (item, i) {
+	                //this loop based in dataS,so if u want to reset data in tabls
+	                //u can dynamiclly set dataS through setState method
+	                var initial$dataS = this.initialDatas;
+	                var tables = this.state.dataS.map(function (item, i) {
+	                    //fetch data-options of each table
 	                    var data$options = tags[i]["data-options"];
+	                    //fetch data of each data
 	                    var data = item;
 	                    return _react2.default.createElement(_Table2.default, { tdBasic: true, multiEnable: 1, key: i, index: i,
 	                        width: width, center: true,
-	                        'data-options': data$options, data: data, align: 'right', 'title-color': '#968D8D',
-	                        'title-font-color': '#fff', notifyCb: notifyCb
+	                        'data-options': data$options, data: data, align: 'left', 'title-color': 'transparent',
+	                        'title-font-color': '#fff', notifyCb: notifyCb,
+	                        initialDatas: initial$dataS
 	                    });
 	                });
 	            }
@@ -22847,7 +23511,7 @@
 	            _react2.default.createElement(
 	                'div',
 	                { className: 'container', style: containerStyle },
-	                tags
+	                tables
 	            )
 	        );
 	    }
