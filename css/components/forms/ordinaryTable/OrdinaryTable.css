@@ -1,0 +1,9 @@
+
+.ordinaryTable .center td{
+    text-align:center;
+}
+
+.folding{
+    float:right;
+    margin-right: 20px;
+}
