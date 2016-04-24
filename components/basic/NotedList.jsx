@@ -1,8 +1,14 @@
 import React from 'react';
 import {render} from 'react-dom';
 import LiElement from '../../components/basic/LiElement.jsx';
+import '../../css/components/basic/NotedList/notedList.css';
 
-
+/**
+ *
+ *
+ *
+ *
+ */
 var NotedList=React.createClass({
     clickCb:function(target){
 
@@ -80,27 +86,32 @@ var NotedList=React.createClass({
         else
             data$initialed=false;
 
-        return({auto:auto,data$initialed:data$initialed,data:data,title:title});
-    },
-    render:function(){
-        var title=null;
-        var lis=null;
-        if(this.state.data$initialed==false&&(this.state.data==undefined||this.state.data==null))
+        var comp=null;
+        if(this.props.comp!==undefined&&this.props.comp!==null)
         {
-            if(this.state.auto==true)
+            comp=this.props.comp;
+        }
+
+
+        return({auto:auto,data$initialed:data$initialed,data:data,title:title,comp:comp});
+    },
+    render:function() {
+        var title = null;
+        var lis = null;
+        if (this.state.data$initialed == false && (this.state.data == undefined || this.state.data == null)) {
+            if (this.state.auto == true)
                 this.fetch();
-        }else{
-            if(this.state.title!==undefined&&this.state.title!==null)
-                title=this.state.title;
+        } else {
+            if (this.state.title !== undefined && this.state.title !== null)
+                title = this.state.title;
 
 
             var data;
-            if(Object.prototype.toString.call(this.state.data)=='[object Array]')
-            {
-                data=this.state.data;
-                lis=new Array();
-                var clickCb=this.clickCb;
-                data.map(function(item,i) {
+            if (Object.prototype.toString.call(this.state.data) == '[object Array]') {
+                data = this.state.data;
+                lis = new Array();
+                var clickCb = this.clickCb;
+                data.map(function (item, i) {
 
                     lis.push(
                         <LiElement data-pos={i} key={i} clickCb={clickCb}>
@@ -110,13 +121,44 @@ var NotedList=React.createClass({
             }
         }
 
+        var re;
+        if (this.state.comp !== undefined && this.state.comp !== null) {
+            switch (this.state.comp) {
+                //菜单列表
+                case "menu":
+                    re = <div className="menuList">
+                        <div className="nav-header" data-toggle="collapse" data-target="#notedList-menu">
+                            {title}
+                        </div>
+                        <ul id="notedList-menu" className="nav nav-list collapse in">
+                            {lis}
+                        </ul>
+                    </div>
+                    break;
+                //信息列表
+                case "note":
+                    re=<div className="notedList">
+                            <h3>{title}</h3>
+                            {lis}
+                        </div>
+                    break;
+                default:
+                    re=<div className="notedList">
+                        <div className="nav-header" data-toggle="collapse" data-target="#notedList-menu">
+                            {title}
+                        </div>
+                        <ul id="notedList-menu" className="nav nav-list collapse in">
+                            {lis}
+                        </ul>
+                    </div>
+                    break;
+            }
+        }
 
-        return (
-            <div className="notedList">
-                <h3>{title}</h3>
-                {lis}
-            </div>
-        )
+        return re;
+
     }
+
+
 });
 export default NotedList;
