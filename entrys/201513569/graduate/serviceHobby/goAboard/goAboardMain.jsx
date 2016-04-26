@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Panel from '../../../../../components/panel/Panel.jsx';
+
 Boot();
 function Boot()
 {
@@ -11,16 +12,13 @@ function Boot()
             reactActionName:"exemptionEnglishApplyInitUseReact"
         }
     }
-
-
-
-
     render(
         <Panel
-            title="è‹±è¯­å…ä¿®ç”³è¯·"
+            title="³ö¹úÁôÑ§ÉêÇë"
             autoComplete={true}
             auto={true}
             bean={bean}
             />
         , document.getElementById('root'))
+
 }
