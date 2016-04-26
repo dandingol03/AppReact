@@ -14,7 +14,7 @@ function Boot()
     }
     render(
         <Panel
-            title="³ö¹úÁôÑ§ÉêÇë"
+            title="å‡ºå›½ç•™å­¦ç”³è¯·"
             autoComplete={true}
             auto={true}
             bean={bean}
