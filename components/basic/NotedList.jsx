@@ -16,7 +16,7 @@ var NotedList=React.createClass({
         if(pos!==undefined&&pos!==null) {
             if (this.state.data !== undefined && this.state.data !== null) {
                 var data = this.state.data;
-
+                //支持针对特定外部dom元素发布事件
                 if(this.props.triggerId!==undefined&&this.props.triggerId!==null)
                 {
                     var obj=document.getElementById(this.props.triggerId);
@@ -39,7 +39,8 @@ var NotedList=React.createClass({
             this.props.query.params,
             'json',
             function(response){
-                this.setState({data:response,data$initialed:true});
+                if(response.data!==undefined&&response.data!==null&&response.data!="")
+                    this.setState({data:response.data,data$initialed:true});
             }.bind(this)
         )
     },
@@ -107,17 +108,41 @@ var NotedList=React.createClass({
 
 
             var data;
-            if (Object.prototype.toString.call(this.state.data) == '[object Array]') {
+            //根据组件类型遍历数据
+            if(this.state.comp!==undefined&&this.state.comp!==null)
+            {
                 data = this.state.data;
-                lis = new Array();
                 var clickCb = this.clickCb;
-                data.map(function (item, i) {
+                if(this.state.comp=="menu")
+                {
+                    if (Object.prototype.toString.call(data) == '[object Array]') {
+                        lis = new Array();
+                        data.map(function (item, i) {
 
-                    lis.push(
-                        <LiElement data-pos={i} key={i} clickCb={clickCb}>
-                            <a href="javascript:void(0)">{item.content}</a>
-                        </LiElement>);
-                });
+                            lis.push(
+                                <LiElement data-pos={i} key={i} clickCb={clickCb}>
+                                    <a href="javascript:void(0)">{item.content}</a>
+                                </LiElement>);
+                        });
+                    }
+                }else{//comp,note
+                    if(data!="")
+                    {
+                        var i=0;
+                      for(var field in data)
+                      {
+                          if(lis==null)
+                            lis=new Array();
+                          var content=field+":    "+data[field];
+                          lis.push(
+                              <LiElement data-pos={i++} key={i++} clickCb={clickCb}>
+                                <a href="javascript:void(0)">{content}</a>
+                                </LiElement>)
+                      }
+                    }
+                }
+
+
             }
         }
 
