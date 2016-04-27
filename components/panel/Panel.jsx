@@ -23,6 +23,7 @@ import dict from '../../data/json/dictionary.json';
  * 6.this.props.query设定panel的提交路径
  * 7.bean,通过后台的数据来初始化组件,全字段均不由本地提供
  * 8.子组件的级联刷新,由父组件的form表单提交完成数据更新
+ * 9.panel开始支持多数据源
  */
 
 var Panel=React.createClass({
