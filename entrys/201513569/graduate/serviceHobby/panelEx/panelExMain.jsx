@@ -3,21 +3,24 @@ import {render} from 'react-dom';
 import Panel from '../../../../../components/panel/Panel.jsx';
 
 Boot();
+
 function Boot()
 {
-    var bean={
-        url:"/serviceHall/bsuims/reactPageDataRequest.do",
+    var data=[
+        {row:['stuType|select','query']}
+    ];
+    var query={
+        url:"/gradms/bsuims/reactPageDataRequest.do",
         params:{
-            reactPageName:"exemptionPage",
-            reactActionName:"exemptionEnglishApplyInitUseReact"
+            reactPageName:"fuckThesis",
+            reactActionName:"deegreeThesisReviewResult"
         }
     }
     render(
         <Panel
-            title="出国留学申请"
+            data={data}
             autoComplete={true}
-            auto={true}
-            bean={bean}
+            query={query}
             />
         , document.getElementById('root'))
 

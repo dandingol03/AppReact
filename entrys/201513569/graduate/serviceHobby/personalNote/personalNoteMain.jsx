@@ -7,7 +7,7 @@ Boot()
 function Boot(){
 
     var title="个人信息";
-    //var url="/ReactJPChatter/person/stuinfo_personBasicInfoUpdate.do"
+
     var data=[
         {content:"学号"},
         {content:"姓名"},
@@ -16,19 +16,18 @@ function Boot(){
     ]
 
     var query={
-        url:"/gradms/bsuims/reactPageDataRequest.do",
+        url:"/serviceHall/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:"personInfoPage",
-            reactActionName:""
+            reactActionName:"getPersonInfoUseReact"
         }
     }
     render(
         <NotedList
             title={title}
-            data={data}
             query={query}
-            autoFetch={true}
-            comp="menu"
+            auto={true}
+            comp="note"
             />
         , document.getElementById('root'))
 }
