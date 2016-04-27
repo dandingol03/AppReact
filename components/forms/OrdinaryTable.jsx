@@ -9,10 +9,196 @@ import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 /**
  *
  * 1.dataField,本组件支持多数据源注入,由dataField的field映射至各表数据源所对应的键
- *
+ * 2.递归合并未采用,采用列扫描
  *
  */
 var OrdinaryTable =React.createClass({
+    combineRemainTd:function(out$param,in$param,prefix,start,count,p$index){
+        if(Object.prototype.toString.call(out$param)=='[object Array]')
+        {
+            var state=this.state;
+            var existedInArray=this.existedInArray;
+
+            for(var i=start;i<start+count;i++)
+            {
+                var tds=prefix.slice(0,prefix.length);
+
+                var td$index;
+                if(i!==start)
+                {
+                    td$index=0;
+                    tds=new Array();
+                }
+                else
+                    td$index = p$index;
+
+
+                var row=in$param[i];
+                console.log("stu="+row.stu);
+                for(var field in row)
+                {
+                    if(existedInArray(field,state.group$field)===false)
+                    {
+                            tds.push(<td key={td$index++}>{row[field]}</td>);
+                    }
+                }
+                out$param.push(<tr key={i}>{tds}</tr>);
+
+            }
+        }
+    },
+    combine:function(ob,in$param,out$param,group$field,prefix,td$index,row$index){
+        var pool=ob;
+        if(pool!==undefined&&pool!==null) {
+            if(Object.prototype.toString.call(pool)=='[object Array]')
+            {
+
+
+                var leaf=(!(pool[0].r!==undefined&&pool[0].r!==null));
+                console.log();
+                console.log();
+                for(var i=0;i<pool.length;i++)
+                {
+                    var tds;
+                    console.log();
+                    console.log();
+                    console.log();
+                    if(i==0&&prefix!==null&&prefix!==undefined)
+                    {
+                        tds=prefix.slice(0,prefix.length);
+                    }else{
+                        tds=new Array();
+                    }
+                    //代表td的键值
+                    var index=td$index;
+                    tds.push(<td rowSpan={pool[i].c} key={index++}>{pool[i].v}</td>);
+                    //分组非叶结点
+                    if(leaf==false)
+                    {
+                        this.combine(pool[i].r,in$param,out$param,group$field,tds,index,row$index);
+                    }else{//分组叶结点
+
+                        this.combineRemainTd(out$param,in$param,tds,row$index.i,pool[i].c,index);
+                        row$index.i+=pool[i].c;
+                    }
+                }
+
+
+            }
+        }
+    },
+    recurse:function(pool,rule,in$param,out$param,group$field){
+        if(pool!==undefined&&pool!==null)
+        {
+            if(Object.prototype.toString.call(pool)=='[object Array]')
+            {
+                for(var i=0;i<pool.length;i++)
+                {
+                    var prefix=rule;
+                    prefix+=pool[i].v;
+                    if(pool[i].r!==undefined&&pool[i].r!==null)
+                    {
+                        prefix+='|';
+                        this.recurse(pool[i].r,prefix,in$param,out$param,group$field);
+                    }else{
+                        //当递归至叶结点时,重新压入数据
+
+                        in$param.map(function(row,j) {
+                            var matchs='';
+                            group$field.map(function(field,k) {
+                                matchs+=row[field];
+                                if(k!=group$field.length-1)
+                                    matchs+='|';
+                            });
+                            if(matchs==prefix)
+                                out$param.push(row);
+                        });
+                    }
+                }
+            }
+        }
+
+    },
+    existedInArray:function(d2,arr)
+    {
+        var existed=false;
+        for(var i=0;i<arr.length;i++)
+        {
+            if(arr[i]==d2)
+            {
+                existed=i;
+                break;
+            }
+        }
+        return existed;
+    },
+    //该方法返回false或该键在数组的下标
+    existedIn:function(d2,pool){
+        var existed=false;
+        for(var i=0;i<pool.length;i++)
+        {
+            if(pool[i].v==d2)
+            {
+                existed=i;
+                break;
+            }
+        }
+        return existed;
+    },
+    group:function(data,group$field) {
+
+        var pool=new Array();
+        var existedIn=this.existedIn;
+        data.map(function(row,i) {
+            var ob;
+            var re;
+            var p=pool;
+            //初始化pool
+            group$field.map(function(field,j) {
+                //如果该分组字段不位于队尾
+                if(j!=group$field.length-1)
+                {
+                    re=existedIn(row[field],p);
+                    if(re===false)//如果pool中没有此键
+                    {
+                        ob=new Object();
+                        ob.v=row[field];
+                        ob.c=1;
+                        ob.r=new Array();
+                        p.push(ob);
+                    }else{
+                        ob=p[re];
+                        ob.c++;
+                    }
+                    p=ob.r;
+                }else{
+                    re=existedIn(row[field],p);
+                    if(re===false)
+                    {
+                        ob=new Object();
+                        ob.v=row[field];
+                        ob.c=1;
+                        p.push(ob);
+                    }else{
+                        ob=p[re];
+                        ob.c++;
+                    }
+                }
+            });
+        });
+
+        //重新生成数据
+        var gen=new Array();
+        this.recurse(pool,'',data,gen,group$field);
+        //根据重新生成的数据源gen进行pool的i设置
+
+        return [pool,gen];
+    },
+    groupCombine:function(pool,in$param,out$param,group$field){
+        var row$index=new Object();
+        row$index.i=0;
+        this.combine(pool,in$param,out$param,group$field,null,0,row$index);
+    },
     clickCb:function(ob){
         if(ob!==undefined&&ob!==null)
         {
@@ -101,8 +287,30 @@ var OrdinaryTable =React.createClass({
             filterField=this.props.filterField;
 
 
+
+        //groupField,此选项用于开启部分字段的分组
+        var group$field;
+        if(this.props["group-field"]!==undefined&&this.props["group-field"]!==null)
+        {
+            group$field=this.props["group-field"];
+
+        }
+
+        var data;
+        var pool;;
+        if(this.props.data!==undefined&&this.props.data!==null)
+        {
+            if(group$field!==undefined&&group$field!==null)
+            {
+                var arr=this.group(this.props.data,group$field);
+                data=arr[1];
+                pool=arr[0];
+            }
+        }
+
         return ({autoFetch:autoFetch,data$initialed:data$initialed,data:data,
-                sideField:sideField,dataField:dataField,filterField:filterField});
+                sideField:sideField,dataField:dataField,filterField:filterField,group$field:group$field,
+                pool:pool});
     },
     componentWillReceiveProps:function(props)
     {
@@ -203,7 +411,7 @@ var OrdinaryTable =React.createClass({
 
             }else{
                 //单表数据源注入
-                if(Object.prototype.toString.call(this.props.data)=="[object Array]"&&this.props.data.length>=1)
+                if(Object.prototype.toString.call(this.state.data)=="[object Array]"&&this.state.data.length>=1)
                 {
                     tables=new Array();
                     colSpan=0;
@@ -211,6 +419,7 @@ var OrdinaryTable =React.createClass({
                     var j=0;
                     var state=this.state;
                     var props=this.props;
+                    //如果允许过滤字段
                     if(state.filterField!==null&&state.filterField!==undefined)
                     {
                         for(var field in state.filterField)
@@ -222,67 +431,123 @@ var OrdinaryTable =React.createClass({
                             }
                         }
                     }else{
-                        for(var field in this.props.data[0])
-                        {
-                            tr$fields.push(<td key={j++}>{field}</td>)
-                            colSpan++;
-                        }
+                            for(var field in state.data[0])
+                            {
+                                tr$fields.push(<td key={j++}>{field}</td>)
+                                colSpan++;
+                            }
+
+
                     }
 
 
                     var trs=new Array();
 
-                    props.data.map(function(row,i) {
-                        var k=0;
-                        var tds=new Array();
-                        if(state.filterField!==undefined&&state.filterField!==null)
-                        {
-                            for(var field in state.filterField)
+
+                    //如果字段进行分组
+                    if(state.group$field!==undefined&&state.group$field!==null)
+                    {
+
+                        this.groupCombine(state.pool, state.data,trs, this.state.group$field);
+                    }else{
+                        state.data.map(function(row,i) {
+                            var k=0;
+                            var tds=new Array();
+                            if(state.filterField!==undefined&&state.filterField!==null)
                             {
-                                if(row[field]!==undefined&&row[field]!==null)
+                                for(var field in state.filterField)
                                 {
-
-                                    switch(field)
+                                    if(row[field]!==undefined&&row[field]!==null)
                                     {
-                                        case 'attachs':
 
-                                            var downloads=null;
-                                            var ids=null;
-                                            if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
-                                                ids=row[field].split("|");
-                                            if(ids!=null&&ids.length>=1)
-                                            {
-                                                downloads=new Array();
-                                                ids.map(function(item,i) {
-                                                    downloads.push(<Download attachId={item} key={i}/>);
-                                                });
-                                            }
+                                        switch(field)
+                                        {
+                                            case 'attachs':
+
+                                                var downloads=null;
+                                                var ids=null;
+                                                if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
+                                                    ids=row[field].split("|");
+                                                if(ids!=null&&ids.length>=1)
+                                                {
+                                                    downloads=new Array();
+                                                    ids.map(function(item,i) {
+                                                        downloads.push(<Download attachId={item} key={i}/>);
+                                                    });
+                                                }
 
 
-                                            tds.push(<td key={k++}>{downloads}</td>);
-                                            break;
-                                        default:
-                                            tds.push(<td key={k++}>{row[field]}</td>);
-                                            break;
+                                                tds.push(<td key={k++}>{downloads}</td>);
+                                                break;
+                                            default:
+                                                tds.push(<td key={k++}>{row[field]}</td>);
+                                                break;
+                                        }
                                     }
 
+                                }state.data.map(function(row,i) {
+                                var k=0;
+                                var tds=new Array();
+                                if(state.filterField!==undefined&&state.filterField!==null)
+                                {
+                                    for(var field in state.filterField)
+                                    {
+                                        if(row[field]!==undefined&&row[field]!==null)
+                                        {
 
+                                            switch(field)
+                                            {
+                                                case 'attachs':
+
+                                                    var downloads=null;
+                                                    var ids=null;
+                                                    if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
+                                                        ids=row[field].split("|");
+                                                    if(ids!=null&&ids.length>=1)
+                                                    {
+                                                        downloads=new Array();
+                                                        ids.map(function(item,i) {
+                                                            downloads.push(<Download attachId={item} key={i}/>);
+                                                        });
+                                                    }
+
+
+                                                    tds.push(<td key={k++}>{downloads}</td>);
+                                                    break;
+                                                default:
+                                                    tds.push(<td key={k++}>{row[field]}</td>);
+                                                    break;
+                                            }
+                                        }
+
+                                    }
                                 }
-
+                                else{
+                                    for(var field in row)
+                                    {
+                                        tds.push(<td key={k++}>{row[field]}</td>);
+                                    }
+                                }
+                                trs.push(
+                                    <tr key={i}>
+                                        {tds}
+                                    </tr>
+                                );
+                            });
                             }
-                        }
-                        else{
+                            else{
                                 for(var field in row)
                                 {
                                     tds.push(<td key={k++}>{row[field]}</td>);
                                 }
-                        }
-                        trs.push(
-                            <tr key={i}>
-                                {tds}
-                            </tr>
-                        );
-                    });
+                            }
+                            trs.push(
+                                <tr key={i}>
+                                    {tds}
+                                </tr>
+                            );
+                        });
+                    }
 
 
                     tables.push(
