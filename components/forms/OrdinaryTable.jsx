@@ -3,6 +3,25 @@ import {render} from 'react-dom';
 import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 
 var OrdinaryTable =React.createClass({
+    group:function(data){
+        var grouped;
+        var pool=new Object();
+        var state=this.state;
+        data.map(function(row,i) {
+
+            var str='';
+            state.group$field.map(function(field,j) {
+                str+=row[field]
+                if(j!==state.group$field.length-1)
+                str+="|";
+            });
+            var link=str.split('|');
+
+        })
+
+
+        return grouped;
+    },
     fetch:function(){
         this.queryHandle(
             null,
@@ -10,7 +29,13 @@ var OrdinaryTable =React.createClass({
             this.props.query.params,
             'json',
             function(response){
-                this.setProps({data:response,data$initialed:true});
+
+                var data;
+                if(this.state.group$field!==undefined&&this.state.group$field!==null)
+                    data=this.group(response);
+                else
+                    data=response;
+                this.setState({data:data,data$initialed:true});
             }.bind(this)
         )
     },
@@ -45,14 +70,26 @@ var OrdinaryTable =React.createClass({
         else
             data$initialed=false;
 
+        //分组字段
+        var group$field;
+        if(this.props["group-field"]!==undefined&&this.props["group-field"]!==null)
+            group$field=this.props["group-field"];
 
-        return ({autoFetch:autoFetch,data$initialed:data$initialed});
-    },
-    componentWillReceiveProps:function(props)
-    {
-        //更新data$initialed状态
-        if(props.data$initialed!==undefined&&props.data$initialed!==null)
-            this.setState({data$initialed:props.data$initialed});
+        var data;
+        if(this.props.data!==undefined&&this.props.data!==null)
+        {
+            if(group$field!==null&&group$field!==undefined&&Object.prototype.toString.call(group$field)=='[object Array]')
+            {
+                data=this.group(this.props.data);
+            }else{
+                data=this.props.data;
+            }
+            data$initialed=true;
+        }else{
+            data$initialed=false;
+        }
+        return ({autoFetch:autoFetch,data$initialed:data$initialed,
+                group$field:group$field,data:data});
     },
     render:function(){
         if(this.state.data$initialed!==true)
@@ -66,7 +103,7 @@ var OrdinaryTable =React.createClass({
         }else{
             var colSpan=1;
             var trs;
-            if(Object.prototype.toString.call(this.props.data)=="[object Array]"&&this.props.data.length>1)
+            if(Object.prototype.toString.call(this.state.data)=="[object Array]"&&this.state.data.length>1)
             {
                 colSpan=0;
                 for(var field in this.props.data[0])
@@ -74,15 +111,17 @@ var OrdinaryTable =React.createClass({
                     colSpan++;
                 }
                 trs=new Array();
-                this.props.data.map(function(row,i) {
+                this.state.data.map(function(row,i) {
                     var tds=new Array();
-                    row.map(function(cell,j) {
+                    var j=0;
+                    for(var field in row)
+                    {
+                        tds.push(
+                            <td key={j ++}>
+                                {row[field]}
+                            </td>);
+                    }
 
-                       tds.push(
-                           <td key={j}>
-                           {cell}
-                           </td>);
-                    });
                     trs.push(
                         <tr key={i}>
                             {tds}
