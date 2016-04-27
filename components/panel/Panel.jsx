@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Span from '../../components/basic/Span.jsx';
 import Select from '../../components/basic/Select.jsx';
 import Download from '../../components/basic/Download.jsx';
+import Radio from '../../components/basic/Radio.jsx';
 import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
 
@@ -164,7 +165,8 @@ var Panel=React.createClass({
             "input":true,
             "select":true,
             "span":true,
-            "textarea":true
+            "textarea":true,
+            "radio":true
         }
 
         var bean;
@@ -224,10 +226,15 @@ var Panel=React.createClass({
                     var ctrl$comp;
                     //查询字典,匹配label字段
                     var name;
+                    var so=dict[coms[0]];
                     if(state.bean!==undefined&&state.bean!==null)
                         name=coms[0];
                     else
-                        name=dict[coms[0]].name;
+                    {
+                        if(so!==undefined&&so!==null)
+                        name=so.name;
+                    }
+
                     if(name!==undefined&&name!==null)
                     {
                         if(coms.length>1)
@@ -329,7 +336,13 @@ var Panel=React.createClass({
                                         ctrl= <Select auto={true} ctrlName={coms[0]}/>
                                 }
                                 else
-                                    ctrl= <Select auto={true} ctrlName={coms[0]}/>
+                                {
+                                    var options=null;
+                                    if(coms[2]!==undefined&&coms[2]!==null)
+                                        options=eval(coms[2]);
+                                    ctrl= <Select auto={true} ctrlName={coms[0]}
+                                                  data={options}/>
+                                }
                                 break;
                             case 'download':
                                 ctrl=<Download attachId={parseInt(coms[0])}/>
@@ -358,8 +371,15 @@ var Panel=React.createClass({
 
                                 break;
                             case 'textarea':
-                                var alias=dict[coms[0]].alias;
-                                ctrl=<textarea rows={4}  name={alias} style={{width:"100%"}}/>
+                                ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>
+                                break;
+                            case 'radio':
+                                if(coms[2]!==undefined&&coms[2]!==null)
+                                {
+                                    ctrl=<Radio name={coms[0]} data={coms[2]}/>
+                                }else{
+                                    ctrl=<Radio name={coms[0]}/>
+                                }
                                 break;
                             default:
                                 break;
