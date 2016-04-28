@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Download from '../../components/basic/Download.jsx';
+import LinkElement from '../../components/basic/LinkElement.jsx';
 import OrdinaryTr from '../../components/forms/OrdinaryTr.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
 import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
@@ -39,7 +40,7 @@ var OrdinaryTable =React.createClass({
                 {
                     if(existedInArray(field,state.group$field)===false)
                     {
-                            tds.push(<td key={td$index++}>{row[field]}</td>);
+                        tds.push(<td key={td$index++}>{row[field]}</td>);
                     }
                 }
                 out$param.push(<tr key={i}>{tds}</tr>);
@@ -227,6 +228,24 @@ var OrdinaryTable =React.createClass({
             }
         }
     },
+    linkCb:function(evt){
+        if(evt!==undefined&&evt!==null)
+        {
+            var target=evt.target;
+            var query;
+            if(target.getAttribute('data-query')!==undefined&&target.getAttribute('data-query')!==null)
+            {
+                try{
+                    query=eval('('+target.getAttribute(('data-query'))+')');
+                }catch(e)
+                {
+                    console.log("encounter error="+e);
+                }
+
+
+            }
+        }
+    },
     fetch:function(){
         this.queryHandle(
             null,
@@ -281,11 +300,11 @@ var OrdinaryTable =React.createClass({
 
         var data;
         if(this.props.data!==undefined&&this.props.data!==null)
-        data=this.props.data;
+            data=this.props.data;
 
         var sideField;
         if(this.props.sideField!==undefined&&this.props.sideField!==null)
-        sideField=this.props.sideField;
+            sideField=this.props.sideField;
 
         var dataField;
         if(this.props.dataField!==undefined&&this.props.dataField!==null)
@@ -319,8 +338,8 @@ var OrdinaryTable =React.createClass({
         }
 
         return ({autoFetch:autoFetch,data$initialed:data$initialed,data:data,
-                sideField:sideField,dataField:dataField,filterField:filterField,group$field:group$field,
-                pool:pool});
+            sideField:sideField,dataField:dataField,filterField:filterField,group$field:group$field,
+            pool:pool});
     },
     componentWillReceiveProps:function(props)
     {
@@ -338,8 +357,8 @@ var OrdinaryTable =React.createClass({
             if(this.state.autoFetch==true)
                 this.fetch();
             return (
-               <table>
-               </table>
+                <table>
+                </table>
             )
         }else{
             var colSpan=1;
@@ -445,11 +464,11 @@ var OrdinaryTable =React.createClass({
                             }
                         }
                     }else{
-                            for(var field in state.data[0])
-                            {
-                                tr$fields.push(<td key={j++}>{field}</td>)
-                                colSpan++;
-                            }
+                        for(var field in state.data[0])
+                        {
+                            tr$fields.push(<td key={j++}>{field}</td>)
+                            colSpan++;
+                        }
 
 
                     }
@@ -464,6 +483,7 @@ var OrdinaryTable =React.createClass({
 
                         this.groupCombine(state.pool, state.data,trs, this.state.group$field);
                     }else{
+                        var linkCb=this.linkCb;
                         state.data.map(function(row,i) {
                             var k=0;
                             var tds=new Array();
@@ -493,6 +513,28 @@ var OrdinaryTable =React.createClass({
 
                                                 tds.push(<td key={k++}>{downloads}</td>);
                                                 break;
+                                            case 'link':
+                                                if(row[field]!==undefined&&row[field]!==null)
+                                                {
+                                                    var ids=row[field].split('|');
+                                                    if(ids[1]=='link'&&ids[2]!==undefined&&ids[2]!==null)
+                                                    {
+                                                        tds.push(
+                                                            <td key={k++}>
+                                                                <LinkElement linkCb={linkCb} data->{ids[0]}</LinkElement>
+                                                            </td>);
+                                                    }
+                                                    else{
+                                                        tds.push(
+                                                            <td key={k++}>
+                                                                <LinkElement>{ids[0]}</LinkElement>
+                                                            </td>);
+                                                    }
+                                                }
+                                                else{
+                                                    tds.push(<td key={k++}></td>);
+                                                }
+                                                break;
                                             default:
                                                 tds.push(<td key={k++}>{row[field]}</td>);
                                                 break;
@@ -500,55 +542,7 @@ var OrdinaryTable =React.createClass({
                                     }
 
                                 }
-                                state.data.map(function(row,i)
-                                {
-                                    var k=0;
-                                    var tds=new Array();
-                                    if(state.filterField!==undefined&&state.filterField!==null)
-                                    {
-                                        for(var field in state.filterField)
-                                        {
-                                            if(row[field]!==undefined&&row[field]!==null)
-                                            {
 
-                                                switch(field)
-                                                {
-                                                    case 'attachs':
-
-                                                        var downloads=null;
-                                                        var ids=null;
-                                                        if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
-                                                            ids=row[field].split("|");
-                                                        if(ids!=null&&ids.length>=1)
-                                                        {
-                                                            downloads=new Array();
-                                                            ids.map(function(item,i) {
-                                                                downloads.push(<Download attachId={item} key={i}/>);
-                                                            });
-                                                        }
-
-
-                                                        tds.push(<td key={k++}>{downloads}</td>);
-                                                        break;
-                                                    default:
-                                                        console.log();
-                                                        console.log();
-                                                        console.log();
-                                                        console.log();
-                                                        tds.push(<td key={k++}>{row[field]}</td>);
-                                                        break;
-                                                }
-                                            }
-
-                                        }
-                                    }
-                                    else{
-                                        for(var field in row)
-                                        {
-                                            tds.push(<td key={k++}>{row[field]}</td>);
-                                        }
-                                    }
-                                });
                             }
                             else{
                                 for(var field in row)
@@ -564,19 +558,21 @@ var OrdinaryTable =React.createClass({
                         });
                     }
 
-
-                    tables.push(
-                        <table className="table table-bordered center" key={0}>
-                        <thead>
+                    var title=null;
+                    if(this.props.title!==undefined&&this.props.title!==null)
+                        title=<thead>
                         <tr>
                             <th colSpan={colSpan}>{this.props.title}</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>{tr$fields}</tr>
-                        {trs}
-                        </tbody>
-                    </table>)
+                    tables.push(
+                        <table className="table table-bordered center" key={0}>
+                            {title}
+                            <tbody>
+                            <tr>{tr$fields}</tr>
+                            {trs}
+                            </tbody>
+                        </table>)
 
                 }
             }
@@ -641,14 +637,14 @@ var OrdinaryTable =React.createClass({
             if(sideDist!==undefined&&sideDist!==null)
                 mainDist=(
                     <div className="col-sm-9" key={0}>
-                    {tables}
+                        {tables}
                     </div>
-                    );
+                );
             else
                 mainDist=(
-                  <div className="col-sm-12" key={0}>
-                      {tables}
-                  </div>
+                    <div className="col-sm-12" key={0}>
+                        {tables}
+                    </div>
                 );
 
             return (
