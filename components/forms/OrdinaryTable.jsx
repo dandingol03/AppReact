@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import Download from '../../components/basic/Download.jsx';
 import LinkElement from '../../components/basic/LinkElement.jsx';
 import OrdinaryTr from '../../components/forms/OrdinaryTr.jsx';
+import Hide from '../../components/basic/Hide.jsx';
+import Panel from '../../components/panel/Panel.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
 import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 
@@ -242,8 +244,11 @@ var OrdinaryTable =React.createClass({
                     console.log("encounter error="+e);
                 }
 
-
             }
+            this.setState({hiddenStatus:true});
+
+
+
         }
     },
     fetch:function(){
@@ -337,9 +342,15 @@ var OrdinaryTable =React.createClass({
             }
         }
 
+        //hidden componnet
+        var hiddenStatus=false;
+        if(this.props.hiddenStatus==true||this.props.hiddenStatus=='true')
+            hiddenStatus=true;
+
+
         return ({autoFetch:autoFetch,data$initialed:data$initialed,data:data,
             sideField:sideField,dataField:dataField,filterField:filterField,group$field:group$field,
-            pool:pool});
+            pool:pool,hiddenStatus:hiddenStatus});
     },
     componentWillReceiveProps:function(props)
     {
@@ -544,10 +555,38 @@ var OrdinaryTable =React.createClass({
                                 }
 
                             }
-                            else{
+                            else{//如果未设置过滤字段
                                 for(var field in row)
                                 {
-                                    tds.push(<td key={k++}>{row[field]}</td>);
+                                    switch(field)
+                                    {
+                                        case 'link':
+                                            if(row[field]!==undefined&&row[field]!==null)
+                                            {
+                                                var ids=row[field].split('|');
+                                                if(ids[1]=='link'&&ids[2]!==undefined&&ids[2]!==null)
+                                                {
+                                                    tds.push(
+                                                        <td key={k++}>
+                                                            <LinkElement linkCb={linkCb} data->{ids[0]}</LinkElement>
+                                                        </td>);
+                                                }
+                                                else{
+                                                    tds.push(
+                                                        <td key={k++}>
+                                                            <LinkElement>{ids[0]}</LinkElement>
+                                                        </td>);
+                                                }
+                                            }
+                                            else{
+                                                tds.push(<td key={k++}></td>);
+                                            }
+                                            break;
+                                        default:
+                                            tds.push(<td key={k++}>{row[field]}</td>);
+                                            break;
+                                    }
+
                                 }
                             }
                             trs.push(
@@ -633,17 +672,52 @@ var OrdinaryTable =React.createClass({
             }
 
 
+
+
+            var hide;
+            var panelData=[
+                {row:['stuType|select','query']}
+            ];
+            var panelQuery={
+                url:"/gradms/bsuims/reactPageDataRequest.do",
+                params:{
+                    reactPageName:"fuckThesis",
+                    reactActionName:"deegreeThesisReviewResult"
+                }
+            }
+
+
+                var panelData=[{row:['stuType|select','query']}];
+
+            hide=
+                    <Hide>
+                        <Panel
+                        data={panelData}
+                        autoComplete={true}
+                        query={panelQuery}
+                        status={this.state.hiddenStatus}
+                        />
+                    </Hide>
+
+
+
             var mainDist;
             if(sideDist!==undefined&&sideDist!==null)
                 mainDist=(
                     <div className="col-sm-9" key={0}>
+                        <div ref="hideDiv">
+                            {hide}
+                        </div>
                         {tables}
                     </div>
                 );
             else
                 mainDist=(
                     <div className="col-sm-12" key={0}>
-                        {tables}
+                        <div ref="hideDiv">
+                            {hide}
+                        </div>
+                        <div ref="contentDiv">{tables}</div>
                     </div>
                 );
 
