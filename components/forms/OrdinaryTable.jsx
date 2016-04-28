@@ -234,7 +234,17 @@ var OrdinaryTable =React.createClass({
             this.props.query.params,
             'json',
             function(response){
-                this.setState({data:response,data$initialed:true});
+                var data;
+                if(Object.prototype.toString.call(response)!='[object Array]')
+                {
+                    if(response.data!==undefined&&response.data!==null)
+                    {
+                        if(Object.prototype.toString.call(response.data)=='[object Array]')
+                            data=response.data;
+                    }
+                }else
+                    data=response;
+                this.setState({data:data,data$initialed:true});
             }.bind(this)
         )
     },
@@ -314,9 +324,13 @@ var OrdinaryTable =React.createClass({
     },
     componentWillReceiveProps:function(props)
     {
+        var op=new Object();
         //更新data$initialed状态
         if(props.data$initialed!==undefined&&props.data$initialed!==null)
-            this.setState({data$initialed:props.data$initialed});
+            op.data$initialed=props.data$initialed;
+        if(props.data!==undefined&&props.data!==null)
+            op.data=props.data;
+        this.setState(op);
     },
     render:function(){
         if(this.state.data$initialed!==true&&(this.props.data==null||this.props.data==undefined))
@@ -424,7 +438,7 @@ var OrdinaryTable =React.createClass({
                     {
                         for(var field in state.filterField)
                         {
-                            if(props.data[0][field]!==null&&props.data[0][field]!==undefined)
+                            if(state.data[0][field]!==null&&state.data[0][field]!==undefined)
                             {
                                 tr$fields.push(<td key={j++}>{field}</td>)
                                 colSpan++;
@@ -485,55 +499,56 @@ var OrdinaryTable =React.createClass({
                                         }
                                     }
 
-                                }state.data.map(function(row,i) {
-                                var k=0;
-                                var tds=new Array();
-                                if(state.filterField!==undefined&&state.filterField!==null)
+                                }
+                                state.data.map(function(row,i)
                                 {
-                                    for(var field in state.filterField)
+                                    var k=0;
+                                    var tds=new Array();
+                                    if(state.filterField!==undefined&&state.filterField!==null)
                                     {
-                                        if(row[field]!==undefined&&row[field]!==null)
+                                        for(var field in state.filterField)
                                         {
-
-                                            switch(field)
+                                            if(row[field]!==undefined&&row[field]!==null)
                                             {
-                                                case 'attachs':
 
-                                                    var downloads=null;
-                                                    var ids=null;
-                                                    if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
-                                                        ids=row[field].split("|");
-                                                    if(ids!=null&&ids.length>=1)
-                                                    {
-                                                        downloads=new Array();
-                                                        ids.map(function(item,i) {
-                                                            downloads.push(<Download attachId={item} key={i}/>);
-                                                        });
-                                                    }
+                                                switch(field)
+                                                {
+                                                    case 'attachs':
+
+                                                        var downloads=null;
+                                                        var ids=null;
+                                                        if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
+                                                            ids=row[field].split("|");
+                                                        if(ids!=null&&ids.length>=1)
+                                                        {
+                                                            downloads=new Array();
+                                                            ids.map(function(item,i) {
+                                                                downloads.push(<Download attachId={item} key={i}/>);
+                                                            });
+                                                        }
 
 
-                                                    tds.push(<td key={k++}>{downloads}</td>);
-                                                    break;
-                                                default:
-                                                    tds.push(<td key={k++}>{row[field]}</td>);
-                                                    break;
+                                                        tds.push(<td key={k++}>{downloads}</td>);
+                                                        break;
+                                                    default:
+                                                        console.log();
+                                                        console.log();
+                                                        console.log();
+                                                        console.log();
+                                                        tds.push(<td key={k++}>{row[field]}</td>);
+                                                        break;
+                                                }
                                             }
-                                        }
 
+                                        }
                                     }
-                                }
-                                else{
-                                    for(var field in row)
-                                    {
-                                        tds.push(<td key={k++}>{row[field]}</td>);
+                                    else{
+                                        for(var field in row)
+                                        {
+                                            tds.push(<td key={k++}>{row[field]}</td>);
+                                        }
                                     }
-                                }
-                                trs.push(
-                                    <tr key={i}>
-                                        {tds}
-                                    </tr>
-                                );
-                            });
+                                });
                             }
                             else{
                                 for(var field in row)
