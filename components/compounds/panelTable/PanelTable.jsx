@@ -57,9 +57,11 @@ var PanelTable=React.createClass({
 
         return (
             <div className="row">
-                <div className="col-sm-12">
+                <div className="col-sm-12 col-md-12">
                 <Panel
                     data={this.state.comps}
+                    auto={true}
+                    bean={this.props.bean}
                     autoComplete={true}
                     query={this.props.query}
                     clickHandle={this.clickHandle}

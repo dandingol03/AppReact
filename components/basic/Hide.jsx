@@ -14,7 +14,7 @@ var Hide=React.createClass({
     },
     getInitialState:function(){
 
-        var status=false;
+        var status=true;
         if(this.props.status!==undefined&&this.props.status!==null)
             status=this.props.status;
 
@@ -22,18 +22,15 @@ var Hide=React.createClass({
     },
     componentWillReceiveProps:function(props)
     {
-        if(props,status!==undefined&&props.status!==null)
+        if(props.status!==undefined&&props.status!==null)
         {
-            this.setState({status:!this.state.status});
+            this.setState({status:props.status});
         }
     },
     render:function(){
 
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        if(this.state.status==false)
+
+        if(this.state.status==true)
         {
             return (
                 <div >

@@ -12,7 +12,7 @@ import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 /**
  *
  * 1.dataField,本组件支持多数据源注入,由dataField的field映射至各表数据源所对应的键
- * 2.递归合并未采用,采用列扫描
+ * 2.link组件开始支持单字段复数
  *
  */
 var OrdinaryTable =React.createClass({
@@ -235,21 +235,26 @@ var OrdinaryTable =React.createClass({
         {
             var target=evt.target;
             var query;
-            if(target.getAttribute('data-query')!==undefined&&target.getAttribute('data-query')!==null)
+            if(target.getAttribute('data-comp')!==undefined&&target.getAttribute('data-comp')!==null)
             {
-                try{
-                    query=eval('('+target.getAttribute(('data-query'))+')');
-                }catch(e)
-                {
-                    console.log("encounter error="+e);
-                }
+                var comp=target.getAttribute("data-comp");
+                var hiddenInfo=new Object();
+                if(Object.prototype.toString.call(target.getAttribute('data-query')=='[object String]'))
+                    hiddenInfo.data=eval('('+target.getAttribute('data-query')+')');
+                else
+                    hiddenInfo.data=target.getAttribute('data-query');
+                hiddenInfo.comp=target.getAttribute('data-comp');
 
+                this.setState({hiddenInfo:hiddenInfo});
+                $(this.refs.contentDiv).slideUp();
             }
-            this.setState({hiddenStatus:true});
-
-
 
         }
+    },
+    returnCb:function()
+    {
+        this.setState({hiddenInfo:null});
+        $(this.refs.contentDiv).slideDown();
     },
     fetch:function(){
         this.queryHandle(
@@ -527,12 +532,14 @@ var OrdinaryTable =React.createClass({
                                             case 'link':
                                                 if(row[field]!==undefined&&row[field]!==null)
                                                 {
+
+
                                                     var ids=row[field].split('|');
-                                                    if(ids[1]=='link'&&ids[2]!==undefined&&ids[2]!==null)
+                                                    if(ids[1]!==null&&ids[1]!==undefined&&ids[2]!==undefined&&ids[2]!==null)
                                                     {
                                                         tds.push(
                                                             <td key={k++}>
-                                                                <LinkElement linkCb={linkCb} data->{ids[0]}</LinkElement>
+                                                                <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]} >{ids[0]}</LinkElement>
                                                             </td>);
                                                     }
                                                     else{
@@ -564,11 +571,11 @@ var OrdinaryTable =React.createClass({
                                             if(row[field]!==undefined&&row[field]!==null)
                                             {
                                                 var ids=row[field].split('|');
-                                                if(ids[1]=='link'&&ids[2]!==undefined&&ids[2]!==null)
+                                                if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
                                                 {
                                                     tds.push(
                                                         <td key={k++}>
-                                                            <LinkElement linkCb={linkCb} data->{ids[0]}</LinkElement>
+                                                            <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
                                                         </td>);
                                                 }
                                                 else{
@@ -672,32 +679,39 @@ var OrdinaryTable =React.createClass({
             }
 
 
-
-
             var hide;
-            var panelData=[
-                {row:['stuType|select','query']}
-            ];
-            var panelQuery={
-                url:"/gradms/bsuims/reactPageDataRequest.do",
-                params:{
-                    reactPageName:"fuckThesis",
-                    reactActionName:"deegreeThesisReviewResult"
+            //渲染隐藏组件
+            if(this.state.hiddenInfo!==null&&this.state.hiddenInfo!==undefined)
+            {
+                if(this.state.hiddenInfo.comp!==undefined&&this.state.hiddenInfo.comp!==null)
+                {
+                    var hide$c;
+                    switch(this.state.hiddenInfo.comp)
+                    {
+                        case 'panel':
+                           hide$c= <Panel
+                               bean={this.state.hiddenInfo.data}
+                               autoComplete={true}
+                               auto={true}
+                               returnCb={this.returnCb}
+                               />
+                            break;
+                        default:
+                            break;
+                    }
+                    hide=
+                        <Hide>
+                            {hide$c}
+                        </Hide>
+
                 }
-            }
+            }else{}
 
 
-                var panelData=[{row:['stuType|select','query']}];
 
-            hide=
-                    <Hide>
-                        <Panel
-                        data={panelData}
-                        autoComplete={true}
-                        query={panelQuery}
-                        status={this.state.hiddenStatus}
-                        />
-                    </Hide>
+
+
+
 
 
 
@@ -713,7 +727,7 @@ var OrdinaryTable =React.createClass({
                 );
             else
                 mainDist=(
-                    <div className="col-sm-12" key={0}>
+                    <div className="col-sm-12 col-md-12 table-responsive" key={0}>
                         <div ref="hideDiv">
                             {hide}
                         </div>
@@ -722,7 +736,7 @@ var OrdinaryTable =React.createClass({
                 );
 
             return (
-                <div  className="ordinaryTable"  style={{margin:"20px"}}>
+                <div  className="ordinaryTable"  style={{margin:"0px"}}>
                     <div className="row">
                         {sideDist}
                         {mainDist}

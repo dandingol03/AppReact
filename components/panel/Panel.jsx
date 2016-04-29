@@ -14,6 +14,7 @@ import dict from '../../data/json/dictionary.json';
  * 2.目前只支持
  * 1).数据本地化,一个label配对一个组件
  * 2).数据拉取,label|comp|data,三个字段的配置只针对select组件,input组件
+ * 3).input组件的语义化,在react需要特别监听值的改变
  * [
  * {row:[{'college|query'},{'stuType|select'},{'major|select'}]},
  * {row:[{'grade|input'},{'query'}]}
@@ -86,7 +87,14 @@ var Panel=React.createClass({
                 for(var i=0;i<form.getElementsByTagName("input").length;i++)
                 {
                     var item=form.getElementsByTagName("input")[i];
-                    params[item.name]=item.value;
+                    //针对单选
+                    if(item.type=='radio')
+                    {
+                        if(item.checked==true)
+                        params[item.name]=item.value;
+                    }else{
+                        params[item.name]=item.value;
+                    }
                 }
                 this.props.clickHandle(params);
             }else{//如果本组件为最顶层组件
@@ -157,6 +165,15 @@ var Panel=React.createClass({
 
 
     },
+    returnCb:function(evt){
+        evt.preventDefault();
+        var target=evt.target;
+        if(target.getAttribute("data-return")!==undefined&&target.getAttribute("data-return")!==null)
+        {
+            this.props.returnCb();
+        }
+
+    },
     getInitialState:function(){
 
         //为组件类型保留关键字
@@ -166,7 +183,8 @@ var Panel=React.createClass({
             "select":true,
             "span":true,
             "textarea":true,
-            "radio":true
+            "radio":true,
+            "return":true
         }
 
         var bean;
@@ -213,6 +231,8 @@ var Panel=React.createClass({
 
             var clickHandle=this.clickHandle;
             var state=this.state;
+            var props=this.props;
+            var returnCb=this.returnCb;
             var selectHandle=this.selectHandle;
             state.data.map(function(item,i) {
                 var row=item.row;
@@ -293,13 +313,17 @@ var Panel=React.createClass({
                                 {
                                     if(coms[2]!==null&&coms[2]!==undefined)
                                     {
+                                        //input组件扩展至第3个字段
                                         switch(coms[2])
                                         {
                                             case 'false':
                                                 ctrl=<input type='text' name={coms[0]} disabled={true}/>
                                                 break;
-                                            default:
+                                            case 'true':
                                                 ctrl=<input type='text' name={coms[0]} />
+                                                break;
+                                            default:
+                                                ctrl=<input type='text' name={coms[0]} defaultValue={coms[2]}/>
                                                 break;
                                         }
                                     }
@@ -371,15 +395,33 @@ var Panel=React.createClass({
 
                                 break;
                             case 'textarea':
-                                ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>
+                                console.log();
+                                console.log();
+                                console.log();
+                                console.log();
+                                if(state.bean!==undefined&&state.bean!==null&&coms[2]!==null)
+                                {
+                                    ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}} value={coms[2]}></textarea>
+                                }
+                                else
+                                    ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>
                                 break;
                             case 'radio':
                                 if(coms[2]!==undefined&&coms[2]!==null)
                                 {
-                                    ctrl=<Radio name={coms[0]} data={coms[2]}/>
+                                    ctrl=<Radio ctrlName={coms[0]} data={coms[2]}/>
                                 }else{
-                                    ctrl=<Radio name={coms[0]}/>
+                                    ctrl=<Radio ctrlName={coms[0]}/>
                                 }
+                                break;
+                            case 'return':
+
+                                    ctrl = <button  onClick={returnCb} style={{width:"100%"}} data-return={props.returnCb}>
+                                        {coms[0]}</button>;
+
+
+                                //当最后一个为query组件时,取消之前的label td
+                                label=null;
                                 break;
                             default:
                                 break;
@@ -425,7 +467,7 @@ var Panel=React.createClass({
             }
             return(
                 <form name="PanelForm" className="form panel" action={this.props.query!==undefined&&this.props.query!==null?this.props.query.url:""}
-                      method="post" style={{margin:"20px"}} >
+                      method="post">
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel">

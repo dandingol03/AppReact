@@ -15,11 +15,11 @@ function Boot()
         "termCount":true,
         "examTypeName":true,
         "managerName":true,
-        "detail":true
+        "link":true
     }
 
    var  query={
-    url:"/gradms/bsuims/reactPageDataRequest.do",
+    url:"/serviceHall/bsuims/reactPageDataRequest.do",
         params:{
         reactActionName:"allCourseQueryDoQuery",
             reactPageName:"newCultivateAllCourseQueryPage"
@@ -30,7 +30,7 @@ function Boot()
     render(
         <PanelTable
             bean={{
-                url:"/gradms/bsuims/reactPageDataRequest.do",
+                url:"/serviceHall/bsuims/reactPageDataRequest.do",
                 params:{
                 reactActionName:"allCourseQueryInit",
                 reactPageName:"newCultivateAllCourseQueryPage"

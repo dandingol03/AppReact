@@ -37,8 +37,10 @@ var LinkElement=React.createClass({
         {
             query=this.props["data-query"];
         }
+
+
         return (<a href={link}  className={this.props.linkClass} data-index={data$index}
-                   onClick={this.clickCb} style={alignStyle} data-query={query}>
+                   onClick={this.clickCb} style={alignStyle} data-query={query} data-comp={this.props["data-comp"]}>
             {this.props.children}</a>)
     }
 });
