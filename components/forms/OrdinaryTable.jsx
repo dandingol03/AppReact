@@ -570,20 +570,54 @@ var OrdinaryTable =React.createClass({
                                         case 'link':
                                             if(row[field]!==undefined&&row[field]!==null)
                                             {
-                                                var ids=row[field].split('|');
-                                                if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
+                                                var ids=null;
+                                                var comps=null;
+                                                try{
+                                                    comps=eval(row[field]);
+                                                }catch(e)
                                                 {
-                                                    tds.push(
-                                                        <td key={k++}>
-                                                            <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
-                                                        </td>);
+                                                    ids=row[field].split('|');
                                                 }
-                                                else{
-                                                    tds.push(
-                                                        <td key={k++}>
-                                                            <LinkElement>{ids[0]}</LinkElement>
-                                                        </td>);
+
+                                                if(comps!==null)
+                                                {
+                                                    var links=new Array();
+                                                    comps.map(function(comp,i){
+                                                     var confs=comp.split('|');
+                                                        if(confs[1]!==undefined&&confs[1]!==null&&confs[2]!==undefined&&confs[2]!==null)
+                                                        {
+                                                            links.push(
+                                                                    <LinkElement linkCb={linkCb} data-comp={confs[1]} data-query={confs[2]} key={i}>{confs[0]}</LinkElement>
+                                                                );
+                                                        }
+                                                    });
+                                                    if(links.length>=1)
+                                                    {
+                                                        tds.push(
+                                                            <td key={k++}>
+                                                                {links}
+                                                                </td>);
+                                                    }
+                                                }else{
+                                                    if(ids!==null)
+                                                    {
+                                                        if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
+                                                        {
+                                                            tds.push(
+                                                                <td key={k++}>
+                                                                    <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
+                                                                </td>);
+                                                        }
+                                                        else{
+                                                            tds.push(
+                                                                <td key={k++}>
+                                                                    <LinkElement>{ids[0]}</LinkElement>
+                                                                </td>);
+                                                        }
+                                                    }
                                                 }
+
+
                                             }
                                             else{
                                                 tds.push(<td key={k++}></td>);
