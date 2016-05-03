@@ -14,8 +14,7 @@ function Boot()
         "classHour":true,
         "termCount":true,
         "examTypeName":true,
-        "managerName":true,
-        "detail":true
+        "managerName":true
     }
 
    var  query={

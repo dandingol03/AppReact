@@ -49,7 +49,6 @@ var PanelTable=React.createClass({
             comps=this.props.comps;
         }
 
-
         return({comps:comps});
     },
     render:function(){
@@ -60,6 +59,8 @@ var PanelTable=React.createClass({
                 <div className="col-sm-12">
                 <Panel
                     data={this.state.comps}
+                    bean={this.props.bean}
+                    auto={true}
                     autoComplete={true}
                     query={this.props.query}
                     clickHandle={this.clickHandle}
@@ -68,10 +69,12 @@ var PanelTable=React.createClass({
                     autoFetch={false}
                     data={this.props.data}
                     filterField={this.props.filterField}
-                    title="论文匿命评阅"
                     />
                 </div>
             </div>
+
+
+
            )
 
 
