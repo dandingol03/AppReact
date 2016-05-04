@@ -471,7 +471,7 @@ var Table=React.createClass({
                 var queryExist=false;
                 var queryType;
                 //广播事件的命名以publish的type属性为标准
-                var publish;
+                var publish=new Object();
                 var broadcastCount=0;
                 this.state.components.map(function(item,i) {
                     if(item.type=="query")

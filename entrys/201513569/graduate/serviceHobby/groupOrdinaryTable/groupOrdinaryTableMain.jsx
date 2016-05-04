@@ -7,6 +7,7 @@ Boot();
 
 function Boot()
 {
+
     var data=[
         {no:1,sex:'m',stu:110},
         {no:1,sex:'f',stu:112},

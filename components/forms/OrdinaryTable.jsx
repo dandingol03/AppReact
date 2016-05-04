@@ -13,7 +13,7 @@ import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
  *
  * 1.dataField,本组件支持多数据源注入,由dataField的field映射至各表数据源所对应的键
  * 2.link组件开始支持单字段复数
- *
+ * 3.目前分组无法识别filterField
  */
 var OrdinaryTable =React.createClass({
     combineRemainTd:function(out$param,in$param,prefix,start,count,p$index){
@@ -35,16 +35,108 @@ var OrdinaryTable =React.createClass({
                 else
                     td$index = p$index;
 
-
                 var row=in$param[i];
-                console.log("stu="+row.stu);
-                for(var field in row)
+
+                //如果过滤字段存在
+                if(state.filterField!==undefined&&state.filterField!==null&&Object.prototype.toString.call(state.filterField)=='[object Object]')
                 {
-                    if(existedInArray(field,state.group$field)===false)
+                    var linkCb=this.linkCb;
+                    for(var field in state.filterField)
                     {
-                        tds.push(<td key={td$index++}>{row[field]}</td>);
+                        if(existedInArray(field,state.group$field)===false)
+                        {
+                            switch(field)
+                            {
+                                case 'attachs':
+
+                                    var downloads=null;
+                                    var ids=null;
+                                    if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
+                                        ids=row[field].split("|");
+                                    if(ids!=null&&ids.length>=1)
+                                    {
+                                        downloads=new Array();
+                                        ids.map(function(item,i) {
+                                            downloads.push(<Download attachId={item} key={i}/>);
+                                        });
+                                    }
+                                    tds.push(<td key={td$index++}>{downloads}</td>);
+                                    break;
+                                case 'link':
+                                    if(row[field]!==undefined&&row[field]!==null)
+                                    {
+                                        var ids=null;
+                                        var comps=null;
+                                        try{
+                                            comps=eval(row[field]);
+                                        }catch(e)
+                                        {
+                                            ids=row[field].split('|');
+                                        }
+
+                                        if(comps!==null)
+                                        {
+                                            var links=new Array();
+                                            comps.map(function(comp,i){
+                                                var confs=comp.split('|');
+                                                if(confs[1]!==undefined&&confs[1]!==null&&confs[2]!==undefined&&confs[2]!==null)
+                                                {
+                                                    links.push(
+                                                        <LinkElement linkCb={linkCb} data-comp={confs[1]} data-query={confs[2]} key={i}>{confs[0]}</LinkElement>
+                                                    );
+                                                }
+                                            });
+                                            if(links.length>=1)
+                                            {
+                                                tds.push(
+                                                    <td key={td$index++}>
+                                                        {links}
+                                                    </td>);
+                                            }
+                                        }else{
+                                            if(ids!==null)
+                                            {
+                                                if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
+                                                {
+                                                    tds.push(
+                                                        <td key={td$index++}>
+                                                            <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
+                                                        </td>);
+                                                }
+                                                else{
+                                                    tds.push(
+                                                        <td key={k++}>
+                                                            <LinkElement>{ids[0]}</LinkElement>
+                                                        </td>);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        tds.push(<td key={td$index++}></td>);
+                                    }
+                                    break;
+                                default:
+                                    tds.push(<td key={td$index++}>{row[field]}</td>);
+                                    break;
+                            }
+                        }
+                    }
+
+
+
+                }else{
+                    for(var field in row)
+                    {
+                        //分组算法中,只压入非分组范围字段
+                        if(existedInArray(field,state.group$field)===false)
+                        {
+
+                            tds.push(<td key={td$index++}>{row[field]}</td>);
+                        }
                     }
                 }
+
                 out$param.push(<tr key={i}>{tds}</tr>);
 
             }
@@ -74,7 +166,7 @@ var OrdinaryTable =React.createClass({
                     }
                     //代表td的键值
                     var index=td$index;
-                    tds.push(<td rowSpan={pool[i].c} key={index++}>{pool[i].v}</td>);
+                    tds.push(<td rowSpan={pool[i].c} key={index++} style={{verticalAlign:"inherit"}}>{pool[i].v}</td>);
                     //分组非叶结点
                     if(leaf==false)
                     {
@@ -264,16 +356,26 @@ var OrdinaryTable =React.createClass({
             'json',
             function(response){
                 var data;
+                var ob=new Object();
                 if(Object.prototype.toString.call(response)!='[object Array]')
-                {
                     if(response.data!==undefined&&response.data!==null)
-                    {
                         if(Object.prototype.toString.call(response.data)=='[object Array]')
                             data=response.data;
-                    }
-                }else
+                else
                     data=response;
-                this.setState({data:data,data$initialed:true});
+
+
+
+                if(this.state.group$field!==undefined&&this.state.group$field!==null)
+                {
+                    var arr=this.group(data,this.state.group$field);
+                    ob.data=arr[1];
+                    ob.pool=arr[0];
+                }else{
+                    ob.data=data;
+                }
+                ob.data$initialed=true;
+                this.setState(ob);
             }.bind(this)
         )
     },
@@ -365,6 +467,8 @@ var OrdinaryTable =React.createClass({
             op.data$initialed=props.data$initialed;
         if(props.data!==undefined&&props.data!==null)
             op.data=props.data;
+        if(props.pool!==undefined&&props.pool!==null)
+            op.pool=props.pool;
         this.setState(op);
     },
     render:function(){
@@ -497,6 +601,7 @@ var OrdinaryTable =React.createClass({
                     if(state.group$field!==undefined&&state.group$field!==null)
                     {
 
+
                         this.groupCombine(state.pool, state.data,trs, this.state.group$field);
                     }else{
                         var linkCb=this.linkCb;
@@ -525,29 +630,61 @@ var OrdinaryTable =React.createClass({
                                                         downloads.push(<Download attachId={item} key={i}/>);
                                                     });
                                                 }
-
-
                                                 tds.push(<td key={k++}>{downloads}</td>);
                                                 break;
                                             case 'link':
                                                 if(row[field]!==undefined&&row[field]!==null)
                                                 {
-
-
-                                                    var ids=row[field].split('|');
-                                                    if(ids[1]!==null&&ids[1]!==undefined&&ids[2]!==undefined&&ids[2]!==null)
+                                                    var ids=null;
+                                                    var comps=null;
+                                                    try{
+                                                        comps=eval(row[field]);
+                                                    }catch(e)
                                                     {
-                                                        tds.push(
-                                                            <td key={k++}>
-                                                                <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]} >{ids[0]}</LinkElement>
-                                                            </td>);
+                                                        ids=row[field].split('|');
                                                     }
-                                                    else{
-                                                        tds.push(
-                                                            <td key={k++}>
-                                                                <LinkElement>{ids[0]}</LinkElement>
-                                                            </td>);
+
+                                                    if(comps!==null)
+                                                    {
+                                                        var links=new Array();
+                                                        comps.map(function(comp,i){
+                                                            var confs=comp.split('|');
+                                                            if(confs[1]!==undefined&&confs[1]!==null&&confs[2]!==undefined&&confs[2]!==null)
+                                                            {
+                                                                links.push(
+                                                                    <LinkElement linkCb={linkCb} data-comp={confs[1]} data-query={confs[2]} key={i}>{confs[0]}</LinkElement>
+                                                                );
+                                                            }
+                                                        });
+                                                        if(links.length>=1)
+                                                        {
+                                                            tds.push(
+                                                                <td key={k++}>
+                                                                    {links}
+                                                                </td>);
+                                                        }
+                                                    }else{
+                                                        if(ids!==null)
+                                                        {
+                                                            if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
+                                                            {
+                                                                tds.push(
+                                                                    <td key={k++}>
+                                                                        <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
+                                                                    </td>);
+                                                            }
+                                                            else{
+                                                                tds.push(
+                                                                    <td key={k++}>
+                                                                        <LinkElement>{ids[0]}</LinkElement>
+                                                                    </td>);
+                                                            }
+                                                        }
                                                     }
+
+
+
+
                                                 }
                                                 else{
                                                     tds.push(<td key={k++}></td>);

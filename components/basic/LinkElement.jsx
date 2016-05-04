@@ -40,7 +40,7 @@ var LinkElement=React.createClass({
 
 
         return (<a href={link}  className={this.props.linkClass} data-index={data$index}
-                   onClick={this.clickCb} style={alignStyle} data-query={query} data-comp={this.props["data-comp"]}>
+                   onClick={this.clickCb} style={Object.assign({marginRight:"20px"},alignStyle)} data-query={query} data-comp={this.props["data-comp"]}>
             {this.props.children}</a>)
     }
 });

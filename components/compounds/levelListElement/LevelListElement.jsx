@@ -67,7 +67,7 @@ var LevelListElement=React.createClass({
                 $(target).next(".embed-div").slideUp();
             }
         }
-        else if($(target).hasClass("second"))
+        else if($(target).hasClass("second"))//如果点击项为当前列表二级项
         {
             var branch=this.state.branch;
             var first=this.state.data[branch[0].field][pos];

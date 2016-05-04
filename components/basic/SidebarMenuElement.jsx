@@ -2,7 +2,51 @@ import React from 'react';
 import '../../css/components/basic/SidebarMenuElement/sidebarMenu.css';
 
 var SidebarMenuElement=React.createClass({
-    clickCb:function(evt){
+    clickCb:function(evt) {
+        //非treeview列表项的点击事件
+        var target=evt.target;
+        var $target = $(target);
+        var ob;
+        if(target.nodeName==="A")
+        {
+            ob = $target.parent("li");
+        }
+        if(target.nodeName==="I")
+            ob = $target.parent("a").parent("li");
+        if(target.nodeName==="SPAN")
+            ob=$target.parent("a").parent("li");
+        var index = ob.attr("data-index");
+        if(index!==undefined&&index!==null) {
+            var url=".."+this.state.data[index].controller;
+            console.log("url=" + url);
+            $("#centerFrame").attr("src", url+"?userName="+this.state.query.params.userName);
+        }
+    },
+    subClickCb:function(evt){
+        //点击子菜单的回调函数
+        var target=evt.target;
+        var $target = $(target);
+        var ob;
+        if(target.nodeName==="A")
+        {
+            ob = $target.parent("li");
+        }
+        if(target.nodeName==="I")
+            ob = $target.parent("a").parent("li");
+        if(target.nodeName==="SPAN")
+            ob=$target.parent("a").parent("li");
+        var index = ob.attr("data-index");
+        if(index!==undefined&&index!==null) {
+            var url=".."+this.state.data[index].controller;
+            console.log("url=" + url);
+            $("#centerFrame").attr("src", url+"?userName="+this.state.query.params.userName);
+        }
+
+
+    }
+    ,
+    clickTreeCb:function(evt){
+        //treeview列表项的点击事件
         var target=evt.target;
         var $target=$(target);
         var ob;
@@ -117,10 +161,12 @@ var SidebarMenuElement=React.createClass({
             if(data!==undefined&&data!==null) {
                 li$s=new Array();
                 var proj=this.state.projName;
-                var clickCb=this.clickCb;
+                var clickTreeCb=this.clickTreeCb;
+                var un$tree$clickCb=this.clickCb;
+                var subClickCb=this.subClickCb;
                 data.map(function(item,i) {
                         var parent;
-                        var parent$href=proj+item.controller;
+                        var parent$href=".."+item.controller;
                         var children;
 
 
@@ -132,10 +178,10 @@ var SidebarMenuElement=React.createClass({
                                 data.map(function(child,j){
                                     if(child.pid==item.authorityId)
                                     {
-                                        var href=proj+item.controller;
+                                        var href=".."+item.controller;
                                         children.push(
-                                            <li key={j}>
-                                                <a href={href}>
+                                            <li key={j} data-index={j} onClick={subClickCb}>
+                                                <a href="javascript:void(0)">
                                                 <i className="fa fa-angle-double-right"></i>
                                                 {child["authorityName"]}
                                             </a>
@@ -144,8 +190,8 @@ var SidebarMenuElement=React.createClass({
                                     }
                                 });
                                 parent= (
-                                    <li className="treeview" key={i} onClick={clickCb}>
-                                    <a href="#">
+                                    <li className="treeview" key={i} onClick={clickTreeCb} >
+                                    <a href="javascript:void(0)">
                                         <i className="fa fa-bar-chart-o"></i>
                                         <span>{item["authorityName"]}</span>
                                         <i className="fa fa-angle-left pull-right"></i>
@@ -155,10 +201,10 @@ var SidebarMenuElement=React.createClass({
                                     </ul>
                                 </li>);
                                 li$s.push(parent);
-                            }else{
+                            }else{//如果本列表项不是treeview
                                 parent= (
-                                    <li key={i}>
-                                        <a href={parent$href}>
+                                    <li key={i} onClick={un$tree$clickCb} data-index={i}>
+                                        <a href="javascript:void(0)">
                                             <i className="fa fa-th"></i>
                                             {item["authorityName"]}
                                         </a>

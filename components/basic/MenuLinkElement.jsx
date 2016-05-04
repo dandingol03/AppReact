@@ -2,20 +2,22 @@ import React from 'react';
 
 var MenuLinkElement=React.createClass({
     clickCb:function(){
-        if(this.props.handle!==undefined&&this.props.handle!==null)
-            this.props.handle({content:this.props.content,index:this.state.index});
-    },
-    getInitialState:function(){
-        var index;
-        if(this.props.index!==undefined&&this.props.index!==null)
-        index=this.props.index;
+        if(this.props.selectCb!==undefined&&this.props.selectCb!==null)
+        {
+            if(this.props[data-index]!==undefined&&this.props[data-index]!==null&&!isNaN(parseInt(this.props["data-index"])))
+                this.props.selectCb({title:this.props.title,index:this.props["data-index"]});
+            else
+                this.props.selectCb({title:this.props.title});
+        }
 
-        return {index:index};
     },
     render:function(){
-        return (<li>
-            <a href={this.props.link} onClick={this.clickCb}>{this.props.content}</a>
-        </li>);
+        return (
+            <li>
+                <a href={this.props.link} onClick={this.clickCb}>
+                    {this.props.title}
+                </a>
+            </li>);
     }
 })
 

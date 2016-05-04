@@ -5,14 +5,19 @@ import TodoStore from '../_event/TodoStore.js';
 
 
 /**
- * @property,explicit:required: title{String}
- * @property,explicit:option:   data{link,title}
- * @property,explicit:option:   auto{false|undefined|null|xxx},
+ * @property, title{String}
+ * @property, data{link,title}
+ * @property,  auto{false|undefined|null|xxx},
  * this prop will forbid component get menu from server-end if this prop is set to true;
  * u can set any-value  to enable dynamic menu-fetch;
- * @property,implicit:option:   query{params:xxx,url:xxx}
- * @property,implicit:option:   subscribe:{type:xxx,cb:xxx}
+ * @property,   query{params:xxx,url:xxx}
+ * @property,   subscribe:{type:xxx,cb:xxx}
  * this prop component subscribe the message of the type you specified
+ * @property,  ctrlName
+ * a input name which use to identify this field in back-end
+ * @example
+ *
+ *
  */
 
 var DropDownButtonElement=React.createClass({
@@ -27,56 +32,58 @@ var DropDownButtonElement=React.createClass({
                 cache: false,
                 success: function(data) {
                     if(data!==undefined&&data!==null&&data.length>0)
-                        this.setState({data:data,initialedData:true});
+                        this.setState({data:data,data$initialed:true});
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }
             });
         }
-    }
-    ,selectCb:function(ob){
+    },
+    /**
+     * 选中事件的回调函数
+     * @param ob
+     */
+    selectCb:function(ob){
         if(ob!==undefined&&ob!==null)
         {
-            //selectedIndex indicate which menu you select
+            //index属性等价选中项所位于的列表位置
             if(ob.index!==null&&ob.index!==undefined)
                 this.setState({selectedIndex:ob.index});
         }
     },
     getInitialState:function(){
-        var data;
+
+
+        //数据初始化的状态
+        var data$initialed;
         if(this.props.data!==undefined&&this.props.data!==null)
-            data=this.props.data;
-        var auto;//enable dynamic data-fetch
-        if(this.props.auto!==undefined&&this.props.auto!==null&&this.props.auto!==false)
-            auto=true
-        var initialedData;
-        if(data!==undefined&&data!==null)
-            initialedData=true;
+            data$initialed=true;
+        //是否参与事件订阅
         var subscribe;
         if(this.props.subscribe!==undefined&&this.props.subscribe!==null)
             subscribe=this.props.subscribe;
+        //选中项的位置标识
         var selectedIndex;
         if(this.props.selectedIndex!==undefined&&this.props.selectedIndex!==null)
             selectedIndex=this.props.selectedIndex;
-        var id;
-        if(this.props.id!==undefined&&this.props.id!==null)
-            id=this.props.id;
-        return {data:data,auto:auto,initialedData:initialedData,subscribe:subscribe
-        ,selectedIndex:selectedIndex,id:id};
+
+
+        return {data$initialed:data$initialed,subscribe:subscribe
+        ,selectedIndex:selectedIndex};
     },
     render:function(){
         var t_menu;
-        if(this.state.initialedData===true)
+        if(this.state.data$initialed===true)
         {
             var selectCb=this.selectCb;
-             t_menu=this.state.data.map(function(item,i) {
+             t_menu=this.props.data.map(function(item,i) {
                 return(
-                    <MenuLinkElement link={item.link} content={item.title} key={i} index={i} handle={selectCb}/>
+                    <MenuLinkElement link={item.link} title={item.title} key={i} data-index={i} selectCb={selectCb}/>
                 )
             })
         }else{
-            if(this.state.auto===true)
+            if(this.props.auto===true)
             {
                 this.initialData();
             }
@@ -84,13 +91,15 @@ var DropDownButtonElement=React.createClass({
 
         var title;
         if(this.state.selectedIndex!==null&&this.state.selectedIndex!==undefined)
-            title=this.state.data[this.state.selectedIndex]["title"];
+            title=this.props.data[this.state.selectedIndex]["title"];
         else
         {
             if(this.props.title!==undefined&&this.props.title!==null)
                 title=this.props.title;
         }
-        return( <div className="btn-group">
+        return(
+            <div className="btn-group">
+                <input name={this.props.ctrlName} style={{display:"none"}}></input>
                 <ButtonElement type="button" buttonClass="btn btn-default dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" title={title} >

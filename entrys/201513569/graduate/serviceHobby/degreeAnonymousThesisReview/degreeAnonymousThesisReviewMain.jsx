@@ -10,7 +10,7 @@ function Boot(){
         {row:['stuType|select','query']}
     ];
     var query={
-        url:"/gradms/bsuims/reactPageDataRequest.do",
+        url:"/serviceHall/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:"degreeAnonymousThesisReviewResult",
             reactActionName:"deegreeThesisReviewResult"
