@@ -18,7 +18,19 @@ var PanelTable=React.createClass({
                 null,
                 function(response){
                     //这里需要统一规范后台返回的数据格式
-                    this.setProps({data:response.arr});
+                    var ob=new Object();
+                    if(response.arr!==undefined&&response.arr!==null)
+                        ob.data=response.arr;
+                    if(response.tail!==undefined&&response.tail!==null)
+                    {
+                        try{
+                            ob.tail=eval(response.tail);
+                        }catch(e)
+                        {
+                            alert("error="+e);
+                        }
+                    }
+                    this.setProps(ob);
                 }.bind(this)
             );
 
