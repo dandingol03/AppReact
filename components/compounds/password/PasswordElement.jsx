@@ -1,25 +1,27 @@
 import React from 'react';
 import {render} from 'react-dom';
+import '../../../css/components/compounds/password/PasswordElement.css';
+
 
 /**
  * Bootstrap
  */
-var PasswordElement=React.createClass({
+var Password=React.createClass({
     commitCb:function(evt){
-        //do validate job
-        var valueBinding=this.state.valueBinding;
-        if(valueBinding["enterOldPwd"]!==valueBinding["enterRepeatPwd"])
+        //validate newPwd
+        if(valueBinding["enterNewPwd"]!==valueBinding["enterRepeatNewPwd"])
         {
             alert("两次输入的密码有误,请重新输入");
             return;
         }
+        //validate oldPwd
+
         var form=document.getElementsByName("passwordForm")[0];
         form.submit();
     },
     handleChange:function(evt){
         var value=evt.target.value;
         var name=evt.target.name;
-        alert("name="+name);
         var valueBinding=this.state.valueBinding;
         valueBinding[name]=value;
         this.setState({valueBinding});
@@ -42,9 +44,9 @@ var PasswordElement=React.createClass({
 
         //表头标题
         var title;
-        if(this.props.title!==undefined&&this.propts.title!==null)
+        if(this.props.title!==undefined&&this.props.title!==null)
         {
-            title=(<tr><td colSpan={this.state.twSpan}>{this.props.title}</td></tr>);
+            title=(<tr><td colSpan={this.state.twSpan} style={{textAlign:"center"}}>{this.props.title}</td></tr>);
         }
 
 
@@ -63,7 +65,7 @@ var PasswordElement=React.createClass({
                 field:"旧密码:",name:"enterOldPwd"
                 },
                 {
-                    field:"输入新密码:",name:"enterRepeatNewPwd",contract:"密码长度最大为12位"
+                        field:"输入新密码:",name:"enterNewPwd",contract:"密码长度最大为12位"
                 },
                 {
                     field:"重复输入新密码:",name:"enterRepeatNewPwd",contract:"密码长度最大为12位"
@@ -72,36 +74,46 @@ var PasswordElement=React.createClass({
         //遍历inputFields,拿到所需填写的字段和填写该字段所需满足的规则
         var handleChange=this.handleChange;
         content.map(function(item,i) {
-
+            var contract;
+            if(item.contract!==undefined&&item.contract!==null)
+            {
+                var contract_content="*(";
+                contract_content+=item.contract;
+                contract_content+=")";
+                contract=(<span style={{color:"#f00"}}>{contract_content}</span>)
+            }
 
             inputFields.push(
                 <tr key={i}>
                     <td style={tdStyle_f}>{item.field}</td>
                     <td style={tdStyle_b}>
                         <input type="password" name={item.name} onChange={handleChange}/>
+                        {contract}
                     </td>
-                    <span>{item.contract}</span>
+
                 </tr>
             )
         });
         //buttons
         var buttons;
-        buttons=(<tr><td colSpan={this.state.twSpan}>
-            <button className="btn btn-default" value="提交" onClick={this.commitCb}></button>
-            <button className="btn btn-default" value="重置" type="reset"></button>
+        buttons=(<tr><td colSpan={this.state.twSpan} style={{textAlign:"center"}}>
+            <button className="btn btn-default"  onClick={this.commitCb}>提交</button>
+            <button className="btn btn-default"  type="reset">重置</button>
         </td></tr>)
     return (
-    <form name="passwordForm" method="post" action={this.props.action}>
+    <form name="passwordForm" className="form" method="post" action={this.props.action} style={{margin:"20px"}}>
         <div className="row">
-            <div className="col-lg-10">
+            <div className="col-lg-12">
                     <table className="table table-bordered center">
                         <thead>
                         {title}
                         </thead>
                         <tbody>
                         {inputFields}
-                        {buttons}
                         </tbody>
+                        <tfoot className="foot">
+                        {buttons}
+                        </tfoot>
                     </table>
             </div>
         </div>
@@ -109,3 +121,5 @@ var PasswordElement=React.createClass({
     )
     }
 })
+
+export default Password

@@ -4,6 +4,12 @@ import LinkElement from './LinkElement.jsx';
 import '.././../css/components/basic/ListElement/ListElement.css';
 
 /**
+ *  @example
+ *  <ListElement  data-options={data$options} applyCb={this.applyHandle}
+ *  cancelCb={this.cancelHandle}/>
+ *  @property,
+ *
+ *
  * @property,explicit:option: data-options{undefined||null||Object}
  * @property,explicit:option:   data-options.params{Array},
  * this property will form the content of list;

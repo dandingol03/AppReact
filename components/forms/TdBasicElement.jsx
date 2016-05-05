@@ -1,7 +1,10 @@
 import React from 'react';
 import '../../css/components/forms/TdBasicElement/TdBasicElement.css';
 
-
+/**
+ * 1.tdData,用于存储数据
+ *
+ */
 
 var TdBasicElement=React.createClass({
     clickHandler:function(){
@@ -18,11 +21,13 @@ var TdBasicElement=React.createClass({
                             colSpan={1} width={this.props.width} className="un-render"
                             onClick={this.clickHandler} style={groupStyle}>
                     {data}
+                    {this.props.children}
                 </td>);
             }else{
                 return (<td rowSpan={this.props.rowSpan!==undefined&&this.props.rowSpan!==null?this.props.rowSpan:1} colSpan={1} width={this.props.width}
                             onClick={this.clickHandler}>
                     {data}
+                    {this.props.children}
                 </td>);
             }
         }
@@ -33,11 +38,13 @@ var TdBasicElement=React.createClass({
                 return (<td  rowSpan={this.props.rowSpan!==undefined&&this.props.rowSpan!==null?this.props.rowSpan:1} colSpan={1}
                              onClick={this.clickHandler} className="microsoft-font un-render" style={groupStyle}>
                     {data}
+                    {this.props.children}
                 </td>);
             }else{
                 return (<td  rowSpan={this.props.rowSpan!==undefined&&this.props.rowSpan!==null?this.props.rowSpan:1} colSpan={1}
                              onClick={this.clickHandler} className="microsoft-font" >
                     {data}
+                    {this.props.children}
                 </td>);
             }
 

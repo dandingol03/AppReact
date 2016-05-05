@@ -95,9 +95,6 @@ var CoupleTableElement=React.createClass({
 
 
     },
-    deleteHandle:function(ob){
-
-    },
     notifyCb:function(ob) {
         //TODO:ob(content:{xxx:xxx},method:['addHandle','deleteHandle']}
         if(ob!==undefined&&ob!==null)

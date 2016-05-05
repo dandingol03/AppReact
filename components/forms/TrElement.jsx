@@ -7,6 +7,8 @@ import CheckBoxElement from '../basic/CheckBoxElement.jsx';
  * @property,rowIndex(typeof *===number)
  * @property,isLineNumberVisible(true|false)
  * @property,multiEnable(false|number)
+ * @example
+ *
  */
 var TrElement =React.createClass({
     checkCb:function(ob){
@@ -34,17 +36,19 @@ var TrElement =React.createClass({
         //TODO:urgent config un-support
         //1.var dw=React.createClass(className,classProps,child1,child2,...,childN)
 
+        //是否行号可见
         var isLineNumberVisible=this.props.isLineNumberVisible;
+        //是否匀许多选
         var multiEnable=this.props.multiEnable;
         var tdBasic=this.props.tdBasic;
         var widths=this.props.widths;
-        //indicate the group field
+        //分组类型设置
         var groupType;
         if(this.props.groupType!==undefined&&this.props.groupType!==null)
         {
             groupType=this.props.groupType;
         }
-
+        //行数据设置
         var rowData=this.props.rowData;
         var tds;
         var tgroups;
@@ -86,7 +90,7 @@ var TrElement =React.createClass({
 
 
         //op$ele,
-        //if parent component has pass op down,he op$ele will store the infomation
+        //if parent component has pass op down,the op$ele will store the infomation
         var op$ele;
         if(this.props.op!==undefined&&this.props.op!==null)
         {
