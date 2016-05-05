@@ -13,7 +13,8 @@ import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
  *
  * 1.dataField,本组件支持多数据源注入,由dataField的field映射至各表数据源所对应的键
  * 2.link组件开始支持单字段复数
- * 3.目前分组无法识别filterField
+ * 3.目前分组可以识别filterField
+ * 4.增加表尾控件,tail
  */
 var OrdinaryTable =React.createClass({
     combineRemainTd:function(out$param,in$param,prefix,start,count,p$index){
@@ -343,10 +344,97 @@ var OrdinaryTable =React.createClass({
 
         }
     },
+    checkCb:function(evt){
+        var target=evt.target;
+        var $target=$(target);
+        switch($target.attr("data-type"))
+        {
+            case 'checkM':
+                var k=$target.attr("data-index");
+                if(k!==null&&k!==undefined&&!isNaN(parseInt(k)))
+                {
+                     k=parseInt(k);
+                    if(this.state.checkingMap==null||this.state.checkingMap==undefined)
+                    {
+                        this.state.checkingMap=new Object();
+                    }
+                    if(this.state.checkingMap[k]!==undefined&&this.state.checkingMap[k]!==null)
+                        delete this.state.checkingMap[k];
+                    else
+                        this.state.checkingMap[k]=true;
+                }
+
+                break;
+            default:
+                break;
+        }
+
+
+
+
+    },
     returnCb:function()
     {
         this.setState({hiddenInfo:null});
         $(this.refs.contentDiv).slideDown();
+    },
+    clickHandle:function(evt)
+    {
+        var target=evt.target;
+        var $target=$(target);
+        switch($target.attr("data-type"))
+        {
+            case 'checkQuery':
+                if($target.attr("data-query")!==undefined&&$target.attr("data-query")!==null)
+                {
+                    var query = eval('(' + $target.attr("data-query") + ')');
+                    //取出选中数据的url,params,filter
+                    /**
+                     * filter,指定你想要check的数据列名
+                     */
+                    var data=this.state.data;
+
+                    var checkingMap=this.state.checkingMap;
+                    var squash;
+                    if(checkingMap!==undefined&&checkingMap!==null)
+                    {
+                        squash=new Array();
+                        for(var index in checkingMap)
+                        {
+                            if(Object.prototype.toString.call(query.filter)=='[object Array]')
+                            {
+                                var json=new Object();
+                                for(var field in query.filter)
+                                {
+                                    json[field]=data[index][field];
+                                }
+                                squash.push(json);
+                            }
+                            else
+                                squash.push(data[index]);
+                        }
+                        var squashed=new Object();
+                        squashed.squashed=squash;
+                        var params=Object.assign(query.params,squashed);
+                        this.queryHandle(
+                            null,
+                            query.url,
+                            params,
+                            'json',
+                            function(response){
+
+                            }.bind(this)
+                        )
+
+
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+
     },
     fetch:function(){
         this.queryHandle(
@@ -368,6 +456,7 @@ var OrdinaryTable =React.createClass({
 
                 if(this.state.group$field!==undefined&&this.state.group$field!==null)
                 {
+                    //对数据进行分组
                     var arr=this.group(data,this.state.group$field);
                     ob.data=arr[1];
                     ob.pool=arr[0];
@@ -375,6 +464,10 @@ var OrdinaryTable =React.createClass({
                     ob.data=data;
                 }
                 ob.data$initialed=true;
+                if(response.tail!==undefined&&response.tail!==null&&Object.prototype.toString.call(response.tail)=='[object Array]')
+                {
+                    ob.tail=response.tail;
+                }
                 this.setState(ob);
             }.bind(this)
         )
@@ -455,9 +548,14 @@ var OrdinaryTable =React.createClass({
             hiddenStatus=true;
 
 
+        //checkingMap,此选项用于保持选中数据项的下标
+        var checkingMap;
+        if(this.props.checkingMap!==undefined&&this.props.checkingMap!==null)
+            checkingMap=this.props.checkingMap;
+
         return ({autoFetch:autoFetch,data$initialed:data$initialed,data:data,
             sideField:sideField,dataField:dataField,filterField:filterField,group$field:group$field,
-            pool:pool,hiddenStatus:hiddenStatus});
+            pool:pool,hiddenStatus:hiddenStatus,checkingMap:checkingMap});
     },
     componentWillReceiveProps:function(props)
     {
@@ -600,11 +698,11 @@ var OrdinaryTable =React.createClass({
                     //如果字段进行分组
                     if(state.group$field!==undefined&&state.group$field!==null)
                     {
-
-
+                        //分组程序
                         this.groupCombine(state.pool, state.data,trs, this.state.group$field);
                     }else{
                         var linkCb=this.linkCb;
+                        var checkCb=this.checkCb;
                         state.data.map(function(row,i) {
                             var k=0;
                             var tds=new Array();
@@ -690,6 +788,26 @@ var OrdinaryTable =React.createClass({
                                                     tds.push(<td key={k++}></td>);
                                                 }
                                                 break;
+                                            case 'checkM':
+                                                if(row[field]!==undefined&&row[field]!==null) {
+
+
+                                                    if (row[field]==true|| row[field]== 'true'){
+
+                                                        tds.push(<td key={k++}>
+                                                                <input type="checkbox" data-index={i} data-type="checkM" onChange={checkCb} selected/>
+                                                            </td>
+                                                        );
+                                                    }
+                                                    else
+                                                        tds.push(
+                                                            <td key={k++}>
+                                                                <input type="checkbox" data-index={i} data-type="checkM"  onChange={checkCb}/>
+                                                            </td>);
+                                                }
+                                                else
+                                                    tds.push(<td key={k++}></td>);
+                                                    break;
                                             default:
                                                 tds.push(<td key={k++}>{row[field]}</td>);
                                                 break;
@@ -760,6 +878,23 @@ var OrdinaryTable =React.createClass({
                                                 tds.push(<td key={k++}></td>);
                                             }
                                             break;
+                                        case 'checkM':
+                                            if(row[field]!==undefined&&row[field]!==null) {
+
+                                                if (row[field]==true|| row[field]== 'true'){
+                                                    tds.push(<td key={k++}>
+                                                            <input type="checkbox" data-type="checkM" data-index={i} onChange={checkCb} selected/>
+                                                        </td>
+                                                    );
+                                                }
+                                                else
+                                                    tds.push(<td key={k++}>
+                                                        <input type="checkbox" data-type="checkM" data-index={i} onChange={checkCb}/>
+                                                    </td>);
+                                            }
+                                            else
+                                                tds.push(<td key={k++}></td>);
+                                            break;
                                         default:
                                             tds.push(<td key={k++}>{row[field]}</td>);
                                             break;
@@ -775,6 +910,51 @@ var OrdinaryTable =React.createClass({
                         });
                     }
 
+
+                    //单表数据源,表尾控件初始化
+                    var tails=null;
+                    if(this.state.tail!==undefined&&this.state.tail!==null)
+                    {
+                        var tail=new Array();
+                        var clickHandle=this.clickHandle;
+                        var state=this.state;
+                        this.state.tail.map(function(item,i) {
+                            var ids=item.split('|');
+                            var ctrl;
+                            if(ids.length>=2)
+                            {
+                                switch(ids[1])
+                                {
+                                    case 'checkQuery':
+                                        if(ids.length>=3)
+                                        {
+                                            var query=eval('('+ids[2]+')');
+                                            ctrl=<button  onClick={clickHandle} data-type="checkQuery" data-query={ids[2]}>{ids[0]}</button>;
+                                        }
+
+                                        else
+                                            ctrl=<button  onClick={clickHandle} data-type="checkQuery">{ids[0]}</button>;
+                                        tail.push(<td key={i}>{ctrl}</td>);
+                                        break;
+                                    default:
+                                        tail.push(<td key={i}></td>);
+                                        break;
+                                }
+                            }
+                        });
+
+                        tails=<tfoot>
+                                <tr>
+                                    <td colSpan={colSpan}>
+                                        <table className="table table-bordered center" style={{width:"100%"}}>
+                                            <tr>{tail}</tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                              </tfoot>
+                    }
+
+
                     var title=null;
                     if(this.props.title!==undefined&&this.props.title!==null)
                         title=<thead>
@@ -789,6 +969,7 @@ var OrdinaryTable =React.createClass({
                             <tr>{tr$fields}</tr>
                             {trs}
                             </tbody>
+                            {tails}
                         </table>)
 
                 }

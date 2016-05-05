@@ -174,6 +174,9 @@ var Panel=React.createClass({
         }
 
     },
+    shouldComponentUpdate: function(nextProps, nextState) {
+        return nextProps.data!==this.props.data||nextState.data!==this.state.data;
+    },
     getInitialState:function(){
 
         //为组件类型保留关键字
@@ -248,7 +251,14 @@ var Panel=React.createClass({
                     var name;
                     var so=dict[coms[0]];
                     if(state.bean!==undefined&&state.bean!==null)
-                        name=coms[0];
+                    {
+                        if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
+                        {
+                            name=coms[0].split('->')[1];
+                        }
+                        else
+                            name=coms[0];
+                    }
                     else
                     {
                         if(so!==undefined&&so!==null)
@@ -309,6 +319,13 @@ var Panel=React.createClass({
                                 label=null;
                                 break;
                             case 'input':
+                                var ctrlName;
+                                if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
+                                {
+                                    ctrlName=coms[0].split('->')[0];
+                                }else{
+                                    ctrlName=coms[0];
+                                }
                                 if(state.bean!==null&&state.bean!==undefined)
                                 {
                                     if(coms[2]!==null&&coms[2]!==undefined)
@@ -317,19 +334,19 @@ var Panel=React.createClass({
                                         switch(coms[2])
                                         {
                                             case 'false':
-                                                ctrl=<input type='text' name={coms[0]} disabled={true}/>
+                                                ctrl=<input type='text' name={ctrlName} disabled={true}/>
                                                 break;
                                             case 'true':
-                                                ctrl=<input type='text' name={coms[0]} />
+                                                ctrl=<input type='text' name={ctrlName} />
                                                 break;
                                             default:
-                                                ctrl=<input type='text' name={coms[0]} defaultValue={coms[2]}/>
+                                                ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
                                                 break;
                                         }
                                     }
                                 }
                                 else
-                                    ctrl=<input type='text' name={coms[0]}/>
+                                    ctrl=<input type='text' name={ctrlName}/>
                                 break;
                             case 'select':
                                 if(state.bean!==undefined&&state.bean!==null)
