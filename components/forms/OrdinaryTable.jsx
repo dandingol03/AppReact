@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import Download from '../../components/basic/Download.jsx';
 import LinkElement from '../../components/basic/LinkElement.jsx';
 import OrdinaryTr from '../../components/forms/OrdinaryTr.jsx';
+import Hide from '../../components/basic/Hide.jsx';
+import Panel from '../../components/panel/Panel.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
 import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 
@@ -10,8 +12,9 @@ import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 /**
  *
  * 1.dataField,本组件支持多数据源注入,由dataField的field映射至各表数据源所对应的键
- * 2.递归合并未采用,采用列扫描
- *
+ * 2.link组件开始支持单字段复数
+ * 3.目前分组可以识别filterField
+ * 4.增加表尾控件,tail
  */
 var OrdinaryTable =React.createClass({
     combineRemainTd:function(out$param,in$param,prefix,start,count,p$index){
@@ -33,16 +36,108 @@ var OrdinaryTable =React.createClass({
                 else
                     td$index = p$index;
 
-
                 var row=in$param[i];
-                console.log("stu="+row.stu);
-                for(var field in row)
+
+                //如果过滤字段存在
+                if(state.filterField!==undefined&&state.filterField!==null&&Object.prototype.toString.call(state.filterField)=='[object Object]')
                 {
-                    if(existedInArray(field,state.group$field)===false)
+                    var linkCb=this.linkCb;
+                    for(var field in state.filterField)
                     {
+                        if(existedInArray(field,state.group$field)===false)
+                        {
+                            switch(field)
+                            {
+                                case 'attachs':
+
+                                    var downloads=null;
+                                    var ids=null;
+                                    if(row[field]!==undefined&&row[field]!==null&&row[field]!='')
+                                        ids=row[field].split("|");
+                                    if(ids!=null&&ids.length>=1)
+                                    {
+                                        downloads=new Array();
+                                        ids.map(function(item,i) {
+                                            downloads.push(<Download attachId={item} key={i}/>);
+                                        });
+                                    }
+                                    tds.push(<td key={td$index++}>{downloads}</td>);
+                                    break;
+                                case 'link':
+                                    if(row[field]!==undefined&&row[field]!==null)
+                                    {
+                                        var ids=null;
+                                        var comps=null;
+                                        try{
+                                            comps=eval(row[field]);
+                                        }catch(e)
+                                        {
+                                            ids=row[field].split('|');
+                                        }
+
+                                        if(comps!==null)
+                                        {
+                                            var links=new Array();
+                                            comps.map(function(comp,i){
+                                                var confs=comp.split('|');
+                                                if(confs[1]!==undefined&&confs[1]!==null&&confs[2]!==undefined&&confs[2]!==null)
+                                                {
+                                                    links.push(
+                                                        <LinkElement linkCb={linkCb} data-comp={confs[1]} data-query={confs[2]} key={i}>{confs[0]}</LinkElement>
+                                                    );
+                                                }
+                                            });
+                                            if(links.length>=1)
+                                            {
+                                                tds.push(
+                                                    <td key={td$index++}>
+                                                        {links}
+                                                    </td>);
+                                            }
+                                        }else{
+                                            if(ids!==null)
+                                            {
+                                                if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
+                                                {
+                                                    tds.push(
+                                                        <td key={td$index++}>
+                                                            <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
+                                                        </td>);
+                                                }
+                                                else{
+                                                    tds.push(
+                                                        <td key={k++}>
+                                                            <LinkElement>{ids[0]}</LinkElement>
+                                                        </td>);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        tds.push(<td key={td$index++}></td>);
+                                    }
+                                    break;
+                                default:
+                                    tds.push(<td key={td$index++}>{row[field]}</td>);
+                                    break;
+                            }
+                        }
+                    }
+
+
+
+                }else{
+                    for(var field in row)
+                    {
+                        //分组算法中,只压入非分组范围字段
+                        if(existedInArray(field,state.group$field)===false)
+                        {
+
                             tds.push(<td key={td$index++}>{row[field]}</td>);
+                        }
                     }
                 }
+
                 out$param.push(<tr key={i}>{tds}</tr>);
 
             }
@@ -72,7 +167,7 @@ var OrdinaryTable =React.createClass({
                     }
                     //代表td的键值
                     var index=td$index;
-                    tds.push(<td rowSpan={pool[i].c} key={index++}>{pool[i].v}</td>);
+                    tds.push(<td rowSpan={pool[i].c} key={index++} style={{verticalAlign:"inherit"}}>{pool[i].v}</td>);
                     //分组非叶结点
                     if(leaf==false)
                     {
@@ -233,18 +328,113 @@ var OrdinaryTable =React.createClass({
         {
             var target=evt.target;
             var query;
-            if(target.getAttribute('data-query')!==undefined&&target.getAttribute('data-query')!==null)
+            if(target.getAttribute('data-comp')!==undefined&&target.getAttribute('data-comp')!==null)
             {
-                try{
-                    query=eval('('+target.getAttribute(('data-query'))+')');
-                }catch(e)
+                var comp=target.getAttribute("data-comp");
+                var hiddenInfo=new Object();
+                if(Object.prototype.toString.call(target.getAttribute('data-query')=='[object String]'))
+                    hiddenInfo.data=eval('('+target.getAttribute('data-query')+')');
+                else
+                    hiddenInfo.data=target.getAttribute('data-query');
+                hiddenInfo.comp=target.getAttribute('data-comp');
+
+                this.setState({hiddenInfo:hiddenInfo});
+                $(this.refs.contentDiv).slideUp();
+            }
+
+        }
+    },
+    checkCb:function(evt){
+        var target=evt.target;
+        var $target=$(target);
+        switch($target.attr("data-type"))
+        {
+            case 'checkM':
+                var k=$target.attr("data-index");
+                if(k!==null&&k!==undefined&&!isNaN(parseInt(k)))
                 {
-                    console.log("encounter error="+e);
+                     k=parseInt(k);
+                    if(this.state.checkingMap==null||this.state.checkingMap==undefined)
+                    {
+                        this.state.checkingMap=new Object();
+                    }
+                    if(this.state.checkingMap[k]!==undefined&&this.state.checkingMap[k]!==null)
+                        delete this.state.checkingMap[k];
+                    else
+                        this.state.checkingMap[k]=true;
                 }
 
-
-            }
+                break;
+            default:
+                break;
         }
+
+
+
+
+    },
+    returnCb:function()
+    {
+        this.setState({hiddenInfo:null});
+        $(this.refs.contentDiv).slideDown();
+    },
+    clickHandle:function(evt)
+    {
+        var target=evt.target;
+        var $target=$(target);
+        switch($target.attr("data-type"))
+        {
+            case 'checkQuery':
+                if($target.attr("data-query")!==undefined&&$target.attr("data-query")!==null)
+                {
+                    var query = eval('(' + $target.attr("data-query") + ')');
+                    //取出选中数据的url,params,filter
+                    /**
+                     * filter,指定你想要check的数据列名
+                     */
+                    var data=this.state.data;
+
+                    var checkingMap=this.state.checkingMap;
+                    var squash;
+                    if(checkingMap!==undefined&&checkingMap!==null)
+                    {
+                        squash=new Array();
+                        for(var index in checkingMap)
+                        {
+                            if(Object.prototype.toString.call(query.filter)=='[object Array]')
+                            {
+                                var json=new Object();
+                                for(var field in query.filter)
+                                {
+                                    json[field]=data[index][field];
+                                }
+                                squash.push(json);
+                            }
+                            else
+                                squash.push(data[index]);
+                        }
+                        var squashed=new Object();
+                        squashed.squashed=squash;
+                        var params=Object.assign(query.params,squashed);
+                        this.queryHandle(
+                            null,
+                            query.url,
+                            params,
+                            'json',
+                            function(response){
+
+                            }.bind(this)
+                        )
+
+
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+
     },
     fetch:function(){
         this.queryHandle(
@@ -254,16 +444,29 @@ var OrdinaryTable =React.createClass({
             'json',
             function(response){
                 var data;
+                var ob=new Object();
                 if(Object.prototype.toString.call(response)!='[object Array]')
-                {
                     if(response.data!==undefined&&response.data!==null)
-                    {
                         if(Object.prototype.toString.call(response.data)=='[object Array]')
                             data=response.data;
-                    }
-                }else
+                else
                     data=response;
-                this.setState({data:data,data$initialed:true});
+
+
+
+                if(this.state.group$field!==undefined&&this.state.group$field!==null)
+                {
+                    //对数据进行分组
+                    var arr=this.group(data,this.state.group$field);
+                    ob.data=arr[1];
+                    ob.pool=arr[0];
+                }else{
+                    ob.data=data;
+                }
+                ob.data$initialed=true;
+                console.log();
+                console.log();
+                this.setState(ob);
             }.bind(this)
         )
     },
@@ -300,11 +503,11 @@ var OrdinaryTable =React.createClass({
 
         var data;
         if(this.props.data!==undefined&&this.props.data!==null)
-        data=this.props.data;
+            data=this.props.data;
 
         var sideField;
         if(this.props.sideField!==undefined&&this.props.sideField!==null)
-        sideField=this.props.sideField;
+            sideField=this.props.sideField;
 
         var dataField;
         if(this.props.dataField!==undefined&&this.props.dataField!==null)
@@ -337,9 +540,20 @@ var OrdinaryTable =React.createClass({
             }
         }
 
+        //hidden componnet
+        var hiddenStatus=false;
+        if(this.props.hiddenStatus==true||this.props.hiddenStatus=='true')
+            hiddenStatus=true;
+
+
+        //checkingMap,此选项用于保持选中数据项的下标
+        var checkingMap;
+        if(this.props.checkingMap!==undefined&&this.props.checkingMap!==null)
+            checkingMap=this.props.checkingMap;
+
         return ({autoFetch:autoFetch,data$initialed:data$initialed,data:data,
-                sideField:sideField,dataField:dataField,filterField:filterField,group$field:group$field,
-                pool:pool});
+            sideField:sideField,dataField:dataField,filterField:filterField,group$field:group$field,
+            pool:pool,hiddenStatus:hiddenStatus,checkingMap:checkingMap});
     },
     componentWillReceiveProps:function(props)
     {
@@ -349,6 +563,10 @@ var OrdinaryTable =React.createClass({
             op.data$initialed=props.data$initialed;
         if(props.data!==undefined&&props.data!==null)
             op.data=props.data;
+        if(props.pool!==undefined&&props.pool!==null)
+            op.pool=props.pool;
+        if(props.tail!==undefined&&props.tail!==null)
+            op.tail=props.tail;
         this.setState(op);
     },
     render:function(){
@@ -357,8 +575,8 @@ var OrdinaryTable =React.createClass({
             if(this.state.autoFetch==true)
                 this.fetch();
             return (
-               <table>
-               </table>
+                <table>
+                </table>
             )
         }else{
             var colSpan=1;
@@ -464,11 +682,11 @@ var OrdinaryTable =React.createClass({
                             }
                         }
                     }else{
-                            for(var field in state.data[0])
-                            {
-                                tr$fields.push(<td key={j++}>{field}</td>)
-                                colSpan++;
-                            }
+                        for(var field in state.data[0])
+                        {
+                            tr$fields.push(<td key={j++}>{field}</td>)
+                            colSpan++;
+                        }
 
 
                     }
@@ -480,10 +698,11 @@ var OrdinaryTable =React.createClass({
                     //如果字段进行分组
                     if(state.group$field!==undefined&&state.group$field!==null)
                     {
-
+                        //分组程序
                         this.groupCombine(state.pool, state.data,trs, this.state.group$field);
                     }else{
                         var linkCb=this.linkCb;
+                        var checkCb=this.checkCb;
                         state.data.map(function(row,i) {
                             var k=0;
                             var tds=new Array();
@@ -509,32 +728,86 @@ var OrdinaryTable =React.createClass({
                                                         downloads.push(<Download attachId={item} key={i}/>);
                                                     });
                                                 }
-
-
                                                 tds.push(<td key={k++}>{downloads}</td>);
                                                 break;
                                             case 'link':
                                                 if(row[field]!==undefined&&row[field]!==null)
                                                 {
-                                                    var ids=row[field].split('|');
-                                                    if(ids[1]=='link'&&ids[2]!==undefined&&ids[2]!==null)
+                                                    var ids=null;
+                                                    var comps=null;
+                                                    try{
+                                                        comps=eval(row[field]);
+                                                    }catch(e)
                                                     {
-                                                        tds.push(
-                                                            <td key={k++}>
-                                                                <LinkElement linkCb={linkCb} data->{ids[0]}</LinkElement>
-                                                            </td>);
+                                                        ids=row[field].split('|');
                                                     }
-                                                    else{
-                                                        tds.push(
-                                                            <td key={k++}>
-                                                                <LinkElement>{ids[0]}</LinkElement>
-                                                             </td>);
+
+                                                    if(comps!==null)
+                                                    {
+                                                        var links=new Array();
+                                                        comps.map(function(comp,i){
+                                                            var confs=comp.split('|');
+                                                            if(confs[1]!==undefined&&confs[1]!==null&&confs[2]!==undefined&&confs[2]!==null)
+                                                            {
+                                                                links.push(
+                                                                    <LinkElement linkCb={linkCb} data-comp={confs[1]} data-query={confs[2]} key={i}>{confs[0]}</LinkElement>
+                                                                );
+                                                            }
+                                                        });
+                                                        if(links.length>=1)
+                                                        {
+                                                            tds.push(
+                                                                <td key={k++}>
+                                                                    {links}
+                                                                </td>);
+                                                        }
+                                                    }else{
+                                                        if(ids!==null)
+                                                        {
+                                                            if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
+                                                            {
+                                                                tds.push(
+                                                                    <td key={k++}>
+                                                                        <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
+                                                                    </td>);
+                                                            }
+                                                            else{
+                                                                tds.push(
+                                                                    <td key={k++}>
+                                                                        <LinkElement>{ids[0]}</LinkElement>
+                                                                    </td>);
+                                                            }
+                                                        }
                                                     }
+
+
+
+
                                                 }
                                                 else{
                                                     tds.push(<td key={k++}></td>);
                                                 }
                                                 break;
+                                            case 'checkM':
+                                                if(row[field]!==undefined&&row[field]!==null) {
+
+
+                                                    if (row[field]==true|| row[field]== 'true'){
+
+                                                        tds.push(<td key={k++}>
+                                                                <input type="checkbox" data-index={i} data-type="checkM" onChange={checkCb} selected/>
+                                                            </td>
+                                                        );
+                                                    }
+                                                    else
+                                                        tds.push(
+                                                            <td key={k++}>
+                                                                <input type="checkbox" data-index={i} data-type="checkM"  onChange={checkCb}/>
+                                                            </td>);
+                                                }
+                                                else
+                                                    tds.push(<td key={k++}></td>);
+                                                    break;
                                             default:
                                                 tds.push(<td key={k++}>{row[field]}</td>);
                                                 break;
@@ -544,10 +817,89 @@ var OrdinaryTable =React.createClass({
                                 }
 
                             }
-                            else{
+                            else{//如果未设置过滤字段
                                 for(var field in row)
                                 {
-                                    tds.push(<td key={k++}>{row[field]}</td>);
+                                    switch(field)
+                                    {
+                                        case 'link':
+                                            if(row[field]!==undefined&&row[field]!==null)
+                                            {
+                                                var ids=null;
+                                                var comps=null;
+                                                try{
+                                                    comps=eval(row[field]);
+                                                }catch(e)
+                                                {
+                                                    ids=row[field].split('|');
+                                                }
+
+                                                if(comps!==null)
+                                                {
+                                                    var links=new Array();
+                                                    comps.map(function(comp,i){
+                                                     var confs=comp.split('|');
+                                                        if(confs[1]!==undefined&&confs[1]!==null&&confs[2]!==undefined&&confs[2]!==null)
+                                                        {
+                                                            links.push(
+                                                                    <LinkElement linkCb={linkCb} data-comp={confs[1]} data-query={confs[2]} key={i}>{confs[0]}</LinkElement>
+                                                                );
+                                                        }
+                                                    });
+                                                    if(links.length>=1)
+                                                    {
+                                                        tds.push(
+                                                            <td key={k++}>
+                                                                {links}
+                                                                </td>);
+                                                    }
+                                                }else{
+                                                    if(ids!==null)
+                                                    {
+                                                        if(ids[1]!==undefined&&ids[1]!==null&&ids[2]!==undefined&&ids[2]!==null)
+                                                        {
+                                                            tds.push(
+                                                                <td key={k++}>
+                                                                    <LinkElement linkCb={linkCb} data-comp={ids[1]} data-query={ids[2]}>{ids[0]}</LinkElement>
+                                                                </td>);
+                                                        }
+                                                        else{
+                                                            tds.push(
+                                                                <td key={k++}>
+                                                                    <LinkElement>{ids[0]}</LinkElement>
+                                                                </td>);
+                                                        }
+                                                    }
+                                                }
+
+
+                                            }
+                                            else{
+                                                tds.push(<td key={k++}></td>);
+                                            }
+                                            break;
+                                        case 'checkM':
+                                            if(row[field]!==undefined&&row[field]!==null) {
+
+                                                if (row[field]==true|| row[field]== 'true'){
+                                                    tds.push(<td key={k++}>
+                                                            <input type="checkbox" data-type="checkM" data-index={i} onChange={checkCb} selected/>
+                                                        </td>
+                                                    );
+                                                }
+                                                else
+                                                    tds.push(<td key={k++}>
+                                                        <input type="checkbox" data-type="checkM" data-index={i} onChange={checkCb}/>
+                                                    </td>);
+                                            }
+                                            else
+                                                tds.push(<td key={k++}></td>);
+                                            break;
+                                        default:
+                                            tds.push(<td key={k++}>{row[field]}</td>);
+                                            break;
+                                    }
+
                                 }
                             }
                             trs.push(
@@ -558,21 +910,68 @@ var OrdinaryTable =React.createClass({
                         });
                     }
 
+
+                    //单表数据源,表尾控件初始化
+                    var tails=null;
+                    if(this.state.tail!==undefined&&this.state.tail!==null)
+                    {
+                        var tail=new Array();
+                        var clickHandle=this.clickHandle;
+                        var state=this.state;
+                        this.state.tail.map(function(item,i) {
+                            var ids=item.split('|');
+                            var ctrl;
+                            if(ids.length>=2)
+                            {
+                                switch(ids[1])
+                                {
+                                    case 'checkQuery':
+                                        if(ids.length>=3)
+                                        {
+                                            var query=eval('('+ids[2]+')');
+                                            ctrl=<button  onClick={clickHandle} data-type="checkQuery" data-query={query}>{ids[0]}</button>;
+                                        }
+                                        else
+                                            ctrl=<button  onClick={clickHandle} data-type="checkQuery">{ids[0]}</button>;
+                                        tail.push(<td key={i}>{ctrl}</td>);
+                                        break;
+                                    default:
+                                        tail.push(<td key={i}></td>);
+                                        break;
+                                }
+                            }
+                        });
+
+                        tails=<tfoot>
+                                <tr>
+                                    <td colSpan={colSpan}>
+                                        <table className="table table-bordered center" style={{width:"100%"}}>
+                                            <tbody>
+                                            <tr>{tail}</tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                              </tfoot>
+                    }
+
+
                     var title=null;
                     if(this.props.title!==undefined&&this.props.title!==null)
-                    title=<thead>
-                                <tr>
-                                    <th colSpan={colSpan}>{this.props.title}</th>
-                                </tr>
+                        title=<thead>
+                        <tr>
+                            <th colSpan={colSpan}>{this.props.title}</th>
+                        </tr>
                         </thead>
                     tables.push(
                         <table className="table table-bordered center" key={0}>
                             {title}
-                        <tbody>
-                        <tr>{tr$fields}</tr>
-                        {trs}
-                        </tbody>
-                    </table>)
+                            <tbody>
+                            <tr>{tr$fields}</tr>
+                            {trs}
+                            </tbody>
+                            {tails}
+                        </table>)
 
                 }
             }
@@ -633,22 +1032,64 @@ var OrdinaryTable =React.createClass({
             }
 
 
+            var hide;
+            //渲染隐藏组件
+            if(this.state.hiddenInfo!==null&&this.state.hiddenInfo!==undefined)
+            {
+                if(this.state.hiddenInfo.comp!==undefined&&this.state.hiddenInfo.comp!==null)
+                {
+                    var hide$c;
+                    switch(this.state.hiddenInfo.comp)
+                    {
+                        case 'panel':
+                           hide$c= <Panel
+                               bean={this.state.hiddenInfo.data}
+                               autoComplete={true}
+                               auto={true}
+                               returnCb={this.returnCb}
+                               />
+                            break;
+                        default:
+                            break;
+                    }
+                    hide=
+                        <Hide>
+                            {hide$c}
+                        </Hide>
+
+                }
+            }else{}
+
+
+
+
+
+
+
+
+
             var mainDist;
             if(sideDist!==undefined&&sideDist!==null)
                 mainDist=(
                     <div className="col-sm-9" key={0}>
-                    {tables}
+                        <div ref="hideDiv">
+                            {hide}
+                        </div>
+                        {tables}
                     </div>
-                    );
+                );
             else
                 mainDist=(
-                  <div className="col-sm-12" key={0}>
-                      {tables}
-                  </div>
+                    <div className="col-sm-12 col-md-12 table-responsive" key={0}>
+                        <div ref="hideDiv">
+                            {hide}
+                        </div>
+                        <div ref="contentDiv">{tables}</div>
+                    </div>
                 );
 
             return (
-                <div  className="ordinaryTable"  style={{margin:"20px"}}>
+                <div  className="ordinaryTable"  style={{margin:"0px"}}>
                     <div className="row">
                         {sideDist}
                         {mainDist}

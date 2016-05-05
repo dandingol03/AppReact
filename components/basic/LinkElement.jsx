@@ -16,7 +16,7 @@ var LinkElement=React.createClass({
     render:function(){
         var data$index;
         if(this.props["data-index"]!==null&&this.props["data-index"]!==undefined)
-             data$index=this.props["data-index"];
+            data$index=this.props["data-index"];
 
         //link,上层组件传来的超链
         var link;
@@ -37,8 +37,10 @@ var LinkElement=React.createClass({
         {
             query=this.props["data-query"];
         }
+
+
         return (<a href={link}  className={this.props.linkClass} data-index={data$index}
-                   onClick={this.clickCb} style={alignStyle} data-query={query}>
+                   onClick={this.clickCb} style={alignStyle} data-query={query} data-comp={this.props["data-comp"]}>
             {this.props.children}</a>)
     }
 });

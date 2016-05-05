@@ -6,23 +6,22 @@ Boot()
 
 function Boot()
 {
-    var filterField= {
-        "courseName": true,
-        "courseNum":true,
-        "courseType":true,
-        "credit":true,
-        "classHour":true,
-        "termCount":true,
-        "examTypeName":true,
-        "managerName":true,
-        "link":true
-    }
+    var filterField = {
+        "checkM": true,
+        "stuNum": true,
+        "stuName": true,
+        "mustCredit": true,
+        "selectCredit": true,
+        "totalCredit": true,
+        "status": true,
+        "avScores": true
+    };
 
     var  query={
-    url:"/gradms/bsuims/reactPageDataRequest.do",
+        url:"/gradms/bsuims/reactPageDataRequest.do",
         params:{
-        reactActionName:"allCourseQueryDoQuery",
-            reactPageName:"newCultivateAllCourseQueryPage"
+            reactActionName:"getStuListForCredit",
+            reactPageName:"newCultivateAchievementProcessPage"
         }
     }
 
@@ -32,8 +31,8 @@ function Boot()
             bean={{
                 url:"/gradms/bsuims/reactPageDataRequest.do",
                 params:{
-                reactActionName:"allCourseQueryInit",
-                reactPageName:"newCultivateAllCourseQueryPage"
+                reactActionName:"newCultivateStuScorePrintInit",
+                reactPageName:"newCultivateAchievementProcessPage"
                 }
             }}
             autoComplete={true}
@@ -41,6 +40,4 @@ function Boot()
             filterField={filterField}
             />
         , document.getElementById('root'))
-
-
 }

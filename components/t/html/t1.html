@@ -3,7 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link href="../../../libs/bootstrap/css/bootstrap.css" rel="stylesheet">
     <script type="text/javascript" src="../../../build/bootstrap/js/jquery-latest.js"></script>
+    <script type="text/javascript" src="../../../libs/bootstrap/js/bootstrap.js"></script>
     <script>
         $(document).ready(function(){
             var obj={
@@ -30,7 +32,6 @@
             });
 
 
-
             var a1=[null,null,null,4,null,6,7,8];
             for(var i=a1.length-1;i>=0;i--)
             {
@@ -38,8 +39,21 @@
                 a1.splice(i,1);
             }
 
+
             console.log(a1);
 
+
+            var tri="a1|a2|a3";
+            try{
+                var json=eval(tri);
+
+            }catch(e)
+            {
+                console.log('e='+e);
+            }
+            finally{
+                console.log('du');
+            }
 
 
         });
@@ -47,10 +61,47 @@
     </script>
 </head>
 <body>
+
 <div name="tdive" data-query="{name:'wjj'}"></div>
 <script>
     var tdive=document.getElementsByName("tdive");
     console.log();
 </script>
+
+<div class="row" style="width:80%;margin-left:auto;margin-right:auto">
+    <div class="col-md-12" >
+        <table class="table-bordered" style="width:100%">
+            <tbody>
+            <tr>
+                <td>
+                    <div>
+                        <div style="display:inline">
+                            <span style="margin:0px 20px">male</span><input type="radio" name="sex" value="male"/>
+                        </div>
+                        <div style="display:inline">
+                            <span style="margin:0px 20px">female</span><input type="radio" name="sex" value="female"/>
+                        </div>
+                    </div>
+
+                </td>
+                <td>
+                    <div>
+                        <span>2015</span><input type="radio" name="grade" value="2015"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><span>20</span><input type="radio" name="age" value="20"/></td>
+                <td><span>21</span><input type="radio" name="age" value="21"/></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+
+
 </body>
 </html>
