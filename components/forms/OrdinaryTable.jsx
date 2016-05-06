@@ -414,7 +414,8 @@ var OrdinaryTable =React.createClass({
                                 squash.push(data[index]);
                         }
                         var squashed=new Object();
-                        squashed.squashed=squash;
+                        squashed.squashed=JSON.stringify(squash);
+
                         var params=Object.assign(query.params,squashed);
                         this.queryHandle(
                             null,
@@ -928,10 +929,9 @@ var OrdinaryTable =React.createClass({
                                     case 'checkQuery':
                                         if(ids.length>=3)
                                         {
-                                            var query=eval('('+ids[2]+')');
+
                                             ctrl=<button  onClick={clickHandle} data-type="checkQuery" data-query={ids[2]}>{ids[0]}</button>;
                                         }
-
                                         else
                                             ctrl=<button  onClick={clickHandle} data-type="checkQuery">{ids[0]}</button>;
                                         tail.push(<td key={i}>{ctrl}</td>);

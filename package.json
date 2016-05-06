@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build --port 3000"
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build --port 3000",
+    "start": "webpack-dev-server  --devtool eval --progress --content-base build --history-api-fallback"
   },
   "dependencies": {
     "babel-plugin-react-transform": "^2.0.0",
@@ -12,6 +13,7 @@
     "jsxhint-loader": "^0.2.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-router": "^2.0.0",
     "react-transform-hmr": "^1.0.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
