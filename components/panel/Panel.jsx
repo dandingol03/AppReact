@@ -174,6 +174,9 @@ var Panel=React.createClass({
         }
 
     },
+    shouldComponentUpdate:function(nextProps, nextState){
+        return nextProps.data!==this.props.data||nextState.data!==this.state.data;
+    },
     getInitialState:function(){
 
         //为组件类型保留关键字

@@ -690,6 +690,24 @@ var OrdinaryTable =React.createClass({
                                                     tds.push(<td key={k++}></td>);
                                                 }
                                                 break;
+                                            case 'checkM':
+                                                if(row[field]!==undefined&&row[field]!==null)
+                                                {
+                                                    //如果不默认选中
+                                                    if(row[field]!=='true'&&row[field]!==true)
+                                                    {
+                                                        tds.push(
+                                                            <td key={k++}>
+                                                                    <input type="checkbox" checked/>
+                                                            </td>
+                                                        );
+                                                    }else{
+                                                        tds.push(<td key={k++}>
+                                                                    <input type="checkbox" />
+                                                                </td>);
+                                                    }
+                                                }
+                                                break;
                                             default:
                                                 tds.push(<td key={k++}>{row[field]}</td>);
                                                 break;
