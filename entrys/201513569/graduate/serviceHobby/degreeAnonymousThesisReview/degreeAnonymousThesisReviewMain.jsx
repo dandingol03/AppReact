@@ -13,7 +13,14 @@ function Boot(){
         url:"/serviceHall/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:"degreeAnonymousThesisReviewResult",
-            reactActionName:"deegreeThesisReviewResult"
+            reactActionName:"deegreeThesisReviewResultUseReact"
+        }
+    }
+    var bean={
+        url:"/serviceHall/bsuims/reactPageDataRequest.do",
+        params:{
+            reactPageName:"degreeAnonymousThesisReviewResult",
+            reactActionName:"deegreeThesisReviewPanelUseReact"
         }
     }
     var filterField= {
@@ -28,9 +35,9 @@ function Boot(){
 
     render(
         <PanelTable
-            comps={comps}
             autoComplete={true}
             query={query}
+            bean={bean}
             filterField={filterField}
             />
         , document.getElementById('root'))

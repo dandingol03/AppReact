@@ -161,9 +161,6 @@ var Panel=React.createClass({
             }
         }
 
-
-
-
     },
     returnCb:function(evt){
         evt.preventDefault();
@@ -252,9 +249,9 @@ var Panel=React.createClass({
                     var so=dict[coms[0]];
                     if(state.bean!==undefined&&state.bean!==null)
                     {
-                        if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
+                        if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
                         {
-                            name=coms[0].split('->')[1];
+                            name=coms[0].split('=>')[1];
                         }
                         else
                             name=coms[0];
@@ -320,9 +317,9 @@ var Panel=React.createClass({
                                 break;
                             case 'input':
                                 var ctrlName;
-                                if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
+                                if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
                                 {
-                                    ctrlName=coms[0].split('->')[0];
+                                    ctrlName=coms[0].split('=>')[0];
                                 }else{
                                     ctrlName=coms[0];
                                 }
@@ -351,30 +348,36 @@ var Panel=React.createClass({
                             case 'select':
                                 if(state.bean!==undefined&&state.bean!==null)
                                 {
-
+                                    var ctrlName;
+                                    if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
+                                    {
+                                        ctrlName=coms[0].split('=>')[0];
+                                    }else{
+                                        ctrlName=coms[0];
+                                    }
                                     if(coms[2]!==null&&coms[2]!==undefined)
                                     {
                                         try{
                                             var arr=eval(coms[2]);
                                             if(Object.prototype.toString.call(arr)=='[object Array]')
                                             {
-                                                ctrl=<Select auto={false} ctrlName={coms[0]} disabled={false} data={arr} selectCb={coms[3]!==undefined&&coms[3]!==null?selectHandle:null} data-query={coms[3]}/>
+                                                ctrl=<Select auto={false} ctrlName={ctrlName} disabled={false} data={arr} selectCb={coms[3]!==undefined&&coms[3]!==null?selectHandle:null} data-query={coms[3]}/>
                                             }
                                             else{
-                                                ctrl= <Select auto={true} ctrlName={coms[0]} disabled={true}/>
+                                                ctrl= <Select auto={true} ctrlName={ctrlName} disabled={true}/>
                                             }
                                         }catch(e){
                                             if(coms[2]=='true')
                                             {
-                                                ctrl=<Select auto={false} ctrlName={coms[0]} />
+                                                ctrl=<Select auto={false} ctrlName={ctrlName} />
                                             }else{
-                                                ctrl=<Select auto={false} ctrlName={coms[0]} disabled={true}/>
+                                                ctrl=<Select auto={false} ctrlName={ctrlName} disabled={true}/>
                                             }
                                         }
 
                                     }
                                     else
-                                        ctrl= <Select auto={true} ctrlName={coms[0]}/>
+                                        ctrl= <Select auto={true} ctrlName={ctrlName}/>
                                 }
                                 else
                                 {
@@ -412,10 +415,7 @@ var Panel=React.createClass({
 
                                 break;
                             case 'textarea':
-                                console.log();
-                                console.log();
-                                console.log();
-                                console.log();
+
                                 if(state.bean!==undefined&&state.bean!==null&&coms[2]!==null)
                                 {
                                     ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}} value={coms[2]}></textarea>
