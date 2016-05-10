@@ -1093,6 +1093,7 @@ var OrdinaryTable =React.createClass({
                         {sideDist}
                         {mainDist}
                     </div>
+
                 </div>
 
 

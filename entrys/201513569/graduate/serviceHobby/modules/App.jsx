@@ -1,13 +1,13 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Nav from '../../../../../components/basic/Nav.jsx';
+import IndexScroll from '../../../../../components/basic/IndexScroll.jsx';
 import ScaleBar from '../../../../../components/basic/ScaleBar.jsx';
-import MainSection from '../modules/MainSection.jsx';
-import ViceSection from '../modules/ViceSection.jsx';
+import News from '../modules/News.jsx';
 import '../../../../../css/serviceHobby/basic/app.css';
 import MENU from '../data/menus.json';
 import Scales from '../data/scaleBar.json';
-
+import Scrolls from '../data/scrolls.json';
 
 
 var App =React.createClass({
@@ -22,10 +22,14 @@ var App =React.createClass({
              */
             <div>
                 <Nav logo="./images/logo.png"  data={MENU}/>
-                {this.props.children}
+                <IndexScroll data={Scrolls}/>
+
+
 
 
                 <ScaleBar data={Scales}/>
+
+                {this.props.children}
             </div>
 
         )

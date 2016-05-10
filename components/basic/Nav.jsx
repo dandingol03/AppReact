@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import { Link } from 'react-router'
 import '../../css/components/basic/nav/nav.css';
 
 
@@ -11,6 +12,13 @@ import '../../css/components/basic/nav/nav.css';
  */
 
 var Nav=React.createClass({
+    linkCb:function(evt){
+        var target=evt.target;
+        evt.preventDefault();
+
+
+
+    },
     fetch:function(){
         this.queryHandle(
             null,
@@ -136,6 +144,7 @@ var Nav=React.createClass({
             {
 
                 var lis = new Array();
+                var linkCb=this.linkCb;
                 this.state.data.map(function(first,i) {
                     var mnavL_left;
                     //三级菜单
@@ -222,7 +231,7 @@ var Nav=React.createClass({
                                     </tr>
                                     </tbody>
                                 </table>
-                            </td>)
+                            </td>);
                         first.sub.map(function(second,j) {
                             cells.push(
                                 <td className=" tz_td_cell" key={k++}>
@@ -230,9 +239,7 @@ var Nav=React.createClass({
                                         <tbody>
                                         <tr>
                                             <td className="mtt_td1">
-                                                <a href="javascript:void(0)">
-                                                    {second.label}
-                                                </a>
+                                                <Link to="/password/modify" onClick={linkCb}>{second.label}</Link>
                                             </td>
                                         </tr>
                                         </tbody>

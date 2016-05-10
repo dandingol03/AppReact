@@ -7,9 +7,6 @@ var TodoActions = require('../../components/flux/actions/TodoActions');
 var ScaleBar =React.createClass({
     clickhide3:function(ref,sel1,sel2,sel3,sel4)
     {
-
-
-
         var category=this.refs[ref];
         var $category=$(category);
         var obj1=$category.find(sel1);

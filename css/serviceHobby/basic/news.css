@@ -1,25 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    outline: none;
-}
-
-body
-{
-    font-size: 12px;
-    font-family: "Microsoft Yahei",Arial, Helvetica, sans-serif,"黑体";
-    color: #666666;
-    line-height: 2.0;
-    background: #fff;
-}
-
-ul, li, ol {
-    list-style: none;
-}
-
-
-
-
 
 /**
 *   assessment part

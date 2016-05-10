@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-
+import PasswordModify from '../password/PasswordModify.jsx';
 var  TodoStore = require('../../../../../components/flux/stores/TodoStore');
 
 var MainSection = React.createClass({
@@ -14,17 +14,34 @@ var MainSection = React.createClass({
         }
     },
     render:function(){
-
-
-        return <div>{this.props.main}</div>
+        var path=this.props.route.path;
+        var ctrl;
+        if(path!==undefined&&path!==null)
+        {
+            switch(path)
+            {
+                case "/password/modify":
+                    ctrl=<PasswordModify/>
+                    break;
+                default:
+                    break;
+            }
+        }
+        return (
+            <div ref="mainSection" style={{display:"none",margin: "300px auto 60px auto",width:"980px"}}>
+                {ctrl}
+            </div>
+        );
 
 
     },
     componentDidMount: function() {
         //TodoStore.addChangeListener(this._onChange);
+        $(this.refs["mainSection"]).slideDown(300);
     },
 
     componentWillUnmount: function() {
+        $(this.refs["mainSection"]).slideUp(300);
         //TodoStore.removeChangeListener(this._onChange);
     }
 });

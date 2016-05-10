@@ -120,6 +120,27 @@
     line-height: 50px;
 }
 
+.mnavL .cell .tz_td1 {
+    width: 114px;
+    overflow: hidden;
+}
+
+.mnavL .cell .tz_td2 {
+    width: 246px;
+    overflow: hidden;
+}
+
+.mnavL .cell .tz_td3 {
+    width: 246px;
+    overflow: hidden;
+}
+
+.mnavL .cell .tz_td4 {
+    width: 246px;
+    overflow: hidden;
+}
+
+
 table.cell
 {
     table-layout: fixed;
