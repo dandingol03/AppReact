@@ -24,11 +24,7 @@ var App =React.createClass({
                 <Nav logo="./images/logo.png"  data={MENU}/>
                 <IndexScroll data={Scrolls}/>
 
-
-
-
                 <ScaleBar data={Scales}/>
-
                 {this.props.children}
             </div>
 
