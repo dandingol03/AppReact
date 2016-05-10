@@ -6,8 +6,13 @@ Boot();
 
 function Boot()
 {
+    var options=[{label:'a',value:0},
+        {label:'b',value:1},
+        {label:'c',value:2}];
     var data=[
-        {row:['stuType|select','query']}
+        {row:['stuType|select|'+JSON.stringify(options)]},
+        {row:['perIdCard|input|true']},
+        {row:['query']}
     ];
     var query={
         url:"/gradms/bsuims/reactPageDataRequest.do",
