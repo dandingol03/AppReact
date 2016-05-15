@@ -18,7 +18,7 @@ function Boot()
     };
 
     var  query={
-        url:"/gradms/bsuims/reactPageDataRequest.do",
+        url:"/bsuims/reactPageDataRequest.do",
         params:{
             reactActionName:"getStuListForCredit",
             reactPageName:"newCultivateAchievementProcessPage"
@@ -29,7 +29,7 @@ function Boot()
     render(
         <PanelTable
             bean={{
-                url:"/gradms/bsuims/reactPageDataRequest.do",
+                url:"/bsuims/reactPageDataRequest.do",
                 params:{
                 reactActionName:"newCultivateStuScorePrintInit",
                 reactPageName:"newCultivateAchievementProcessPage"
