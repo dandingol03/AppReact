@@ -1,0 +1,126 @@
+
+/**
+*   assessment part
+*/
+
+.section {
+    width: 980px;
+    margin: 120px auto 60px auto;
+    font-family: "微软雅黑","黑体","宋体";
+}
+
+.w_170 {
+    width: 170px;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.w_720 {
+    width: 720px;
+    border-right: 1px solid #eee;
+    padding-right: 30px;
+    overflow: hidden;
+}
+.lfloat {
+    float: left;
+    display: inline;
+}
+
+.w_170 {
+    width: 170px;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.list {
+    font-family: "微软雅黑","黑体","宋体";
+    font-size: 14px;
+}
+
+.list li {
+    border-bottom: 1px solid #eee;
+    height: 40px;
+    line-height: 40px;
+}
+
+.list li a {
+    float: left;
+    margin: 0 10px;
+    color: #333;
+}
+
+.list li span {
+    float: right;
+    color: #999;
+}
+
+.side_list2 .title_h2 {
+    padding-left: 20px;
+    height: 32px;
+    line-height: 32px;
+    background: url(../../../build/images/sq.png) left 11px no-repeat;
+}
+
+.side_list2 .province {
+    padding-top: 10px;
+}
+
+.province a {
+    display: inline-block;
+    width: 39px;
+}
+
+.vcc-pagelist {
+    margin: 40px auto 0px;
+    font-size: 12px;
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+.page {
+    margin-top: 40px;
+}
+
+.page span {
+    margin: 0 8px;
+}
+
+#next, #one, #btn {
+    background: #0066b3;
+    color: #fff;
+    cursor: pointer;
+}
+.page span {
+    margin: 0 8px;
+}
+
+.vcc-pagelist input {
+    width: 40px;
+    height: 20px;
+    margin: 0 2px;
+    border: 1px solid #0066b3;
+}
+.page input {
+    margin: 0 2px;
+    width: 40px;
+    height: 20px;
+    border: 1px solid #0066b3;
+    line-height: 20px;
+    text-indent: 5px;
+    text-align: center;
+}
+
+
+.f_14_black {
+    color: #fff;
+    padding: 4px 10px;
+    margin: 0 4px;
+    background: #0066b3;
+    cursor: text;
+}
+.page .page_btn, .page a:hover {
+    color: #fff;
+    padding: 4px 10px;
+    margin: 0 4px;
+    background: #0066b3;
+}

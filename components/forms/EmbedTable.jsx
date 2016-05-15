@@ -151,6 +151,7 @@ var EmbedTable=React.createClass({
                 trs=new Array();
                 var embedCols=this.state.embedCols;
                 var clickCb=this.clickCb;
+
                 this.props.data.arr.map(function(item,i) {
                     var sub$data;
                     if(item.data!==undefined&&item.data!==null)
@@ -167,6 +168,7 @@ var EmbedTable=React.createClass({
                     var sub$trs=new Array();
                     var sub$tds;
                     var sub$row$index=0;
+
                     sub$data.map(function(sub,j) {
                         if(j%embedCols==0)
                         {
@@ -180,8 +182,8 @@ var EmbedTable=React.createClass({
                             sub$trs.push(<tr key={sub$row$index}>{sub$tds}</tr>);
                             sub$row$index++;
                         }
+                    });
 
-                        });
                     td$table=(
                         <table className="table table-bordered center" key={i}>
                         <tbody>

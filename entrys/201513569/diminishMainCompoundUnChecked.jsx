@@ -96,7 +96,10 @@ function Boot()
     ];
     var containerStyle={textAlign:"center"};
     render(
+        <div>
         <CoupleTableElement tags={tags} data-options={data$options}/>
+            <OrdinaryTable />
+            </div>
         , document.getElementById('cultivatePlanJsx'))
 
 }
