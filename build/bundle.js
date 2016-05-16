@@ -53,8 +53,19 @@
 /******/
 /******/ 	
 /******/ 	
+/******/ 	// Copied from https://github.com/facebook/react/blob/bef45b0/src/shared/utils/canDefineProperty.js
+/******/ 	var canDefineProperty = false;
+/******/ 	try {
+/******/ 		Object.defineProperty({}, "x", {
+/******/ 			get: function() {}
+/******/ 		});
+/******/ 		canDefineProperty = true;
+/******/ 	} catch(x) {
+/******/ 		// IE will fail on defineProperty
+/******/ 	}
+/******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d510512ebb168937db12"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c91385e282384e15f171"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -77,7 +88,7 @@
 /******/ 		};
 /******/ 		for(var name in __webpack_require__) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(__webpack_require__, name)) {
-/******/ 				if(Object.defineProperty) {
+/******/ 				if(canDefineProperty) {
 /******/ 					Object.defineProperty(fn, name, (function(name) {
 /******/ 						return {
 /******/ 							configurable: true,
@@ -120,7 +131,7 @@
 /******/ 				}
 /******/ 			});
 /******/ 		}
-/******/ 		if(Object.defineProperty) {
+/******/ 		if(canDefineProperty) {
 /******/ 			Object.defineProperty(fn, "e", {
 /******/ 				enumerable: true,
 /******/ 				value: ensure
@@ -587,29 +598,47 @@
 	
 	var _reactDom = __webpack_require__(159);
 	
-	var _SidebarMenuElement = __webpack_require__(160);
+	var _PanelTable = __webpack_require__(160);
 	
-	var _SidebarMenuElement2 = _interopRequireDefault(_SidebarMenuElement);
+	var _PanelTable2 = _interopRequireDefault(_PanelTable);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	Pack();
+	Boot();
 	
-	function Pack() {
-	    var render$node = document.getElementById('react$render$menu');
-	    var userName = render$node.getAttribute("userName");
-	    var data$options = {
-	        query: {
-	            url: "/ReactJPChatter/menu/getPersonalMenu.do",
-	            params: {
-	                userName: userName
-	            }
-	        },
-	        auto: true,
-	        projName: 'ReactJPChatter'
+	function Boot() {
+	    var filterField = {
+	        "courseName": true,
+	        "courseNum": true,
+	        "courseType": true,
+	        "credit": true,
+	        "classHour": true,
+	        "termCount": true,
+	        "examTypeName": true,
+	        "managerName": true,
+	        "link": true
 	    };
 	
-	    (0, _reactDom.render)(_react2.default.createElement(_SidebarMenuElement2.default, { 'data-options': data$options }), document.getElementById('react$render$menu'));
+	    var query = {
+	        url: "/gradms/bsuims/reactPageDataRequest.do",
+	        params: {
+	            reactActionName: "allCourseQueryDoQuery",
+	            reactPageName: "newCultivateAchievementProcessPage"
+	        }
+	    };
+	
+	    (0, _reactDom.render)(_react2.default.createElement(_PanelTable2.default, {
+	        bean: {
+	            url: "/gradms/bsuims/reactPageDataRequest.do",
+	            params: {
+	                reactActionName: "newCultivateStuScorePrintInit",
+	                reactPageName: "newCultivateAchievementProcessPage"
+	            }
+	        },
+	        autoComplete: true,
+	        query: query,
+	        filterField: filterField
+	    }), document.getElementById('root'));
 	}
 
 /***/ },
@@ -8537,6 +8566,10 @@
 	  }
 	};
 	
+	function registerNullComponentID() {
+	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
+	}
+	
 	var ReactEmptyComponent = function ReactEmptyComponent(instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8545,7 +8578,7 @@
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function construct(element) {},
 	  mountComponent: function mountComponent(rootID, transaction, context) {
-	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
+	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -19294,7 +19327,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.7';
+	module.exports = '0.14.8';
 
 /***/ },
 /* 148 */
@@ -20280,153 +20313,2859 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactDom = __webpack_require__(159);
+	
+	var _Download = __webpack_require__(161);
+	
+	var _Download2 = _interopRequireDefault(_Download);
+	
+	var _Panel = __webpack_require__(162);
+	
+	var _Panel2 = _interopRequireDefault(_Panel);
+	
+	var _OrdinaryTable = __webpack_require__(171);
+	
+	var _OrdinaryTable2 = _interopRequireDefault(_OrdinaryTable);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var SidebarMenuElement = _react2.default.createClass({
-	    displayName: 'SidebarMenuElement',
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	    data$inital: function data$inital() {
-	        if (this.state.query !== undefined && this.state.query !== null) {
-	            $.ajax({
-	                type: 'POST',
-	                url: this.state.query.url,
-	                dataType: 'json',
-	                data: this.state.query.params,
-	                cache: false,
-	                success: function (data) {
-	                    if (data !== undefined && data !== null && data.length > 0) {
-	                        this.setProps({ data: data, data$initialed: true });
+	var PanelTable = _react2.default.createClass({
+	    displayName: 'PanelTable',
+	
+	    clickHandle: function clickHandle(ob) {
+	        if (this.props.query !== undefined && this.props.query !== null) {
+	            var params;
+	            params = Object.assign(this.props.query.params !== null && this.props.query.params !== undefined ? this.props.query.params : '', ob !== undefined && ob !== null ? ob : '');
+	            this.queryHandle(null, this.props.query.url, params, null, function (response) {
+	                //这里需要统一规范后台返回的数据格式
+	                this.setProps({ data: response.arr });
+	            }.bind(this));
+	        }
+	    },
+	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
+	        $.ajax({
+	            type: type !== undefined && type !== null ? type : 'POST',
+	            url: url,
+	            dataType: dataType !== undefined && dataType !== null ? dataType : 'json',
+	            data: params,
+	            cache: false,
+	            success: function success(response) {
+	                if (callback !== undefined && callback !== null) callback(response);
+	            },
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
+	    getInitialState: function getInitialState() {
+	
+	        var comps;
+	        if (this.props.comps !== undefined && this.props.comps !== null) {
+	            comps = this.props.comps;
+	        }
+	
+	        return { comps: comps };
+	    },
+	    render: function render() {
+	        var _React$createElement;
+	
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12 col-md-12' },
+	                _react2.default.createElement(_Panel2.default, (_React$createElement = {
+	                    data: this.state.comps,
+	                    bean: this.props.bean,
+	                    auto: true
+	                }, _defineProperty(_React$createElement, 'auto', true), _defineProperty(_React$createElement, 'bean', this.props.bean), _defineProperty(_React$createElement, 'autoComplete', true), _defineProperty(_React$createElement, 'query', this.props.query), _defineProperty(_React$createElement, 'clickHandle', this.clickHandle), _React$createElement)),
+	                _react2.default.createElement(_OrdinaryTable2.default, {
+	                    autoFetch: false,
+	                    data: this.props.data,
+	                    filterField: this.props.filterField
+	                })
+	            )
+	        );
+	    }
+	});
+	exports.default = PanelTable;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var Download = _react2.default.createClass({
+	    displayName: 'Download',
+	
+	
+	    render: function render() {
+	        var attach = null;
+	        if (this.props.attachId !== undefined && this.props.attachId !== null) {
+	            var href = "gradms/attachment/attachmentDownloadAttachmentBSFile.do?attachId=" + this.props.attachId;
+	            attach = _react2.default.createElement(
+	                'a',
+	                _defineProperty({ href: '#', className: 'btn btn-block btn-primary ' }, 'href', href),
+	                'Primary',
+	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-arrow-down', 'aria-hidden': 'true' })
+	            );
+	        }
+	
+	        return _react2.default.createElement(
+	            'div',
+	            null,
+	            attach
+	        );
+	    }
+	});
+	exports.default = Download;
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	var _Span = __webpack_require__(163);
+	
+	var _Span2 = _interopRequireDefault(_Span);
+	
+	var _Select = __webpack_require__(164);
+	
+	var _Select2 = _interopRequireDefault(_Select);
+	
+	var _Download = __webpack_require__(161);
+	
+	var _Download2 = _interopRequireDefault(_Download);
+	
+	var _Radio = __webpack_require__(166);
+	
+	var _Radio2 = _interopRequireDefault(_Radio);
+	
+	__webpack_require__(167);
+	
+	var _dictionary = __webpack_require__(165);
+	
+	var _dictionary2 = _interopRequireDefault(_dictionary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 *
+	 * 本组件需要数据库字典类作为配置组件的属性,提交发生为表单，路由功能交由jsp完成
+	 * 1.实现一个本地文件的读取以及属性匹配
+	 * 2.目前只支持
+	 * 1).数据本地化,一个label配对一个组件
+	 * 2).数据拉取,label|comp|data,三个字段的配置只针对select组件,input组件
+	 * 3).input组件的语义化,在react需要特别监听值的改变
+	 * [
+	 * {row:[{'college|query'},{'stuType|select'},{'major|select'}]},
+	 * {row:[{'grade|input'},{'query'}]}
+	 * ]
+	 * 3.query组件可单字段存在
+	 * 4.
+	 * 5.样式基于研究生
+	 * 6.this.props.query设定panel的提交路径
+	 * 7.bean,通过后台的数据来初始化组件,全字段均不由本地提供
+	 * 8.子组件的级联刷新,由父组件的form表单提交完成数据更新
+	 * 9.panel开始支持多数据源
+	 */
+	
+	var Panel = _react2.default.createClass({
+	    displayName: 'Panel',
+	
+	    fetch: function fetch() {
+	        this.queryHandle(null, this.props.bean.url, this.props.bean.params, null, function (response) {
+	            //这里需要统一规范后台返回的数据格式
+	            var ob = null;
+	            if (response.data !== undefined && response.data !== null && response.data != "") {
+	                if (ob == null) ob = new Object();
+	                ob.data = response.data;
+	            } else console.log("type of response is wrong");
+	            if (response.query !== undefined && response.query !== null) {
+	                if (ob == null) ob = new Object();
+	                ob.query = response.query;
+	            }
+	            if (ob !== null) this.setState(ob);
+	        }.bind(this));
+	    },
+	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
+	        $.ajax({
+	            type: type !== undefined && type !== null ? type : 'POST',
+	            url: url,
+	            dataType: dataType !== undefined && dataType !== null ? dataType : 'json',
+	            data: params,
+	            cache: false,
+	            success: function success(response) {
+	                if (callback !== undefined && callback !== null) callback(response);
+	            },
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
+	    clickHandle: function clickHandle(evt) {
+	        evt.preventDefault();
+	        var target = evt.target;
+	        if (target !== undefined && target !== null) {
+	            var form = document.getElementsByName('PanelForm')[0];
+	            if (this.props.clickHandle !== undefined && this.props.clickHandle !== null) {
+	                var params = new Object();
+	                for (var i = 0; i < form.getElementsByTagName("input").length; i++) {
+	                    var item = form.getElementsByTagName("input")[i];
+	                    //针对单选
+	                    if (item.type == 'radio') {
+	                        if (item.checked == true) params[item.name] = item.value;
+	                    } else {
+	                        params[item.name] = item.value;
 	                    }
-	                }.bind(this),
-	                error: function error(xhr, status, err) {
-	                    console.error(this.props.url, status, err.toString());
 	                }
-	            });
+	                //TODO:
+	                this.setState({ cache: params });
+	                this.props.clickHandle(params);
+	            } else {
+	                //如果本组件为最顶层组件
+	
+	                if (this.state.query !== null && this.state.query !== undefined) {
+	                    var ddw;
+	                    ddw = this.state.query.params.reactPageName;
+	                    var dw;
+	                    dw = this.state.query.params.reactActionName;
+	                    form.action = form.action + "?" + "reactPageName=" + ddw + "&" + "reactActionName=" + dw + "";
+	                }
+	                form.submit();
+	            }
+	        }
+	    },
+	    selectHandle: function selectHandle(target) {
+	        if (target !== undefined && target !== null) {
+	            var ob = target.getAttribute("data-query");
+	            if (ob !== undefined && ob !== null) {
+	                //采用ajax的数据提交
+	                ob = eval('(' + ob + ')');
+	                var form = document.getElementsByName('PanelForm')[0];
+	                var $form = $(form);
+	                var fields = new Object();
+	                $form.find("input[name!='']").map(function (i, item) {
+	                    fields[item.name] = item.value;
+	                });
+	                console.log();
+	                console.log();
+	                var params = Object.assign(ob.params, fields);
+	                this.queryHandle(null, ob.url, params, null, function (response) {
+	                    //这里需要统一规范后台返回的数据格式
+	                    var ob = null;
+	                    if (response.data !== undefined && response.data !== null && response.data != "") {
+	                        if (ob == null) ob = new Object();
+	                        ob.data = response.data;
+	                    } else console.log("type of response is wrong");
+	                    if (response.query !== undefined && response.query !== null) {
+	                        if (ob == null) ob = new Object();
+	                        ob.query = response.query;
+	                    }
+	                    if (ob !== null) this.setState(ob);
+	                }.bind(this));
+	            }
+	        }
+	    },
+	    returnCb: function returnCb(evt) {
+	        evt.preventDefault();
+	        var target = evt.target;
+	        if (target.getAttribute("data-return") !== undefined && target.getAttribute("data-return") !== null) {
+	            this.props.returnCb();
 	        }
 	    },
 	    getInitialState: function getInitialState() {
-	        var data;
-	        var data$initialed = false;
-	        if (this.props.data !== undefined && this.props.data !== null) {
-	            data = this.props.data;
-	            data$initialed = true;
-	        }
-	        var query;
-	        var auto;
-	        var projName;
-	        if (this.props["data-options"] !== undefined && this.props["data-options"] !== null) {
-	            var data$options = this.props["data-options"];
-	            if (data$options.query !== null && data$options.query !== undefined) {
-	                query = data$options.query;
-	            }
-	            if (data$options.auto !== null && data$options !== undefined) auto = data$options.auto;
-	            if (data$options.projName !== undefined && data$options.projName !== null) projName = data$options.projName;
-	        }
 	
-	        return {
-	            data: data, projName: projName, auto: auto, query: query, data$initialed: data$initialed
+	        //为组件类型保留关键字
+	        var reserved = {
+	            "query": true,
+	            "input": true,
+	            "select": true,
+	            "span": true,
+	            "textarea": true,
+	            "radio": true,
+	            "return": true
 	        };
-	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(props) {
-	        if (props.data !== undefined && props.data !== null) {
-	            this.setState({ data: props.data, data$initialed: true });
-	        }
-	    },
 	
+	        var bean;
+	        if (this.props.bean !== undefined && this.props.bean !== null) bean = this.props.bean;
+	
+	        var data;
+	        if (this.props.data !== undefined && this.props.data !== null) data = this.props.data;
+	
+	        var query;
+	        if (this.props.query !== undefined && this.props.query !== null) query = this.props.query;
+	
+	        var cache;
+	        if (this.props.cache !== undefined && this.props.cache !== null) cache = this.props.cache;
+	        return { reserved: reserved, bean: bean, shield: false, data: data, query: query,
+	            cache: cache };
+	    },
 	    render: function render() {
-	        if (this.state.data$initialed !== true) {
-	            if (this.state.auto === true) {
-	                this.data$inital();
-	            }
-	        } else {
-	            //数据已经初始化
-	            var data;
-	            if (this.state.data !== undefined && this.state.data !== null) {
-	                data = this.state.data;
-	            }
-	            var li$s;
-	            if (data !== undefined && data !== null) {
-	                li$s = new Array();
-	                var proj = this.state.projName;
-	                data.map(function (item, i) {
-	                    var parent;
-	                    var parent$href = proj + item.controller;
-	                    var children;
+	        if (this.state.data !== undefined && this.state.data !== null && Object.prototype.toString.call(this.state.data) == '[object Array]') {
 	
-	                    children = new Array();
-	                    if (item.isLeaf == 0) {
-	                        //可展开列表项
-	                        if (item.pid != -1) {
-	                            data.map(function (child, j) {
-	                                if (child.pid == item.id) {
-	                                    var href = proj + item.controller;
-	                                    children.push(_react2.default.createElement(
-	                                        'li',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'a',
-	                                            { href: href },
-	                                            _react2.default.createElement('i', { className: 'fa fa-angle-double-right' }),
-	                                            '$',
-	                                            child["authority_name"]
-	                                        )
+	            //保存最大列宽,每行的单元格数组的label和控件各自放一个td
+	            var max$cols = 1;
+	            this.state.data.map(function (item, i) {
+	                if (item.row !== undefined && item.row !== null && Object.prototype.toString.call(item.row) == '[object Array]') {
+	                    var cols = 0;
+	                    item.row.map(function (comp, j) {
+	                        var col = comp.split("|");
+	                        if (col.length > 1) cols += 2;else cols += 1;
+	                    });
+	                    if (cols > max$cols) max$cols = cols;
+	                }
+	            });
+	
+	            var reserved = this.state.reserved;
+	            var trs = new Array();
+	            //自动补齐td差值属性
+	            var autoComplete = this.props.autoComplete;
+	
+	            var clickHandle = this.clickHandle;
+	            var state = this.state;
+	            var props = this.props;
+	            var returnCb = this.returnCb;
+	            var selectHandle = this.selectHandle;
+	            state.data.map(function (item, i) {
+	                var row = item.row;
+	                var tds = new Array();
+	                //一个字符串序列,可设置3个字段,label|comp|data
+	                var td$index = 0;
+	                row.map(function (com, j) {
+	                    var coms = com.split("|");
+	                    var label;
+	                    var ctrl;
+	                    var ctrl$comp;
+	                    //查询字典,匹配label字段
+	                    var name;
+	                    var so = _dictionary2.default[coms[0]];
+	                    if (state.bean !== undefined && state.bean !== null) name = coms[0];else {
+	                        if (so !== undefined && so !== null) name = so.name;
+	                    }
+	
+	                    if (name !== undefined && name !== null) {
+	                        if (coms.length > 1) {
+	                            label = _react2.default.createElement(
+	                                'td',
+	                                { key: td$index++, style: { textAlign: "left" }, colSpan: 1 },
+	                                name
+	                            );
+	                        } else {
+	                            label = _react2.default.createElement(
+	                                'td',
+	                                { key: td$index++, style: { textAlign: "left" }, colSpan: j == row.length - 1 ? max$cols - j : 1 },
+	                                name
+	                            );
+	                        }
+	
+	                        //label=(<span>{dict[coms[0]].name}</span>);
+	                    } else {
+	                            //匹配comp字段
+	                            //默认query控件为最后一个可设字段,在此进行td填充
+	                            if (coms[0] == 'query') {
+	                                ctrl = _react2.default.createElement(
+	                                    'button',
+	                                    { className: 'query', onClick: clickHandle },
+	                                    '查询'
+	                                );
+	                                if (autoComplete == true) {
+	                                    tds.push(_react2.default.createElement(
+	                                        'td',
+	                                        { key: td$index++, style: { textAlign: "center" }, colSpan: j == row.length - 1 ? max$cols - j : 1 },
+	                                        ctrl
+	                                    ));
+	                                } else {
+	                                    tds.push(_react2.default.createElement(
+	                                        'td',
+	                                        { key: td$index++, style: { textAlign: "left" } },
+	                                        ctrl
 	                                    ));
 	                                }
-	                            });
-	                            parent = _react2.default.createElement(
-	                                'li',
-	                                { className: 'treeview' },
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#' },
-	                                    _react2.default.createElement('i', { className: 'fa fa-bar-chart-o' }),
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        '$',
-	                                        item["authority_name"]
-	                                    ),
-	                                    _react2.default.createElement('i', { className: 'fa fa-angle-left pull-right' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    { className: 'treeview-menu' },
-	                                    children
-	                                )
-	                            );
-	                            li$s.push(parent);
-	                        } else {
-	                            parent = _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: parent$href },
-	                                    _react2.default.createElement('i', { className: 'fa fa-th' }),
-	                                    ' ',
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        item["authority_name"]
-	                                    )
-	                                )
-	                            );
-	                            li$s.push(parent);
+	                                return true;
+	                            } else return false;
+	                        }
+	
+	                    if (reserved[coms[1]] !== undefined && reserved[coms[1]] !== null) {
+	                        //加入所有当前能够支持的组件分支
+	                        switch (coms[1]) {
+	                            case 'query':
+	                                if (state.bean !== null && state.bean !== undefined) {
+	                                    ctrl = _react2.default.createElement(
+	                                        'button',
+	                                        { type: 'submit', onClick: clickHandle, style: { width: "100%" } },
+	                                        coms[0]
+	                                    );
+	                                } else ctrl = _react2.default.createElement(
+	                                    'button',
+	                                    { type: 'submit', onClick: clickHandle, style: { width: "100%" } },
+	                                    _dictionary2.default[coms[0]].name
+	                                );
+	                                //当最后一个为query组件时,取消之前的label td
+	                                label = null;
+	                                break;
+	                            case 'input':
+	                                if (state.bean !== null && state.bean !== undefined) {
+	                                    if (coms[2] !== null && coms[2] !== undefined) {
+	                                        //input组件扩展至第3个字段
+	                                        switch (coms[2]) {
+	                                            case 'false':
+	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0], disabled: true });
+	                                                break;
+	                                            case 'true':
+	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0] });
+	                                                break;
+	                                            default:
+	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0], defaultValue: coms[2] });
+	                                                break;
+	                                        }
+	                                    }
+	                                } else ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0] });
+	                                break;
+	                            case 'select':
+	                                if (state.bean !== undefined && state.bean !== null) {
+	
+	                                    if (coms[2] !== null && coms[2] !== undefined) {
+	                                        try {
+	                                            console.log();
+	                                            console.log();
+	                                            console.log();
+	                                            console.log();
+	                                            var arr = eval(coms[2]);
+	                                            console.log();
+	                                            if (Object.prototype.toString.call(arr) == '[object Array]') {
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: coms[0], disabled: false, data: arr, selectCb: coms[3] !== undefined && coms[3] !== null ? selectHandle : null, 'data-query': coms[3] });
+	                                            } else {
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: true, ctrlName: coms[0], disabled: true });
+	                                            }
+	                                        } catch (e) {
+	                                            if (coms[2] == 'true') {
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: coms[0] });
+	                                            } else {
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: coms[0], disabled: true });
+	                                            }
+	                                        }
+	                                    } else ctrl = _react2.default.createElement(_Select2.default, { auto: true, ctrlName: coms[0] });
+	                                } else {
+	                                    var options = null;
+	                                    if (coms[2] !== undefined && coms[2] !== null) options = eval(coms[2]);
+	                                    ctrl = _react2.default.createElement(_Select2.default, { auto: true, ctrlName: coms[0],
+	                                        data: options });
+	                                }
+	                                break;
+	                            case 'download':
+	                                ctrl = _react2.default.createElement(_Download2.default, { attachId: parseInt(coms[0]) });
+	                                break;
+	                            case 'span':
+	                                if (state.bean !== undefined && state.bean !== null) {
+	                                    if (coms[2] !== null && coms[2] !== undefined) {
+	                                        ctrl = _react2.default.createElement(_Span2.default, { auto: false, data: coms[2] });
+	                                    } else ctrl = _react2.default.createElement(_Span2.default, { auto: false });
+	                                } else {
+	                                    var url = _dictionary2.default[coms[0]].url;
+	                                    var alias = _dictionary2.default[coms[0]].alias;
+	                                    var query = { url: url,
+	                                        params: {
+	                                            dictName: alias,
+	                                            reactPageName: "gradGreenWayPage",
+	                                            reactActionName: "getDictionaryValue"
+	                                        }
+	                                    };
+	                                    ctrl = _react2.default.createElement(_Span2.default, { query: query, auto: true });
+	                                }
+	
+	                                break;
+	                            case 'textarea':
+	                                console.log();
+	                                console.log();
+	                                console.log();
+	                                console.log();
+	                                if (state.bean !== undefined && state.bean !== null && coms[2] !== null) {
+	                                    ctrl = _react2.default.createElement('textarea', { rows: 4, name: coms[0], style: { width: "100%" }, value: coms[2] });
+	                                } else ctrl = _react2.default.createElement('textarea', { rows: 4, name: coms[0], style: { width: "100%" } });
+	                                break;
+	                            case 'radio':
+	                                if (coms[2] !== undefined && coms[2] !== null) {
+	                                    ctrl = _react2.default.createElement(_Radio2.default, { ctrlName: coms[0], data: coms[2] });
+	                                } else {
+	                                    ctrl = _react2.default.createElement(_Radio2.default, { ctrlName: coms[0] });
+	                                }
+	                                break;
+	                            case 'return':
+	
+	                                ctrl = _react2.default.createElement(
+	                                    'button',
+	                                    { onClick: returnCb, style: { width: "100%" }, 'data-return': props.returnCb },
+	                                    coms[0]
+	                                );
+	
+	                                //当最后一个为query组件时,取消之前的label td
+	                                label = null;
+	                                break;
+	                            default:
+	                                break;
 	                        }
 	                    }
+	                    if (ctrl !== undefined && ctrl !== null) ctrl$comp = _react2.default.createElement(
+	                        'td',
+	                        { key: td$index++, style: { textAlign: "left" }, colSpan: j == row.length - 1 ? max$cols - j : 1 },
+	                        ctrl
+	                    );
+	                    if (autoComplete == true) {
+	                        tds.push(label);
+	                        if (ctrl$comp !== undefined && ctrl$comp !== null) tds.push(ctrl$comp);
+	                        //tds.push(
+	                        //    <td key={j} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
+	                        //        {label}
+	                        //        {ctrl}
+	                        //    </td>);
+	                    } else {
+	                            tds.push(_react2.default.createElement(
+	                                'td',
+	                                { key: j },
+	                                label,
+	                                ctrl
+	                            ));
+	                        }
 	                });
+	                trs.push(_react2.default.createElement(
+	                    'tr',
+	                    { key: i },
+	                    tds
+	                ));
+	            });
+	
+	            var title;
+	            if (this.props.title !== undefined && this.props.title !== null) {
+	                title = _react2.default.createElement(
+	                    'tr',
+	                    null,
+	                    _react2.default.createElement(
+	                        'th',
+	                        { colSpan: max$cols },
+	                        this.props.title
+	                    )
+	                );
 	            }
+	            return _react2.default.createElement(
+	                'form',
+	                { name: 'PanelForm', className: 'form panel', action: this.props.query !== undefined && this.props.query !== null ? this.props.query.url : "",
+	                    method: 'post' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-sm-12' },
+	                        _react2.default.createElement(
+	                            'table',
+	                            { className: 'table table-bordered center panel' },
+	                            _react2.default.createElement(
+	                                'thead',
+	                                null,
+	                                title
+	                            ),
+	                            _react2.default.createElement(
+	                                'tbody',
+	                                null,
+	                                trs
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        } else {
+	
+	            if (this.props.auto == true) this.fetch();
 	
 	            return _react2.default.createElement(
-	                'ul',
-	                { className: 'sidebar-menu' },
-	                li$s
+	                'div',
+	                { className: 'row' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-sm-12' },
+	                    _react2.default.createElement('table', null)
+	                )
 	            );
 	        }
 	    }
 	});
+	exports.default = Panel;
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
-	exports.default = SidebarMenuElement;
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Span = _react2.default.createClass({
+	    displayName: 'Span',
+	
+	    fetch: function fetch() {
+	        this.queryHandle(null, this.props.query.url, this.props.query.params, null, function (response) {
+	            //这里需要统一规范后台返回的数据格式
+	            if (response.data !== undefined && response.data !== null && response.data != "") this.setState({ data: response.data, data$initialed: true });else console.log("type of response is wrong");
+	        }.bind(this));
+	    },
+	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
+	        $.ajax({
+	            type: type !== undefined && type !== null ? type : 'POST',
+	            url: url,
+	            dataType: dataType !== undefined && dataType !== null ? dataType : 'json',
+	            data: params,
+	            cache: false,
+	            success: function success(response) {
+	                if (callback !== undefined && callback !== null) callback(response);
+	            },
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
+	    getInitialState: function getInitialState() {
+	
+	        var auto;
+	        if (this.props.auto !== undefined && this.props.auto !== null) {
+	            auto = this.props.auto;
+	        }
+	
+	        var data;
+	        if (this.props.data !== undefined && this.props.data !== null) {
+	            data = this.props.data;
+	        }
+	
+	        var data$initialed;
+	        if (data !== undefined && data !== null) {
+	            data$initialed = true;
+	        } else data$initialed = false;
+	
+	        return { data: data, data$initialed: data$initialed, auto: auto };
+	    },
+	    render: function render() {
+	
+	        var content = null;
+	        if (this.state.data$initialed == false && (this.props.data == null || this.props.data == undefined)) {
+	            if (this.state.auto == true) this.fetch();
+	        } else {
+	            content = this.state.data;
+	        }
+	        return _react2.default.createElement(
+	            'span',
+	            null,
+	            content
+	        );
+	    }
+	});
+	exports.default = Span;
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	var _dictionary = __webpack_require__(165);
+	
+	var _dictionary2 = _interopRequireDefault(_dictionary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * 1.select组件扩展父组件表单提交触发
+	 */
+	
+	var Select = _react2.default.createClass({
+	    displayName: 'Select',
+	
+	    dataInitial: function dataInitial() {
+	        if (_dictionary2.default[this.props.ctrlName] !== undefined && _dictionary2.default[this.props.ctrlName] !== null) {
+	
+	            var ctrlName = this.props.ctrlName;
+	
+	            this.queryHandle(null, _dictionary2.default[this.props.ctrlName].url, {
+	                dictName: _dictionary2.default[this.props.ctrlName].alias
+	            }, null, function (response) {
+	                //这里需要统一规范后台返回的数据格式
+	                if (response.arr !== undefined && response.arr !== null) this.setState({ data: response.arr, data$initialed: true });else console.log("type of response is wrong");
+	            }.bind(this));
+	        }
+	    },
+	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
+	        $.ajax({
+	            type: type !== undefined && type !== null ? type : 'POST',
+	            url: url,
+	            dataType: dataType !== undefined && dataType !== null ? dataType : 'json',
+	            data: params,
+	            cache: false,
+	            success: function success(response) {
+	                if (callback !== undefined && callback !== null) callback(response);
+	            },
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
+	    selectCb: function selectCb(evt) {
+	        var target = evt.target;
+	        var hidden = this.refs.hidden_field;
+	        hidden.value = target.value;
+	        console.log();
+	        console.log();
+	        if (this.props.selectCb !== null && this.props.selectCb !== undefined) {
+	            this.props.selectCb(target);
+	        }
+	    },
+	    getInitialState: function getInitialState() {
+	        var auto;
+	        if (this.props.auto !== undefined && this.props.auto !== null) {
+	            auto = this.props.auto;
+	        }
+	
+	        var data;
+	        if (this.props.data !== undefined && this.props.data !== null) {
+	            data = this.props.data;
+	        } else if (_dictionary2.default[this.props.ctrlName] !== undefined && _dictionary2.default[this.props.ctrlName] !== null) {
+	            if (Object.prototype.toString.call(_dictionary2.default[this.props.ctrlName].data) == '[object Array]') data = _dictionary2.default[this.props.ctrlName].data;
+	        } else {}
+	
+	        var data$initialed;
+	        if (data !== undefined && data !== null) {
+	            data$initialed = true;
+	        } else data$initialed = false;
+	
+	        return { selectedIndex: -1, auto: auto, data$initialed: data$initialed, data: data };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props) {
+	        var ob = new Object();
+	        if (props.data !== undefined && props.data !== null) {
+	            ob.data = props.data;
+	        }
+	        if (this.state.data$initialed == false) {
+	            ob.data$initialed = true;
+	        }
+	        if (props.disabled !== undefined && props.disabled !== null) ob.disabled = props.disabled;
+	        this.setState(ob);
+	    },
+	
+	    render: function render() {
+	        if (this.state.data$initialed == true && Object.prototype.toString.call(this.state.data) == '[object Array]' && this.state.disabled != true) {
+	            var options = new Array();
+	            var selectCb = this.selectCb;
+	            var selected = null;
+	            this.state.data.map(function (item, i) {
+	                if (item["selected"] !== undefined && item["selected"] !== null) {
+	                    options.push(_react2.default.createElement(
+	                        'option',
+	                        { value: item.value, key: i, selected: true },
+	                        item.label
+	                    ));
+	                    selected = i;
+	                } else options.push(_react2.default.createElement(
+	                    'option',
+	                    { value: item.value, key: i },
+	                    item.label
+	                ));
+	            });
+	            return _react2.default.createElement(
+	                'div',
+	                { style: { display: 'inline' } },
+	                _react2.default.createElement('input', { name: this.props.ctrlName, style: { display: "none" }, value: selected !== null && selected !== undefined ? selected : '', ref: 'hidden_field' }),
+	                _react2.default.createElement(
+	                    'select',
+	                    { onChange: selectCb, style: { width: "100%" }, 'data-query': this.props["data-query"] !== null && this.props["data-query"] !== undefined ? this.props["data-query"] : null },
+	                    _react2.default.createElement(
+	                        'option',
+	                        { key: -1, value: -1 },
+	                        '请选择'
+	                    ),
+	                    options
+	                )
+	            );
+	        } else {
+	            if (this.props.auto == true) this.dataInitial();
+	
+	            return _react2.default.createElement('select', null);
+	        }
+	    }
+	});
+	exports.default = Select;
+
+/***/ },
+/* 165 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"grade": {
+			"alias": "",
+			"name": "年级",
+			"url": "/serviceHall/bsuims/reactDictionaryRequest.do"
+		},
+		"college": {
+			"alias": "college",
+			"name": "学院",
+			"url": "/serviceHall/bsuims/reactPageDataRequest.do"
+		},
+		"stuType": {
+			"alias": "XSLXM",
+			"name": "学生类型",
+			"url": "/serviceHall/bsuims/reactDictionaryRequest.do"
+		},
+		"loanType": {
+			"alias": "",
+			"data": [
+				{
+					"label": "生源地国家助学贷款",
+					"value": 1
+				},
+				{
+					"label": "校园地国家助学贷款",
+					"value": 2
+				},
+				{
+					"label": "暂缓贷款",
+					"value": 3
+				}
+			],
+			"name": "申请类型"
+		},
+		"perName": {
+			"alias": "perName",
+			"name": "姓名",
+			"url": "/serviceHall/bsuims/reactPageDataRequest.do"
+		},
+		"perNum": {
+			"alias": "perNum",
+			"name": "学号",
+			"url": "/serviceHall/bsuims/reactPageDataRequest.do"
+		},
+		"sex": {
+			"alias": "sex",
+			"name": "性别",
+			"url": "/serviceHall/bsuims/reactPageDataRequest.do"
+		},
+		"perIdCard": {
+			"alias": "perIdCard",
+			"name": "身份证号",
+			"url": "/serviceHall/bsuims/reactPageDataRequest.do"
+		},
+		"major": {
+			"alias": "majorName",
+			"name": "专业",
+			"url": "/serviceHall/bsuims/reactPageDataRequest.do"
+		},
+		"className": {
+			"alias": "className",
+			"name": "班级",
+			"url": "/serviceHall/bsuims/reactPageDataRequest.do"
+		},
+		"applyReason": {
+			"alias": "applyReason",
+			"name": "申请原因"
+		},
+		"submit": {
+			"alias": "submit",
+			"name": "提交"
+		}
+	};
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	var _dictionary = __webpack_require__(165);
+	
+	var _dictionary2 = _interopRequireDefault(_dictionary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Radio = _react2.default.createClass({
+	    displayName: 'Radio',
+	
+	    changeCb: function changeCb(evt) {
+	        var target = evt.target;
+	        console.log();
+	        console.log();
+	    },
+	    render: function render() {
+	        var radios;
+	        var props = this.props;
+	        if (this.props.data !== undefined && this.props.data !== null) {
+	            radios = new Array();
+	            var changeCb = this.changeCb;
+	            props.data.map(function (item, i) {
+	                radios.push(_react2.default.createElement(
+	                    'div',
+	                    { style: { display: "inline" }, key: i },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { style: { margin: "0px 20px" } },
+	                        item.label
+	                    ),
+	                    _react2.default.createElement('input', { type: 'radio', value: item.value, name: props.ctrlName, onChange: changeCb })
+	                ));
+	            });
+	        }
+	        return _react2.default.createElement(
+	            'div',
+	            null,
+	            radios
+	        );
+	    }
+	});
+	exports.default = Radio;
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(168);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(168, function() {
+				var newContent = __webpack_require__(168);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\r\n.table.table-bordered.panel> thead:first-child > tr:first-child > th{\r\n    border-top:1px solid #ddd;\r\n}\r\n\r\n.table.table-bordered.center.panel thead:first-child tr th {\r\n    text-align:center;\r\n    font-family: lucida, verdana, arial, sans-serif;\r\n    font-size:1.2em;\r\n}\r\n\r\n\r\n.table.table-bordered.center.panel td\r\n{\r\n    align:left;\r\n}\r\n.table.table-bordered.center.panel td span{\r\nmargin-right:5%;\r\n}\r\n.table.table-bordered.center.panel td button\r\n{\r\n    align:center;\r\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 169 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function () {
+		var list = [];
+	
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for (var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if (item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+	
+		// import a list of modules into the list
+		list.i = function (modules, mediaQuery) {
+			if (typeof modules === "string") modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for (var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if (typeof id === "number") alreadyImportedModules[id] = true;
+			}
+			for (i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if (mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if (mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+	
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+	
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+	
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+	
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+	
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	var replaceText = (function () {
+		var textStore = [];
+	
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+	
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+	
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+	
+		var blob = new Blob([css], { type: "text/css" });
+	
+		var oldSrc = linkElement.href;
+	
+		linkElement.href = URL.createObjectURL(blob);
+	
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	var _Download = __webpack_require__(161);
+	
+	var _Download2 = _interopRequireDefault(_Download);
+	
+	var _LinkElement = __webpack_require__(172);
+	
+	var _LinkElement2 = _interopRequireDefault(_LinkElement);
+	
+	var _OrdinaryTr = __webpack_require__(173);
+	
+	var _OrdinaryTr2 = _interopRequireDefault(_OrdinaryTr);
+	
+	var _Hide = __webpack_require__(174);
+	
+	var _Hide2 = _interopRequireDefault(_Hide);
+	
+	var _Panel = __webpack_require__(162);
+	
+	var _Panel2 = _interopRequireDefault(_Panel);
+	
+	var _EmbedTable = __webpack_require__(177);
+	
+	var _EmbedTable2 = _interopRequireDefault(_EmbedTable);
+	
+	__webpack_require__(186);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 *
+	 * 1.dataField,本组件支持多数据源注入,由dataField的field映射至各表数据源所对应的键
+	 * 2.link组件开始支持单字段复数
+	 *
+	 */
+	var OrdinaryTable = _react2.default.createClass({
+	    displayName: 'OrdinaryTable',
+	
+	    combineRemainTd: function combineRemainTd(out$param, in$param, prefix, start, count, p$index) {
+	        if (Object.prototype.toString.call(out$param) == '[object Array]') {
+	            var state = this.state;
+	            var existedInArray = this.existedInArray;
+	
+	            for (var i = start; i < start + count; i++) {
+	                var tds = prefix.slice(0, prefix.length);
+	
+	                var td$index;
+	                if (i !== start) {
+	                    td$index = 0;
+	                    tds = new Array();
+	                } else td$index = p$index;
+	
+	                var row = in$param[i];
+	                console.log("stu=" + row.stu);
+	                for (var field in row) {
+	                    if (existedInArray(field, state.group$field) === false) {
+	                        tds.push(_react2.default.createElement(
+	                            'td',
+	                            { key: td$index++ },
+	                            row[field]
+	                        ));
+	                    }
+	                }
+	                out$param.push(_react2.default.createElement(
+	                    'tr',
+	                    { key: i },
+	                    tds
+	                ));
+	            }
+	        }
+	    },
+	    combine: function combine(ob, in$param, out$param, group$field, prefix, td$index, row$index) {
+	        var pool = ob;
+	        if (pool !== undefined && pool !== null) {
+	            if (Object.prototype.toString.call(pool) == '[object Array]') {
+	
+	                var leaf = !(pool[0].r !== undefined && pool[0].r !== null);
+	                console.log();
+	                console.log();
+	                for (var i = 0; i < pool.length; i++) {
+	                    var tds;
+	                    console.log();
+	                    console.log();
+	                    console.log();
+	                    if (i == 0 && prefix !== null && prefix !== undefined) {
+	                        tds = prefix.slice(0, prefix.length);
+	                    } else {
+	                        tds = new Array();
+	                    }
+	                    //代表td的键值
+	                    var index = td$index;
+	                    tds.push(_react2.default.createElement(
+	                        'td',
+	                        { rowSpan: pool[i].c, key: index++ },
+	                        pool[i].v
+	                    ));
+	                    //分组非叶结点
+	                    if (leaf == false) {
+	                        this.combine(pool[i].r, in$param, out$param, group$field, tds, index, row$index);
+	                    } else {
+	                        //分组叶结点
+	
+	                        this.combineRemainTd(out$param, in$param, tds, row$index.i, pool[i].c, index);
+	                        row$index.i += pool[i].c;
+	                    }
+	                }
+	            }
+	        }
+	    },
+	    recurse: function recurse(pool, rule, in$param, out$param, group$field) {
+	        if (pool !== undefined && pool !== null) {
+	            if (Object.prototype.toString.call(pool) == '[object Array]') {
+	                for (var i = 0; i < pool.length; i++) {
+	                    var prefix = rule;
+	                    prefix += pool[i].v;
+	                    if (pool[i].r !== undefined && pool[i].r !== null) {
+	                        prefix += '|';
+	                        this.recurse(pool[i].r, prefix, in$param, out$param, group$field);
+	                    } else {
+	                        //当递归至叶结点时,重新压入数据
+	
+	                        in$param.map(function (row, j) {
+	                            var matchs = '';
+	                            group$field.map(function (field, k) {
+	                                matchs += row[field];
+	                                if (k != group$field.length - 1) matchs += '|';
+	                            });
+	                            if (matchs == prefix) out$param.push(row);
+	                        });
+	                    }
+	                }
+	            }
+	        }
+	    },
+	    existedInArray: function existedInArray(d2, arr) {
+	        var existed = false;
+	        for (var i = 0; i < arr.length; i++) {
+	            if (arr[i] == d2) {
+	                existed = i;
+	                break;
+	            }
+	        }
+	        return existed;
+	    },
+	    //该方法返回false或该键在数组的下标
+	    existedIn: function existedIn(d2, pool) {
+	        var existed = false;
+	        for (var i = 0; i < pool.length; i++) {
+	            if (pool[i].v == d2) {
+	                existed = i;
+	                break;
+	            }
+	        }
+	        return existed;
+	    },
+	    group: function group(data, group$field) {
+	
+	        var pool = new Array();
+	        var existedIn = this.existedIn;
+	        data.map(function (row, i) {
+	            var ob;
+	            var re;
+	            var p = pool;
+	            //初始化pool
+	            group$field.map(function (field, j) {
+	                //如果该分组字段不位于队尾
+	                if (j != group$field.length - 1) {
+	                    re = existedIn(row[field], p);
+	                    if (re === false) //如果pool中没有此键
+	                        {
+	                            ob = new Object();
+	                            ob.v = row[field];
+	                            ob.c = 1;
+	                            ob.r = new Array();
+	                            p.push(ob);
+	                        } else {
+	                        ob = p[re];
+	                        ob.c++;
+	                    }
+	                    p = ob.r;
+	                } else {
+	                    re = existedIn(row[field], p);
+	                    if (re === false) {
+	                        ob = new Object();
+	                        ob.v = row[field];
+	                        ob.c = 1;
+	                        p.push(ob);
+	                    } else {
+	                        ob = p[re];
+	                        ob.c++;
+	                    }
+	                }
+	            });
+	        });
+	
+	        //重新生成数据
+	        var gen = new Array();
+	        this.recurse(pool, '', data, gen, group$field);
+	        //根据重新生成的数据源gen进行pool的i设置
+	
+	        return [pool, gen];
+	    },
+	    groupCombine: function groupCombine(pool, in$param, out$param, group$field) {
+	        var row$index = new Object();
+	        row$index.i = 0;
+	        this.combine(pool, in$param, out$param, group$field, null, 0, row$index);
+	    },
+	    clickCb: function clickCb(ob) {
+	        if (ob !== undefined && ob !== null) {
+	            var dataField = ob.field;
+	            var index = ob.index;
+	            if (index === null || index === undefined || dataField == null || dataField == undefined) {} else {
+	                if (dataField == this.state.sideField.field && !isNaN(parseInt(index))) {
+	                    var row = this.state.data[this.state.sideField.field][index];
+	                    var params = Object.assign(this.state.sideField.query.params, row);
+	                    this.queryHandle(null, this.state.sideField.query.url, params, 'json', function (response) {
+	                        console.log();
+	                        console.log();
+	                        this.setState({ data: response.arr });
+	                    }.bind(this));
+	                }
+	            }
+	        }
+	    },
+	    linkCb: function linkCb(evt) {
+	        if (evt !== undefined && evt !== null) {
+	            var target = evt.target;
+	            var query;
+	            if (target.getAttribute('data-comp') !== undefined && target.getAttribute('data-comp') !== null) {
+	                var comp = target.getAttribute("data-comp");
+	                var hiddenInfo = new Object();
+	                if (Object.prototype.toString.call(target.getAttribute('data-query') == '[object String]')) hiddenInfo.data = eval('(' + target.getAttribute('data-query') + ')');else hiddenInfo.data = target.getAttribute('data-query');
+	                hiddenInfo.comp = target.getAttribute('data-comp');
+	
+	                this.setState({ hiddenInfo: hiddenInfo });
+	                $(this.refs.contentDiv).slideUp();
+	            }
+	        }
+	    },
+	    returnCb: function returnCb() {
+	        this.setState({ hiddenInfo: null });
+	        $(this.refs.contentDiv).slideDown();
+	    },
+	    fetch: function fetch() {
+	        this.queryHandle(null, this.props.query.url, this.props.query.params, 'json', function (response) {
+	            var data;
+	            if (Object.prototype.toString.call(response) != '[object Array]') {
+	                if (response.data !== undefined && response.data !== null) {
+	                    if (Object.prototype.toString.call(response.data) == '[object Array]') data = response.data;
+	                }
+	            } else data = response;
+	            this.setState({ data: data, data$initialed: true });
+	        }.bind(this));
+	    },
+	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
+	        $.ajax({
+	            type: type !== undefined && type !== null ? type : 'POST',
+	            url: url,
+	            dataType: dataType !== undefined && dataType !== null ? dataType : 'json',
+	            data: params,
+	            cache: false,
+	            success: function success(response) {
+	                if (callback !== undefined && callback !== null) callback(response);
+	            },
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
+	    getInitialState: function getInitialState() {
+	        //自动拉取服务器数据
+	        var autoFetch;
+	        if (this.props.autoFetch !== undefined && this.props.autoFetch !== null) autoFetch = this.props.autoFetch;else autoFetch = false;
+	
+	        //数据是否绑定
+	        var data$initialed;
+	        if (this.props.data !== undefined && this.props.data !== null) data$initialed = true;else data$initialed = false;
+	
+	        var data;
+	        if (this.props.data !== undefined && this.props.data !== null) data = this.props.data;
+	
+	        var sideField;
+	        if (this.props.sideField !== undefined && this.props.sideField !== null) sideField = this.props.sideField;
+	
+	        var dataField;
+	        if (this.props.dataField !== undefined && this.props.dataField !== null) dataField = this.props.dataField;
+	
+	        //filterField,此选项开启后自动按照filterField的顺序进行字段填充
+	        var filterField;
+	        if (this.props.filterField !== undefined && this.props.filterField !== null) filterField = this.props.filterField;
+	
+	        //groupField,此选项用于开启部分字段的分组
+	        var group$field;
+	        if (this.props["group-field"] !== undefined && this.props["group-field"] !== null) {
+	            group$field = this.props["group-field"];
+	        }
+	
+	        var data;
+	        var pool;;
+	        if (this.props.data !== undefined && this.props.data !== null) {
+	            if (group$field !== undefined && group$field !== null) {
+	                var arr = this.group(this.props.data, group$field);
+	                data = arr[1];
+	                pool = arr[0];
+	            }
+	        }
+	
+	        //hidden componnet
+	        var hiddenStatus = false;
+	        if (this.props.hiddenStatus == true || this.props.hiddenStatus == 'true') hiddenStatus = true;
+	
+	        return { autoFetch: autoFetch, data$initialed: data$initialed, data: data,
+	            sideField: sideField, dataField: dataField, filterField: filterField, group$field: group$field,
+	            pool: pool, hiddenStatus: hiddenStatus };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props) {
+	        var op = new Object();
+	        //更新data$initialed状态
+	        if (props.data$initialed !== undefined && props.data$initialed !== null) op.data$initialed = props.data$initialed;
+	        if (props.data !== undefined && props.data !== null) op.data = props.data;
+	        this.setState(op);
+	    },
+	    render: function render() {
+	        if (this.state.data$initialed !== true && (this.props.data == null || this.props.data == undefined)) {
+	            if (this.state.autoFetch == true) this.fetch();
+	            return _react2.default.createElement('table', null);
+	        } else {
+	            var colSpan = 1;
+	            var tables;
+	            if (this.state.dataField !== null && this.state.dataField !== undefined) {
+	                tables = new Array();
+	                if (Object.prototype.toString.call(this.props.dataField) != "[object Array]") return _react2.default.createElement('table', null);
+	                var state = this.state;
+	                var props = this.props;
+	                state.dataField.map(function (item, i) {
+	                    var colSpan = 0;
+	                    if (props.data[item.field] == null || props.data[item.field] == undefined || Object.prototype.toString.call(props.data[item.field]) != "[object Array]") {
+	                        return false;
+	                    }
+	                    if (props.data[item.field].length < 1) return false;
+	                    //如果内表允许堆叠
+	                    if (item.stacked == true) {
+	                        var arr = new Array();
+	                        var json = new Object();
+	                        json["data"] = state.data[item.field];
+	                        arr.push(json);
+	                        tables.push(_react2.default.createElement(_EmbedTable2.default, { title: item.title,
+	                            data: { arr: arr },
+	                            subQuery: {
+	                                url: "/gradms/bsuims/reactPageDataRequest.do",
+	                                params: {
+	                                    reactPageName: 'cultivateTutorPage',
+	                                    reactActionName: "personIntroductionShow"
+	                                }
+	                            },
+	                            autoFetch: false, key: i }));
+	                    } else {
+	                        var trs;
+	                        var rowFields = new Array();
+	                        for (var field in props.data[item.field][0]) {
+	                            rowFields.push(_react2.default.createElement(
+	                                'td',
+	                                { key: colSpan },
+	                                field
+	                            ));
+	                            colSpan++;
+	                        }
+	                        trs = new Array();
+	                        props.data[item.field].map(function (row, i) {
+	                            var tds = new Array();
+	                            var j = 0;
+	                            for (var field in row) {
+	                                tds.push(_react2.default.createElement(
+	                                    'td',
+	                                    { key: j++ },
+	                                    row[field]
+	                                ));
+	                            }
+	                            trs.push(_react2.default.createElement(
+	                                'tr',
+	                                { key: i },
+	                                tds
+	                            ));
+	                        });
+	                        tables.push(_react2.default.createElement(
+	                            'table',
+	                            { className: 'table table-bordered center ordinaryTable', key: i },
+	                            _react2.default.createElement(
+	                                'thead',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'tr',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'th',
+	                                        { colSpan: colSpan },
+	                                        item.title
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'tbody',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'tr',
+	                                    null,
+	                                    rowFields
+	                                ),
+	                                trs
+	                            )
+	                        ));
+	                    }
+	                });
+	            } else {
+	                //单表数据源注入
+	                if (Object.prototype.toString.call(this.state.data) == "[object Array]" && this.state.data.length >= 1) {
+	                    tables = new Array();
+	                    colSpan = 0;
+	                    var tr$fields = new Array();
+	                    var j = 0;
+	                    var state = this.state;
+	                    var props = this.props;
+	                    //如果允许过滤字段
+	                    if (state.filterField !== null && state.filterField !== undefined) {
+	                        for (var field in state.filterField) {
+	                            if (state.data[0][field] !== null && state.data[0][field] !== undefined) {
+	                                tr$fields.push(_react2.default.createElement(
+	                                    'td',
+	                                    { key: j++ },
+	                                    field
+	                                ));
+	                                colSpan++;
+	                            }
+	                        }
+	                    } else {
+	                        for (var field in state.data[0]) {
+	                            tr$fields.push(_react2.default.createElement(
+	                                'td',
+	                                { key: j++ },
+	                                field
+	                            ));
+	                            colSpan++;
+	                        }
+	                    }
+	
+	                    var trs = new Array();
+	
+	                    //如果字段进行分组
+	                    if (state.group$field !== undefined && state.group$field !== null) {
+	
+	                        this.groupCombine(state.pool, state.data, trs, this.state.group$field);
+	                    } else {
+	                        var linkCb = this.linkCb;
+	                        state.data.map(function (row, i) {
+	                            var k = 0;
+	                            var tds = new Array();
+	                            if (state.filterField !== undefined && state.filterField !== null) {
+	                                for (var field in state.filterField) {
+	                                    if (row[field] !== undefined && row[field] !== null) {
+	
+	                                        switch (field) {
+	                                            case 'attachs':
+	
+	                                                var downloads = null;
+	                                                var ids = null;
+	                                                if (row[field] !== undefined && row[field] !== null && row[field] != '') ids = row[field].split("|");
+	                                                if (ids != null && ids.length >= 1) {
+	                                                    downloads = new Array();
+	                                                    ids.map(function (item, i) {
+	                                                        downloads.push(_react2.default.createElement(_Download2.default, { attachId: item, key: i }));
+	                                                    });
+	                                                }
+	
+	                                                tds.push(_react2.default.createElement(
+	                                                    'td',
+	                                                    { key: k++ },
+	                                                    downloads
+	                                                ));
+	                                                break;
+	                                            case 'link':
+	                                                if (row[field] !== undefined && row[field] !== null) {
+	
+	                                                    var ids = row[field].split('|');
+	                                                    if (ids[1] !== null && ids[1] !== undefined && ids[2] !== undefined && ids[2] !== null) {
+	                                                        tds.push(_react2.default.createElement(
+	                                                            'td',
+	                                                            { key: k++ },
+	                                                            _react2.default.createElement(
+	                                                                _LinkElement2.default,
+	                                                                { linkCb: linkCb, 'data-comp': ids[1], 'data-query': ids[2] },
+	                                                                ids[0]
+	                                                            )
+	                                                        ));
+	                                                    } else {
+	                                                        tds.push(_react2.default.createElement(
+	                                                            'td',
+	                                                            { key: k++ },
+	                                                            _react2.default.createElement(
+	                                                                _LinkElement2.default,
+	                                                                null,
+	                                                                ids[0]
+	                                                            )
+	                                                        ));
+	                                                    }
+	                                                } else {
+	                                                    tds.push(_react2.default.createElement('td', { key: k++ }));
+	                                                }
+	                                                break;
+	
+	                                            default:
+	                                                tds.push(_react2.default.createElement(
+	                                                    'td',
+	                                                    { key: k++ },
+	                                                    row[field]
+	                                                ));
+	                                                break;
+	                                        }
+	                                    }
+	                                }
+	                            } else {
+	                                //如果未设置过滤字段
+	                                for (var field in row) {
+	                                    switch (field) {
+	                                        case 'link':
+	                                            if (row[field] !== undefined && row[field] !== null) {
+	                                                var ids = null;
+	                                                var comps = null;
+	                                                try {
+	                                                    comps = eval(row[field]);
+	                                                } catch (e) {
+	                                                    ids = row[field].split('|');
+	                                                }
+	
+	                                                if (comps !== null) {
+	                                                    var links = new Array();
+	                                                    comps.map(function (comp, i) {
+	                                                        var confs = comp.split('|');
+	                                                        if (confs[1] !== undefined && confs[1] !== null && confs[2] !== undefined && confs[2] !== null) {
+	                                                            links.push(_react2.default.createElement(
+	                                                                _LinkElement2.default,
+	                                                                { linkCb: linkCb, 'data-comp': confs[1], 'data-query': confs[2], key: i },
+	                                                                confs[0]
+	                                                            ));
+	                                                        }
+	                                                    });
+	                                                    if (links.length >= 1) {
+	                                                        tds.push(_react2.default.createElement(
+	                                                            'td',
+	                                                            { key: k++ },
+	                                                            links
+	                                                        ));
+	                                                    }
+	                                                } else {
+	                                                    if (ids !== null) {
+	                                                        if (ids[1] !== undefined && ids[1] !== null && ids[2] !== undefined && ids[2] !== null) {
+	                                                            tds.push(_react2.default.createElement(
+	                                                                'td',
+	                                                                { key: k++ },
+	                                                                _react2.default.createElement(
+	                                                                    _LinkElement2.default,
+	                                                                    { linkCb: linkCb, 'data-comp': ids[1], 'data-query': ids[2] },
+	                                                                    ids[0]
+	                                                                )
+	                                                            ));
+	                                                        } else {
+	                                                            tds.push(_react2.default.createElement(
+	                                                                'td',
+	                                                                { key: k++ },
+	                                                                _react2.default.createElement(
+	                                                                    _LinkElement2.default,
+	                                                                    null,
+	                                                                    ids[0]
+	                                                                )
+	                                                            ));
+	                                                        }
+	                                                    }
+	                                                }
+	                                            } else {
+	                                                tds.push(_react2.default.createElement('td', { key: k++ }));
+	                                            }
+	                                            break;
+	                                        default:
+	                                            tds.push(_react2.default.createElement(
+	                                                'td',
+	                                                { key: k++ },
+	                                                row[field]
+	                                            ));
+	                                            break;
+	                                    }
+	                                }
+	                            }
+	                            trs.push(_react2.default.createElement(
+	                                'tr',
+	                                { key: i },
+	                                tds
+	                            ));
+	                        });
+	                    }
+	
+	                    var title = null;
+	                    if (this.props.title !== undefined && this.props.title !== null) title = _react2.default.createElement(
+	                        'thead',
+	                        null,
+	                        _react2.default.createElement(
+	                            'tr',
+	                            null,
+	                            _react2.default.createElement(
+	                                'th',
+	                                { colSpan: colSpan },
+	                                this.props.title
+	                            )
+	                        )
+	                    );
+	                    tables.push(_react2.default.createElement(
+	                        'table',
+	                        { className: 'table table-bordered center', key: 0 },
+	                        title,
+	                        _react2.default.createElement(
+	                            'tbody',
+	                            null,
+	                            _react2.default.createElement(
+	                                'tr',
+	                                null,
+	                                tr$fields
+	                            ),
+	                            trs
+	                        )
+	                    ));
+	                }
+	            }
+	
+	            var sideDist;
+	            if (this.props.sideField !== undefined && this.props.sideField !== null) {
+	                var sideTables;
+	                colSpan = 0;
+	                var state = this.state;
+	                if (state.sideField.field !== undefined && state.sideField.field !== null && state.data[state.sideField.field] !== undefined && state.data[state.sideField.field] !== null) {
+	                    var fields = new Array();
+	                    for (var field in state.data[state.sideField.field][0]) {
+	                        fields.push(_react2.default.createElement(
+	                            'td',
+	                            { key: colSpan },
+	                            field
+	                        ));
+	                        colSpan++;
+	                    }
+	                    var trs = new Array();
+	                    var clickCb = this.clickCb;
+	                    state.data[state.sideField.field].map(function (row, i) {
+	                        var tds = new Array();
+	                        var j = 0;
+	
+	                        for (var cell in row) {
+	                            tds.push(_react2.default.createElement(
+	                                'td',
+	                                { key: j++ },
+	                                row[cell]
+	                            ));
+	                        }
+	
+	                        trs.push(_react2.default.createElement(
+	                            _OrdinaryTr2.default,
+	                            { key: i, clickCb: clickCb, dataField: props.sideField.field, 'data-index': i },
+	                            tds
+	                        ));
+	                    });
+	                    sideTables = _react2.default.createElement(
+	                        'table',
+	                        { className: 'table table-bordered center', key: 0 },
+	                        _react2.default.createElement(
+	                            'tbody',
+	                            null,
+	                            _react2.default.createElement(
+	                                'tr',
+	                                null,
+	                                fields
+	                            ),
+	                            trs
+	                        )
+	                    );
+	                    if (sideTables !== undefined && sideTables !== null) sideDist = _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-sm-3', key: 1 },
+	                        sideTables
+	                    );
+	                } else {}
+	            }
+	
+	            var hide;
+	            //渲染隐藏组件
+	            if (this.state.hiddenInfo !== null && this.state.hiddenInfo !== undefined) {
+	                if (this.state.hiddenInfo.comp !== undefined && this.state.hiddenInfo.comp !== null) {
+	                    var hide$c;
+	                    switch (this.state.hiddenInfo.comp) {
+	                        case 'panel':
+	                            hide$c = _react2.default.createElement(_Panel2.default, {
+	                                bean: this.state.hiddenInfo.data,
+	                                autoComplete: true,
+	                                auto: true,
+	                                returnCb: this.returnCb
+	                            });
+	                            break;
+	                        default:
+	                            break;
+	                    }
+	                    hide = _react2.default.createElement(
+	                        _Hide2.default,
+	                        null,
+	                        hide$c
+	                    );
+	                }
+	            } else {}
+	
+	            var mainDist;
+	            if (sideDist !== undefined && sideDist !== null) mainDist = _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-9', key: 0 },
+	                _react2.default.createElement(
+	                    'div',
+	                    { ref: 'hideDiv' },
+	                    hide
+	                ),
+	                tables
+	            );else mainDist = _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12 col-md-12 table-responsive', key: 0 },
+	                _react2.default.createElement(
+	                    'div',
+	                    { ref: 'hideDiv' },
+	                    hide
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { ref: 'contentDiv' },
+	                    tables
+	                )
+	            );
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'ordinaryTable', style: { margin: "0px" } },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    sideDist,
+	                    mainDist
+	                )
+	            );
+	        }
+	    }
+	});
+	exports.default = OrdinaryTable;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var LinkElement = _react2.default.createClass({
+	    displayName: "LinkElement",
+	
+	    clickCb: function clickCb(evt) {
+	        if (this.props.linkCb !== undefined && this.props.linkCb !== null) {
+	            console.log();
+	            console.log();
+	            console.log();
+	            this.props.linkCb(evt);
+	        }
+	    },
+	    render: function render() {
+	        var data$index;
+	        if (this.props["data-index"] !== null && this.props["data-index"] !== undefined) data$index = this.props["data-index"];
+	
+	        //link,上层组件传来的超链
+	        var link;
+	        if (this.props.to !== undefined && this.props.to !== null) link = this.props.to;else link = "javascript:void(0)";
+	
+	        var alignStyle;
+	        if (this.props.align !== undefined && this.props.align !== null) alignStyle = {
+	            textAlign: this.props.align
+	        };
+	
+	        var query;
+	        if (this.props["data-query"] !== undefined && this.props["data-query"] !== null) {
+	            query = this.props["data-query"];
+	        }
+	
+	        return _react2.default.createElement(
+	            "a",
+	            { href: link, className: this.props.linkClass, "data-index": data$index,
+	                onClick: this.clickCb, style: alignStyle, "data-query": query, "data-comp": this.props["data-comp"] },
+	            this.props.children
+	        );
+	    }
+	});
+	
+	exports.default = LinkElement;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var OrdinaryTr = _react2.default.createClass({
+	    displayName: 'OrdinaryTr',
+	
+	    clickCb: function clickCb() {
+	        if (this.props.clickCb !== undefined && this.props.clickCb !== null) {
+	            if (this.props["data-index"] !== undefined && this.props["data-index"] !== null) {
+	                var ob = new Object();
+	                ob.field = this.props.dataField;
+	                ob.index = this.props["data-index"];
+	                this.props.clickCb(ob);
+	            } else {
+	                this.props.clickCb(null);
+	            }
+	        }
+	    },
+	    render: function render() {
+	
+	        return _react2.default.createElement(
+	            'tr',
+	            { onClick: this.clickCb },
+	            this.props.children
+	        );
+	    }
+	});
+	exports.default = OrdinaryTr;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	__webpack_require__(175);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * 1.本组件完成子组件的包装加壳
+	 * 2.本组件完成显示状态的控制
+	 */
+	
+	var Hide = _react2.default.createClass({
+	    displayName: 'Hide',
+	
+	    transitinStatus: function transitinStatus() {
+	
+	        this.setState({ status: !this.state.status });
+	    },
+	    getInitialState: function getInitialState() {
+	
+	        var status = true;
+	        if (this.props.status !== undefined && this.props.status !== null) status = this.props.status;
+	
+	        return { status: status };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props) {
+	        if (props.status !== undefined && props.status !== null) {
+	            this.setState({ status: props.status });
+	        }
+	    },
+	    render: function render() {
+	
+	        if (this.state.status == true) {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    this.props.children
+	                )
+	            );
+	        } else {
+	            return _react2.default.createElement(
+	                'div',
+	                { style: { display: "none" } },
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    this.props.children
+	                )
+	            );
+	        }
+	    }
+	});
+	exports.default = Hide;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(176);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(176, function() {
+				var newContent = __webpack_require__(176);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(159);
+	
+	var _TdElement = __webpack_require__(178);
+	
+	var _TdElement2 = _interopRequireDefault(_TdElement);
+	
+	__webpack_require__(181);
+	
+	var _HideElement = __webpack_require__(183);
+	
+	var _HideElement2 = _interopRequireDefault(_HideElement);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * EmbedTable,表格组件，请使用&lt;StackedTable /&gt;进行实例化
+	 * @author outstudio
+	 * @constructor EmbedTable
+	 * @example
+	 * <EmbedTable
+	 * title={title}
+	 * query={{
+	                url:"/gradms/bsuims/reactPageDataRequest.do",
+	                params:
+	                {
+	                    reactPageName:'cultivateTutorPage',
+	                    reactActionName:'getAllTutorListUseReact'
+	                }
+	            }}
+	 * subQuery={{
+	                url:"/gradms/bsuims/reactPageDataRequest.do",
+	                params:{
+	                    personId:'',
+	                    reactPageName:'cultivateTutorPage',
+	                    reactActionName:"personIntroductionShow"
+	                }
+	            }}
+	 * autoFetch={true}
+	 * />
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
+	var EmbedTable = _react2.default.createClass({
+	    displayName: 'EmbedTable',
+	
+	    foldCb: function foldCb(formName) {
+	        console.log();
+	        //$("form[name!='"+formName+"']").show();
+	        $("form[name='" + formName + "']").slideToggle();
+	        this.setState({ personInfo: null });
+	    },
+	    clickCb: function clickCb(ob) {
+	        var url = this.props.subQuery.url;
+	        if (url == undefined || url == null) return;
+	        var params = this.props.subQuery.params;
+	        if (params == undefined || params == null) params = new Object();
+	        params.personId = parseInt(ob);
+	        this.queryHandle(url, params, null, function (response) {
+	            if (response.data !== undefined && response.data !== null) {
+	                response.data.title = "个人简介";
+	                this.setState({ personInfo: response.data });
+	                $("form[name='hideForm']").slideToggle();
+	                //$("form[name!='hideForm']").fadeToggle();
+	            }
+	        }.bind(this));
+	    },
+	    fetch: function fetch() {
+	
+	        this.queryHandle(this.props.query.url, this.props.query.params, null, function (response) {
+	            var data;
+	            data = response;
+	            if (data !== undefined && data !== null) {
+	                this.setProps({ data: data, data$initialed: true });
+	            }
+	        }.bind(this));
+	    },
+	    queryHandle: function queryHandle(url, params, dataType, callback) {
+	        $.ajax({
+	            type: 'POST',
+	            url: url,
+	            dataType: dataType !== undefined && dataType !== null ? dataType : 'json',
+	            data: params,
+	            cache: false,
+	            success: function success(response) {
+	                if (callback !== undefined && callback !== null) callback(response);
+	            },
+	            error: function error(xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }
+	        });
+	    },
+	    getInitialState: function getInitialState() {
+	        //自动拉取服务器数据
+	        var autoFetch;
+	        if (this.props.autoFetch !== undefined && this.props.autoFetch !== null) autoFetch = this.props.autoFetch;else autoFetch = false;
+	
+	        //数据是否绑定
+	        var data$initialed;
+	        if (this.props.data !== undefined && this.props.data !== null) data$initialed = true;else data$initialed = false;
+	
+	        //指定嵌套表的列宽
+	        var embedCols;
+	        if (this.props.embedCols !== undefined && this.props.embedCols !== null) embedCols = this.props.embedCols;else embedCols = 10;
+	
+	        //存储hideForm的数据,当组件位于二层内部时不能直接使用setProps
+	
+	        return {
+	            autoFetch: autoFetch, data$initialed: data$initialed, embedCols: embedCols
+	        };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props) {
+	        //更新data$initialed状态
+	        if (props.data$initialed !== undefined && props.data$initialed !== null) this.setState({ data$initialed: props.data$initialed });
+	    },
+	    render: function render() {
+	        //表格数据未绑定
+	        if (this.state.data$initialed !== true) {
+	            if (this.state.autoFetch == true) this.fetch();
+	
+	            return _react2.default.createElement('table', { className: 'table table-bordered center' });
+	        } else {
+	            //表格数据已绑定
+	            //不采用this.state.data的原因,state与props不同步
+	
+	            var trs = null;
+	            if (this.props.data !== undefined && this.props.data !== null) {
+	                trs = new Array();
+	                var embedCols = this.state.embedCols;
+	                var clickCb = this.clickCb;
+	                this.props.data.arr.map(function (item, i) {
+	                    var sub$data;
+	                    if (item.data !== undefined && item.data !== null) sub$data = item.data;else return false;
+	                    var sub$title;
+	                    if (item.title !== undefined && item.title !== null) {
+	                        sub$title = _react2.default.createElement(
+	                            'td',
+	                            { rowSpan: 1, style: { verticalAlign: "middle", textAlign: "center" } },
+	                            item.title
+	                        );
+	                    }
+	                    var rows = parseInt(sub$data.length / embedCols) + 1;
+	                    var td$table;
+	                    var sub$trs = new Array();
+	                    var sub$tds;
+	                    var sub$row$index = 0;
+	                    sub$data.map(function (sub, j) {
+	                        if (j % embedCols == 0) {
+	                            sub$tds = new Array();
+	                        }
+	                        sub$tds.push(_react2.default.createElement(
+	                            _TdElement2.default,
+	                            { key: j, data: sub.personId, clickCb: clickCb },
+	                            sub.perName
+	                        ));
+	                        if (j % embedCols == embedCols - 1 || j == sub$data.length - 1) {
+	                            sub$trs.push(_react2.default.createElement(
+	                                'tr',
+	                                { key: sub$row$index },
+	                                sub$tds
+	                            ));
+	                            sub$row$index++;
+	                        }
+	                    });
+	                    td$table = _react2.default.createElement(
+	                        'table',
+	                        { className: 'table table-bordered center', key: i },
+	                        _react2.default.createElement(
+	                            'tbody',
+	                            null,
+	                            sub$trs
+	                        )
+	                    );
+	
+	                    trs.push(_react2.default.createElement(
+	                        'tr',
+	                        { key: i },
+	                        sub$title,
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            td$table
+	                        )
+	                    ));
+	                });
+	            }
+	
+	            var hideTable;
+	            if (this.state.personInfo !== undefined && this.state.personInfo !== null) {
+	                var personInfo = this.state.personInfo;
+	                hideTable = _react2.default.createElement(_HideElement2.default, { personInfo: personInfo, foldCb: this.foldCb, name: 'hideForm', title: '个人简介', dataField: 'email' });
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { style: { marginLeft: "80px" } },
+	                _react2.default.createElement(
+	                    'form',
+	                    { name: 'hideForm', style: { margin: "20px", display: 'none' } },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-sm-12' },
+	                            hideTable
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { name: 'embedTableForm', className: 'form embedTable', method: 'post', style: { margin: "20px" } },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-sm-12' },
+	                            _react2.default.createElement(
+	                                'table',
+	                                { className: 'table table-bordered center' },
+	                                _react2.default.createElement(
+	                                    'thead',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'tr',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            { colSpan: 2 },
+	                                            this.props.title
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'tbody',
+	                                    null,
+	                                    trs
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }
+	});
+	exports.default = EmbedTable;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(179);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * date:
+	 * Thu Apr 14 2016 17:16:03 GMT+0800 (CST)
+	 *
+	 *
+	 */
+	
+	var TdElement = _react2.default.createClass({
+	    displayName: 'TdElement',
+	
+	    clickCb: function clickCb() {
+	        if (this.state.editEnable == true) {} else {
+	            if (this.props.data !== undefined && this.props.data !== null) this.props.clickCb(this.props.data);
+	        }
+	    },
+	    getInitialState: function getInitialState() {
+	        //是否为编辑状态
+	        var editEnable;
+	        if (this.props.editEnable !== undefined && this.props.editEnable !== null) editEnable = this.props.editEnable;
+	
+	        return {
+	            editEnable: editEnable
+	        };
+	    },
+	    render: function render() {
+	
+	        return _react2.default.createElement(
+	            'td',
+	            { rowSpan: this.props.rowSpan !== undefined && this.props.rowSpan !== null ? this.props.rowSpan : 1,
+	                colSpan: this.props.colSpan !== undefined && this.props.colSpan !== null ? this.props.colSpan : 1,
+	                onClick: this.clickCb, className: 'microsoft-font' },
+	            this.props.children
+	        );
+	    }
+	
+	});
+	
+	exports.default = TdElement;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(180);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(180, function() {
+				var newContent = __webpack_require__(180);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".microsoft-font{\r\n    font-family:  Microsoft YaHei,lucida, verdana, arial, sans-serif;\r\n    vertical-align: bottom;\r\n}\r\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(182);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(182, function() {
+				var newContent = __webpack_require__(182);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\r\n.embedTable .center td{\r\n    text-align:center;\r\n}\r\n\r\n.folding{\r\n    float:right;\r\n    margin-right: 20px;\r\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(184);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * component HideElement
+	 * 1.dataField,指示本组件需要载入的内容字段
+	 */
+	var HideElement = _react2.default.createClass({
+	    displayName: 'HideElement',
+	
+	    foldCb: function foldCb() {
+	        if (this.props.name !== undefined && this.props.name !== null) this.props.foldCb(this.props.name);
+	    },
+	    render: function render() {
+	
+	        var hideTrs;
+	        if (this.props.info !== undefined && this.props.info !== null) {
+	            var info = this.props.info;
+	            var content;
+	            if (info[this.props.dataField].length > 1) {
+	                content = info[this.props.dataField];
+	                var reg = /\<(.*?)\>/;
+	                var re = reg.exec(content);
+	                if (re[1] !== undefined && re[1] !== null) {
+	                    content = _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: content } });
+	                }
+	            }
+	            hideTrs = _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                    'td',
+	                    null,
+	                    content
+	                )
+	            );
+	        }
+	
+	        return _react2.default.createElement(
+	            'table',
+	            { className: 'table table-bordered center hideTable' },
+	            _react2.default.createElement(
+	                'thead',
+	                null,
+	                _react2.default.createElement(
+	                    'tr',
+	                    null,
+	                    _react2.default.createElement(
+	                        'th',
+	                        { colSpan: 1 },
+	                        this.props.info.title,
+	                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-up folding',
+	                            onClick: this.foldCb })
+	                    )
+	                )
+	            ),
+	            _react2.default.createElement(
+	                'tbody',
+	                null,
+	                hideTrs
+	            )
+	        );
+	    }
+	});
+	exports.default = HideElement;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(185);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(185, function() {
+				var newContent = __webpack_require__(185);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(187);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(187, function() {
+				var newContent = __webpack_require__(187);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\r\n.ordinaryTable .center td{\r\n    text-align:center;\r\n}\r\n\r\n.folding{\r\n    float:right;\r\n    margin-right: 20px;\r\n}", ""]);
+	
+	// exports
+
 
 /***/ }
 /******/ ]);

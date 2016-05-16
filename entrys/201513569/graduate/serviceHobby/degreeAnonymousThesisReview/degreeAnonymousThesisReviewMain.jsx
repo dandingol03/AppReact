@@ -24,9 +24,11 @@ function Boot(){
         }
     }
     var filterField= {
+        "order":true,
+        "stuNum":true,
         "stuName": true,
-        "stuId":true,
-        "stuCollegeName":true,
+        "grade":true,
+        "stuTypeName":true,
         "stuMajorName":true,
         "thesisLevel":true,
         "commentResult":true,

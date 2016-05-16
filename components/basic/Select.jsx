@@ -111,6 +111,10 @@ var Select=React.createClass({
          var options=new Array();
          var selectCb=this.selectCb;
          var selected=null
+         if(this.state.data.length<=1)
+         {
+             options.push(<option value={-1} key={-1}>请选择</option>);
+         }
          this.state.data.map(function(item,i) {
              if(item["selected"]!==undefined&&item["selected"]!==null)
              {

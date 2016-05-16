@@ -1,14 +1,15 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PanelTable from '../../../../../components/compounds/panelTable/PanelTable.jsx';
-
+var ProxyQ=require('../../../../../components/proxy/ProxyQ');
 Boot()
 
 function Boot()
 {
     var filterField= {
-        "courseName": true,
+       "order":true,
         "courseNum":true,
+        "courseName": true,
         "courseType":true,
         "credit":true,
         "classHour":true,
@@ -18,8 +19,8 @@ function Boot()
         "link":true
     }
 
-   var  query={
-    url:"/serviceHall/bsuims/reactPageDataRequest.do",
+    var  query={
+    url:"/bsuims/reactPageDataRequest.do",
         params:{
         reactActionName:"allCourseQueryDoQuery",
             reactPageName:"newCultivateAllCourseQueryPage"
@@ -30,7 +31,7 @@ function Boot()
     render(
         <PanelTable
             bean={{
-                url:"/serviceHall/bsuims/reactPageDataRequest.do",
+                url:"/bsuims/reactPageDataRequest.do",
                 params:{
                 reactActionName:"allCourseQueryInit",
                 reactPageName:"newCultivateAllCourseQueryPage"

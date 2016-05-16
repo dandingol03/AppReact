@@ -2,12 +2,12 @@ var path = require('path');
 var webpack = require('webpack');
 
 
-
+<!-- entry: path.resolve(__dirname, 'main.jsx')-->
 
 module.exports = {
     devtool: 'source-map',
     entry: [
-        path.resolve(__dirname, './entrys/201513569/graduate/serviceHobby/index.js')
+        path.resolve(__dirname, './entrys/201513569/graduate/serviceHobby/degreeAnonymousThesisReview/degreeAnonymousThesisReviewMain.jsx')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -24,8 +24,8 @@ module.exports = {
         port:3000,
         hot:true,
         proxy:{
-            '/serviceHall/*.do':{
-                    target: 'http://localhost:8090/',
+            '/gradms/*.do':{
+                    target: 'http://localhost:8080/',
                     secure: false
             }
         }
@@ -51,8 +51,7 @@ module.exports = {
                 }
             },
             {test: /\.png$/, loader: "url-loader?mimetype=image/png"},
-            {test: /\.gif$/, loader: "url-loader?mimetype=image/gif"},
-            {test: /\.jpg$/, loader: "url-loader?mimetype=image/jpeg"}
+            {test: /\.gif$/, loader: "url-loader?mimetype=image/gif"}
         ]
     }
 };

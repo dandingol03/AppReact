@@ -4,9 +4,9 @@ import Span from '../../components/basic/Span.jsx';
 import Select from '../../components/basic/Select.jsx';
 import Download from '../../components/basic/Download.jsx';
 import Radio from '../../components/basic/Radio.jsx';
-var  ProxyQ = require('../../components/proxy/ProxyQ');
 import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
+var ProxyQ=require('../proxy/ProxyQ');
 
 /**
  *
@@ -31,7 +31,6 @@ import dict from '../../data/json/dictionary.json';
 
 var Panel=React.createClass({
     fetch:function(){
-
         ProxyQ.queryHandle(
             null,
             this.props.bean.url,
@@ -60,34 +59,6 @@ var Panel=React.createClass({
             }.bind(this)
         );
 
-        //this.queryHandle(
-        //    null,
-        //    this.props.bean.url,
-        //    this.props.bean.params,
-        //    null,
-        //    function(response){
-        //        //这里需要统一规范后台返回的数据格式
-        //        var ob=null;
-        //        if(response.data!==undefined&&response.data!==null&&response.data!="")
-        //        {
-        //            if(ob==null)
-        //                ob=new Object();
-        //            ob.data=response.data;
-        //        }
-        //        else
-        //            console.log("type of response is wrong");
-        //        if(response.query!==undefined&&response.query!==null)
-        //        {
-        //            if(ob==null)
-        //                ob=new Object();
-        //            ob.query=response.query;
-        //        }
-        //        if(ob!==null)
-        //            this.setState(ob);
-        //
-        //    }.bind(this)
-        //);
-
     },
     queryHandle:function(type,url,params,dataType,callback){
         $.ajax({
@@ -101,12 +72,7 @@ var Panel=React.createClass({
                     callback(response);
             },
             error: function(xhr, status, err) {
-                console.log();
-                console.log();
                 console.error(this.props.url, status, err.toString());
-                console.log();
-                console.log();
-                console.log();
             }
         });
     },
@@ -131,15 +97,7 @@ var Panel=React.createClass({
                         params[item.name]=item.value;
                     }
                 }
-                if($(target).attr("data-query")!==undefined&&$(target).attr("data-query")!==null)
-                {
-                   var query=new Object();
-                    query=eval('('+$(target).attr("data-query")+')');
-                    query.params=JSON.stringify(Object.assign(query.params,params));
-                    this.props.clickHandle(query);
-                }
-                else
-                    this.props.clickHandle(params);
+                this.props.clickHandle(params);
             }else{//如果本组件为最顶层组件
 
                 if(this.state.query!==null&&this.state.query!==undefined)
@@ -172,7 +130,7 @@ var Panel=React.createClass({
                 console.log();
                 console.log();
                 var params=Object.assign(ob.params,fields);
-                this.queryHandle(
+                ProxyQ.queryHandle(
                     null,
                     ob.url,
                     params,
@@ -204,6 +162,9 @@ var Panel=React.createClass({
             }
         }
 
+
+
+
     },
     returnCb:function(evt){
         evt.preventDefault();
@@ -215,7 +176,13 @@ var Panel=React.createClass({
 
     },
     shouldComponentUpdate: function(nextProps, nextState) {
+        console.log();
+        console.log();
+        console.log();
+        console.log();
+        console.log();
         return nextProps.data!==this.props.data||nextState.data!==this.state.data;
+
     },
     getInitialState:function(){
 
@@ -227,7 +194,8 @@ var Panel=React.createClass({
             "span":true,
             "textarea":true,
             "radio":true,
-            "return":true
+            "return":true,
+            "download":true
         }
 
         var bean;
@@ -292,9 +260,9 @@ var Panel=React.createClass({
                     var so=dict[coms[0]];
                     if(state.bean!==undefined&&state.bean!==null)
                     {
-                        if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
+                        if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
                         {
-                            name=coms[0].split('=>')[1];
+                            name=coms[0].split('->')[1];
                         }
                         else
                             name=coms[0];
@@ -308,10 +276,11 @@ var Panel=React.createClass({
                     if(name!==undefined&&name!==null)
                     {
                         if(coms.length>1)
-                        {
-                            label=(<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
+                        {   if(coms[1]!==null&&coms[1]!=undefined&&coms[1]!=='download') {
+                            label = (<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
                                 {name}
                             </td>);
+                        }
                         }else{
                             label=(<td key={td$index++} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
                                 {name}
@@ -350,12 +319,6 @@ var Panel=React.createClass({
                         {
                             case 'query':
                                 if(state.bean!==null&&state.bean!==undefined) {
-                                    if(coms.length>=3)
-                                    {
-                                        ctrl = <button type='submit' data-query={coms[2]} onClick={clickHandle} style={{width:"100%"}}>
-                                            {coms[0]}</button>;
-                                    }
-                                    else
                                     ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
                                         {coms[0]}</button>;
                                 }
@@ -366,9 +329,9 @@ var Panel=React.createClass({
                                 break;
                             case 'input':
                                 var ctrlName;
-                                if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
+                                if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
                                 {
-                                    ctrlName=coms[0].split('=>')[0];
+                                    ctrlName=coms[0].split('->')[0];
                                 }else{
                                     ctrlName=coms[0];
                                 }
@@ -397,36 +360,30 @@ var Panel=React.createClass({
                             case 'select':
                                 if(state.bean!==undefined&&state.bean!==null)
                                 {
-                                    var ctrlName;
-                                    if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
-                                    {
-                                        ctrlName=coms[0].split('=>')[0];
-                                    }else{
-                                        ctrlName=coms[0];
-                                    }
+
                                     if(coms[2]!==null&&coms[2]!==undefined)
                                     {
                                         try{
                                             var arr=eval(coms[2]);
                                             if(Object.prototype.toString.call(arr)=='[object Array]')
                                             {
-                                                ctrl=<Select auto={false} ctrlName={ctrlName} disabled={false} data={arr} selectCb={coms[3]!==undefined&&coms[3]!==null?selectHandle:null} data-query={coms[3]}/>
+                                                ctrl=<Select auto={false} ctrlName={coms[0]} disabled={false} data={arr} selectCb={coms[3]!==undefined&&coms[3]!==null?selectHandle:null} data-query={coms[3]}/>
                                             }
                                             else{
-                                                ctrl= <Select auto={true} ctrlName={ctrlName} disabled={true}/>
+                                                ctrl= <Select auto={true} ctrlName={coms[0]} disabled={true}/>
                                             }
                                         }catch(e){
                                             if(coms[2]=='true')
                                             {
-                                                ctrl=<Select auto={false} ctrlName={ctrlName} />
+                                                ctrl=<Select auto={false} ctrlName={coms[0]} />
                                             }else{
-                                                ctrl=<Select auto={false} ctrlName={ctrlName} disabled={true}/>
+                                                ctrl=<Select auto={false} ctrlName={coms[0]} disabled={true}/>
                                             }
                                         }
 
                                     }
                                     else
-                                        ctrl= <Select auto={true} ctrlName={ctrlName}/>
+                                        ctrl= <Select auto={true} ctrlName={coms[0]}/>
                                 }
                                 else
                                 {
@@ -438,12 +395,11 @@ var Panel=React.createClass({
                                 }
                                 break;
                             case 'download':
-                                ctrl=<Download attachId={parseInt(coms[0])}/>
+                                ctrl=<Download href={coms[2]} title={coms[0]} />
                                 break;
                             case 'span':
                                 if(state.bean!==undefined&&state.bean!==null)
                                 {
-
                                     if(coms[2]!==null&&coms[2]!==undefined)
                                     {
                                         ctrl=<Span auto={false} data={coms[2]}/>
@@ -465,17 +421,13 @@ var Panel=React.createClass({
 
                                 break;
                             case 'textarea':
-
+                                console.log();
+                                console.log();
+                                console.log();
+                                console.log();
                                 if(state.bean!==undefined&&state.bean!==null&&coms[2]!==null)
                                 {
-                                    var ctrlName;
-                                    if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
-                                    {
-                                        ctrlName=coms[0].split('=>')[0];
-                                    }else{
-                                        ctrlName=coms[0];
-                                    }
-                                    ctrl=<textarea rows={4}  name={ctrlName} style={{width:"100%"}} value={coms[2]}></textarea>
+                                    ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}} value={coms[2]}></textarea>
                                 }
                                 else
                                     ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>

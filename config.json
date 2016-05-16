@@ -4,7 +4,7 @@
     "port":3000,
     "hot":true,
     "proxy":{
-      "/serviceHall/*.do":{
+      "/gradms/*.do":{
         "model": "on",
         "secure": false
       }

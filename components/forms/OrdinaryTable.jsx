@@ -419,6 +419,9 @@ var OrdinaryTable =React.createClass({
                     if(checkingMap!==undefined&&checkingMap!==null)
                     {
                         squash=new Array();
+                        if(checkingMap[-1]==true||checkingMap[-1]=='true') {
+                            delete checkingMap[-1];
+                        }
                         for(var index in checkingMap)
                         {
                             if(Object.prototype.toString.call(query.filter)=='[object Array]')
@@ -709,7 +712,7 @@ var OrdinaryTable =React.createClass({
                                     <th colSpan={colSpan}>{item.title}</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody  className="table table-bordered center ordinaryTable">
                                 <tr>{rowFields}</tr>
                                 {trs}
                                 </tbody>
@@ -802,9 +805,9 @@ var OrdinaryTable =React.createClass({
                                                 {
                                                     downloads=new Array();
                                                     ids.map(function(item,i) {
-                                                        var id=item.split("=>")[0];
-                                                        var title=item.split("=>")[1];
-                                                        downloads.push(<Download attachId={id} key={i} title={title}/>);
+                                                        var oa=eval('('+item+')');
+                                                        downloads.push(<Download attachId={oa.id} key={i}>{oa.name}</Download>);
+
                                                     });
                                                 }
                                                 tds.push(<td key={k++}>{downloads}</td>);
@@ -897,15 +900,18 @@ var OrdinaryTable =React.createClass({
                                                     tds.push(<td key={k++}></td>);
                                                     break;
                                             default:
-                                                //text/html内容检查
-                                                var reg=/<(.*?)>(.*)<\/\1>/;
-                                                var re=reg.exec(content);
-                                                var content=row[field];
-                                                if(re[1]!==undefined&&re[1]!==null)
+                                                    //text/html内容检查<re>c</re>
+                                                var reg = /<(.*?)>(.*)<\/.*>/;
+                                                var content = row[field];
+                                                var re = reg.exec(content);
+                                                if(re!==undefined&&re!==null)
                                                 {
-                                                    content=<span dangerouslySetInnerHTML={{__html:content}} />;
+                                                    if (re[1] !== undefined && re[1] !== null) {
+                                                        content = <span dangerouslySetInnerHTML={{__html:content}}/>;
+                                                    }
                                                 }
                                                 tds.push(<td key={k++}>{content}</td>);
+
                                                 break;
                                         }
                                     }
@@ -1067,6 +1073,18 @@ var OrdinaryTable =React.createClass({
                             {tails}
                         </table>)
 
+                }else{
+                    tables=new Array();
+                       tables.push(
+                        <table className="table table-bordered center" key={0}>
+                            {title}
+                            <tbody>
+                            <tr>{tr$fields}</tr>
+                            <tr><th><font color="red">没有符合条件的数据</font></th></tr>
+                            </tbody>
+                            {tails}
+                        </table>)
+
                 }
             }
 
@@ -1152,7 +1170,11 @@ var OrdinaryTable =React.createClass({
                         </Hide>
 
                 }
-            }else{}
+            }else{
+
+
+
+            }
 
 
 
@@ -1174,7 +1196,7 @@ var OrdinaryTable =React.createClass({
                 );
             else
                 mainDist=(
-                    <div className="col-sm-12 col-md-12 table-responsive" key={0}>
+                    <div className="col-sm-12 col-md-12" key={0}>
                         <div ref="hideDiv">
                             {hide}
                         </div>

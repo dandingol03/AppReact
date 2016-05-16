@@ -24,7 +24,7 @@ function Boot()
     render(<OrdinaryTable
 
             query={{
-                url:"/gradms/bsuims/reactPageDataRequest.do",
+                url:"/bsuims/reactPageDataRequest.do",
                 params:{
                 reactActionName:"allCourseQueryDoQuery",
                 reactPageName:"newCultivateAllCourseQueryPage"
