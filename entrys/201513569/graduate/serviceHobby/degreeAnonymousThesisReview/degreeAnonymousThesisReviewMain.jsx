@@ -35,12 +35,19 @@ function Boot(){
         "attachs":true
     }
 
+
+    var pageInfo = {
+        perSize: 40
+    }
+
     render(
         <PanelTable
             autoComplete={true}
             query={query}
             bean={bean}
             filterField={filterField}
+            pagination={true}
+            pageInfo={pageInfo}
             />
         , document.getElementById('root'))
 

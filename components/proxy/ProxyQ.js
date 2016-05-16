@@ -45,7 +45,7 @@ var ProxyQ = {
                 var content;
                 var errType="";
                 var catched=false;
-                if(response.data==undefined||response.data==null)
+                if (response.arr == undefined && response.arr == null && response.data == undefined && response.data == null)
                 {
                     content="警告:   数据为空";
                     catched=true;
