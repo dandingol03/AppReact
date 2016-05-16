@@ -6,6 +6,7 @@ import OrdinaryTr from '../../components/forms/OrdinaryTr.jsx';
 import Hide from '../../components/basic/Hide.jsx';
 import Panel from '../../components/panel/Panel.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
+import Operation from '../../components/basic/Operation.jsx';
 import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 var ProxyQ=require('../proxy/ProxyQ');
 
@@ -394,6 +395,13 @@ var OrdinaryTable =React.createClass({
         this.setState({hiddenInfo:null});
         $(this.refs.contentDiv).slideDown();
     },
+    operationCb: function (ob) {
+        if (ob !== undefined && ob !== null) {
+            ob.params.data = this.state.data[ob.params.index];
+            if (this.props.opCb !== undefined && this.props.opCb !== null)
+                this.props.opCb(ob);
+        }
+    },
     clickHandle:function(evt)
     {
         var target=evt.target;
@@ -780,6 +788,7 @@ var OrdinaryTable =React.createClass({
                     }else{
                         var linkCb=this.linkCb;
                         var checkCb=this.checkCb;
+                        var operationCb = this.operationCb;
                         state.data.map(function(row,i) {
                             var k=0;
                             var tds=new Array();
@@ -896,6 +905,23 @@ var OrdinaryTable =React.createClass({
                                                 else
                                                     tds.push(<td key={k++}></td>);
                                                     break;
+                                            case 'operation':
+                                                //"+|operation|{}",'-|operation|{}"
+                                                if (row[field] !== undefined && row[field] !== null) {
+                                                    var ids = null;
+                                                    ids = row[field].split("|");
+                                                    if (ids.length == 3) {
+                                                        tds.push(<td key={k++}><Operation op={ids[0]} query={ids[2]}
+                                                                                          data-index={k++}
+                                                                                          operationCb={operationCb}></Operation>
+                                                        </td>);
+                                                    }
+                                                    else
+                                                        tds.push(<td key={k++}></td>);
+                                                } else {
+                                                    tds.push(<td key={k++}></td>);
+                                                }
+                                                break;
                                             default:
                                                     //text/html内容检查<re>c</re>
                                                 var reg = /<(.*?)>(.*)<\/.*>/;

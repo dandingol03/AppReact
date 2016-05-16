@@ -16,7 +16,7 @@ function Boot()
     }
 
     var  query={
-        url:"/serviceHall/bsuims/reactPageDataRequest.do",
+        url: "/bsuims/reactPageDataRequest.do",
         params:{
             reactActionName:"assTeaListPostInfoUseReact",
             reactPageName:"assitantScholarApplyPage"
