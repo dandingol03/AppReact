@@ -1,11 +1,10 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	var parentHotUpdateCallback = this["webpackHotUpdate"];
-/******/ 	this["webpackHotUpdate"] = 
-/******/ 	function webpackHotUpdateCallback(chunkId, moreModules) { // eslint-disable-line no-unused-vars
+/******/ 	this["webpackHotUpdate"] = function webpackHotUpdateCallback(chunkId, moreModules) { // eslint-disable-line no-unused-vars
 /******/ 		hotAddUpdateChunk(chunkId, moreModules);
 /******/ 		if(parentHotUpdateCallback) parentHotUpdateCallback(chunkId, moreModules);
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotDownloadUpdateChunk(chunkId) { // eslint-disable-line no-unused-vars
 /******/ 		var head = document.getElementsByTagName("head")[0];
 /******/ 		var script = document.createElement("script");
@@ -14,7 +13,7 @@
 /******/ 		script.src = __webpack_require__.p + "" + chunkId + "." + hotCurrentHash + ".hot-update.js";
 /******/ 		head.appendChild(script);
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotDownloadManifest(callback) { // eslint-disable-line no-unused-vars
 /******/ 		if(typeof XMLHttpRequest === "undefined")
 /******/ 			return callback(new Error("No browser support"));
@@ -51,24 +50,12 @@
 /******/ 		};
 /******/ 	}
 /******/
-/******/ 	
-/******/ 	
-/******/ 	// Copied from https://github.com/facebook/react/blob/bef45b0/src/shared/utils/canDefineProperty.js
-/******/ 	var canDefineProperty = false;
-/******/ 	try {
-/******/ 		Object.defineProperty({}, "x", {
-/******/ 			get: function() {}
-/******/ 		});
-/******/ 		canDefineProperty = true;
-/******/ 	} catch(x) {
-/******/ 		// IE will fail on defineProperty
-/******/ 	}
-/******/ 	
+/******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c91385e282384e15f171"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "35e9d0dc3e00c555d6fb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
-/******/ 	
+/******/
 /******/ 	function hotCreateRequire(moduleId) { // eslint-disable-line no-unused-vars
 /******/ 		var me = installedModules[moduleId];
 /******/ 		if(!me) return __webpack_require__;
@@ -88,7 +75,7 @@
 /******/ 		};
 /******/ 		for(var name in __webpack_require__) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(__webpack_require__, name)) {
-/******/ 				if(canDefineProperty) {
+/******/ 				if(Object.defineProperty) {
 /******/ 					Object.defineProperty(fn, name, (function(name) {
 /******/ 						return {
 /******/ 							configurable: true,
@@ -106,7 +93,7 @@
 /******/ 				}
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		function ensure(chunkId, callback) {
 /******/ 			if(hotStatus === "ready")
 /******/ 				hotSetStatus("prepare");
@@ -117,7 +104,7 @@
 /******/ 				} finally {
 /******/ 					finishChunkLoading();
 /******/ 				}
-/******/ 	
+/******/
 /******/ 				function finishChunkLoading() {
 /******/ 					hotChunksLoading--;
 /******/ 					if(hotStatus === "prepare") {
@@ -131,7 +118,7 @@
 /******/ 				}
 /******/ 			});
 /******/ 		}
-/******/ 		if(canDefineProperty) {
+/******/ 		if(Object.defineProperty) {
 /******/ 			Object.defineProperty(fn, "e", {
 /******/ 				enumerable: true,
 /******/ 				value: ensure
@@ -141,7 +128,7 @@
 /******/ 		}
 /******/ 		return fn;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotCreateModule(moduleId) { // eslint-disable-line no-unused-vars
 /******/ 		var hot = {
 /******/ 			// private stuff
@@ -150,7 +137,7 @@
 /******/ 			_selfAccepted: false,
 /******/ 			_selfDeclined: false,
 /******/ 			_disposeHandlers: [],
-/******/ 	
+/******/
 /******/ 			// Module API
 /******/ 			active: true,
 /******/ 			accept: function(dep, callback) {
@@ -183,7 +170,7 @@
 /******/ 				var idx = hot._disposeHandlers.indexOf(callback);
 /******/ 				if(idx >= 0) hot._disposeHandlers.splice(idx, 1);
 /******/ 			},
-/******/ 	
+/******/
 /******/ 			// Management API
 /******/ 			check: hotCheck,
 /******/ 			apply: hotApply,
@@ -198,22 +185,22 @@
 /******/ 				var idx = hotStatusHandlers.indexOf(l);
 /******/ 				if(idx >= 0) hotStatusHandlers.splice(idx, 1);
 /******/ 			},
-/******/ 	
+/******/
 /******/ 			//inherit from previous dispose call
 /******/ 			data: hotCurrentModuleData[moduleId]
 /******/ 		};
 /******/ 		return hot;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	var hotStatusHandlers = [];
 /******/ 	var hotStatus = "idle";
-/******/ 	
+/******/
 /******/ 	function hotSetStatus(newStatus) {
 /******/ 		hotStatus = newStatus;
 /******/ 		for(var i = 0; i < hotStatusHandlers.length; i++)
 /******/ 			hotStatusHandlers[i].call(null, newStatus);
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	// while downloading
 /******/ 	var hotWaitingFiles = 0;
 /******/ 	var hotChunksLoading = 0;
@@ -221,15 +208,15 @@
 /******/ 	var hotRequestedFilesMap = {};
 /******/ 	var hotAvailibleFilesMap = {};
 /******/ 	var hotCallback;
-/******/ 	
+/******/
 /******/ 	// The update info
 /******/ 	var hotUpdate, hotUpdateNewHash;
-/******/ 	
+/******/
 /******/ 	function toModuleId(id) {
 /******/ 		var isNumber = (+id) + "" === id;
 /******/ 		return isNumber ? +id : id;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotCheck(apply, callback) {
 /******/ 		if(hotStatus !== "idle") throw new Error("check() is only allowed in idle status");
 /******/ 		if(typeof apply === "function") {
@@ -249,14 +236,14 @@
 /******/ 				callback(null, null);
 /******/ 				return;
 /******/ 			}
-/******/ 	
+/******/
 /******/ 			hotRequestedFilesMap = {};
 /******/ 			hotAvailibleFilesMap = {};
 /******/ 			hotWaitingFilesMap = {};
 /******/ 			for(var i = 0; i < update.c.length; i++)
 /******/ 				hotAvailibleFilesMap[update.c[i]] = true;
 /******/ 			hotUpdateNewHash = update.h;
-/******/ 	
+/******/
 /******/ 			hotSetStatus("prepare");
 /******/ 			hotCallback = callback;
 /******/ 			hotUpdate = {};
@@ -270,7 +257,7 @@
 /******/ 			}
 /******/ 		});
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotAddUpdateChunk(chunkId, moreModules) { // eslint-disable-line no-unused-vars
 /******/ 		if(!hotAvailibleFilesMap[chunkId] || !hotRequestedFilesMap[chunkId])
 /******/ 			return;
@@ -284,7 +271,7 @@
 /******/ 			hotUpdateDownloaded();
 /******/ 		}
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotEnsureUpdateChunk(chunkId) {
 /******/ 		if(!hotAvailibleFilesMap[chunkId]) {
 /******/ 			hotWaitingFilesMap[chunkId] = true;
@@ -294,7 +281,7 @@
 /******/ 			hotDownloadUpdateChunk(chunkId);
 /******/ 		}
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotUpdateDownloaded() {
 /******/ 		hotSetStatus("ready");
 /******/ 		var callback = hotCallback;
@@ -312,7 +299,7 @@
 /******/ 			callback(null, outdatedModules);
 /******/ 		}
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	function hotApply(options, callback) {
 /******/ 		if(hotStatus !== "ready") throw new Error("apply() is only allowed in ready status");
 /******/ 		if(typeof options === "function") {
@@ -328,11 +315,11 @@
 /******/ 				if(err) throw err;
 /******/ 			};
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		function getAffectedStuff(module) {
 /******/ 			var outdatedModules = [module];
 /******/ 			var outdatedDependencies = {};
-/******/ 	
+/******/
 /******/ 			var queue = outdatedModules.slice();
 /******/ 			while(queue.length > 0) {
 /******/ 				var moduleId = queue.pop();
@@ -363,10 +350,10 @@
 /******/ 					queue.push(parentId);
 /******/ 				}
 /******/ 			}
-/******/ 	
+/******/
 /******/ 			return [outdatedModules, outdatedDependencies];
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		function addAllToSet(a, b) {
 /******/ 			for(var i = 0; i < b.length; i++) {
 /******/ 				var item = b[i];
@@ -374,7 +361,7 @@
 /******/ 					a.push(item);
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// at begin all updates modules are outdated
 /******/ 		// the "outdated" status can propagate to parents if they don't accept the children
 /******/ 		var outdatedDependencies = {};
@@ -405,7 +392,7 @@
 /******/ 				}
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Store self accepted outdated modules to require them later by the module system
 /******/ 		var outdatedSelfAcceptedModules = [];
 /******/ 		for(var i = 0; i < outdatedModules.length; i++) {
@@ -416,7 +403,7 @@
 /******/ 					errorHandler: installedModules[moduleId].hot._selfAccepted
 /******/ 				});
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Now in "dispose" phase
 /******/ 		hotSetStatus("dispose");
 /******/ 		var queue = outdatedModules.slice();
@@ -424,9 +411,9 @@
 /******/ 			var moduleId = queue.pop();
 /******/ 			var module = installedModules[moduleId];
 /******/ 			if(!module) continue;
-/******/ 	
+/******/
 /******/ 			var data = {};
-/******/ 	
+/******/
 /******/ 			// Call dispose handlers
 /******/ 			var disposeHandlers = module.hot._disposeHandlers;
 /******/ 			for(var j = 0; j < disposeHandlers.length; j++) {
@@ -434,13 +421,13 @@
 /******/ 				cb(data);
 /******/ 			}
 /******/ 			hotCurrentModuleData[moduleId] = data;
-/******/ 	
+/******/
 /******/ 			// disable module (this disables requires from this module)
 /******/ 			module.hot.active = false;
-/******/ 	
+/******/
 /******/ 			// remove module from cache
 /******/ 			delete installedModules[moduleId];
-/******/ 	
+/******/
 /******/ 			// remove "parents" references from all children
 /******/ 			for(var j = 0; j < module.children.length; j++) {
 /******/ 				var child = installedModules[module.children[j]];
@@ -451,7 +438,7 @@
 /******/ 				}
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// remove outdated dependency from module children
 /******/ 		for(var moduleId in outdatedDependencies) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(outdatedDependencies, moduleId)) {
@@ -464,19 +451,19 @@
 /******/ 				}
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Not in "apply" phase
 /******/ 		hotSetStatus("apply");
-/******/ 	
+/******/
 /******/ 		hotCurrentHash = hotUpdateNewHash;
-/******/ 	
+/******/
 /******/ 		// insert new code
 /******/ 		for(var moduleId in appliedUpdate) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(appliedUpdate, moduleId)) {
 /******/ 				modules[moduleId] = appliedUpdate[moduleId];
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// call accept handlers
 /******/ 		var error = null;
 /******/ 		for(var moduleId in outdatedDependencies) {
@@ -501,7 +488,7 @@
 /******/ 				}
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Load self accepted modules
 /******/ 		for(var i = 0; i < outdatedSelfAcceptedModules.length; i++) {
 /******/ 			var item = outdatedSelfAcceptedModules[i];
@@ -521,13 +508,13 @@
 /******/ 					error = err;
 /******/ 			}
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// handle errors in accept handlers and self accepted module load
 /******/ 		if(error) {
 /******/ 			hotSetStatus("fail");
 /******/ 			return callback(error);
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		hotSetStatus("idle");
 /******/ 		callback(null, outdatedModules);
 /******/ 	}
@@ -607,36 +594,35 @@
 	Boot();
 	
 	function Boot() {
-	    var filterField = {
-	        "courseName": true,
-	        "courseNum": true,
-	        "courseType": true,
-	        "credit": true,
-	        "classHour": true,
-	        "termCount": true,
-	        "examTypeName": true,
-	        "managerName": true,
-	        "link": true
-	    };
-	
+	    var comps = [{ row: ['stuType|select', 'query'] }];
 	    var query = {
-	        url: "/gradms/bsuims/reactPageDataRequest.do",
+	        url: "/bsuims/reactPageDataRequest.do",
 	        params: {
-	            reactActionName: "allCourseQueryDoQuery",
-	            reactPageName: "newCultivateAchievementProcessPage"
+	            reactPageName: "degreeAnonymousThesisReviewResult",
+	            reactActionName: "deegreeThesisReviewResultUseReact"
 	        }
+	    };
+	    var bean = {
+	        url: "/bsuims/reactPageDataRequest.do",
+	        params: {
+	            reactPageName: "degreeAnonymousThesisReviewResult",
+	            reactActionName: "deegreeThesisReviewPanelUseReact"
+	        }
+	    };
+	    var filterField = {
+	        "stuName": true,
+	        "stuId": true,
+	        "stuCollegeName": true,
+	        "stuMajorName": true,
+	        "thesisLevel": true,
+	        "commentResult": true,
+	        "attachs": true
 	    };
 	
 	    (0, _reactDom.render)(_react2.default.createElement(_PanelTable2.default, {
-	        bean: {
-	            url: "/gradms/bsuims/reactPageDataRequest.do",
-	            params: {
-	                reactActionName: "newCultivateStuScorePrintInit",
-	                reactPageName: "newCultivateAchievementProcessPage"
-	            }
-	        },
 	        autoComplete: true,
 	        query: query,
+	        bean: bean,
 	        filterField: filterField
 	    }), document.getElementById('root'));
 	}
@@ -8566,10 +8552,6 @@
 	  }
 	};
 	
-	function registerNullComponentID() {
-	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
-	}
-	
 	var ReactEmptyComponent = function ReactEmptyComponent(instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8578,7 +8560,7 @@
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function construct(element) {},
 	  mountComponent: function mountComponent(rootID, transaction, context) {
-	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
+	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -19327,7 +19309,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.8';
+	module.exports = '0.14.7';
 
 /***/ },
 /* 148 */
@@ -20323,24 +20305,144 @@
 	
 	var _Panel2 = _interopRequireDefault(_Panel);
 	
-	var _OrdinaryTable = __webpack_require__(171);
+	var _OrdinaryTable = __webpack_require__(173);
 	
 	var _OrdinaryTable2 = _interopRequireDefault(_OrdinaryTable);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	var ProxyQ = __webpack_require__(171);
 	
 	var PanelTable = _react2.default.createClass({
 	    displayName: 'PanelTable',
 	
+	    recurse: function recurse(pool, rule, in$param, out$param, group$field) {
+	        if (pool !== undefined && pool !== null) {
+	            if (Object.prototype.toString.call(pool) == '[object Array]') {
+	                for (var i = 0; i < pool.length; i++) {
+	                    var prefix = rule;
+	                    prefix += pool[i].v;
+	                    if (pool[i].r !== undefined && pool[i].r !== null) {
+	                        prefix += '|';
+	                        this.recurse(pool[i].r, prefix, in$param, out$param, group$field);
+	                    } else {
+	                        //当递归至叶结点时,重新压入数据
+	
+	                        in$param.map(function (row, j) {
+	                            var matchs = '';
+	                            group$field.map(function (field, k) {
+	                                matchs += row[field];
+	                                if (k != group$field.length - 1) matchs += '|';
+	                            });
+	                            if (matchs == prefix) out$param.push(row);
+	                        });
+	                    }
+	                }
+	            }
+	        }
+	    },
+	    //该方法返回false或该键在数组的下标
+	    existedIn: function existedIn(d2, pool) {
+	        var existed = false;
+	        for (var i = 0; i < pool.length; i++) {
+	            if (pool[i].v == d2) {
+	                existed = i;
+	                break;
+	            }
+	        }
+	        return existed;
+	    },
+	    group: function group(data, group$field) {
+	
+	        var pool = new Array();
+	        var existedIn = this.existedIn;
+	        data.map(function (row, i) {
+	            var ob;
+	            var re;
+	            var p = pool;
+	            //初始化pool
+	            group$field.map(function (field, j) {
+	                //如果该分组字段不位于队尾
+	                if (j != group$field.length - 1) {
+	                    re = existedIn(row[field], p);
+	                    if (re === false) //如果pool中没有此键
+	                        {
+	                            ob = new Object();
+	                            ob.v = row[field];
+	                            ob.c = 1;
+	                            ob.r = new Array();
+	                            p.push(ob);
+	                        } else {
+	                        ob = p[re];
+	                        ob.c++;
+	                    }
+	                    p = ob.r;
+	                } else {
+	                    re = existedIn(row[field], p);
+	                    if (re === false) {
+	                        ob = new Object();
+	                        ob.v = row[field];
+	                        ob.c = 1;
+	                        p.push(ob);
+	                    } else {
+	                        ob = p[re];
+	                        ob.c++;
+	                    }
+	                }
+	            });
+	        });
+	
+	        //重新生成数据
+	        var gen = new Array();
+	        this.recurse(pool, '', data, gen, group$field);
+	        //根据重新生成的数据源gen进行pool的i设置
+	
+	        return [pool, gen];
+	    },
 	    clickHandle: function clickHandle(ob) {
-	        if (this.props.query !== undefined && this.props.query !== null) {
-	            var params;
-	            params = Object.assign(this.props.query.params !== null && this.props.query.params !== undefined ? this.props.query.params : '', ob !== undefined && ob !== null ? ob : '');
-	            this.queryHandle(null, this.props.query.url, params, null, function (response) {
+	        if (this.props.query !== undefined && this.props.query !== null) //本地配置查询按钮的路径
+	            {
+	                var params;
+	                if (ob.params !== undefined && ob.params !== null && Object.prototype.toString.call(ob.params) == '[object String]') {
+	                    params = Object.assign(this.props.query.params, JSON.parse(ob.params));
+	                } else params = Object.assign(this.props.query.params, ob.params);
+	                ProxyQ.queryHandle(null, this.props.query.url, params, null, function (response) {
+	                    //这里需要统一规范后台返回的数据格式
+	                    var ob = new Object();
+	                    if (response.arr !== undefined && response.arr !== null) ob.data = response.arr;
+	                    var pool;
+	                    if (ob.data !== undefined && ob.data !== null) {
+	                        if (this.props.group$field !== undefined && this.props.group$field !== null) {
+	                            var arr = this.group(this.props.data, this.props.group$field);
+	                            ob.data = arr[1];
+	                            ob.pool = arr[0];
+	                        }
+	                    }
+	
+	                    if (response.tail !== undefined && response.tail !== null) {
+	                        try {
+	                            ob.tail = eval(response.tail);
+	                        } catch (e) {
+	                            alert("error=" + e);
+	                        }
+	                    }
+	                    if (response.translation !== undefined && response.translation !== null) ob.translation = response.translation;
+	                    this.setProps(ob);
+	                }.bind(this));
+	            } else {
+	            this.queryHandle(null, ob.url, ob.params, null, function (response) {
 	                //这里需要统一规范后台返回的数据格式
-	                this.setProps({ data: response.arr });
+	                var ob = new Object();
+	                if (response.arr !== undefined && response.arr !== null) ob.data = response.arr;
+	                if (response.tail !== undefined && response.tail !== null) {
+	                    try {
+	                        ob.tail = eval(response.tail);
+	                    } catch (e) {
+	                        alert("error=" + e);
+	                    }
+	                }
+	                if (response.translation !== undefined && response.translation !== null) ob.translation = response.translation;
+	                this.setProps(ob);
 	            }.bind(this));
 	        }
 	    },
@@ -20369,7 +20471,6 @@
 	        return { comps: comps };
 	    },
 	    render: function render() {
-	        var _React$createElement;
 	
 	        return _react2.default.createElement(
 	            'div',
@@ -20377,15 +20478,21 @@
 	            _react2.default.createElement(
 	                'div',
 	                { className: 'col-sm-12 col-md-12' },
-	                _react2.default.createElement(_Panel2.default, (_React$createElement = {
+	                _react2.default.createElement(_Panel2.default, {
 	                    data: this.state.comps,
+	                    auto: true,
 	                    bean: this.props.bean,
-	                    auto: true
-	                }, _defineProperty(_React$createElement, 'auto', true), _defineProperty(_React$createElement, 'bean', this.props.bean), _defineProperty(_React$createElement, 'autoComplete', true), _defineProperty(_React$createElement, 'query', this.props.query), _defineProperty(_React$createElement, 'clickHandle', this.clickHandle), _React$createElement)),
+	                    autoComplete: true,
+	                    query: this.props.query,
+	                    clickHandle: this.clickHandle
+	                }),
 	                _react2.default.createElement(_OrdinaryTable2.default, {
 	                    autoFetch: false,
 	                    data: this.props.data,
-	                    filterField: this.props.filterField
+	                    pool: this.props.pool,
+	                    translation: this.props.translation,
+	                    filterField: this.props.filterField,
+	                    title: '论文匿命评阅'
 	                })
 	            )
 	        );
@@ -20424,11 +20531,10 @@
 	            attach = _react2.default.createElement(
 	                'a',
 	                _defineProperty({ href: '#', className: 'btn btn-block btn-primary ' }, 'href', href),
-	                'Primary',
+	                this.props.title,
 	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-arrow-down', 'aria-hidden': 'true' })
 	            );
 	        }
-	
 	        return _react2.default.createElement(
 	            'div',
 	            null,
@@ -20478,6 +20584,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var ProxyQ = __webpack_require__(171);
+	
+	
 	/**
 	 *
 	 * 本组件需要数据库字典类作为配置组件的属性,提交发生为表单，路由功能交由jsp完成
@@ -20503,7 +20612,8 @@
 	    displayName: 'Panel',
 	
 	    fetch: function fetch() {
-	        this.queryHandle(null, this.props.bean.url, this.props.bean.params, null, function (response) {
+	
+	        ProxyQ.queryHandle(null, this.props.bean.url, this.props.bean.params, null, function (response) {
 	            //这里需要统一规范后台返回的数据格式
 	            var ob = null;
 	            if (response.data !== undefined && response.data !== null && response.data != "") {
@@ -20516,6 +20626,34 @@
 	            }
 	            if (ob !== null) this.setState(ob);
 	        }.bind(this));
+	
+	        //this.queryHandle(
+	        //    null,
+	        //    this.props.bean.url,
+	        //    this.props.bean.params,
+	        //    null,
+	        //    function(response){
+	        //        //这里需要统一规范后台返回的数据格式
+	        //        var ob=null;
+	        //        if(response.data!==undefined&&response.data!==null&&response.data!="")
+	        //        {
+	        //            if(ob==null)
+	        //                ob=new Object();
+	        //            ob.data=response.data;
+	        //        }
+	        //        else
+	        //            console.log("type of response is wrong");
+	        //        if(response.query!==undefined&&response.query!==null)
+	        //        {
+	        //            if(ob==null)
+	        //                ob=new Object();
+	        //            ob.query=response.query;
+	        //        }
+	        //        if(ob!==null)
+	        //            this.setState(ob);
+	        //
+	        //    }.bind(this)
+	        //);
 	    },
 	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
 	        $.ajax({
@@ -20528,7 +20666,12 @@
 	                if (callback !== undefined && callback !== null) callback(response);
 	            },
 	            error: function error(xhr, status, err) {
+	                console.log();
+	                console.log();
 	                console.error(this.props.url, status, err.toString());
+	                console.log();
+	                console.log();
+	                console.log();
 	            }
 	        });
 	    },
@@ -20548,9 +20691,12 @@
 	                        params[item.name] = item.value;
 	                    }
 	                }
-	                //TODO:
-	                this.setState({ cache: params });
-	                this.props.clickHandle(params);
+	                if ($(target).attr("data-query") !== undefined && $(target).attr("data-query") !== null) {
+	                    var query = new Object();
+	                    query = eval('(' + $(target).attr("data-query") + ')');
+	                    query.params = JSON.stringify(Object.assign(query.params, params));
+	                    this.props.clickHandle(query);
+	                } else this.props.clickHandle(params);
 	            } else {
 	                //如果本组件为最顶层组件
 	
@@ -20603,6 +20749,9 @@
 	            this.props.returnCb();
 	        }
 	    },
+	    shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	        return nextProps.data !== this.props.data || nextState.data !== this.state.data;
+	    },
 	    getInitialState: function getInitialState() {
 	
 	        //为组件类型保留关键字
@@ -20625,10 +20774,7 @@
 	        var query;
 	        if (this.props.query !== undefined && this.props.query !== null) query = this.props.query;
 	
-	        var cache;
-	        if (this.props.cache !== undefined && this.props.cache !== null) cache = this.props.cache;
-	        return { reserved: reserved, bean: bean, shield: false, data: data, query: query,
-	            cache: cache };
+	        return { reserved: reserved, bean: bean, shield: false, data: data, query: query };
 	    },
 	    render: function render() {
 	        if (this.state.data !== undefined && this.state.data !== null && Object.prototype.toString.call(this.state.data) == '[object Array]') {
@@ -20669,7 +20815,11 @@
 	                    //查询字典,匹配label字段
 	                    var name;
 	                    var so = _dictionary2.default[coms[0]];
-	                    if (state.bean !== undefined && state.bean !== null) name = coms[0];else {
+	                    if (state.bean !== undefined && state.bean !== null) {
+	                        if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2) {
+	                            name = coms[0].split('=>')[1];
+	                        } else name = coms[0];
+	                    } else {
 	                        if (so !== undefined && so !== null) name = so.name;
 	                    }
 	
@@ -20720,7 +20870,13 @@
 	                        switch (coms[1]) {
 	                            case 'query':
 	                                if (state.bean !== null && state.bean !== undefined) {
-	                                    ctrl = _react2.default.createElement(
+	                                    if (coms.length >= 3) {
+	                                        ctrl = _react2.default.createElement(
+	                                            'button',
+	                                            { type: 'submit', 'data-query': coms[2], onClick: clickHandle, style: { width: "100%" } },
+	                                            coms[0]
+	                                        );
+	                                    } else ctrl = _react2.default.createElement(
 	                                        'button',
 	                                        { type: 'submit', onClick: clickHandle, style: { width: "100%" } },
 	                                        coms[0]
@@ -20734,47 +20890,53 @@
 	                                label = null;
 	                                break;
 	                            case 'input':
+	                                var ctrlName;
+	                                if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2) {
+	                                    ctrlName = coms[0].split('=>')[0];
+	                                } else {
+	                                    ctrlName = coms[0];
+	                                }
 	                                if (state.bean !== null && state.bean !== undefined) {
 	                                    if (coms[2] !== null && coms[2] !== undefined) {
 	                                        //input组件扩展至第3个字段
 	                                        switch (coms[2]) {
 	                                            case 'false':
-	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0], disabled: true });
+	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: ctrlName, disabled: true });
 	                                                break;
 	                                            case 'true':
-	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0] });
+	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: ctrlName });
 	                                                break;
 	                                            default:
-	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0], defaultValue: coms[2] });
+	                                                ctrl = _react2.default.createElement('input', { type: 'text', name: ctrlName, defaultValue: coms[2] });
 	                                                break;
 	                                        }
 	                                    }
-	                                } else ctrl = _react2.default.createElement('input', { type: 'text', name: coms[0] });
+	                                } else ctrl = _react2.default.createElement('input', { type: 'text', name: ctrlName });
 	                                break;
 	                            case 'select':
 	                                if (state.bean !== undefined && state.bean !== null) {
-	
+	                                    var ctrlName;
+	                                    if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2) {
+	                                        ctrlName = coms[0].split('=>')[0];
+	                                    } else {
+	                                        ctrlName = coms[0];
+	                                    }
 	                                    if (coms[2] !== null && coms[2] !== undefined) {
 	                                        try {
-	                                            console.log();
-	                                            console.log();
-	                                            console.log();
-	                                            console.log();
 	                                            var arr = eval(coms[2]);
-	                                            console.log();
 	                                            if (Object.prototype.toString.call(arr) == '[object Array]') {
-	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: coms[0], disabled: false, data: arr, selectCb: coms[3] !== undefined && coms[3] !== null ? selectHandle : null, 'data-query': coms[3] });
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: ctrlName, disabled: false, data: arr, selectCb: coms[3] !== undefined && coms[3] !== null ? selectHandle : null, 'data-query': coms[3] });
 	                                            } else {
-	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: true, ctrlName: coms[0], disabled: true });
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: true, ctrlName: ctrlName, disabled: true });
 	                                            }
 	                                        } catch (e) {
 	                                            if (coms[2] == 'true') {
-	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: coms[0] });
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: ctrlName });
 	                                            } else {
-	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: coms[0], disabled: true });
+	                                                ctrl = _react2.default.createElement(_Select2.default, { auto: false, ctrlName: ctrlName, disabled: true });
 	                                            }
 	                                        }
-	                                    } else ctrl = _react2.default.createElement(_Select2.default, { auto: true, ctrlName: coms[0] });
+	                                    } else ctrl = _react2.default.createElement(_Select2.default, { auto: true, ctrlName: ctrlName });
 	                                } else {
 	                                    var options = null;
 	                                    if (coms[2] !== undefined && coms[2] !== null) options = eval(coms[2]);
@@ -20787,6 +20949,7 @@
 	                                break;
 	                            case 'span':
 	                                if (state.bean !== undefined && state.bean !== null) {
+	
 	                                    if (coms[2] !== null && coms[2] !== undefined) {
 	                                        ctrl = _react2.default.createElement(_Span2.default, { auto: false, data: coms[2] });
 	                                    } else ctrl = _react2.default.createElement(_Span2.default, { auto: false });
@@ -20805,12 +20968,15 @@
 	
 	                                break;
 	                            case 'textarea':
-	                                console.log();
-	                                console.log();
-	                                console.log();
-	                                console.log();
+	
 	                                if (state.bean !== undefined && state.bean !== null && coms[2] !== null) {
-	                                    ctrl = _react2.default.createElement('textarea', { rows: 4, name: coms[0], style: { width: "100%" }, value: coms[2] });
+	                                    var ctrlName;
+	                                    if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2) {
+	                                        ctrlName = coms[0].split('=>')[0];
+	                                    } else {
+	                                        ctrlName = coms[0];
+	                                    }
+	                                    ctrl = _react2.default.createElement('textarea', { rows: 4, name: ctrlName, style: { width: "100%" }, value: coms[2] });
 	                                } else ctrl = _react2.default.createElement('textarea', { rows: 4, name: coms[0], style: { width: "100%" } });
 	                                break;
 	                            case 'radio':
@@ -21110,7 +21276,7 @@
 	                        { value: item.value, key: i, selected: true },
 	                        item.label
 	                    ));
-	                    selected = i;
+	                    if (item.value !== undefined && item.value !== null) selected = item.value;
 	                } else options.push(_react2.default.createElement(
 	                    'option',
 	                    { value: item.value, key: i },
@@ -21124,11 +21290,6 @@
 	                _react2.default.createElement(
 	                    'select',
 	                    { onChange: selectCb, style: { width: "100%" }, 'data-query': this.props["data-query"] !== null && this.props["data-query"] !== undefined ? this.props["data-query"] : null },
-	                    _react2.default.createElement(
-	                        'option',
-	                        { key: -1, value: -1 },
-	                        '请选择'
-	                    ),
 	                    options
 	                )
 	            );
@@ -21312,7 +21473,7 @@
 	
 	
 	// module
-	exports.push([module.id, "\r\n.table.table-bordered.panel> thead:first-child > tr:first-child > th{\r\n    border-top:1px solid #ddd;\r\n}\r\n\r\n.table.table-bordered.center.panel thead:first-child tr th {\r\n    text-align:center;\r\n    font-family: lucida, verdana, arial, sans-serif;\r\n    font-size:1.2em;\r\n}\r\n\r\n\r\n.table.table-bordered.center.panel td\r\n{\r\n    align:left;\r\n}\r\n.table.table-bordered.center.panel td span{\r\nmargin-right:5%;\r\n}\r\n.table.table-bordered.center.panel td button\r\n{\r\n    align:center;\r\n}", ""]);
+	exports.push([module.id, "\n.table.table-bordered.panel> thead:first-child > tr:first-child > th{\n    border-top:1px solid #ddd;\n}\n\n.table.table-bordered.center.panel thead:first-child tr th {\n    text-align:center;\n    font-family: lucida, verdana, arial, sans-serif;\n    font-size:1.2em;\n}\n\n\n.table.table-bordered.center.panel td\n{\n    align:left;\n}\n.table.table-bordered.center.panel td span{\nmargin-right:5%;\n}\n.table.table-bordered.center.panel td button\n{\n    align:center;\n}", ""]);
 	
 	// exports
 
@@ -21589,6 +21750,7 @@
 	function applyToTag(styleElement, obj) {
 		var css = obj.css;
 		var media = obj.media;
+		var sourceMap = obj.sourceMap;
 	
 		if(media) {
 			styleElement.setAttribute("media", media)
@@ -21606,6 +21768,7 @@
 	
 	function updateLink(linkElement, obj) {
 		var css = obj.css;
+		var media = obj.media;
 		var sourceMap = obj.sourceMap;
 	
 		if(sourceMap) {
@@ -21628,6 +21791,81 @@
 /* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	var _config = __webpack_require__(172);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ProxyQ = {
+	    getProxyServer: function getProxyServer() {
+	        if (_config2.default.devServer !== undefined && _config2.default.devServer !== null) {
+	            if (_config2.default.devServer.proxy !== undefined && _config2.default.devServer.proxy !== null) {
+	                //只添加第一个proxy的值
+	                var proxyServer;
+	                for (var field in _config2.default.devServer.proxy) {
+	                    var re = /\/(.*?)\//;
+	                    proxyServer = re.exec(field)[1];
+	                    break;
+	                }
+	                return proxyServer;
+	            }
+	        }
+	    },
+	    getPrefix: function getPrefix() {
+	        if (App.getModel() == "debug") {
+	            return "/" + this.getProxyServer();
+	        } else return "";
+	    },
+	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
+	        var proxyUrl = url;
+	        if (App.getModel() == "debug") {
+	            proxyUrl = "/" + this.getProxyServer() + proxyUrl;
+	        }
+	
+	        $.ajax({
+	            type: type !== undefined && type !== null ? type : 'POST',
+	            url: proxyUrl,
+	            dataType: dataType !== undefined && dataType !== null ? dataType : 'json',
+	            data: params,
+	            cache: false,
+	            success: function success(response) {
+	                if (callback !== undefined && callback !== null) callback(response);
+	            },
+	            error: function error(xhr, status, err) {
+	                console.error("error=" + err);
+	            }
+	        });
+	    }
+	
+	};
+	
+	module.exports = ProxyQ;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"model": "debug",
+		"devServer": {
+			"port": 3000,
+			"hot": true,
+			"proxy": {
+				"/serviceHall/*.do": {
+					"model": "on",
+					"secure": false
+				}
+			}
+		}
+	};
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -21644,15 +21882,15 @@
 	
 	var _Download2 = _interopRequireDefault(_Download);
 	
-	var _LinkElement = __webpack_require__(172);
+	var _LinkElement = __webpack_require__(174);
 	
 	var _LinkElement2 = _interopRequireDefault(_LinkElement);
 	
-	var _OrdinaryTr = __webpack_require__(173);
+	var _OrdinaryTr = __webpack_require__(175);
 	
 	var _OrdinaryTr2 = _interopRequireDefault(_OrdinaryTr);
 	
-	var _Hide = __webpack_require__(174);
+	var _Hide = __webpack_require__(176);
 	
 	var _Hide2 = _interopRequireDefault(_Hide);
 	
@@ -21660,19 +21898,22 @@
 	
 	var _Panel2 = _interopRequireDefault(_Panel);
 	
-	var _EmbedTable = __webpack_require__(177);
+	var _EmbedTable = __webpack_require__(179);
 	
 	var _EmbedTable2 = _interopRequireDefault(_EmbedTable);
 	
-	__webpack_require__(186);
+	__webpack_require__(188);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ProxyQ = __webpack_require__(171);
 	
 	/**
 	 *
 	 * 1.dataField,本组件支持多数据源注入,由dataField的field映射至各表数据源所对应的键
 	 * 2.link组件开始支持单字段复数
-	 *
+	 * 3.目前分组可以识别filterField
+	 * 4.增加表尾控件,tail
 	 */
 	var OrdinaryTable = _react2.default.createClass({
 	    displayName: 'OrdinaryTable',
@@ -21692,16 +21933,112 @@
 	                } else td$index = p$index;
 	
 	                var row = in$param[i];
-	                console.log("stu=" + row.stu);
-	                for (var field in row) {
-	                    if (existedInArray(field, state.group$field) === false) {
-	                        tds.push(_react2.default.createElement(
-	                            'td',
-	                            { key: td$index++ },
-	                            row[field]
-	                        ));
+	
+	                //如果过滤字段存在
+	                if (state.filterField !== undefined && state.filterField !== null && Object.prototype.toString.call(state.filterField) == '[object Object]') {
+	                    var linkCb = this.linkCb;
+	                    for (var field in state.filterField) {
+	                        if (existedInArray(field, state.group$field) === false) {
+	                            switch (field) {
+	                                case 'attachs':
+	
+	                                    var downloads = null;
+	                                    var ids = null;
+	                                    if (row[field] !== undefined && row[field] !== null && row[field] != '') ids = row[field].split("|");
+	                                    if (ids != null && ids.length >= 1) {
+	                                        downloads = new Array();
+	                                        ids.map(function (item, i) {
+	                                            downloads.push(_react2.default.createElement(_Download2.default, { attachId: item, key: i }));
+	                                        });
+	                                    }
+	                                    tds.push(_react2.default.createElement(
+	                                        'td',
+	                                        { key: td$index++ },
+	                                        downloads
+	                                    ));
+	                                    break;
+	                                case 'link':
+	                                    if (row[field] !== undefined && row[field] !== null) {
+	                                        var ids = null;
+	                                        var comps = null;
+	                                        try {
+	                                            comps = eval(row[field]);
+	                                        } catch (e) {
+	                                            ids = row[field].split('|');
+	                                        }
+	
+	                                        if (comps !== null) {
+	                                            var links = new Array();
+	                                            comps.map(function (comp, i) {
+	                                                var confs = comp.split('|');
+	                                                if (confs[1] !== undefined && confs[1] !== null && confs[2] !== undefined && confs[2] !== null) {
+	                                                    links.push(_react2.default.createElement(
+	                                                        _LinkElement2.default,
+	                                                        { linkCb: linkCb, 'data-comp': confs[1], 'data-query': confs[2], key: i },
+	                                                        confs[0]
+	                                                    ));
+	                                                }
+	                                            });
+	                                            if (links.length >= 1) {
+	                                                tds.push(_react2.default.createElement(
+	                                                    'td',
+	                                                    { key: td$index++ },
+	                                                    links
+	                                                ));
+	                                            }
+	                                        } else {
+	                                            if (ids !== null) {
+	                                                if (ids[1] !== undefined && ids[1] !== null && ids[2] !== undefined && ids[2] !== null) {
+	                                                    tds.push(_react2.default.createElement(
+	                                                        'td',
+	                                                        { key: td$index++ },
+	                                                        _react2.default.createElement(
+	                                                            _LinkElement2.default,
+	                                                            { linkCb: linkCb, 'data-comp': ids[1], 'data-query': ids[2] },
+	                                                            ids[0]
+	                                                        )
+	                                                    ));
+	                                                } else {
+	                                                    tds.push(_react2.default.createElement(
+	                                                        'td',
+	                                                        { key: k++ },
+	                                                        _react2.default.createElement(
+	                                                            _LinkElement2.default,
+	                                                            null,
+	                                                            ids[0]
+	                                                        )
+	                                                    ));
+	                                                }
+	                                            }
+	                                        }
+	                                    } else {
+	                                        tds.push(_react2.default.createElement('td', { key: td$index++ }));
+	                                    }
+	                                    break;
+	                                default:
+	                                    tds.push(_react2.default.createElement(
+	                                        'td',
+	                                        { key: td$index++ },
+	                                        row[field]
+	                                    ));
+	                                    break;
+	                            }
+	                        }
+	                    }
+	                } else {
+	                    for (var field in row) {
+	                        //分组算法中,只压入非分组范围字段
+	                        if (existedInArray(field, state.group$field) === false) {
+	
+	                            tds.push(_react2.default.createElement(
+	                                'td',
+	                                { key: td$index++ },
+	                                row[field]
+	                            ));
+	                        }
 	                    }
 	                }
+	
 	                out$param.push(_react2.default.createElement(
 	                    'tr',
 	                    { key: i },
@@ -21732,7 +22069,7 @@
 	                    var index = td$index;
 	                    tds.push(_react2.default.createElement(
 	                        'td',
-	                        { rowSpan: pool[i].c, key: index++ },
+	                        { rowSpan: pool[i].c, key: index++, style: { verticalAlign: "inherit" } },
 	                        pool[i].v
 	                    ));
 	                    //分组非叶结点
@@ -21854,7 +22191,7 @@
 	                if (dataField == this.state.sideField.field && !isNaN(parseInt(index))) {
 	                    var row = this.state.data[this.state.sideField.field][index];
 	                    var params = Object.assign(this.state.sideField.query.params, row);
-	                    this.queryHandle(null, this.state.sideField.query.url, params, 'json', function (response) {
+	                    ProxyQ.queryHandle(null, this.state.sideField.query.url, params, 'json', function (response) {
 	                        console.log();
 	                        console.log();
 	                        this.setState({ data: response.arr });
@@ -21878,19 +22215,113 @@
 	            }
 	        }
 	    },
+	    checkCb: function checkCb(evt) {
+	        var target = evt.target;
+	        var $target = $(target);
+	        switch ($target.attr("data-type")) {
+	            case 'checkM':
+	                var k = $target.attr("data-index");
+	                var checkingMap = this.state.checkingMap;
+	                //if hit by single check
+	                if (k !== null && k !== undefined && !isNaN(parseInt(k)) && k !== "-1") {
+	                    k = parseInt(k);
+	                    if (this.state.checkingMap == null || this.state.checkingMap == undefined) {
+	                        this.state.checkingMap = new Object();
+	                    }
+	
+	                    if (checkingMap[k] !== undefined && checkingMap[k] !== null) delete checkingMap[k];else checkingMap[k] = true;
+	                    this.setState({ chekingMap: checkingMap });
+	                } else {
+	                    //check all
+	                    if (checkingMap[-1] == true || checkingMap[-1] == 'true') {
+	                        delete checkingMap[-1];
+	                        for (var i = 0; i < this.state.data.length; i++) {
+	                            delete checkingMap[i];
+	                        }
+	                    } else {
+	                        checkingMap[-1] = true;
+	                        for (var i = 0; i < this.state.data.length; i++) {
+	                            checkingMap[i] = true;
+	                        }
+	                    }
+	                    this.setState({ chekingMap: checkingMap });
+	                }
+	                break;
+	            default:
+	                break;
+	        }
+	    },
 	    returnCb: function returnCb() {
 	        this.setState({ hiddenInfo: null });
 	        $(this.refs.contentDiv).slideDown();
 	    },
-	    fetch: function fetch() {
-	        this.queryHandle(null, this.props.query.url, this.props.query.params, 'json', function (response) {
-	            var data;
-	            if (Object.prototype.toString.call(response) != '[object Array]') {
-	                if (response.data !== undefined && response.data !== null) {
-	                    if (Object.prototype.toString.call(response.data) == '[object Array]') data = response.data;
+	    clickHandle: function clickHandle(evt) {
+	        var target = evt.target;
+	        var $target = $(target);
+	        switch ($target.attr("data-type")) {
+	            case 'checkQuery':
+	                if ($target.attr("data-query") !== undefined && $target.attr("data-query") !== null) {
+	                    var query = eval('(' + $target.attr("data-query") + ')');
+	                    var backType = $target.attr("data-backtype");
+	                    //取出选中数据的url,params,filter
+	                    /**
+	                     * filter,指定你想要check的数据列名
+	                     */
+	                    var data = this.state.data;
+	
+	                    var checkingMap = this.state.checkingMap;
+	                    var squash;
+	                    if (checkingMap !== undefined && checkingMap !== null) {
+	                        squash = new Array();
+	                        for (var index in checkingMap) {
+	                            if (Object.prototype.toString.call(query.filter) == '[object Array]') {
+	                                var json = new Object();
+	                                query.filter.map(function (field, i) {
+	                                    json[field] = data[index][field];
+	                                });
+	                                squash.push(json);
+	                            } else squash.push(data[index]);
+	                        }
+	                        var squashed = new Object();
+	                        squashed.squashed = JSON.stringify(squash);
+	
+	                        var params = Object.assign(query.params == null || query.params == undefined ? {} : query.params, squashed);
+	
+	                        if (backType !== undefined && backType !== null) {
+	                            var cmd = query.url;
+	                            var prefix = ProxyQ.getPrefix();
+	                            var QueryA = this.refs["QueryA"];
+	                            var $QueryA = $(QueryA);
+	                            $QueryA.attr("src", prefix + cmd + "?squashed=" + JSON.stringify(squash));
+	                        } else {
+	                            ProxyQ.queryHandle(null, query.url, params, 'json', function (response) {}.bind(this));
+	                        }
+	                    }
 	                }
-	            } else data = response;
-	            this.setState({ data: data, data$initialed: true });
+	                break;
+	            default:
+	                break;
+	        }
+	    },
+	    fetch: function fetch() {
+	        ProxyQ.queryHandle(null, this.props.query.url, this.props.query.params, 'json', function (response) {
+	            var data;
+	            var ob = new Object();
+	            if (Object.prototype.toString.call(response) != '[object Array]') if (response.data !== undefined && response.data !== null) if (Object.prototype.toString.call(response.data) == '[object Array]') data = response.data;else data = response;
+	
+	            if (this.state.group$field !== undefined && this.state.group$field !== null) {
+	                //对数据进行分组
+	                var arr = this.group(data, this.state.group$field);
+	                ob.data = arr[1];
+	                ob.pool = arr[0];
+	            } else {
+	                ob.data = data;
+	            }
+	            ob.data$initialed = true;
+	            if (response.tail !== undefined && response.tail !== null && Object.prototype.toString.call(response.tail) == '[object Array]') {
+	                ob.tail = response.tail;
+	            }
+	            this.setState(ob);
 	        }.bind(this));
 	    },
 	    queryHandle: function queryHandle(type, url, params, dataType, callback) {
@@ -21937,7 +22368,7 @@
 	        }
 	
 	        var data;
-	        var pool;;
+	        var pool;
 	        if (this.props.data !== undefined && this.props.data !== null) {
 	            if (group$field !== undefined && group$field !== null) {
 	                var arr = this.group(this.props.data, group$field);
@@ -21950,15 +22381,40 @@
 	        var hiddenStatus = false;
 	        if (this.props.hiddenStatus == true || this.props.hiddenStatus == 'true') hiddenStatus = true;
 	
+	        //checkingMap,此选项用于保持选中数据项的下标
+	        var checkingMap;
+	        if (this.props.checkingMap !== undefined && this.props.checkingMap !== null) checkingMap = this.props.checkingMap;
+	
+	        //translation,中英文对照表
+	        var translation;
+	        if (this.props.translation !== undefined && this.props.translation !== null) translation = this.props.translation;
+	
 	        return { autoFetch: autoFetch, data$initialed: data$initialed, data: data,
 	            sideField: sideField, dataField: dataField, filterField: filterField, group$field: group$field,
-	            pool: pool, hiddenStatus: hiddenStatus };
+	            pool: pool, hiddenStatus: hiddenStatus, checkingMap: checkingMap, translation: translation };
 	    },
 	    componentWillReceiveProps: function componentWillReceiveProps(props) {
 	        var op = new Object();
 	        //更新data$initialed状态
 	        if (props.data$initialed !== undefined && props.data$initialed !== null) op.data$initialed = props.data$initialed;
-	        if (props.data !== undefined && props.data !== null) op.data = props.data;
+	        if (props.data !== undefined && props.data !== null) {
+	
+	            if (this.props.data !== props.data) {
+	                if (this.props.filterField !== null && this.props.filterField !== undefined && (this.props.filterField.checkM == true || this.props.filterField.checkM == "true")) {
+	                    op.checkingMap = new Object();
+	                    props.data.map(function (row, i) {
+	                        if (row.checkM == true || row.checkM == "true") {
+	                            op.checkingMap[i] = true;
+	                        }
+	                    });
+	                }
+	            }
+	            op.data = props.data;
+	        }
+	        if (props.pool !== undefined && props.pool !== null) op.pool = props.pool;
+	        if (props.translation !== undefined && props.translation !== null) op.translation = props.translation;
+	        if (props.tail !== undefined && props.tail !== null) op.tail = props.tail;
+	
 	        this.setState(op);
 	    },
 	    render: function render() {
@@ -21968,6 +22424,7 @@
 	        } else {
 	            var colSpan = 1;
 	            var tables;
+	            //多表数据源注入
 	            if (this.state.dataField !== null && this.state.dataField !== undefined) {
 	                tables = new Array();
 	                if (Object.prototype.toString.call(this.props.dataField) != "[object Array]") return _react2.default.createElement('table', null);
@@ -21999,6 +22456,7 @@
 	                        var trs;
 	                        var rowFields = new Array();
 	                        for (var field in props.data[item.field][0]) {
+	
 	                            rowFields.push(_react2.default.createElement(
 	                                'td',
 	                                { key: colSpan },
@@ -22061,15 +22519,32 @@
 	                    var j = 0;
 	                    var state = this.state;
 	                    var props = this.props;
+	                    var checkCb = this.checkCb;
 	                    //如果允许过滤字段
 	                    if (state.filterField !== null && state.filterField !== undefined) {
 	                        for (var field in state.filterField) {
 	                            if (state.data[0][field] !== null && state.data[0][field] !== undefined) {
-	                                tr$fields.push(_react2.default.createElement(
-	                                    'td',
-	                                    { key: j++ },
-	                                    field
-	                                ));
+	                                var transaltedField = field;
+	                                if (state.translation !== null && state.translation !== undefined && state.translation[field] !== undefined && state.translation[field] !== null) {
+	                                    transaltedField = state.translation[field];
+	                                }
+	                                switch (field) {
+	                                    case "checkM":
+	                                        tr$fields.push(_react2.default.createElement(
+	                                            'td',
+	                                            { key: j++ },
+	                                            _react2.default.createElement('input', { type: 'checkbox', 'data-index': -1, 'data-type': 'checkM', onChange: checkCb }),
+	                                            '全选'
+	                                        ));
+	                                        break;
+	                                    default:
+	                                        tr$fields.push(_react2.default.createElement(
+	                                            'td',
+	                                            { key: j++ },
+	                                            transaltedField
+	                                        ));
+	                                        break;
+	                                }
 	                                colSpan++;
 	                            }
 	                        }
@@ -22089,9 +22564,11 @@
 	                    //如果字段进行分组
 	                    if (state.group$field !== undefined && state.group$field !== null) {
 	
+	                        //分组程序
 	                        this.groupCombine(state.pool, state.data, trs, this.state.group$field);
 	                    } else {
 	                        var linkCb = this.linkCb;
+	                        var checkCb = this.checkCb;
 	                        state.data.map(function (row, i) {
 	                            var k = 0;
 	                            var tds = new Array();
@@ -22101,17 +22578,18 @@
 	
 	                                        switch (field) {
 	                                            case 'attachs':
-	
+	                                                //附件字段更改,attachid1=>xx1|attachid2=>xx2
 	                                                var downloads = null;
 	                                                var ids = null;
 	                                                if (row[field] !== undefined && row[field] !== null && row[field] != '') ids = row[field].split("|");
 	                                                if (ids != null && ids.length >= 1) {
 	                                                    downloads = new Array();
 	                                                    ids.map(function (item, i) {
-	                                                        downloads.push(_react2.default.createElement(_Download2.default, { attachId: item, key: i }));
+	                                                        var id = item.split("=>")[0];
+	                                                        var title = item.split("=>")[1];
+	                                                        downloads.push(_react2.default.createElement(_Download2.default, { attachId: id, key: i, title: title }));
 	                                                    });
 	                                                }
-	
 	                                                tds.push(_react2.default.createElement(
 	                                                    'td',
 	                                                    { key: k++ },
@@ -22120,39 +22598,101 @@
 	                                                break;
 	                                            case 'link':
 	                                                if (row[field] !== undefined && row[field] !== null) {
+	                                                    var ids = null;
+	                                                    var comps = null;
+	                                                    try {
+	                                                        comps = eval(row[field]);
+	                                                    } catch (e) {
+	                                                        ids = row[field].split('|');
+	                                                    }
 	
-	                                                    var ids = row[field].split('|');
-	                                                    if (ids[1] !== null && ids[1] !== undefined && ids[2] !== undefined && ids[2] !== null) {
-	                                                        tds.push(_react2.default.createElement(
-	                                                            'td',
-	                                                            { key: k++ },
-	                                                            _react2.default.createElement(
-	                                                                _LinkElement2.default,
-	                                                                { linkCb: linkCb, 'data-comp': ids[1], 'data-query': ids[2] },
-	                                                                ids[0]
-	                                                            )
-	                                                        ));
+	                                                    if (comps !== null) {
+	                                                        var links = new Array();
+	                                                        comps.map(function (comp, i) {
+	                                                            var confs = comp.split('|');
+	                                                            if (confs[1] !== undefined && confs[1] !== null && confs[2] !== undefined && confs[2] !== null) {
+	                                                                links.push(_react2.default.createElement(
+	                                                                    _LinkElement2.default,
+	                                                                    { linkCb: linkCb, 'data-comp': confs[1], 'data-query': confs[2], key: i },
+	                                                                    confs[0]
+	                                                                ));
+	                                                            }
+	                                                        });
+	                                                        if (links.length >= 1) {
+	                                                            tds.push(_react2.default.createElement(
+	                                                                'td',
+	                                                                { key: k++ },
+	                                                                links
+	                                                            ));
+	                                                        }
 	                                                    } else {
-	                                                        tds.push(_react2.default.createElement(
-	                                                            'td',
-	                                                            { key: k++ },
-	                                                            _react2.default.createElement(
-	                                                                _LinkElement2.default,
-	                                                                null,
-	                                                                ids[0]
-	                                                            )
-	                                                        ));
+	                                                        if (ids !== null) {
+	                                                            if (ids[1] !== undefined && ids[1] !== null && ids[2] !== undefined && ids[2] !== null) {
+	                                                                tds.push(_react2.default.createElement(
+	                                                                    'td',
+	                                                                    { key: k++ },
+	                                                                    _react2.default.createElement(
+	                                                                        _LinkElement2.default,
+	                                                                        { linkCb: linkCb, 'data-comp': ids[1], 'data-query': ids[2] },
+	                                                                        ids[0]
+	                                                                    )
+	                                                                ));
+	                                                            } else {
+	                                                                tds.push(_react2.default.createElement(
+	                                                                    'td',
+	                                                                    { key: k++ },
+	                                                                    _react2.default.createElement(
+	                                                                        _LinkElement2.default,
+	                                                                        null,
+	                                                                        ids[0]
+	                                                                    )
+	                                                                ));
+	                                                            }
+	                                                        }
 	                                                    }
 	                                                } else {
 	                                                    tds.push(_react2.default.createElement('td', { key: k++ }));
 	                                                }
 	                                                break;
+	                                            case 'checkM':
+	                                                if (row[field] !== undefined && row[field] !== null) {
+	                                                    if (state.checkingMap !== undefined && state.checkingMap !== null && (state.checkingMap[i] == 'true' || state.checkingMap[i] == true)) {
+	                                                        tds.push(_react2.default.createElement(
+	                                                            'td',
+	                                                            { key: k++ },
+	                                                            _react2.default.createElement('input', { type: 'checkbox', 'data-index': i, 'data-type': 'checkM', onChange: checkCb, checked: true })
+	                                                        ));
+	                                                    } else tds.push(_react2.default.createElement(
+	                                                        'td',
+	                                                        { key: k++ },
+	                                                        _react2.default.createElement('input', { type: 'checkbox', 'data-index': i, 'data-type': 'checkM', onChange: checkCb })
+	                                                    ));
 	
+	                                                    //if (row[field]==true|| row[field]== 'true'){
+	                                                    //    tds.push(<td key={k++}>
+	                                                    //            <input type="checkbox" data-index={i} data-type="checkM" onChange={checkCb} selected/>
+	                                                    //        </td>
+	                                                    //    );
+	                                                    //}
+	                                                    //else
+	                                                    //    tds.push(
+	                                                    //        <td key={k++}>
+	                                                    //            <input type="checkbox" data-index={i} data-type="checkM"  onChange={checkCb}/>
+	                                                    //        </td>);
+	                                                } else tds.push(_react2.default.createElement('td', { key: k++ }));
+	                                                break;
 	                                            default:
+	                                                //text/html内容检查
+	                                                var reg = /<(.*?)>(.*)<\/\1>/;
+	                                                var re = reg.exec(content);
+	                                                var content = row[field];
+	                                                if (re[1] !== undefined && re[1] !== null) {
+	                                                    content = _react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: content } });
+	                                                }
 	                                                tds.push(_react2.default.createElement(
 	                                                    'td',
 	                                                    { key: k++ },
-	                                                    row[field]
+	                                                    content
 	                                                ));
 	                                                break;
 	                                        }
@@ -22220,6 +22760,22 @@
 	                                                tds.push(_react2.default.createElement('td', { key: k++ }));
 	                                            }
 	                                            break;
+	                                        case 'checkM':
+	                                            if (row[field] !== undefined && row[field] !== null) {
+	
+	                                                if (row[field] == true || row[field] == 'true') {
+	                                                    tds.push(_react2.default.createElement(
+	                                                        'td',
+	                                                        { key: k++ },
+	                                                        _react2.default.createElement('input', { type: 'checkbox', 'data-type': 'checkM', 'data-index': i, onChange: checkCb, checked: true })
+	                                                    ));
+	                                                } else tds.push(_react2.default.createElement(
+	                                                    'td',
+	                                                    { key: k++ },
+	                                                    _react2.default.createElement('input', { type: 'checkbox', 'data-type': 'checkM', 'data-index': i, onChange: checkCb })
+	                                                ));
+	                                            } else tds.push(_react2.default.createElement('td', { key: k++ }));
+	                                            break;
 	                                        default:
 	                                            tds.push(_react2.default.createElement(
 	                                                'td',
@@ -22236,6 +22792,66 @@
 	                                tds
 	                            ));
 	                        });
+	                    }
+	
+	                    //表尾控件初始化
+	                    var tails = null;
+	                    if (this.state.tail !== undefined && this.state.tail !== null) {
+	                        var tail = new Array();
+	                        var clickHandle = this.clickHandle;
+	                        var state = this.state;
+	                        this.state.tail.map(function (item, i) {
+	                            var ids = item.split('|');
+	                            var ctrl;
+	                            if (ids.length >= 2) {
+	                                switch (ids[1]) {
+	                                    case 'checkQuery':
+	                                        if (ids.length >= 3) {
+	
+	                                            ctrl = _react2.default.createElement(
+	                                                'button',
+	                                                { onClick: clickHandle, 'data-type': 'checkQuery', 'data-query': ids[2] },
+	                                                ids[0]
+	                                            );
+	                                        } else ctrl = _react2.default.createElement(
+	                                            'button',
+	                                            { onClick: clickHandle, 'data-type': 'checkQuery' },
+	                                            ids[0]
+	                                        );
+	                                        tail.push(_react2.default.createElement(
+	                                            'td',
+	                                            { key: i },
+	                                            ctrl
+	                                        ));
+	                                        break;
+	                                    default:
+	                                        tail.push(_react2.default.createElement('td', { key: i }));
+	                                        break;
+	                                }
+	                            }
+	                        });
+	
+	                        tails = _react2.default.createElement(
+	                            'tfoot',
+	                            null,
+	                            _react2.default.createElement(
+	                                'tr',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'td',
+	                                    { colSpan: colSpan },
+	                                    _react2.default.createElement(
+	                                        'table',
+	                                        { className: 'table table-bordered center', style: { width: "100%" } },
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            tail
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        );
 	                    }
 	
 	                    var title = null;
@@ -22265,7 +22881,8 @@
 	                                tr$fields
 	                            ),
 	                            trs
-	                        )
+	                        ),
+	                        tails
 	                    ));
 	                }
 	            }
@@ -22385,7 +23002,8 @@
 	                    { className: 'row' },
 	                    sideDist,
 	                    mainDist
-	                )
+	                ),
+	                _react2.default.createElement('iframe', { ref: 'QueryA', methpd: 'post', style: { display: "none" } })
 	            );
 	        }
 	    }
@@ -22393,7 +23011,7 @@
 	exports.default = OrdinaryTable;
 
 /***/ },
-/* 172 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22413,9 +23031,6 @@
 	
 	    clickCb: function clickCb(evt) {
 	        if (this.props.linkCb !== undefined && this.props.linkCb !== null) {
-	            console.log();
-	            console.log();
-	            console.log();
 	            this.props.linkCb(evt);
 	        }
 	    },
@@ -22440,7 +23055,7 @@
 	        return _react2.default.createElement(
 	            "a",
 	            { href: link, className: this.props.linkClass, "data-index": data$index,
-	                onClick: this.clickCb, style: alignStyle, "data-query": query, "data-comp": this.props["data-comp"] },
+	                onClick: this.clickCb, style: Object.assign({ marginRight: "20px" }, alignStyle), "data-query": query, "data-comp": this.props["data-comp"] },
 	            this.props.children
 	        );
 	    }
@@ -22449,7 +23064,7 @@
 	exports.default = LinkElement;
 
 /***/ },
-/* 173 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22493,7 +23108,7 @@
 	exports.default = OrdinaryTr;
 
 /***/ },
-/* 174 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22508,7 +23123,7 @@
 	
 	var _reactDom = __webpack_require__(159);
 	
-	__webpack_require__(175);
+	__webpack_require__(177);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22564,13 +23179,13 @@
 	exports.default = Hide;
 
 /***/ },
-/* 175 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(176);
+	var content = __webpack_require__(178);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -22579,8 +23194,8 @@
 	if(true) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept(176, function() {
-				var newContent = __webpack_require__(176);
+			module.hot.accept(178, function() {
+				var newContent = __webpack_require__(178);
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -22590,7 +23205,7 @@
 	}
 
 /***/ },
-/* 176 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
@@ -22604,7 +23219,7 @@
 
 
 /***/ },
-/* 177 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22619,13 +23234,13 @@
 	
 	var _reactDom = __webpack_require__(159);
 	
-	var _TdElement = __webpack_require__(178);
+	var _TdElement = __webpack_require__(180);
 	
 	var _TdElement2 = _interopRequireDefault(_TdElement);
 	
-	__webpack_require__(181);
+	__webpack_require__(183);
 	
-	var _HideElement = __webpack_require__(183);
+	var _HideElement = __webpack_require__(185);
 	
 	var _HideElement2 = _interopRequireDefault(_HideElement);
 	
@@ -22750,6 +23365,7 @@
 	                trs = new Array();
 	                var embedCols = this.state.embedCols;
 	                var clickCb = this.clickCb;
+	
 	                this.props.data.arr.map(function (item, i) {
 	                    var sub$data;
 	                    if (item.data !== undefined && item.data !== null) sub$data = item.data;else return false;
@@ -22766,6 +23382,7 @@
 	                    var sub$trs = new Array();
 	                    var sub$tds;
 	                    var sub$row$index = 0;
+	
 	                    sub$data.map(function (sub, j) {
 	                        if (j % embedCols == 0) {
 	                            sub$tds = new Array();
@@ -22784,6 +23401,7 @@
 	                            sub$row$index++;
 	                        }
 	                    });
+	
 	                    td$table = _react2.default.createElement(
 	                        'table',
 	                        { className: 'table table-bordered center', key: i },
@@ -22870,7 +23488,7 @@
 	exports.default = EmbedTable;
 
 /***/ },
-/* 178 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22883,7 +23501,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(179);
+	__webpack_require__(181);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22927,46 +23545,6 @@
 	exports.default = TdElement;
 
 /***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(180);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(170)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(true) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept(180, function() {
-				var newContent = __webpack_require__(180);
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(169)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, ".microsoft-font{\r\n    font-family:  Microsoft YaHei,lucida, verdana, arial, sans-serif;\r\n    vertical-align: bottom;\r\n}\r\n", ""]);
-	
-	// exports
-
-
-/***/ },
 /* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23001,13 +23579,53 @@
 	
 	
 	// module
-	exports.push([module.id, "\r\n.embedTable .center td{\r\n    text-align:center;\r\n}\r\n\r\n.folding{\r\n    float:right;\r\n    margin-right: 20px;\r\n}", ""]);
+	exports.push([module.id, ".microsoft-font{\n    font-family:  Microsoft YaHei,lucida, verdana, arial, sans-serif;\n    vertical-align: bottom;\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
 /* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(184);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(184, function() {
+				var newContent = __webpack_require__(184);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\n.embedTable .center td{\n    text-align:center;\n}\n\n.folding{\n    float:right;\n    margin-right: 20px;\n}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23020,7 +23638,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(184);
+	__webpack_require__(186);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23088,46 +23706,6 @@
 	exports.default = HideElement;
 
 /***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(185);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(170)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(true) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept(185, function() {
-				var newContent = __webpack_require__(185);
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(169)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "", ""]);
-	
-	// exports
-
-
-/***/ },
 /* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23162,7 +23740,47 @@
 	
 	
 	// module
-	exports.push([module.id, "\r\n.ordinaryTable .center td{\r\n    text-align:center;\r\n}\r\n\r\n.folding{\r\n    float:right;\r\n    margin-right: 20px;\r\n}", ""]);
+	exports.push([module.id, "", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(189);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(true) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept(189, function() {
+				var newContent = __webpack_require__(189);
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\n.ordinaryTable .center td{\n    text-align:center;\n}\n\n.folding{\n    float:right;\n    margin-right: 20px;\n}", ""]);
 	
 	// exports
 
