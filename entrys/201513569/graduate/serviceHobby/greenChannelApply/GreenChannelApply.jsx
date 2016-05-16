@@ -10,12 +10,18 @@ var GreenChannelApply=React.createClass({
 
         var bean={
             url:'serviceHall/bsuims/reactPageDataRequest.do',
-            reactActionName:"",
-            reactPageName:""
+            params: {
+                reactActionName: "",
+                reactPageName  : "gradGreenWayPage"
+            }
         }
 
         var query={
-
+            url:"",
+            params:{
+                reactActionName:"",
+                reactPageName:""
+            }
         }
 
         return(

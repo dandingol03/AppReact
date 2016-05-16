@@ -56,6 +56,10 @@
             }
 
 
+            var string1="<de>c</de>";
+            var re1=/<(.*)>.*<\/(.*)>/;
+
+
         });
 
     </script>
@@ -95,16 +99,24 @@
                 <td><span>21</span><input type="radio" name="age" value="21"/></td>
             </tr>
             </tbody>
-
+            <tfoot>
+            <tr>
+                <td colspan="2" style="text-align:center">
+                    <table class="table-bordered" style="width:100%">
+                        <tr>
+                            <td><input type="text"/></td>
+                            <td><input type="text"/></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>
 
-<form name="mail-form">
-    <input type="checkbox" name="t1" checked/>
-    <input type="checkbox" name="t2" selected/>
-    <input type="checkbox" name="t3" selected/>
-</form>
+<input type="text"  id="test-data-query" data-query="{url:'dd'}" />
+
 
 
 </body>

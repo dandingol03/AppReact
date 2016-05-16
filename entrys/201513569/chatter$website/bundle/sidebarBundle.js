@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "747042a6e880cb2dfe62"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "16cac9afe39e32b8eaed"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20293,6 +20293,42 @@
 	    displayName: 'SidebarMenuElement',
 	
 	    clickCb: function clickCb(evt) {
+	        //非treeview列表项的点击事件
+	        var target = evt.target;
+	        var $target = $(target);
+	        var ob;
+	        if (target.nodeName === "A") {
+	            ob = $target.parent("li");
+	        }
+	        if (target.nodeName === "I") ob = $target.parent("a").parent("li");
+	        if (target.nodeName === "SPAN") ob = $target.parent("a").parent("li");
+	        var index = ob.attr("data-index");
+	        if (index !== undefined && index !== null) {
+	            var url = ".." + this.state.data[index].controller;
+	            console.log("url=" + url);
+	            $("#centerFrame").attr("src", url + "?userName=" + this.state.query.params.userName);
+	        }
+	    },
+	    subClickCb: function subClickCb(evt) {
+	        //点击子菜单的回调函数
+	        var target = evt.target;
+	        var $target = $(target);
+	        var ob;
+	        if (target.nodeName === "A") {
+	            ob = $target.parent("li");
+	        }
+	        if (target.nodeName === "I") ob = $target.parent("a").parent("li");
+	        if (target.nodeName === "SPAN") ob = $target.parent("a").parent("li");
+	        var index = ob.attr("data-index");
+	        if (index !== undefined && index !== null) {
+	            var url = ".." + this.state.data[index].controller;
+	            console.log("url=" + url);
+	            $("#centerFrame").attr("src", url + "?userName=" + this.state.query.params.userName);
+	        }
+	    },
+	
+	    clickTreeCb: function clickTreeCb(evt) {
+	        //treeview列表项的点击事件
 	        var target = evt.target;
 	        var $target = $(target);
 	        var ob;
@@ -20393,10 +20429,12 @@
 	            if (data !== undefined && data !== null) {
 	                li$s = new Array();
 	                var proj = this.state.projName;
-	                var clickCb = this.clickCb;
+	                var clickTreeCb = this.clickTreeCb;
+	                var un$tree$clickCb = this.clickCb;
+	                var subClickCb = this.subClickCb;
 	                data.map(function (item, i) {
 	                    var parent;
-	                    var parent$href = proj + item.controller;
+	                    var parent$href = ".." + item.controller;
 	                    var children;
 	
 	                    children = new Array();
@@ -20405,13 +20443,13 @@
 	                        if (item.pid != -1) {
 	                            data.map(function (child, j) {
 	                                if (child.pid == item.authorityId) {
-	                                    var href = proj + item.controller;
+	                                    var href = ".." + item.controller;
 	                                    children.push(_react2.default.createElement(
 	                                        'li',
-	                                        { key: j },
+	                                        { key: j, 'data-index': j, onClick: subClickCb },
 	                                        _react2.default.createElement(
 	                                            'a',
-	                                            { href: href },
+	                                            { href: 'javascript:void(0)' },
 	                                            _react2.default.createElement('i', { className: 'fa fa-angle-double-right' }),
 	                                            child["authorityName"]
 	                                        )
@@ -20420,10 +20458,10 @@
 	                            });
 	                            parent = _react2.default.createElement(
 	                                'li',
-	                                { className: 'treeview', key: i, onClick: clickCb },
+	                                { className: 'treeview', key: i, onClick: clickTreeCb },
 	                                _react2.default.createElement(
 	                                    'a',
-	                                    { href: '#' },
+	                                    { href: 'javascript:void(0)' },
 	                                    _react2.default.createElement('i', { className: 'fa fa-bar-chart-o' }),
 	                                    _react2.default.createElement(
 	                                        'span',
@@ -20440,12 +20478,13 @@
 	                            );
 	                            li$s.push(parent);
 	                        } else {
+	                            //如果本列表项不是treeview
 	                            parent = _react2.default.createElement(
 	                                'li',
-	                                { key: i },
+	                                { key: i, onClick: un$tree$clickCb, 'data-index': i },
 	                                _react2.default.createElement(
 	                                    'a',
-	                                    { href: parent$href },
+	                                    { href: 'javascript:void(0)' },
 	                                    _react2.default.createElement('i', { className: 'fa fa-th' }),
 	                                    item["authorityName"]
 	                                )
