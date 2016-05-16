@@ -10,23 +10,25 @@ function Boot(){
         {row:['stuType|select','query']}
     ];
     var query={
-        url:"/serviceHall/bsuims/reactPageDataRequest.do",
+        url:"/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:"degreeAnonymousThesisReviewResult",
             reactActionName:"deegreeThesisReviewResultUseReact"
         }
     }
     var bean={
-        url:"/serviceHall/bsuims/reactPageDataRequest.do",
+        url:"/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:"degreeAnonymousThesisReviewResult",
             reactActionName:"deegreeThesisReviewPanelUseReact"
         }
     }
     var filterField= {
+        "order":true,
+        "stuNum":true,
         "stuName": true,
-        "stuId":true,
-        "stuCollegeName":true,
+        "grade":true,
+        "stuTypeName":true,
         "stuMajorName":true,
         "thesisLevel":true,
         "commentResult":true,

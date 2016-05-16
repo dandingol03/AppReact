@@ -6,6 +6,7 @@ import Download from '../../components/basic/Download.jsx';
 import Radio from '../../components/basic/Radio.jsx';
 import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
+var ProxyQ=require('../proxy/ProxyQ');
 
 /**
  *
@@ -30,7 +31,7 @@ import dict from '../../data/json/dictionary.json';
 
 var Panel=React.createClass({
     fetch:function(){
-        this.queryHandle(
+        ProxyQ.queryHandle(
             null,
             this.props.bean.url,
             this.props.bean.params,
@@ -129,7 +130,7 @@ var Panel=React.createClass({
                 console.log();
                 console.log();
                 var params=Object.assign(ob.params,fields);
-                this.queryHandle(
+                ProxyQ.queryHandle(
                     null,
                     ob.url,
                     params,
@@ -193,7 +194,8 @@ var Panel=React.createClass({
             "span":true,
             "textarea":true,
             "radio":true,
-            "return":true
+            "return":true,
+            "download":true
         }
 
         var bean;
@@ -274,10 +276,11 @@ var Panel=React.createClass({
                     if(name!==undefined&&name!==null)
                     {
                         if(coms.length>1)
-                        {
-                            label=(<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
+                        {   if(coms[1]!==null&&coms[1]!=undefined&&coms[1]!=='download') {
+                            label = (<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
                                 {name}
                             </td>);
+                        }
                         }else{
                             label=(<td key={td$index++} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
                                 {name}
@@ -392,7 +395,7 @@ var Panel=React.createClass({
                                 }
                                 break;
                             case 'download':
-                                ctrl=<Download attachId={parseInt(coms[0])}/>
+                                ctrl=<Download href={coms[2]} title={coms[0]} />
                                 break;
                             case 'span':
                                 if(state.bean!==undefined&&state.bean!==null)

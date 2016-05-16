@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Download from '../../../components/basic/Download.jsx';
 import Panel from '../../panel/Panel.jsx';
 import OrdinaryTable from '../../forms/OrdinaryTable.jsx';
+var ProxyQ=require('../../proxy/ProxyQ');
 
 var PanelTable=React.createClass({
     clickHandle:function(ob){
@@ -11,7 +12,7 @@ var PanelTable=React.createClass({
             var params;
             params=Object.assign(this.props.query.params!==null&&this.props.query.params!==undefined?this.props.query.params:'',
                 ob!==undefined&&ob!==null?ob:'');
-            this.queryHandle(
+            ProxyQ.queryHandle(
                 null,
                 this.props.query.url,
                 params,
