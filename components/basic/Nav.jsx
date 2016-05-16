@@ -13,11 +13,8 @@ import '../../css/components/basic/nav/nav.css';
 
 var Nav=React.createClass({
     linkCb:function(evt){
-        var target=evt.target;
-        evt.preventDefault();
-
-
-
+        //var target=evt.target;
+        //evt.preventDefault();
     },
     fetch:function(){
         this.queryHandle(
