@@ -115,7 +115,8 @@ var Select=React.createClass({
              if(item["selected"]!==undefined&&item["selected"]!==null)
              {
                  options.push(<option value={item.value} key={i} selected>{item.label}</option>);
-                 selected=i;
+                 if(item.value!==undefined&&item.value!==null)
+                    selected=item.value;
              }
              else
                 options.push(<option value={item.value} key={i}>{item.label}</option>);
@@ -124,7 +125,6 @@ var Select=React.createClass({
             <div style={{display:'inline'}}>
                 <input name={this.props.ctrlName} style={{display:"none"}} value={selected!==null&&selected!==undefined?selected:''} ref="hidden_field"/>
                 <select onChange={selectCb} style={{width:"100%"}} data-query={this.props["data-query"]!==null&&this.props["data-query"]!==undefined?this.props["data-query"]:null}>
-                    <option key={-1} value={-1}>请选择</option>
                     {options}
                 </select>
             </div>

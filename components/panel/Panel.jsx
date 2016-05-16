@@ -4,6 +4,7 @@ import Span from '../../components/basic/Span.jsx';
 import Select from '../../components/basic/Select.jsx';
 import Download from '../../components/basic/Download.jsx';
 import Radio from '../../components/basic/Radio.jsx';
+var  ProxyQ = require('../../components/proxy/ProxyQ');
 import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
 
@@ -30,7 +31,8 @@ import dict from '../../data/json/dictionary.json';
 
 var Panel=React.createClass({
     fetch:function(){
-        this.queryHandle(
+
+        ProxyQ.queryHandle(
             null,
             this.props.bean.url,
             this.props.bean.params,
@@ -58,6 +60,34 @@ var Panel=React.createClass({
             }.bind(this)
         );
 
+        //this.queryHandle(
+        //    null,
+        //    this.props.bean.url,
+        //    this.props.bean.params,
+        //    null,
+        //    function(response){
+        //        //这里需要统一规范后台返回的数据格式
+        //        var ob=null;
+        //        if(response.data!==undefined&&response.data!==null&&response.data!="")
+        //        {
+        //            if(ob==null)
+        //                ob=new Object();
+        //            ob.data=response.data;
+        //        }
+        //        else
+        //            console.log("type of response is wrong");
+        //        if(response.query!==undefined&&response.query!==null)
+        //        {
+        //            if(ob==null)
+        //                ob=new Object();
+        //            ob.query=response.query;
+        //        }
+        //        if(ob!==null)
+        //            this.setState(ob);
+        //
+        //    }.bind(this)
+        //);
+
     },
     queryHandle:function(type,url,params,dataType,callback){
         $.ajax({
@@ -71,7 +101,12 @@ var Panel=React.createClass({
                     callback(response);
             },
             error: function(xhr, status, err) {
+                console.log();
+                console.log();
                 console.error(this.props.url, status, err.toString());
+                console.log();
+                console.log();
+                console.log();
             }
         });
     },
@@ -96,7 +131,15 @@ var Panel=React.createClass({
                         params[item.name]=item.value;
                     }
                 }
-                this.props.clickHandle(params);
+                if($(target).attr("data-query")!==undefined&&$(target).attr("data-query")!==null)
+                {
+                   var query=new Object();
+                    query=eval('('+$(target).attr("data-query")+')');
+                    query.params=JSON.stringify(Object.assign(query.params,params));
+                    this.props.clickHandle(query);
+                }
+                else
+                    this.props.clickHandle(params);
             }else{//如果本组件为最顶层组件
 
                 if(this.state.query!==null&&this.state.query!==undefined)
@@ -307,6 +350,12 @@ var Panel=React.createClass({
                         {
                             case 'query':
                                 if(state.bean!==null&&state.bean!==undefined) {
+                                    if(coms.length>=3)
+                                    {
+                                        ctrl = <button type='submit' data-query={coms[2]} onClick={clickHandle} style={{width:"100%"}}>
+                                            {coms[0]}</button>;
+                                    }
+                                    else
                                     ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
                                         {coms[0]}</button>;
                                 }
@@ -394,6 +443,7 @@ var Panel=React.createClass({
                             case 'span':
                                 if(state.bean!==undefined&&state.bean!==null)
                                 {
+
                                     if(coms[2]!==null&&coms[2]!==undefined)
                                     {
                                         ctrl=<Span auto={false} data={coms[2]}/>
@@ -418,7 +468,14 @@ var Panel=React.createClass({
 
                                 if(state.bean!==undefined&&state.bean!==null&&coms[2]!==null)
                                 {
-                                    ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}} value={coms[2]}></textarea>
+                                    var ctrlName;
+                                    if(coms[0].indexOf('=>')!==-1&&coms[0].split('=>').length>=2)
+                                    {
+                                        ctrlName=coms[0].split('=>')[0];
+                                    }else{
+                                        ctrlName=coms[0];
+                                    }
+                                    ctrl=<textarea rows={4}  name={ctrlName} style={{width:"100%"}} value={coms[2]}></textarea>
                                 }
                                 else
                                     ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>

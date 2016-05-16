@@ -6,9 +6,6 @@ var LinkElement=React.createClass({
     clickCb:function(evt){
         if(this.props.linkCb!==undefined&&this.props.linkCb!==null)
         {
-            console.log();
-            console.log();
-            console.log();
             this.props.linkCb(evt);
         }
 
