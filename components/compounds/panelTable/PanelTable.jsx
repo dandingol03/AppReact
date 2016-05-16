@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Download from '../../../components/basic/Download.jsx';
 import Panel from '../../panel/Panel.jsx';
 import OrdinaryTable from '../../forms/OrdinaryTable.jsx';
+import Pagination from '../../../components/basic/Pagination.jsx';
 var ProxyQ=require('../../proxy/ProxyQ');
 
 var PanelTable=React.createClass({
@@ -34,6 +35,10 @@ var PanelTable=React.createClass({
                     if(response.translation!==undefined&&response.translation!==null){
                         ob.translation=response.translation;
                     }
+                    if(response.pageInfo!==undefined&&response.pageInfo!==null)
+                    {
+                        ob.pageInfo=response.pageInfo;
+                    }
                     this.setProps(ob);
                 }.bind(this)
             );
@@ -57,6 +62,26 @@ var PanelTable=React.createClass({
             }
         });
     },
+    pageCb:function(ob){
+        if(Object.prototype.toString.call(ob)=='[object Object]')
+        {
+            this.setProps({pageInfo:ob});
+        }
+    },
+    goGetPageData:function(data)
+    {
+        if(data!==undefined&&data!==null)
+        {
+            var selected = 0;
+            var perSize = 40;
+            if (this.state.pageInfo !== undefined && this.state.pageInfo !== null) {
+                selected = this.state.pageInfo.selected;
+                perSize = this.state.pageInfo.perSize;
+            }
+            return data.slice(selected * perSize, (selected + 1) * perSize > data.length ? data.length : (selected + 1) * perSize);
+        }
+
+    },
     getInitialState:function(){
 
         var comps;
@@ -68,7 +93,17 @@ var PanelTable=React.createClass({
         return({comps:comps});
     },
     render:function(){
-
+        var data;
+        //分页
+        var pagination=null;
+        if(this.props.pagination==true)
+        {
+            pagination=<Pagination pageCb={this.pageCb} perSize={this.props.pageInfo!==undefined&&this.props.pageInfo!==null?this.props.pageInfo.perSize:40}
+                                   size={this.props.data.length}/>;
+            data=this.goGetPageData(this.props.data);
+        }
+        else
+            data=this.props.data;
 
         return (
             <div className="row">
@@ -85,12 +120,13 @@ var PanelTable=React.createClass({
                     />
                 <OrdinaryTable
                     autoFetch={false}
-                    data={this.props.data}
+                    data={data}
                     tail={this.props.tail}
                     filterField={this.props.filterField}
                     translation={this.props.translation}
                     />
                 </div>
+                {pagination}
             </div>
 
 
