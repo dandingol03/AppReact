@@ -24,7 +24,7 @@ var Pagination=React.createClass({
             {
                 $(pages[i]).removeClass("active");
             }
-            var selectedP=$(this.refs["pages"].find("li"))[index];
+            var selectedP = $(this.refs["pages"]).find("li")[index];
             $(selectedP).addClass("active");
 
             this.setState({selected:parseInt(index)});
@@ -66,7 +66,7 @@ var Pagination=React.createClass({
 
         return (
             <div>
-                <ul className="pagination pagination-lg" ref="pages">
+                <ul className="pagination pagination-lg" ref="pages" style={{marginLeft:"50%"}}>
                     {lis}
                 </ul>
             </div>

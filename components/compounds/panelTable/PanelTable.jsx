@@ -39,6 +39,16 @@ var PanelTable=React.createClass({
                     {
                         ob.pageInfo=response.pageInfo;
                     }
+                    else {
+                        var length = ob.data.length;
+                        console.log();
+                        console.log();
+                        ob.pageInfo = {
+                            perSize: 40,
+                            size   : length
+                        };
+                    }
+
                     this.setProps(ob);
                 }.bind(this)
             );
@@ -65,7 +75,7 @@ var PanelTable=React.createClass({
     pageCb:function(ob){
         if(Object.prototype.toString.call(ob)=='[object Object]')
         {
-            this.setProps({pageInfo:ob});
+            this.setState({pageInfo: ob});
         }
     },
     goGetPageData:function(data)
@@ -92,14 +102,19 @@ var PanelTable=React.createClass({
 
         return({comps:comps});
     },
+    renderPage : function () {
+        var pagination = null;
+        if (this.props.pagination == true) {
+            pagination = <Pagination pageCb={this.pageCb}
+                                     perSize={this.props.pageInfo!==undefined&&this.props.pageInfo!==null?this.props.pageInfo.perSize:40}
+                                     size={this.props.data!==undefined&&this.props.data!==null?this.props.data.length:0}/>;
+        }
+        return pagination;
+    },
     render:function(){
         var data;
-        //分页
-        var pagination=null;
         if(this.props.pagination==true)
         {
-            pagination=<Pagination pageCb={this.pageCb} perSize={this.props.pageInfo!==undefined&&this.props.pageInfo!==null?this.props.pageInfo.perSize:40}
-                                   size={this.props.data.length}/>;
             data=this.goGetPageData(this.props.data);
         }
         else
@@ -108,25 +123,25 @@ var PanelTable=React.createClass({
         return (
             <div className="row">
                 <div className="col-sm-12 col-md-12">
-                <Panel
-                    data={this.state.comps}
-                    bean={this.props.bean}
-                    auto={true}
-                    auto={true}
-                    bean={this.props.bean}
-                    autoComplete={true}
-                    query={this.props.query}
-                    clickHandle={this.clickHandle}
-                    />
-                <OrdinaryTable
-                    autoFetch={false}
-                    data={data}
-                    tail={this.props.tail}
-                    filterField={this.props.filterField}
-                    translation={this.props.translation}
-                    />
+                    <Panel
+                        data={this.state.comps}
+                        bean={this.props.bean}
+                        auto={true}
+                        auto={true}
+                        bean={this.props.bean}
+                        autoComplete={true}
+                        query={this.props.query}
+                        clickHandle={this.clickHandle}
+                        />
+                    <OrdinaryTable
+                        autoFetch={false}
+                        data={data}
+                        tail={this.props.tail}
+                        filterField={this.props.filterField}
+                        translation={this.props.translation}
+                        />
+                    {this.renderPage()}
                 </div>
-                {pagination}
             </div>
 
 

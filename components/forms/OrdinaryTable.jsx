@@ -388,9 +388,6 @@ var OrdinaryTable =React.createClass({
                 break;
         }
 
-
-
-
     },
     returnCb:function()
     {
