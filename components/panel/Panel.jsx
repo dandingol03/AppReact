@@ -395,6 +395,7 @@ var Panel=React.createClass({
                                 }
                                 break;
                             case 'download':
+
                                 ctrl=<Download href={coms[2]} title={coms[0]} />
                                 break;
                             case 'span':
