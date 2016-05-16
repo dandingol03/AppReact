@@ -31,6 +31,9 @@ var PanelTable=React.createClass({
                             alert("error="+e);
                         }
                     }
+                    if(response.translation!==undefined&&response.translation!==null){
+                        ob.translation=response.translation;
+                    }
                     this.setProps(ob);
                 }.bind(this)
             );
@@ -85,6 +88,7 @@ var PanelTable=React.createClass({
                     data={this.props.data}
                     tail={this.props.tail}
                     filterField={this.props.filterField}
+                    translation={this.props.translation}
                     />
                 </div>
             </div>
