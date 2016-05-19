@@ -25,7 +25,6 @@ var Operation = React.createClass({
                     operation = <div className="minus" onClick={this.operationCb}></div>
                     break;
                 default:
-
                     break;
             }
         }
