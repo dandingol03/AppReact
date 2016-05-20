@@ -37,7 +37,7 @@
     display: inline-block;
     text-align: center;
     padding-top: 10px;
-    color: #ccc;
+    color: #444;
     vertical-align: top;
 }
 
@@ -88,13 +88,16 @@
     margin: 10px 10px 10px 0;
 }
 
+.customMenu .bottom .uncandidate.box {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    background: rgba(87, 104, 144, 0.3);
+}
 .customMenu .bottom .candidate.box {
     text-align: center;
     width: 100%;
-    position: absolute;
-    top: 100%;
-    background-color: rgba(64, 117, 35, 0.6);
-    padding: 20px
+    padding: 10px
 }
 
 .customMenu .bottom .candidate.box .menu {
@@ -103,7 +106,7 @@
     height: 84px;
     width: 84px;
     display: inline-block;
-    margin: 0px 10px 0px 10px;
+    margin: 0px 5px 0px 5px;
 }
 
 .customMenu .bottom .candidate.box .menu input[type="checkbox"] {
