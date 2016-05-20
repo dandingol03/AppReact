@@ -6,8 +6,6 @@ import '../../css/components/basic/customMenu.css';
 /**
  * 1.downLimit,订制菜单数的最小下限
  * 2.upLimit,订制菜单数的最大上限
- *
- *
  */
 
 var CustomMenu = React.createClass({
@@ -46,11 +44,13 @@ var CustomMenu = React.createClass({
         }
     },
     customCb                 : function (evt) {
-        var candidate = this.refs["candidate"];
-        var $candidate = $(candidate);
-        var display = $candidate.css("display");
-        if (display == "none")
+        var customModal = this.refs["custom_modal"];
+        var $customModal = $(customModal);
+        var display = $customModal.css("display");
+        if (display == "none") {
             this.setState({customizing: true});
+            $customModal.modal("show");
+        }
         else {
             if (this.props.query !== undefined && this.props.query !== null) {
                 var params = this.props.query.params;
@@ -71,8 +71,9 @@ var CustomMenu = React.createClass({
                     }.bind(this)
                 );
             }
+            $customModal.modal("hide");
         }
-        $candidate.slideToggle();
+
     },
     fetch                    : function () {
         ProxyQ.queryHandle(
@@ -126,6 +127,7 @@ var CustomMenu = React.createClass({
     render                   : function () {
         var selected = null;
         var unselected = null;
+        var selectedCount = this.state.selected.length;
         var customButton = <div className="menu_custom" key={-1}>
             <div className="functionalAreas">
                 <a href="javascript:void(0)" onClick={this.customCb}>
@@ -177,12 +179,39 @@ var CustomMenu = React.createClass({
             <div className="bottom">
                 {customButton}
                 {selected}
-                <div className="candidate box" ref="candidate" style={{display:"none"}}>
-                    {unselected}
+                <div className="modal fade" ref="custom_modal" style={{display:"none"}}>
+                    <div className="modal-dialog" style={{width:"65%"}}>
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 className="modal-title" style={{textAlign:"left"}}>
+                                    定制常用功能
+                                </h4>
+                                <h5 style={{textAlign:"right",marginRight:"7%"}}>您已选择了{selectedCount}个功能</h5>
+                            </div>
+                            <div className="modal-body" style={{height:"330",padding:"15px"}}>
+                                <div className="uncandidate box">
+                                    {selected}
+                                </div>
+                                <div style={{border:"1px solid #eee"}}>
+                                    <div className="candidate box"
+                                         style={{height:"190px",overflow:"scroll 1px solid ",overflowX:"hidden"}}>
+                                        {unselected}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer" style={{borderTop:"0px"}}>
+                                <button type="button" className="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="button" className="btn btn-primary">提交更改</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
     }
 });
-export default CustomMenu;
+module.exports = CustomMenu;

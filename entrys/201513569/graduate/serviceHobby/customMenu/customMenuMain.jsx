@@ -38,22 +38,13 @@ function Boot() {
         {selected: false, name: "k"},
         {selected: false, name: "k"}
     ];
+
     require(["../../../../../components/basic/CustomMenu.jsx"],function(Component){
         render(
-            React.createElement(Component,{data:data,query:query})
-            , document.getElementById('root'));
+            React.createElement(Component,{data:data,query:query}));
+
 
     });
-
-
-
-
-    //render(
-    //    <CustomMenu
-    //        data={data}
-    //        query={query}
-    //        />
-    //    , document.getElementById('root'));
 
 
 }
