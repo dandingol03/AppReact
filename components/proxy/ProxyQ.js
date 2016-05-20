@@ -84,7 +84,13 @@ var ProxyQ = {
                         default:
                             break;
                     }
-                }else{
+                }
+                else if (xhr.status == 502 || xhr.status == "502") {
+                    content = "错误描述:        " + xhr.responseText;
+                    errType = "发生错误:" + "无效的服务器指向";
+
+                }
+                else {
 
                 }
                 $modal.find(".modal-body").text(content);
