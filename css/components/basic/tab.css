@@ -1,0 +1,23 @@
+.tab{
+    border-bottom: 2px solid #efefef;
+    width: 100%;
+    margin-bottom: 21px;
+}
+.tab-body{
+    width: 960px;
+    margin: 0 auto;
+    height: 39px;
+}
+.tab-body ul{
+    float: right;
+}
+.tab-body ul li{
+    float: left;
+    padding: 0 18px;
+    height: 38px;
+    line-height: 38px;
+    list-style:none;
+}
+.tab-body ul li.cli.active{
+    border-bottom: 4px solid #0066b3;
+}
