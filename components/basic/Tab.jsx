@@ -11,7 +11,7 @@ var Tab=React.createClass({
         var index = $target.attr("data-index");
         var $dataTabs=$(this.refs["dataTabs"]);
         var dataTabs=$dataTabs.find("div");
-        for(var i=0;i<dataTabs.length;i++) {
+        for(var i=0;i<dataTabs.length;i++){
             var $dataTab=$(dataTabs[i]);
             if(i==index) {
                 $dataTab.slideDown();
