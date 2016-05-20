@@ -4,12 +4,30 @@
     <meta charset="UTF-8">
     <title></title>
     <link href="../../../libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+        #btn_add{
+            background-image:url("../../../icon/add_0.png");
+            background-repeat:no-repeat;
+            height:16px;
+            width:16px;
+        }
+    </style>
     <script type="text/javascript" src="../../../build/bootstrap/js/jquery-latest.js"></script>
     <script type="text/javascript" src="../../../libs/bootstrap/js/bootstrap.js"></script>
     <script>
+        function checkCb(target){
+            console.log("checked=" + target.checked);
+            console.log();
+        }
+    </script>
+    <script>
         $(document).ready(function(){
             var obj={
+<<<<<<< HEAD
                 name:"sgfjnfus",
+=======
+                name: "dw",
+>>>>>>> c6503eb397215995cd3c0891cec3462c52096fc9
                 data:{
                     age:20,
                     house:"none",
@@ -117,7 +135,25 @@
 
 <input type="text"  id="test-data-query" data-query="{url:'dd'}" />
 
+<ul class="pagination pagination-lg">
+    <li class=""><a role="button" href="">1</a></li>
+    <li class=""><a role="button" href="">2</a></li>
+    <li class=""><a role="button" href="">3</a></li>
+    <li class=""><a role="button" href="">4</a></li>
+    <li class=""><a role="button" href="">5</a></li>
+    <li class=""><a role="button" href="">6</a></li>
+    <li class=""><a role="button" href="">7</a></li>
+    <li class=""><a role="button" href="">8</a></li><li class="active"><a role="button" href="">9</a></li>
+    <li class=""><a role="button" href="">10</a></li>
+</ul>
+<div id="btn_add">
+    <a href=""/>
+</div>
 
+<div>
+    <span>check me</span>
+    <input type="checkbox" onchange="checkCb(this)"/>
+</div>
 
 </body>
 </html>
