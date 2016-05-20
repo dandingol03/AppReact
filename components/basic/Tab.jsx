@@ -2,6 +2,16 @@ import React from 'react';
 import {render} from 'react-dom';
 import '../../css/components/basic/tab.css';
 import PanelTable from '../compounds/panelTable/PanelTable.jsx';
+import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
+import EmbedTable from '../../components/forms/EmbedTable.jsx';
+
+
+/**
+ * Tab component
+ *
+ *
+ *
+ */
 
 
 var Tab=React.createClass({
@@ -28,7 +38,7 @@ var Tab=React.createClass({
     render:function(){
 
         var tabs=new Array();
-        var datatabs=new Array();
+        var dataTabs = new Array();
         var tabCb=this.tabCb;
         var state=this.state;
 
@@ -39,14 +49,32 @@ var Tab=React.createClass({
                 </li>);
             if(item.dataTab!==undefined&&item.dataTab!==null)
             {
-                var datatab=item.dataTab;
-                datatabs.push(
+                var dataTab = item.dataTab;
+                var comp;
+                switch (dataTab.type) {
+                    case "PanelTable":
+                        comp = <PanelTable
+                            bean={dataTab.bean}
+                            autoComplete={dataTab.autoComplete}
+                            query={dataTab.query}
+                            filterField={dataTab.filterField}/>
+                        break;
+                    case "Panel":
+                        comp = <div></div>
+                        break;
+                    case "OrdinaryTable":
+                        comp = <OrdinaryTable/>
+                        break;
+                    case "EmbedTbale":
+                        comp = <EmbedTable/>
+                        break;
+                    default:
+                        comp = <div></div>
+                        break;
+                }
+                dataTabs.push(
                     <div key={i} style={{display:"none"}}>
-                        <PanelTable
-                            bean={datatab.bean}
-                            autoComplete={datatab.autoComplete}
-                            query={datatab.query}
-                            filterField={datatab.filterField}/>
+                        {comp}
                     </div>
                  );
             }
@@ -59,7 +87,7 @@ var Tab=React.createClass({
                           </ul>
                     </div>
                     <div ref="dataTabs">
-                        {datatabs}
+                        {dataTabs}
                     </div>
                </div>)
 

@@ -771,8 +771,6 @@ var OrdinaryTable =React.createClass({
                             tr$fields.push(<td key={j++}>{field}</td>)
                             colSpan++;
                         }
-
-
                     }
 
 

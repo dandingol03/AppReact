@@ -14,7 +14,7 @@ function Boot(){
         <EmbedTable
             title={title}
             query={{
-                url:"/gradms/bsuims/reactPageDataRequest.do",
+                url:"/bsuims/reactPageDataRequest.do",
                 params:
                 {
                     reactPageName:'cultivateTutorPage',
@@ -22,7 +22,7 @@ function Boot(){
                 }
             }}
             subQuery={{
-                url:"/gradms/bsuims/reactPageDataRequest.do",
+                url:"/bsuims/reactPageDataRequest.do",
                 params:{
                     personId:'',
                     reactPageName:'cultivateTutorPage',

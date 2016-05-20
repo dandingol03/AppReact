@@ -9,7 +9,7 @@ import '../../css/components/basic/customMenu.css';
  */
 
 var CustomMenu = React.createClass({
-    selectedCb               : function (evt) {//已选中菜单的取消点击行为
+    selectedCb     : function (evt) {//已选中菜单的取消点击行为
         var target = evt.target;
         var $target = $(target);
         var index = parseInt($target.attr("data-index"));
@@ -27,7 +27,7 @@ var CustomMenu = React.createClass({
         }
 
     },
-    unselectedCb             : function (evt) {//已选中菜单的增加点击行为
+    unselectedCb   : function (evt) {//已选中菜单的增加点击行为
         var target = evt.target;
         var $target = $(target);
         var index = parseInt($target.attr("data-index"));
@@ -43,7 +43,7 @@ var CustomMenu = React.createClass({
             });
         }
     },
-    customCb                 : function (evt) {
+    customCb       : function (evt) {
         var customModal = this.refs["custom_modal"];
         var $customModal = $(customModal);
         var display = $customModal.css("display");
@@ -75,7 +75,7 @@ var CustomMenu = React.createClass({
         }
 
     },
-    fetch                    : function () {
+    fetch          : function () {
         ProxyQ.queryHandle(
             null,
             this.props.query.url,
@@ -99,7 +99,7 @@ var CustomMenu = React.createClass({
         )
 
     },
-    getInitialState          : function () {
+    getInitialState: function () {
         var data;
         var data$initialed = null;
         if (this.props.data !== undefined && this.props.data !== null) {
@@ -124,7 +124,7 @@ var CustomMenu = React.createClass({
         }
         this.setState(ob);
     },
-    render                   : function () {
+    render         : function () {
         var selected = null;
         var unselected = null;
         var selectedCount = this.state.selected.length;

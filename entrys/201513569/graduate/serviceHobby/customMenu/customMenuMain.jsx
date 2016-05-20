@@ -41,7 +41,7 @@ function Boot() {
 
     require(["../../../../../components/basic/CustomMenu.jsx"],function(Component){
         render(
-            React.createElement(Component,{data:data,query:query}));
+            React.createElement(Component, {data: data, query: query}), document.getElementById("root"));
 
 
     });

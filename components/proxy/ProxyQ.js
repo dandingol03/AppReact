@@ -1,4 +1,6 @@
 import config from '../../config.json';
+import Comps from '../../data/json/comps.json';
+
 
 var ProxyQ = {
     getProxyServer:function(){
@@ -15,6 +17,20 @@ var ProxyQ = {
                 return proxyServer;
             }
         }
+    },
+    load: function (modalName) {
+        var component = null;
+        switch (modalName) {
+            case "EmbedTable":
+                component = require('../../components/forms/EmbedTable.jsx');
+                break;
+            case "PanelTable":
+                component = require("../../components/compounds/panelTable/PanelTable.jsx");
+            default:
+                break;
+        }
+        return component;
+
     },
     getPrefix:function(){
         if(App.getModel()=="debug")
