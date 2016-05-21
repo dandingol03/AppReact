@@ -147,32 +147,31 @@ var PanelTable=React.createClass({
             data=this.props.data;
 
         return (
-            <div className="row">
-                <div className="col-sm-12 col-md-12">
-                    <Panel
-                        data={this.state.comps}
-                        bean={this.props.bean}
-                        auto={true}
-                        auto={true}
-                        bean={this.props.bean}
-                        autoComplete={true}
-                        query={this.props.query}
-                        clickHandle={this.clickHandle}
-                        />
-                    <OrdinaryTable
-                        autoFetch={false}
-                        data={data}
-                        tail={this.props.tail}
-                        filterField={this.props.filterField}
-                        translation={this.props.translation}
-                        />
-                    {this.renderPage()}
+            <div className="PanelTable" style={{marginTop:"20px"}}>
+                <div className="row">
+                    <div className="col-sm-12 col-md-12">
+                        <Panel
+                            data={this.state.comps}
+                            bean={this.props.bean}
+                            auto={true}
+                            auto={true}
+                            bean={this.props.bean}
+                            autoComplete={true}
+                            query={this.props.query}
+                            clickHandle={this.clickHandle}
+                            />
+                        <OrdinaryTable
+                            autoFetch={false}
+                            data={data}
+                            tail={this.props.tail}
+                            filterField={this.props.filterField}
+                            translation={this.props.translation}
+                            />
+                        {this.renderPage()}
+                    </div>
                 </div>
             </div>
-
-
-
-           )
+        )
 
 
 

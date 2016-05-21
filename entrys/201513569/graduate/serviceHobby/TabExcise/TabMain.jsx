@@ -33,10 +33,10 @@ function Boot(){
     }
 
     var dataTab={
-        component  : "PanelTable",
-            autoComplete:true,
-            query:query,
-            bean:bean,
+        name        : "PanelTable",
+        autoComplete: true,
+        query       : query,
+        bean        : bean,
         filterField: filterField
             };
 

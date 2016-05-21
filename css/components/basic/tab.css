@@ -1,10 +1,10 @@
 .tab{
-    border-bottom: 2px solid #efefef;
+
     width: 100%;
     margin-bottom: 21px;
 }
 .tab-body{
-    width: 960px;
+    width: 100%;
     margin: 0 auto;
     height: 39px;
 }
@@ -20,4 +20,11 @@
 }
 .tab-body ul li.cli.active{
     border-bottom: 4px solid #0066b3;
+}
+
+.tab-data {
+    width: 100%;
+    margin: 20px auto 0px auto;
+    border-top: 2px solid #efefef;
+
 }

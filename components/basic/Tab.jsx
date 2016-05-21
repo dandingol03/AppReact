@@ -1,10 +1,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/components/basic/tab.css';
-import PanelTable from '../compounds/panelTable/PanelTable.jsx';
+import PanelTable from '../../components/compounds/panelTable/PanelTable.jsx';
+import Panel from '../../components/panel/Panel.jsx';
 import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
-
 
 /**
  * Tab component
@@ -20,7 +20,7 @@ var Tab=React.createClass({
         var $target=$(target);
         var index = $target.attr("data-index");
         var $dataTabs=$(this.refs["dataTabs"]);
-        var dataTabs=$dataTabs.find("div");
+        var dataTabs = $dataTabs.children("div");
         for(var i=0;i<dataTabs.length;i++) {
             var $dataTab=$(dataTabs[i]);
             if(i==index) {
@@ -45,36 +45,40 @@ var Tab=React.createClass({
         this.props.data.map(function(item,i){
             tabs.push(
                 <li className={state.selected==i?"cli "+"active":"cli"} onClick={tabCb} key={i} data-index={i}>
-                    {item.name}
+                    {item.title}
                 </li>);
-            if(item.dataTab!==undefined&&item.dataTab!==null)
+            if (item.comp !== undefined && item.comp !== null)
             {
-                var dataTab = item.dataTab;
-                var comp;
-                switch (dataTab.type) {
+                var comp = item.comp;
+                var entity = null;
+
+                switch (comp.name) {
                     case "PanelTable":
-                        comp = <PanelTable
-                            bean={dataTab.bean}
-                            autoComplete={dataTab.autoComplete}
-                            query={dataTab.query}
-                            filterField={dataTab.filterField}/>
+                        entity = <PanelTable
+                            bean={comp.bean}
+                            autoComplete={comp.autoComplete}
+                            query={comp.query}
+                            filterField={comp.filterField}/>
                         break;
                     case "Panel":
-                        comp = <div></div>
+                        entity = <Panel/>
                         break;
                     case "OrdinaryTable":
-                        comp = <OrdinaryTable/>
+                        entity = <OrdinaryTable/>
                         break;
-                    case "EmbedTbale":
-                        comp = <EmbedTable/>
+                    case "EmbedTable":
+                        entity = <EmbedTable
+                            data={comp.data}
+                            embedCols={comp.embedCols}
+                            />
                         break;
                     default:
-                        comp = <div></div>
+                        entity = <div></div>
                         break;
                 }
                 dataTabs.push(
-                    <div key={i} style={{display:"none"}}>
-                        {comp}
+                    <div key={i} style={{display:"none",width:"100%"}}>
+                        {entity}
                     </div>
                  );
             }
@@ -86,7 +90,7 @@ var Tab=React.createClass({
                               {tabs}
                           </ul>
                     </div>
-                    <div ref="dataTabs">
+            <div className="tab-data" ref="dataTabs">
                         {dataTabs}
                     </div>
                </div>)

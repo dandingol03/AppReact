@@ -26,6 +26,13 @@ var ProxyQ = {
                 break;
             case "PanelTable":
                 component = require("../../components/compounds/panelTable/PanelTable.jsx");
+                break;
+            case "Panel":
+                component = require("../../components/panel/Panel.jsx");
+                break;
+            case "OrdinaryTable":
+                component = require("../../components/forms/OrdinaryTable.jsx");
+                break;
             default:
                 break;
         }

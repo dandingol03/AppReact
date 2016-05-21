@@ -237,7 +237,7 @@ var EmbedTable=React.createClass({
 
 
             return (
-                <div style={{marginLeft:"80px"}}>
+                <div>
                     <form name='hideForm' style={{margin:"20px",display:'none'}}>
                         <div className="row" >
                             <div className="col-sm-12">
