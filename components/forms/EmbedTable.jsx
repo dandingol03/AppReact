@@ -168,7 +168,8 @@ var EmbedTable=React.createClass({
                                         var source = eval('(' + ids[0] + ')');
                                         sub$tds.push(
                                             <td key={j} style={{border:"0px"}}><Image link={source.link}
-                                                                                      src={source.src}/></td>);
+                                                                                      src={source.src}
+                                                                                      icon={source.icon}/></td>);
                                         break;
                                     case 'link':
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Trans from '../../data/json/translation.json';
+import Tab from '../../components/basic/Tab.jsx';
 var ProxyQ = require("../../components/proxy/ProxyQ");
 import '../../css/components/basic/customMenu.css';
 /**

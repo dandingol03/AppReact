@@ -12,22 +12,22 @@ var Icon = React.createClass({
         var tds = new Array();
         var clickCb = this.clickCb;
         var img = null;
-        switch (this.props.data.type) {
+        switch (this.props.type) {
             case "add":
                 img = <img src='./images/add.png'
                            onClick={clickCb}/>;
                 break
             case "delete":
-                img = <img src='./images/delte.png'
+                img = <img src='./images/close2.png'
                            onClick={clickCb}/>;
                 break;
             default:
-                img = <img
+                img = <img style={{height:"20px"}}
                     />;
                 break;
         }
         return (
-            <div>
+            <div style={{width:"100%",marginLeft:"30px"}}>
                 {img}
             </div>)
     }

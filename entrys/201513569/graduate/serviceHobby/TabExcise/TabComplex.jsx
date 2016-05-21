@@ -37,22 +37,22 @@ function Boot() {
                 border     : "none",
                 data       : [
                     {
-                        "perName": "{link:'',src:'./images/function1.png'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     }
                 ]
             }
