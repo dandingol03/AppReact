@@ -6,7 +6,8 @@ function Boot() {
 
 
     var query = {
-        url: "/bsuims/reactPageDataRequest.do",
+
+        url   : "/bsuims/reactPageDataRequest.do",
         params: {
             reactPageName  : "degreeAnonymousThesisReviewResult",
             reactActionName: "deegreeThesisReviewResultUseReact"
@@ -43,16 +44,18 @@ function Boot() {
                         "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
+
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     },
                     {
                         "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
+
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     }
                 ]
             }

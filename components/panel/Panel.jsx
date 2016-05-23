@@ -260,9 +260,9 @@ var Panel=React.createClass({
                     var so=dict[coms[0]];
                     if(state.bean!==undefined&&state.bean!==null)
                     {
-                        if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
+                        if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2)
                         {
-                            name=coms[0].split('->')[1];
+                            name = coms[0].split('=>')[1];
                         }
                         else
                             name=coms[0];

@@ -167,10 +167,7 @@ var PanelTable=React.createClass({
                     {this.renderPage()}
                 </div>
             </div>
-
-
-
-           )
+        )
 
 
 

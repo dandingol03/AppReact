@@ -23,7 +23,7 @@ var HideElement=React.createClass({
                  content=info[this.props.dataField];
                 var reg=/\<(.*?)\>/;
                 var re=reg.exec(content);
-                if(re[1]!==undefined&&re[1]!==null)
+                if (re !== null && re !== undefined && re[1] !== undefined && re[1] !== null)
                 {
                     content=<div dangerouslySetInnerHTML={{__html:content}} />;
                 }

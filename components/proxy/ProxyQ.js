@@ -1,4 +1,6 @@
 import config from '../../config.json';
+import Comps from '../../data/json/comps.json';
+
 
 var ProxyQ = {
     getProxyServer:function(){
@@ -15,6 +17,27 @@ var ProxyQ = {
                 return proxyServer;
             }
         }
+    },
+    load: function (modalName) {
+        var component = null;
+        switch (modalName) {
+            case "EmbedTable":
+                component = require('../../components/forms/EmbedTable.jsx');
+                break;
+            case "PanelTable":
+                component = require("../../components/compounds/panelTable/PanelTable.jsx");
+                break;
+            case "Panel":
+                component = require("../../components/panel/Panel.jsx");
+                break;
+            case "OrdinaryTable":
+                component = require("../../components/forms/OrdinaryTable.jsx");
+                break;
+            default:
+                break;
+        }
+        return component;
+
     },
     getPrefix:function(){
         if(App.getModel()=="debug")
@@ -84,7 +107,13 @@ var ProxyQ = {
                         default:
                             break;
                     }
-                }else{
+                }
+                else if (xhr.status == 502 || xhr.status == "502") {
+                    content = "错误描述:        " + xhr.responseText;
+                    errType = "发生错误:" + "无效的服务器指向";
+
+                }
+                else {
 
                 }
                 $modal.find(".modal-body").text(content);

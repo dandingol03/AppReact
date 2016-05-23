@@ -1,10 +1,10 @@
 .tab{
-    border-bottom: 2px solid #efefef;
+
     width: 100%;
     margin-bottom: 21px;
 }
 .tab-body{
-    width: 960px;
+    width: 100%;
     margin: 0 auto;
     height: 39px;
 }
@@ -22,6 +22,7 @@
     border-bottom: 4px solid #0066b3;
 }
 
+<<<<<<< HEAD
 .tab .data-tab{
     height:600px;
 }
@@ -58,4 +59,11 @@
     height: 100%;
     float:left;
     padding:0 20px 0 20px;
+=======
+.tab-data {
+    width: 100%;
+    margin: 20px auto 0px auto;
+    border-top: 2px solid #efefef;
+
+>>>>>>> be64eee922897036ce96bff30b58913976b64d4a
 }

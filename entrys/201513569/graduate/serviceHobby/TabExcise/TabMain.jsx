@@ -32,14 +32,15 @@ function Boot(){
     }
 
     var dataTab={
-            autoComplete:true,
-            query:query,
-            bean:bean,
-            filterField:{filterField}
+        name        : "PanelTable",
+        autoComplete: true,
+        query       : query,
+        bean        : bean,
+        filterField: filterField
             };
 
     var data=[
-        {name:"tab1",dataTab:dataTab},
+        {name: "tab1", comp: dataTab},
         {name:"tab2"},
         {name:"tab3"},
         {name:"tab4"}

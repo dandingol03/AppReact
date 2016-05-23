@@ -3,7 +3,8 @@ import {render} from 'react-dom';
 import TdElement from '../../components/forms/TdElement.jsx';
 import '../../css/components/forms/embedTable/EmbedTable.css';
 import HideElement from '../../components/basic/HideElement.jsx';
-
+import Image from '../../components/basic/Image.jsx';
+var ProxyQ = require('../../components/proxy/ProxyQ');
 
 
 /**
@@ -50,11 +51,9 @@ var EmbedTable=React.createClass({
         var url=this.props.subQuery.url;
         if(url==undefined||url==null)
             return ;
-        var params=this.props.subQuery.params;
-        if(params==undefined||params==null)
-            params=new Object();
-        params.personId=parseInt(ob);
-        this.queryHandle(url,params,null,function(response){
+        var params;
+        params = Object.assign(this.props.subQuery.params, ob);
+        ProxyQ.queryHandle(null, url, params, null, function (response) {
             if(response.data!==undefined&&response.data!==null)
             {
                 response.data.title="个人简介";
@@ -66,8 +65,7 @@ var EmbedTable=React.createClass({
         }.bind(this));
     },
     fetch:function(){
-
-        this.queryHandle(this.props.query.url,this.props.query.params,null,function(response){
+        ProxyQ.queryHandle(null, this.props.query.url, this.props.query.params, null, function (response) {
             var data;
             data=response;
             if(data!==undefined&&data!==null) {
@@ -77,22 +75,6 @@ var EmbedTable=React.createClass({
 
 
 
-    },
-    queryHandle:function(url,params,dataType,callback){
-        $.ajax({
-            type: 'POST',
-            url: url,
-            dataType: dataType!==undefined&&dataType!==null?dataType:'json',
-            data: params,
-            cache: false,
-            success: function(response) {
-                if(callback!==undefined&&callback!==null)
-                    callback(response);
-            },
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        });
     },
     getInitialState:function(){
         //自动拉取服务器数据
@@ -151,14 +133,14 @@ var EmbedTable=React.createClass({
                 trs=new Array();
                 var embedCols=this.state.embedCols;
                 var clickCb=this.clickCb;
-
+                //data.arr为多数据源数组
                 this.props.data.arr.map(function(item,i) {
                     var sub$data;
                     if(item.data!==undefined&&item.data!==null)
                         sub$data=item.data;
                     else
                         return false;
-                    var sub$title;
+                    var sub$title = null;
                     if(item.title!==undefined&&item.title!==null)
                     {
                         sub$title=(<td rowSpan={1} style={{verticalAlign:"middle",textAlign:"center"}}>{item.title}</td>);
@@ -169,14 +151,45 @@ var EmbedTable=React.createClass({
                     var sub$tds;
                     var sub$row$index=0;
 
+                    //特定数据源单件
                     sub$data.map(function(sub,j) {
                         if(j%embedCols==0)
                         {
                             sub$tds=new Array();
                         }
-                        sub$tds.push(
-                                <TdElement key={j} data={sub.personId} clickCb={clickCb}>{sub.perName}</TdElement>
-                        );
+                        var content = "";
+                        if (item.filterField !== undefined && item.filterField !== null) {
+                            var content = sub[item.filterField];
+                            var ids = content.split("|");
+                            if (ids.length >= 2 && Object.prototype.toString.call(ids) == '[object Array]') {
+                                switch (ids[1]) {
+                                    case 'image':
+
+                                        var source = eval('(' + ids[0] + ')');
+                                        sub$tds.push(
+                                            <td key={j} style={{border:"0px"}}><Image link={source.link}
+                                                                                      src={source.src}
+                                                                                      icon={source.icon}/></td>);
+                                        break;
+                                    case 'link':
+
+                                        break;
+                                    case 'span':
+                                    default:
+                                        sub$tds.push(
+                                            <TdElement key={j} data={sub} clickCb={clickCb}>{ids[0]}</TdElement>);
+                                        break;
+                                }
+                            } else {
+                                sub$tds.push(
+                                    <TdElement key={j} data={sub} clickCb={clickCb}>{content}</TdElement>);
+                            }
+                        }
+                        else {
+                            sub$tds.push(
+                                <TdElement key={j} data={sub} clickCb={clickCb}></TdElement>);
+                        }
+
                         if(j%embedCols==(embedCols-1)||j==sub$data.length-1)
                         {
                             sub$trs.push(<tr key={sub$row$index}>{sub$tds}</tr>);
@@ -184,8 +197,9 @@ var EmbedTable=React.createClass({
                         }
                     });
 
+                    if (item.border == "none")
                     td$table=(
-                        <table className="table table-bordered center" key={i}>
+                        <table className={item.border=="none"?"table center":"table center "+"table-bordered"} key={i}>
                         <tbody>
                         {sub$trs}
                         </tbody>
@@ -206,14 +220,25 @@ var EmbedTable=React.createClass({
             var hideTable;
             if(this.state.personInfo!==undefined&&this.state.personInfo!==null)
             {
-                var personInfo=this.state.personInfo;
-                hideTable= <HideElement personInfo={personInfo} foldCb={this.foldCb} name='hideForm' title="个人简介" dataField="email"/>
+                var info = this.state.personInfo;
+                hideTable =
+                    <HideElement info={info} foldCb={this.foldCb} name='hideForm' title="个人简介" dataField="email"/>
+            }
+
+            var title = null;
+            if (this.props.title !== undefined && this.props.title !== null) {
+                title = <thead>
+                <tr>
+                    <th colSpan={2}>{this.props.title}</th>
+                </tr>
+                </thead>
             }
 
 
 
+
             return (
-                <div style={{marginLeft:"80px"}}>
+                <div>
                     <form name='hideForm' style={{margin:"20px",display:'none'}}>
                         <div className="row" >
                             <div className="col-sm-12">
@@ -225,11 +250,7 @@ var EmbedTable=React.createClass({
                         <div className="row">
                             <div className="col-sm-12">
                                 <table className="table table-bordered center">
-                                    <thead>
-                                    <tr>
-                                        <th colSpan={2}>{this.props.title}</th>
-                                    </tr>
-                                    </thead>
+                                    {title}
                                     <tbody>
                                     {trs}
                                     </tbody>
@@ -245,4 +266,4 @@ var EmbedTable=React.createClass({
 
     }
 });
-export default EmbedTable;
+module.exports = EmbedTable;

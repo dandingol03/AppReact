@@ -1,10 +1,24 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/components/basic/tab.css';
+
 import PanelTable from '../compounds/panelTable/PanelTable.jsx';
 import Panel from '../../components/panel/Panel.jsx';
 import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
+import PanelTable from '../../components/compounds/panelTable/PanelTable.jsx';
+import Panel from '../../components/panel/Panel.jsx';
+import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
+import EmbedTable from '../../components/forms/EmbedTable.jsx';
+
+/**
+ * Tab component
+ *
+ *
+ *
+ */
+
+
 
 var Tab=React.createClass({
     tabCb:function(evt){
@@ -14,6 +28,7 @@ var Tab=React.createClass({
         var $dataTabs=$(this.refs["dataTabs"]);
         var dataTabs=$dataTabs.children("div");
         for(var i=0;i<dataTabs.length;i++){
+
             var $dataTab=$(dataTabs[i]);
             if(i==index) {
                 $dataTab.slideDown();
@@ -47,7 +62,7 @@ var Tab=React.createClass({
     },
     render:function(){
         var tabs=new Array();
-        var datatabs=new Array();
+        var dataTabs = new Array();
         var tabCb=this.tabCb;
         var state=this.state;
         var secondTabCb=this.secondTabCb;
@@ -126,9 +141,9 @@ var Tab=React.createClass({
                               {tabs}
                           </ul>
                     </div>
-
                     <div ref="dataTabs" className="data-tab">
                         {datatabs}
+
                     </div>
                </div>)
     }
