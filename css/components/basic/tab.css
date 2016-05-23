@@ -21,3 +21,41 @@
 .tab-body ul li.cli.active{
     border-bottom: 4px solid #0066b3;
 }
+
+.tab .data-tab{
+    height:600px;
+}
+
+.second{
+    border-bottom: 2px solid #efefef;
+    width: 100%;
+    margin-bottom: 21px;
+}
+.second .second-Tab-body{
+    width: 15%;
+    margin: 0 auto;
+    height: 100%;
+    float:left;
+    border-right:1px solid #0000ff;
+}
+.second .second-Tab-body ul{
+    height: 100%;
+}
+.second-Tab-body ul li
+{
+    padding: 0 18px;
+    width:100%;
+    line-height: 38px;
+    list-style:none;
+}
+.second-Tab-body ul li.cli.active{
+    border-bottom: 4px solid #0066b3;
+}
+
+.second .second_data_tab{
+    width: 85%;
+    margin: 0 auto;
+    height: 100%;
+    float:left;
+    padding:0 20px 0 20px;
+}
