@@ -10,13 +10,17 @@ import EmbedTable from '../../components/forms/EmbedTable.jsx';
 
 
 var Tab=React.createClass({
-    recurseDataTab:function(leaf_key,global,in$param,out$param){
+    recurseDataTab:function(leaf_key,global,in$param,out$param1,out$param){
         if(in$param!==undefined&&in$param!==null)
         {
             var dataTabCb=this.dataTabCb;
             var recurseDataTab=this.recurseDataTab;
-            in$param.map(function(item,i) {
-                if(item[leaf_key]==undefined||item[leaf_key]!==null)//叶结点
+            in$param.map(function(item,i)
+            {
+                console.log();
+                console.log();
+                console.log();
+                if(item[leaf_key]==undefined||item[leaf_key]==null)//叶结点
                 {
                     var comp = item.comp;
                     var entity = null;
@@ -46,26 +50,35 @@ var Tab=React.createClass({
                     if(out$param.comp==undefined||out$param.comp==null)
                         out$param.comp=new Array();
                     out$param.comp.push( <div key={global.index} data-index={parseInt(global.index)} style={{display:"none",width:"100%"}}>
-                                            {entity}
-                                        </div>);
-                    if(out$param.tab==undefined||out$param.tab==null)
-                        out$param.tab=new Array();
-                    out$param.tab.push(<li key={i} >
-                                                <a onClick={dataTabCb}  data-index={global.index++} data-leaf={true}>
-                                                    {item.name}
-                                                </a>
-                                        </li>);
+                        {entity}
+                    </div>);
+
+                    out$param1.push(<li key={i} >
+                        <a href="#" className="auto" onClick={dataTabCb}  data-index={global.index++} data-leaf={true}>
+                            <i className="fa fa-angle-right text-xs"></i>
+                            {item.name}
+                        </a>
+                    </li>);
                 }else{
                     var lis=new Array();
-                    recurseDataTab(leaf_key,global,item[leaf_key],lis);
-                    out$param.tab.push(<li key={i} data-index={i}>
-                                            <a onClick={dataTabCb}>
-                                                {item.name}
-                                            </a>
-                                            <ul>
-                                                {lis}
-                                            </ul>
-                                        </li>);
+                    console.log();
+                    console.log();
+                    console.log();
+                    recurseDataTab(leaf_key,global,item[leaf_key],lis,out$param);
+                    console.log();
+                    console.log();
+                    console.log();
+                    out$param1.push(<li key={i} data-index={i}>
+                        <a href="#" className="auto" onClick={dataTabCb}>
+                            <i className=" text"></i>
+                            <i className=" text-active"></i>
+                            <i className=" text-xs"></i>
+                            {item.name}
+                        </a>
+                        <ul className="nav dk text-sm" >
+                            {lis}
+                        </ul>
+                    </li>);
 
                 }
             });
@@ -126,7 +139,7 @@ var Tab=React.createClass({
                 var $comp=$(component);
                 if(i==index)
                 {
-                   continue;
+                    continue;
                 }
                 else
                 {
@@ -136,9 +149,9 @@ var Tab=React.createClass({
             var component=components[index];
             var $comp=$(component);
             $comp.slideDown();
-
-        }else{
-
+        }else{//非叶结点tab
+            var $ul=$target.parent("li").children("ul");
+            $ul.slideDown();
         }
 
     },
@@ -174,8 +187,6 @@ var Tab=React.createClass({
         if(this.props.data!==undefined&&this.props.data!==null)
         {
             var props=this.props;
-            var global=new Object();
-            global.index=0;
             this.props.data.map(function(first,i){
                 var dataTab=new Object();
                 //一级tab
@@ -218,13 +229,20 @@ var Tab=React.createClass({
                         </div>
                     );
                 }else{
-                    recurseDataTab("sub",global,first.sub,dataTab);
+                    var global=new Object();
+                    global.index=0;
+                    var out$param1=new Object();
+                    out$param1.tab=new Array();
+                    recurseDataTab("sub",global,first.sub,out$param1.tab,dataTab);
                     dataTabs.push(
                         <div key={i} style={{display:"none",width:"100%"}}>
-                            <div className="tab" >
-                                <ul>
-                                    {dataTab.tab}
-                                </ul>
+                            <div className="bg-dark bk nav-xs" style={{backgroundColor:"rgb(77, 93, 110)"}}>
+                                <div className="nav-primary">
+                                    <ul className="nav" data-ride="collapse">
+
+                                        {out$param1.tab}
+                                    </ul>
+                                </div>
                             </div>
                             <div className="comp">
                                 {dataTab.comp}
@@ -238,15 +256,15 @@ var Tab=React.createClass({
 
 
         return(<div className="Tab">
-                    <div className="tab" >
-                          <ul style={{marginRight:"20%"}}>
-                              {tabs}
-                          </ul>
-                    </div>
-                    <div ref="dataTabs" className="data-tab">
-                        {dataTabs}
-                    </div>
-               </div>)
+            <div className="tab" >
+                <ul style={{marginRight:"20%"}}>
+                    {tabs}
+                </ul>
+            </div>
+            <div ref="dataTabs" className="data-tab">
+                {dataTabs}
+            </div>
+        </div>)
     }
 });
 export default Tab;
