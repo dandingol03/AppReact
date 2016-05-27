@@ -40,7 +40,7 @@ var PanelTable=React.createClass({
                         ob.pageInfo=response.pageInfo;
                     }
                     else {
-                        var length = ob.data.length;
+                        var length =response.arr.length;
                         console.log();
                         console.log();
                         ob.pageInfo = {

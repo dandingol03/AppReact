@@ -324,6 +324,7 @@ var OrdinaryTable =React.createClass({
             }
         }
     },
+
     linkCb:function(evt){
         if(evt!==undefined&&evt!==null)
         {
@@ -343,6 +344,20 @@ var OrdinaryTable =React.createClass({
                 $(this.refs.contentDiv).slideUp();
             }
 
+        }
+    },
+    inputCb: function(evt){
+        var target=evt.target;
+        var value=target.value;
+        if(target.getAttribute('data-index')!==undefined&&target.getAttribute('data-index')!==null)
+        {
+            var index=target.getAttribute('data-index');
+            var data=this.state.data;
+            var datai=data[index];
+            if(value!==null&&value!==undefined){
+                datai.input=value;
+            }
+            this.setState({data:data})
         }
     },
     checkCb:function(evt){
@@ -402,6 +417,7 @@ var OrdinaryTable =React.createClass({
                 this.props.opCb(ob);
         }
     },
+
     clickHandle:function(evt)
     {
         var target=evt.target;
@@ -417,55 +433,86 @@ var OrdinaryTable =React.createClass({
                     /**
                      * filter,指定你想要check的数据列名
                      */
+
                     var data=this.state.data;
 
                     var checkingMap=this.state.checkingMap;
                     var squash;
-                    if(checkingMap!==undefined&&checkingMap!==null)
-                    {
-                        squash=new Array();
-                        if(checkingMap[-1]==true||checkingMap[-1]=='true') {
+                    if(checkingMap!==undefined&&checkingMap!==null) {
+                        squash = new Array();
+                        if (checkingMap[-1] == true || checkingMap[-1] == 'true') {
                             delete checkingMap[-1];
                         }
-                        for(var index in checkingMap)
-                        {
-                            if(Object.prototype.toString.call(query.filter)=='[object Array]')
-                            {
-                                var json=new Object();
-                                query.filter.map(function(field,i) {
-                                   json[field]=data[index][field];
+                        for (var index in checkingMap) {
+                            if (Object.prototype.toString.call(query.filter) == '[object Array]') {
+                                var json = new Object();
+                                query.filter.map(function (field, i) {
+                                    json[field] = data[index][field];
                                 });
                                 squash.push(json);
                             }
                             else
                                 squash.push(data[index]);
                         }
-                        var squashed=new Object();
-                        squashed.squashed=JSON.stringify(squash);
 
-                        var params=Object.assign(query.params==null||query.params==undefined?{}:query.params
-                            ,squashed);
+                        var squashed = new Object();
+                        squashed.squashed = JSON.stringify(squash);
 
-                        if(backType!==undefined&&backType!==null)
-                        {
-                            var cmd=query.url;
-                            var prefix=ProxyQ.getPrefix();
-                            var QueryA=this.refs["QueryA"];
-                            var $QueryA=$(QueryA);
-                            $QueryA.attr("src",prefix+cmd+"?squashed="+JSON.stringify(squash));
-                        }else{
+                        var params = Object.assign(query.params == null || query.params == undefined ? {} : query.params
+                            , squashed !== null && squashed !== undefined ? squashed : '');
+
+                        if (backType !== undefined && backType !== null) {
+                            var cmd = query.url;
+                            var prefix = ProxyQ.getPrefix();
+                            var QueryA = this.refs["QueryA"];
+                            var $QueryA = $(QueryA);
+                            $QueryA.attr("src", prefix + cmd + "?squashed=" + JSON.stringify(squash));
+                        } else {
+
+
                             ProxyQ.queryHandle(
                                 null,
                                 query.url,
                                 params,
                                 'json',
-                                function(response){
+                                function (response) {
 
                                 }.bind(this)
                             )
                         }
                     }
-                }
+                    else{
+
+                        squash = new Array();
+                        for(var index=0;index<data.length;index++) {
+                            if (Object.prototype.toString.call(query.filter) == '[object Array]') {
+                                var json = new Object();
+                                query.filter.map(function (field, i) {
+
+                                        json[field] = data[index][field];
+
+                                });
+                                squash.push(json);
+                            }
+                            else
+                                squash.push(data[index]);
+                        }
+                        var squashed = new Object();
+                        squashed.squashed = JSON.stringify(squash);
+                        var params = Object.assign(query.params == null || query.params == undefined ? {} : query.params
+                                , squashed !== null && squashed !== undefined ? squashed : '');
+                            ProxyQ.queryHandle(
+                                null,
+                                query.url,
+                                params,
+                                'json',
+                                function (response) {
+                                    this.fetch();
+                                }.bind(this)
+                            )
+                        }
+
+                    }
                 break;
             default:
                 break;
@@ -483,9 +530,9 @@ var OrdinaryTable =React.createClass({
                 var data;
                 var ob=new Object();
                 if(Object.prototype.toString.call(response)!='[object Array]')
-                    if(response.data!==undefined&&response.data!==null)
-                        if(Object.prototype.toString.call(response.data)=='[object Array]')
-                            data=response.data;
+                    if(response.arr!==undefined&&response.arr!==null)
+                        if(Object.prototype.toString.call(response.arr)=='[object Array]')
+                            data=response.arr;
                 else
                     data=response;
 
@@ -504,6 +551,9 @@ var OrdinaryTable =React.createClass({
                 if(response.tail!==undefined&&response.tail!==null&&Object.prototype.toString.call(response.tail)=='[object Array]')
                 {
                     ob.tail=response.tail;
+                }
+                if(response.translation!==undefined&&response.translation!==null){
+                    ob.translation=response.translation;
                 }
                 this.setState(ob);
             }.bind(this)
@@ -738,6 +788,7 @@ var OrdinaryTable =React.createClass({
                     var state=this.state;
                     var props=this.props;
                     var checkCb=this.checkCb;
+                    var inputCb=this.inputCb;
                     //如果允许过滤字段
                     if(state.filterField!==null&&state.filterField!==undefined)
                     {
@@ -919,6 +970,15 @@ var OrdinaryTable =React.createClass({
                                                 } else {
                                                     tds.push(<td key={k++}></td>);
                                                 }
+                                                break;
+                                            case 'input':
+                                                if(row[field]!==undefined&&row[field]!==null){
+                                                    var ids;
+                                                    ids=row[field];
+                                                    tds.push(<td key={k++}>
+                                                        <input  type="text" value={ids==null||ids==undefined?null:ids}  data-index={i} onChange={inputCb}/>
+                                                            </td>)
+                                                        }
                                                 break;
                                             default:
                                                     //text/html内容检查<re>c</re>

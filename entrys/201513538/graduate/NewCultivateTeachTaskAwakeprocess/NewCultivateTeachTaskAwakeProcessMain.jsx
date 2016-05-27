@@ -4,6 +4,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PanelTable from '../../../../components/compounds/panelTable/PanelTable.jsx';
+import OrdinaryTable from '../../../../components/forms/OrdinaryTable.jsx'
 Boot()
 
 function Boot()
@@ -15,7 +16,7 @@ function Boot()
         "input":true
     }
 
-    var bean={
+    var query={
         url:"/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:"newCultivateTeachTaskAwakeprocessRulePage",
@@ -23,9 +24,9 @@ function Boot()
         }
     }
     render(
-        <PanelTable
-            bean={bean}
-            autoComplete={true}
+        <OrdinaryTable
+            query={query}
+            autoFetch={true}
             filterField={filterField}
             />
         , document.getElementById('root'))
