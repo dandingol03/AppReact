@@ -54,6 +54,7 @@ var Tab=React.createClass({
 
                     out$param1.push(<li key={i}>
                         <a onClick={dataTabCb} data-index={global.index++} data-leaf={true}>
+                            <i className="fa fa-angle-right text-xs"></i>
                             {item.name}
                         </a>
                     </li>);
@@ -68,6 +69,9 @@ var Tab=React.createClass({
                     console.log();
                     out$param1.push(<li key={i} data-index={i}>
                         <a onClick={dataTabCb}>
+                            <i className=" text"></i>
+                            <i className=" text-active"></i>
+                            <i className=" text-xs"></i>
                             {item.name}
                         </a>
                         <ul style={{display:"none"}}>
@@ -205,10 +209,13 @@ var Tab=React.createClass({
                     recurseDataTab("sub", global, first.sub, out$param1.tab, dataTab);
                     dataTabs.push(
                         <div key={i} style={{display:"none",width:"100%"}}>
-                            <div className="tab">
-                                <ul>
-                                    {out$param1.tab}
-                                </ul>
+                            <div className="bg-dark bk nav-xs" style={{backgroundColor:"rgb(77, 93, 110)"}}>
+                                <div className="nav-primary">
+                                    <ul className="nav" data-ride="collapse">
+
+                                        {out$param1.tab}
+                                    </ul>
+                                </div>
                             </div>
                             <div className="comp">
                                 {dataTab.comp}
