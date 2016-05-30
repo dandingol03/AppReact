@@ -65,178 +65,171 @@ function Boot() {
 
     var data = [
         {
-            name: "tab1", sub: [
-            {
-                "name": "vice1", sub: [
-                {
-                    "name": "选课", comp: {
-                    name        : "PanelTable",
-                    autoComplete: true,
-                    query       : query,
-                    bean        : bean,
-                    filterField : filterField
-                }
-                },
-                {
-                    "name": "退课", comp: {
-                    name        : "PanelTable",
-                    autoComplete: true,
-                    query       : query,
-                    bean        : bean,
-                    filterField : filterField
-                }
-                }
-            ]
-            },
-            {
-                "name": "盲审", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "盲审", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "盲审", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "盲审", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "盲审", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            }
-        ]
+            name: "tab1", sub:[
+                            {
+                                "name":"盲审" ,comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                                                        }
+                            },
+                            {
+                                "name":"盲审",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                                                        }
+                            },
+                            {
+                                "name":"盲审",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                                                        }
+                            },
+                            {
+                                "name":"盲审",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+                            {
+                                "name":"盲审",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+                            {
+                                "name":"修改密码",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+                            {
+                                "name":"修改密码",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+                            {
+                                "name":"修改密码",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }}
+                            ]
         },
         {
-            name: "tab2", sub: [
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "修改密码", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "课表查看", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            },
-            {
-                "name": "上课时间地点查看", comp: {
-                name        : "PanelTable",
-                autoComplete: true,
-                query       : query,
-                bean        : bean,
-                filterField : filterField
-            }
-            }
-        ]
+            name: "tab2",sub:[
+                            {
+                                "name":"修改密码1" ,sub:[ {
+                                                         "name":"盲审1" ,comp: {
+                                                           name        : "PanelTable",
+                                                         autoComplete: true,
+                                                         query       : query,
+                                                          bean        : bean,
+                                                        filterField : filterField
+                                                        }},
+                                                        {
+                                                          "name":"盲审2",comp: {
+                                                            name        : "PanelTable",
+                                                             autoComplete: true,
+                                                            query       : query,
+                                                            bean        : bean,
+                                                             filterField : filterField
+                                                        }},
+                                                         {
+                                                          "name":"盲审3",comp: {
+                                                             name        : "PanelTable",
+                                                          autoComplete: true,
+                                                          query       : query,
+                                                          bean        : bean,
+                                                          filterField : filterField
+                                                      }},
+
+                                                        {
+                                                        "name":"盲审4",comp: {
+                                                              name        : "PanelTable",
+                                                            autoComplete: true,
+                                                               query       : query,
+                                                             bean        : bean,
+                                                          filterField : filterField
+                                                        }},
+                                                      ]
+                            },
+                            {
+                                "name":"上课与选课",sub:[ {
+                                "name":"盲审1" ,comp: {
+                                    name        : "PanelTable",
+                                    autoComplete: true,
+                                    query       : query,
+                                    bean        : bean,
+                                    filterField : filterField
+                                }},
+                                {
+                                    "name":"盲审2",comp: {
+                                    name        : "PanelTable",
+                                    autoComplete: true,
+                                    query       : query,
+                                    bean        : bean,
+                                    filterField : filterField
+                                }},
+                                {
+                                    "name":"盲审3",comp: {
+                                    name        : "PanelTable",
+                                    autoComplete: true,
+                                    query       : query,
+                                    bean        : bean,
+                                    filterField : filterField
+                                }},
+
+                                {
+                                    "name":"盲审4",comp: {
+                                    name        : "PanelTable",
+                                    autoComplete: true,
+                                    query       : query,
+                                    bean        : bean,
+                                    filterField : filterField
+                                }}
+                            ]
+                            },
+
+                            {
+                                "name":"修改密码3",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+
+
+                            {
+                                "name":"课表查看4",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+
+                            ]
         },
         {
             name: "tab3"

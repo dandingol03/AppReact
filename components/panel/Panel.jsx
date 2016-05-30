@@ -210,9 +210,14 @@ var Panel=React.createClass({
         if(this.props.query!==undefined&&this.props.query!==null)
             query=this.props.query;
 
+
         return ({reserved:reserved,bean:bean,shield:false,data:data,query:query});
     },
     render:function(){
+        console.log();
+        console.log();
+        console.log();
+
         if(this.state.data!==undefined&&this.state.data!==null&&Object.prototype.toString.call(this.state.data)=='[object Array]')
         {
 

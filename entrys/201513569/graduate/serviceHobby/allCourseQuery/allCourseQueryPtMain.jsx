@@ -40,7 +40,6 @@ function Boot()
             autoComplete={true}
             query={query}
             filterField={filterField}
-            pagination={true}
             />
         , document.getElementById('root'))
 

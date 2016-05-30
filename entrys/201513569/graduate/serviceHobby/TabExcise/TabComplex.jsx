@@ -6,6 +6,7 @@ function Boot() {
 
 
     var query = {
+
         url   : "/bsuims/reactPageDataRequest.do",
         params: {
             reactPageName  : "degreeAnonymousThesisReviewResult",
@@ -43,16 +44,18 @@ function Boot() {
                         "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
+
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     },
                     {
                         "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
+
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
                     }
                 ]
             }
@@ -61,23 +64,123 @@ function Boot() {
 
     var data = [
         {
-            name: "tab1", comp: {
-            name        : "PanelTable",
-            autoComplete: true,
-            query       : query,
-            bean        : bean,
-            filterField : filterField
-        }
+            title: "tab1", sub:[
+                            {
+                                "title":"修改密码" ,comp:
+                                                        {
+                                                            name        : "PanelTable",
+                                                            autoComplete: true,
+                                                            query       : query,
+                                                            bean        : bean,
+                                                            filterField : filterField
+                                                        }
+                            },
+                            {"title":"修改密码","query":"",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+                            {"title":"修改密码","query":"",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }}, {"title":"修改密码","query":"",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+                            {"title":"修改密码","query":"",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},{"title":"修改密码","query":"",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},
+                            {"title":"修改密码","query":"",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }},{"title":"修改密码","query":"",comp: {
+                                name        : "PanelTable",
+                                autoComplete: true,
+                                query       : query,
+                                bean        : bean,
+                                filterField : filterField
+                            }}
+                            ]
         },
         {
-            name: "tab2", comp: {
-            name     : "EmbedTable",
-            data     : second,
-            embedCols: 4
-        }
+            title: "tab2",sub:[
+            {"title":"修改密码" ,comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            } }, {"title":"修改密码","query":"",comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            }},
+            {"title":"修改密码","query":"",comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            }}, {"title":"修改密码","query":"",comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            }},
+            {"title":"修改密码","query":"",comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            }},{"title":"修改密码","query":"",comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            }},
+            {"title":"修改密码","query":"",comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            }},{"title":"修改密码","query":"",comp: {
+                name        : "PanelTable",
+                autoComplete: true,
+                query       : query,
+                bean        : bean,
+                filterField : filterField
+            }}
+        ]
         },
-        {name: "tab3"},
-        {name: "tab4"}
+        {title: "tab3"},
+        {title: "tab4"}
     ];
 
 

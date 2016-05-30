@@ -1,9 +1,22 @@
 
 .ordinaryTable .center td{
     text-align:center;
+
 }
 
 .folding{
     float:right;
     margin-right: 20px;
 }
+.col-sm-12.col-md-12{
+
+    padding: 50px;
+}
+.table.table{
+    background-color: transparent;
+}
+div#root{
+    background-image:url(../../../../icon/body.gif);
+}
+
+
