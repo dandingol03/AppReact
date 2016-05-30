@@ -52,29 +52,26 @@ var Tab=React.createClass({
                         {entity}
                     </div>);
 
-                    out$param1.push(<li key={i}>
-                        <a onClick={dataTabCb} data-index={global.index++} data-leaf={true}>
-                            <i className="fa fa-angle-right text-xs"></i>
-                            {item.name}
-                        </a>
+                    out$param1.push(
+                        <li key={i}>
+                            <a href="#" className="auto" onClick={dataTabCb} data-index={global.index++}
+                               data-leaf={true}>
+                                <i className="fa fa-angle-right text-xs"></i>
+                                {item.name}
+                            </a>
+
                     </li>);
                 } else {
                     var lis = new Array();
-                    console.log();
-                    console.log();
-                    console.log();
                     recurseDataTab(leaf_key, global, item[leaf_key], lis, out$param);
-                    console.log();
-                    console.log();
-                    console.log();
                     out$param1.push(<li key={i} data-index={i}>
-                        <a onClick={dataTabCb}>
+                        <a onClick={dataTabCb} href="#" className="auto">
                             <i className=" text"></i>
                             <i className=" text-active"></i>
                             <i className=" text-xs"></i>
                             {item.name}
                         </a>
-                        <ul style={{display:"none"}}>
+                        <ul style={{display:"none"}} className="nav dk text-sm">
                             {lis}
                         </ul>
                     </li>);
@@ -208,16 +205,15 @@ var Tab=React.createClass({
                     out$param1.tab = new Array();
                     recurseDataTab("sub", global, first.sub, out$param1.tab, dataTab);
                     dataTabs.push(
-                        <div key={i} style={{display:"none",width:"100%"}}>
+                        <div key={i} style={{display:"none",width:"100%",height:"700px"}}>
                             <div className="bg-dark bk nav-xs" style={{backgroundColor:"rgb(77, 93, 110)"}}>
                                 <div className="nav-primary">
                                     <ul className="nav" data-ride="collapse">
-
                                         {out$param1.tab}
                                     </ul>
                                 </div>
                             </div>
-                            <div className="comp">
+                            <div className="comp" style={{width:"100%"}}>
                                 {dataTab.comp}
                             </div>
                         </div>
