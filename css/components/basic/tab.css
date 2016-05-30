@@ -1,30 +1,98 @@
-.tab{
 
-    width: 100%;
-    margin-bottom: 21px;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
-.tab-body{
+
+.Tab {
+    margin-left: auto;
+    margin-right: auto;
+    width: 972px;
+    position: relative;
+    overflow: hidden;
+    /*background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))/!* url(../img/headline.jpg) no-repeat center*!/;*/
+}
+
+.tab {
     width: 100%;
     margin: 0 auto;
     height: 39px;
 }
-.tab-body ul{
+
+.tab ul {
     float: right;
 }
-.tab-body ul li{
+
+.tab ul li {
     float: left;
     padding: 0 18px;
     height: 38px;
     line-height: 38px;
     list-style:none;
 }
-.tab-body ul li.cli.active{
+
+.tab ul li.active {
     border-bottom: 4px solid #0066b3;
 }
 
-.tab-data {
+.Tab .data-tab {
+
+}
+
+.second {
+    border-bottom: 2px solid #efefef;
     width: 100%;
-    margin: 20px auto 0px auto;
-    border-top: 2px solid #efefef;
+    margin-bottom: 21px;
+}
+
+.second .second-Tab-body {
+    width: 15%;
+    margin: 0 auto;
+    height: 100%;
+    float: left;
+
+}
+
+.second .second-Tab-body ul {
+    height: 100%;
+    width: 100px;
+    background: #aedaf5;
+    border-top: 1px solid #aaa;
+}
+
+.second-Tab-body ul li {
+    font-weight: 300;
+    font-size: 1em;
+    list-style: none;
+    width: 100%;
+    line-height: 38px;
+    border-bottom: 1px solid #aaa;
+}
+
+.second-Tab-body ul li a {
+    color: #333;
+    display: block;
+    padding: 10px 20px 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.second-Tab-body ul li a:hover {
+    background: #96c6f2;
+    border-left: 4px solid #0066b3;
+    text-decoration: none;
+}
+
+.second-Tab-body ul li a.active {
+    border-left: 4px solid #0066b3;
+    background: #96c6f2;
+}
+
+.second .second_data_tab {
+    width: 85%;
+    margin: 0 auto;
+    height: 100%;
+    float: left;
+    padding: 0 20px 0 20px;
 
 }

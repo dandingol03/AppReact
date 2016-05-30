@@ -258,7 +258,7 @@ var IndexScroll=React.createClass({
 
             }
             return (
-                <div className="index_scroll" style={{zIndex:"9"}} ref="index_scroll" >
+                <div className="index_scroll" style={{zIndex:"9",marginTop:"20px"}} ref="index_scroll">
                     <div className="index_scroll_left">
                         <a href="javascript:void(0)" ></a>
                     </div>

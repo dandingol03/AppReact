@@ -7,7 +7,7 @@ Boot();
 function Boot()
 {
     var bean={
-        url:'serviceHall/bsuims/reactPageDataRequest.do',
+        url: '/bsuims/reactPageDataRequest.do',
         params: {
             reactActionName: "addApplyInfoInitPanelUseReact",
             reactPageName  : "gradGreenWayPage"
@@ -16,7 +16,7 @@ function Boot()
 
 
     var query={
-        url:'serviceHall/bsuims/reactPageDataRequest.do',
+        url: '/bsuims/reactPageDataRequest.do',
         reactActionName:"",
         reactPageName:""
     }

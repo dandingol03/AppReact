@@ -43,16 +43,16 @@ function Boot() {
                         "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
                         "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     },
                     {
-                        "perName": "{link:'',src:'./images/function1.png',icon:'delete'}|image"
+                        "perName": "{link:'',src:'./images/function1.png',icon:'add'}|image"
                     }
                 ]
             }
@@ -61,7 +61,7 @@ function Boot() {
 
     var data = [
         {
-            title: "tab1", comp: {
+            name: "tab1", comp: {
             name        : "PanelTable",
             autoComplete: true,
             query       : query,
@@ -70,14 +70,14 @@ function Boot() {
         }
         },
         {
-            title: "tab2", comp: {
+            name: "tab2", comp: {
             name     : "EmbedTable",
             data     : second,
             embedCols: 4
         }
         },
-        {title: "tab3"},
-        {title: "tab4"}
+        {name: "tab3"},
+        {name: "tab4"}
     ];
 
 

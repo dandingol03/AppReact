@@ -133,6 +133,7 @@ var EmbedTable=React.createClass({
                 trs=new Array();
                 var embedCols=this.state.embedCols;
                 var clickCb=this.clickCb;
+                var props = this.props;
                 //data.arr为多数据源数组
                 this.props.data.arr.map(function(item,i) {
                     var sub$data;
@@ -150,7 +151,6 @@ var EmbedTable=React.createClass({
                     var sub$trs=new Array();
                     var sub$tds;
                     var sub$row$index=0;
-
                     //特定数据源单件
                     sub$data.map(function(sub,j) {
                         if(j%embedCols==0)
@@ -164,12 +164,20 @@ var EmbedTable=React.createClass({
                             if (ids.length >= 2 && Object.prototype.toString.call(ids) == '[object Array]') {
                                 switch (ids[1]) {
                                     case 'image':
-
                                         var source = eval('(' + ids[0] + ')');
+                                        var check = function (ob) {
+                                            if (props.checkCb !== undefined && props.checkCb !== null) {
+                                                props.checkCb(source.id);
+                                            }
+                                        }
                                         sub$tds.push(
-                                            <td key={j} style={{border:"0px"}}><Image link={source.link}
-                                                                                      src={source.src}
-                                                                                      icon={source.icon}/></td>);
+                                            <td key={j} style={{border:"0px"}}>
+                                                <Image link={source.link}
+                                                       src={source.src}
+                                                       type={source.type}
+                                                       checkCb={check}/>
+                                                <span>{source.name}</span>
+                                            </td>);
                                         break;
                                     case 'link':
 

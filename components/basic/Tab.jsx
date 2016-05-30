@@ -1,27 +1,114 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/components/basic/tab.css';
-import PanelTable from '../../components/compounds/panelTable/PanelTable.jsx';
+import PanelTable from '../compounds/panelTable/PanelTable.jsx';
 import Panel from '../../components/panel/Panel.jsx';
 import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
 
-/**
- * Tab component
- *
- *
- *
- */
+
 
 
 var Tab=React.createClass({
+    recurseDataTab : function (leaf_key, global, in$param, out$param1, out$param) {
+        if (in$param !== undefined && in$param !== null) {
+            var dataTabCb = this.dataTabCb;
+            var recurseDataTab = this.recurseDataTab;
+            in$param.map(function (item, i) {
+                console.log();
+                console.log();
+                console.log();
+                if (item[leaf_key] == undefined || item[leaf_key] == null)//叶结点
+                {
+                    var comp = item.comp;
+                    var entity = null;
+                    switch (comp.name) {
+                        case "PanelTable":
+                            entity = <PanelTable
+                                bean={comp.bean}
+                                autoComplete={comp.autoComplete}
+                                query={comp.query}
+                                filterField={comp.filterField}/>
+                            break;
+                        case "Panel":
+                            entity = <Panel/>
+                            break;
+                        case "OrdinaryTable":
+                            entity = <OrdinaryTable/>
+                            break;
+                        case "EmbedTable":
+                            entity = <EmbedTable
+                                data={comp.data}
+                                embedCols={comp.embedCols}/>
+                            break;
+                        default:
+                            entity = <div></div>
+                            break;
+                    }
+                    if (out$param.comp == undefined || out$param.comp == null)
+                        out$param.comp = new Array();
+                    out$param.comp.push(<div key={global.index} data-index={parseInt(global.index)}
+                                             style={{display:"none",width:"100%"}}>
+                        {entity}
+                    </div>);
+
+                    out$param1.push(<li key={i}>
+                        <a onClick={dataTabCb} data-index={global.index++} data-leaf={true}>
+                            {item.name}
+                        </a>
+                    </li>);
+                } else {
+                    var lis = new Array();
+                    console.log();
+                    console.log();
+                    console.log();
+                    recurseDataTab(leaf_key, global, item[leaf_key], lis, out$param);
+                    console.log();
+                    console.log();
+                    console.log();
+                    out$param1.push(<li key={i} data-index={i}>
+                        <a onClick={dataTabCb}>
+                            {item.name}
+                        </a>
+                        <ul style={{display:"none"}}>
+                            {lis}
+                        </ul>
+                    </li>);
+
+                }
+            });
+        }
+    },
+    recurse        : function (leaf_key, global, in$param, out$param, fieldFlag) {
+        if (in$param !== undefined && in$param !== null) {
+            in$param.map(function (item, i) {
+                if (item[leaf_key] == null || item[leaf_key] == undefined)//已选叶结点
+                {
+                    out$param.push(
+                        <div key={global.index++}>
+                            {state.customizing == true ?
+                                <Image link={source.link}
+                                       src={source.src}
+                                       type={source.type}
+                                       checkCb={check}/> : <Image link={source.link}
+                                                                  src={source.src}/>}
+                        </div>);
+                    if (item[fieldFlag] == true || item[fieldFlag] == "true")
+                        this.state[fieldFlag].push(global.index++);
+                } else {
+                    this.recurse(leaf_key, global, item[leaf_key], out$param);
+                }
+            });
+        }
+    },
     tabCb:function(evt){
         var target=evt.target;
         var $target=$(target);
         var index = $target.attr("data-index");
         var $dataTabs=$(this.refs["dataTabs"]);
         var dataTabs = $dataTabs.children("div");
-        for(var i=0;i<dataTabs.length;i++) {
+        for (var i = 0; i < dataTabs.length; i++) {
+
             var $dataTab=$(dataTabs[i]);
             if(i==index) {
                 $dataTab.slideDown();
@@ -31,72 +118,119 @@ var Tab=React.createClass({
         }
         this.setState({selected: index});
     },
-    getInitialState:function(){
+    dataTabCb      : function (evt) {
+        var target = evt.target;
+        var $target = $(target);
+        var leaf = $target.attr("data-leaf");
+        if (leaf != undefined && leaf != null && (leaf == true || leaf == "true"))//叶结点的tab
+        {
+            var index = parseInt($target.attr("data-index"));
+            var vice = $(this.refs["dataTabs"]).children("div")[this.state.selected];
+            var components = $(vice).children(".comp").children("div");
+            for (var i = 0; i < components.length; i++) {
+                var component = components[i];
+                var $comp = $(component);
+                if (i == index) {
+                    continue;
+                }
+                else {
+                    $comp.css("display", "none");
+                }
+            }
+            var component = components[index];
+            var $comp = $(component);
+            $comp.slideDown();
+        } else {//非叶结点tab
+            var $ul = $target.parent("li").children("ul");
+            $ul.slideDown();
+        }
 
-        return ({selected: -1});
+    },
+    getInitialState: function () {
+        return ({selected: -1, secondSelected: -1});
     },
     render:function(){
-
         var tabs=new Array();
         var dataTabs = new Array();
         var tabCb=this.tabCb;
         var state=this.state;
-
-        this.props.data.map(function(item,i){
-            tabs.push(
-                <li className={state.selected==i?"cli "+"active":"cli"} onClick={tabCb} key={i} data-index={i}>
-                    {item.title}
-                </li>);
-            if (item.comp !== undefined && item.comp !== null)
-            {
-                var comp = item.comp;
-                var entity = null;
-
-                switch (comp.name) {
-                    case "PanelTable":
-                        entity = <PanelTable
-                            bean={comp.bean}
-                            autoComplete={comp.autoComplete}
-                            query={comp.query}
-                            filterField={comp.filterField}/>
-                        break;
-                    case "Panel":
-                        entity = <Panel/>
-                        break;
-                    case "OrdinaryTable":
-                        entity = <OrdinaryTable/>
-                        break;
-                    case "EmbedTable":
-                        entity = <EmbedTable
-                            data={comp.data}
-                            embedCols={comp.embedCols}
-                            />
-                        break;
-                    default:
-                        entity = <div></div>
-                        break;
+        var recurseDataTab = this.recurseDataTab;
+        if (this.props.data !== undefined && this.props.data !== null) {
+            var props = this.props;
+            this.props.data.map(function (first, i) {
+                var dataTab = new Object();
+                //一级tab
+                tabs.push(
+                    <li className={state.selected==i?"active":""} onClick={tabCb} key={i} data-index={i}>
+                        {first.name}
+                    </li>);
+                //TODO:wjj
+                if (first.comp !== undefined && first.comp !== null) {
+                    var comp = first.comp;
+                    var entity = null;
+                    switch (comp.name) {
+                        case "PanelTable":
+                            entity = <PanelTable
+                                bean={comp.bean}
+                                autoComplete={comp.autoComplete}
+                                query={comp.query}
+                                filterField={comp.filterField}/>
+                            break;
+                        case "Panel":
+                            entity = <Panel/>
+                            break;
+                        case "OrdinaryTable":
+                            entity = <OrdinaryTable/>
+                            break;
+                        case "EmbedTable":
+                            entity = <EmbedTable
+                                data={comp.data}
+                                embedCols={comp.embedCols}
+                                checkCb={props.checkCb}/>
+                            break;
+                        default:
+                            entity = <div></div>
+                            break;
+                    }
+                    dataTabs.push(
+                        <div key={i} style={{display:"none",width:"100%",paddingLeft:"20px",paddingRight:"20px"}}>
+                            {entity}
+                        </div>
+                    );
+                } else {
+                    var global = new Object();
+                    global.index = 0;
+                    var out$param1 = new Object();
+                    out$param1.tab = new Array();
+                    recurseDataTab("sub", global, first.sub, out$param1.tab, dataTab);
+                    dataTabs.push(
+                        <div key={i} style={{display:"none",width:"100%"}}>
+                            <div className="tab">
+                                <ul>
+                                    {out$param1.tab}
+                                </ul>
+                            </div>
+                            <div className="comp">
+                                {dataTab.comp}
+                            </div>
+                        </div>
+                    );
                 }
-                dataTabs.push(
-                    <div key={i} style={{display:"none",width:"100%"}}>
-                        {entity}
-                    </div>
-                 );
-            }
 
-        });
-        return(<div className="tab">
-                    <div className="tab-body" >
-                          <ul>
+            });
+        }
+
+
+        return (<div className="Tab">
+            <div className="tab">
+                <ul style={{marginRight:"20%"}}>
                               {tabs}
                           </ul>
                     </div>
-            <div className="tab-data" ref="dataTabs">
+            <div ref="dataTabs" className="data-tab">
                         {dataTabs}
                     </div>
                </div>)
-
-
-
     }
 });
 export default Tab;

@@ -1,8 +1,7 @@
 .customMenu {
     width: 100%;
     min-width: 1263px;
-    height: 220px;
-    background: linear-gradient(to right bottom, rgba(172, 218, 244, 0), rgba(0, 0, 0, 0)), url(../../../build/images/headline.jpg) no-repeat center;
+    background: linear-gradient(to right bottom, rgba(172, 218, 244, 0), rgba(0, 0, 0, 0));
 }
 
 .customMenu .bottom {
