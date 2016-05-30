@@ -101,24 +101,23 @@ var Password=React.createClass({
             <button className="btn btn-default"  type="reset">重置</button>
         </td></tr>)
     return (
-    <form name="passwordForm" className="form" method="post" action={this.props.action} style={{margin:"20px"}}>
-        <div className="row">
-            <div className="col-lg-12">
-                    <table className="table table-bordered center">
-                        <thead>
-                        {title}
-                        </thead>
-                        <tbody>
-                        {inputFields}
-                        </tbody>
-                        <tfoot className="foot">
-                        {buttons}
-                        </tfoot>
-                    </table>
+        <form name="passwordForm" className="form" method="post" action={this.props.action} style={{margin:"20px",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
+            <div className="row">
+                <div className="col-lg-12">
+                        <table className="table table-bordered center">
+                            <thead>
+                            {title}
+                            </thead>
+                            <tbody>
+                            {inputFields}
+                            </tbody>
+                            <tfoot className="foot">
+                            {buttons}
+                            </tfoot>
+                        </table>
+                </div>
             </div>
-        </div>
-    </form>
-    )
+        </form>);
     }
 })
 
