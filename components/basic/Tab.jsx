@@ -223,14 +223,16 @@ var Tab=React.createClass({
             });
         }
 
-
-        return (<div className="Tab">
+        var style = {};
+        if (this.props.height !== undefined && this.props.height !== null)
+            style = Object.assign(style, {height: this.props.height});
+        return (<div className="Tab" style={style}>
             <div className="tab">
-                <ul style={{marginRight:"20%"}}>
+                <ul style={{marginRight:"0%"}}>
                               {tabs}
                           </ul>
                     </div>
-            <div ref="dataTabs" className="data-tab">
+            <div ref="dataTabs" className="data-tab" style={{height:"100%"}}>
                         {dataTabs}
                     </div>
                </div>)

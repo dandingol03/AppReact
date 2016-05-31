@@ -324,7 +324,7 @@ var Panel=React.createClass({
                         {
                             case 'query':
                                 if(state.bean!==null&&state.bean!==undefined) {
-                                    if (Object.prototype.toString.call(coms[0].split("=>")) == '[object Array]' && coms[0].split("=>").length >= 1) {
+                                    if (Object.prototype.toString.call(coms[0].split("=>")) == '[object Array]' && coms[0].split("=>").length >= 2) {
                                         ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
                                             {coms[0].split("=>")[1]}</button>;
                                     }
