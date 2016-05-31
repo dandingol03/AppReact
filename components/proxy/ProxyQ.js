@@ -69,9 +69,9 @@ var ProxyQ = {
         {
             proxyUrl = "/" + this.getProxyServer() + proxyUrl;
         }
-
-
-
+        if (App.getLoadModel() == "true") {
+            App.load();
+        }
         $.ajax({
             type    : type !== undefined && type !== null ? type : 'POST',
             url     : proxyUrl,
@@ -79,6 +79,10 @@ var ProxyQ = {
             data    : params,
             cache   : false,
             success : function (response) {
+                //取消加载遮罩
+                if (App.getLoadModel() == "true") {
+                    App.unload();
+                }
                 var $modal=$("#root_modal");
                 var content;
                 var errType="";
@@ -113,6 +117,9 @@ var ProxyQ = {
                     callback(response);
             },
             error   : function (xhr, status, err) {
+                if (App.getLoadModel() == "true") {
+                    App.unload();
+                }
                 console.error("error=" + err);
                 var $modal=$("#root_modal");
                 var content;

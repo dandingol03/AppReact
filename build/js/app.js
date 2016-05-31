@@ -7,3 +7,12 @@ window.App=new Object();
 window.App.getModel=function(){
     return "debug";
 }
+window.App.getLoadModel = function () {
+    return "true";
+}
+window.App.load = function () {
+    $("#loading").fakeLoader({prolong: true});
+}
+window.App.unLoad = function () {
+    $("#loading").fadeOut();
+}
