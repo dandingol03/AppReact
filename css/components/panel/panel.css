@@ -1,18 +1,23 @@
-
+.table.table-bordered.panel
+{
+    background-color: #edf7ff;
+}
 .table.table-bordered.panel> thead:first-child > tr:first-child > th{
-    border-top:1px solid #ddd;
+    border:1px solid #6EA0FF;
 }
 
 .table.table-bordered.center.panel thead:first-child tr th {
     text-align:center;
     font-family: lucida, verdana, arial, sans-serif;
     font-size:1.2em;
+
 }
 
 
 .table.table-bordered.center.panel td
 {
     align:left;
+    border:1px solid #6EA0FF;
 }
 .table.table-bordered.center.panel td span{
 margin-right:5%;

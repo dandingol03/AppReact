@@ -18,6 +18,21 @@ var ProxyQ = {
             }
         }
     },
+    keyInArray: function (val, key, arr) {
+        var index = -1;
+        arr.map(function (item, i) {
+            if (item[key] == val) {
+                index = i;
+            }
+
+        });
+        if (index !== -1) {
+            return index;
+        }
+        else {
+            return false;
+        }
+    },
     load: function (modalName) {
         var component = null;
         switch (modalName) {

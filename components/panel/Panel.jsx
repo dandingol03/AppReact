@@ -324,7 +324,12 @@ var Panel=React.createClass({
                         {
                             case 'query':
                                 if(state.bean!==null&&state.bean!==undefined) {
-                                    ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
+                                    if (Object.prototype.toString.call(coms[0].split("=>")) == '[object Array]' && coms[0].split("=>").length >= 2) {
+                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
+                                            {coms[0].split("=>")[1]}</button>;
+                                    }
+                                    else
+                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
                                         {coms[0]}</button>;
                                 }
                                 else
@@ -433,7 +438,8 @@ var Panel=React.createClass({
                                 console.log();
                                 if(state.bean!==undefined&&state.bean!==null&&coms[2]!==null)
                                 {
-                                    ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}} value={coms[2]}></textarea>
+                                    ctrl = <textarea rows={4} name={coms[0]} style={{width:"100%"}}
+                                                     defaultValue={coms[2]}></textarea>
                                 }
                                 else
                                     ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>
@@ -499,10 +505,10 @@ var Panel=React.createClass({
             }
             return(
                 <form name="PanelForm" className="form panel" action={this.props.query!==undefined&&this.props.query!==null?this.props.query.url:""}
-                      method="post">
+                      method="post" style={{backgroundColor: "#edf7ff",boxShadow:"none"}}>
                     <div className="row">
                         <div className="col-sm-12">
-                            <table className="table table-bordered center panel">
+                            <table className="table table-bordered center panel" style={{border:"none"}}>
                                 <thead>
                                 {title}
                                 </thead>

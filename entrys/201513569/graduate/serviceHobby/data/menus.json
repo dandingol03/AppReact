@@ -4,11 +4,17 @@
                                 {"label":"修改密码","query":""},
                                 {"label":"政策文件","query":""},
                                 {"label":"通知浏览","query":""},
-                                {"label":"学术规范承诺书","query":""},
+    {
+      "label": "学术规范承诺书",
+      "query": ""
+    },
                                 {"label":"联系方式维护","query":""},
                                 {"label":"学籍信息","query":""},
                                 {"label":"学生表现信息","query":""},
-                                {"label":"照片浏览","query":""}
+    {
+      "label": "照片浏览",
+      "query": ""
+    }
                               ]
   },
   {
@@ -24,20 +30,29 @@
     "label":"培养管理2016","sub":[
                             {
                               "label":"导师与学生","sub":[
-                                                      {"label":"申请导师","query":""}
+                              {
+                                "label": "申请导师",
+                                "query": ""
+                              }
                                                     ]
                             },
                             {
                               "label":"培养方案与学生个人计划","sub":[
                                                   {"label":"培养方案查询","query":""},
                                                   {"label":"制定培养计划","query":""},
-                                                  {"label":"查看培养计划","query":""}
+                              {
+                                "label": "查看培养计划",
+                                "query": ""
+                              }
                                                                  ]
                             },
                             {
                               "label":"课程与选课","query":"","sub":
                                                               [
-                                                                {"label":"课程查询","query":""}
+                                                                {
+                                                                  "label": "课程查询",
+                                                                  "query": ""
+                                                                }
                                                               ]
                             }
                                 ]

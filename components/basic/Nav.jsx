@@ -280,14 +280,25 @@ var Nav=React.createClass({
             }
 
 
+            return (
+                <div >
+                    <div id="navigation">
+                        <div className="center">
+                            <ul className="link">
+                                <li><a href="###">刷新</a></li>
+                                <em className="global-top-item global-top-seperator">|</em>
+                                <li><a href="###">退出</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="header_box">
+                        <div className="header">
+                            {logo}
+                            {nav}
+                        </div>
 
-
-            return      (<div className="header_box">
-                            <div className="header">
-                                {logo}
-                                {nav}
-                            </div>
-                        </div>)
+                    </div>
+                </div>);
         }
     },
     componentDidMount:function(){

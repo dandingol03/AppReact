@@ -13,10 +13,59 @@
     display: inline;
 }
 
+/**navigation part**/
+#navigation {
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    z-index:10;
+    width: 100%;
+    height: 30px;
+    background:url(../../../../build/images/bg.png) repeat-x 0 0;
+    /*background-color: #0066B3;*/
+    _padding-top:9px;_position:absolute;_top: expression(eval(document.documentElement.scrollTop)+0);
+}
+
+#navigation .center {
+    width: 1263px;
+    height: 30px;
+    margin: 0 auto;
+}
+#navigation .link {
+    /*width: 650px;*/
+    margin-left: 60px;
+    height: 30px;
+    line-height: 30px;
+    color: #eee;
+    float: right;
+}
+#navigation .link .user{
+    width: 80px;
+    text-align: center;
+    float: left;
+}
+#navigation .link li {
+    width: 40px;
+    text-align: center;
+    float: left;
+}
+#navigation .link a {
+    color: #eee;
+    display: block;
+}
+#navigation .link a:hover, #nav .active a {
+    background-color: #0066b3;
+}
+
+
+
+
 
 
 .header_box
 {
+    z-index: 11;
     width: 100%;
     height: auto;
     border-bottom:1px solid #ddd;
@@ -26,23 +75,23 @@
 {
     clear: both;
     width: 80%;
-    margin: 0 auto;
+    margin: 40px auto;
     height: 81px;
     position: relative;
-    z-index: 11;
+    margin-bottom: 10px;
 }
 .logo {
     float: left;
     width: 200px;
     height: 40px;
-    padding-top: 21px;
+    padding-top: 5px;
     padding-right: 16px;
 }
 
 .nav {
     float: left;
     padding-top: 24px;
-    padding-left: 6px;
+    padding-left: 36px;
 }
 
 

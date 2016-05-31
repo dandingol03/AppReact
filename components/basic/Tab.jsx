@@ -10,17 +10,15 @@ import EmbedTable from '../../components/forms/EmbedTable.jsx';
 
 
 var Tab=React.createClass({
-    recurseDataTab:function(leaf_key,global,in$param,out$param1,out$param){
-        if(in$param!==undefined&&in$param!==null)
-        {
-            var dataTabCb=this.dataTabCb;
-            var recurseDataTab=this.recurseDataTab;
-            in$param.map(function(item,i)
-            {
+    recurseDataTab : function (leaf_key, global, in$param, out$param1, out$param) {
+        if (in$param !== undefined && in$param !== null) {
+            var dataTabCb = this.dataTabCb;
+            var recurseDataTab = this.recurseDataTab;
+            in$param.map(function (item, i) {
                 console.log();
                 console.log();
                 console.log();
-                if(item[leaf_key]==undefined||item[leaf_key]==null)//叶结点
+                if (item[leaf_key] == undefined || item[leaf_key] == null)//叶结点
                 {
                     var comp = item.comp;
                     var entity = null;
@@ -47,38 +45,35 @@ var Tab=React.createClass({
                             entity = <div></div>
                             break;
                     }
-                    if(out$param.comp==undefined||out$param.comp==null)
-                        out$param.comp=new Array();
-                    out$param.comp.push( <div key={global.index} data-index={parseInt(global.index)}
-                                              style={{display:"none",width:"100%"}}>
+
+                    if (out$param.comp == undefined || out$param.comp == null)
+                        out$param.comp = new Array();
+                    out$param.comp.push(<div key={global.index} data-index={parseInt(global.index)}
+                                             style={{display:"none",width:"100%"}}>
                         {entity}
                     </div>);
 
+                    out$param1.push(
+                        <li key={i}>
+                            <a href="#" className="auto" onClick={dataTabCb} data-index={global.index++}
+                               data-leaf={true}>
+                                <i className="fa fa-angle-right text-xs"></i>
+                                {item.name}
+                            </a>
 
-                    //mark:clasName="auto"
-                    out$param1.push(<li key={i} >
-                        <a href="#" className="auto" onClick={dataTabCb}  data-index={global.index++} data-leaf={true}>
-                            <i className="fa fa-angle-right text-xs"></i>
-                            {item.name}
-                        </a>
+
                     </li>);
-                }else{
-                    var lis=new Array();
-                    console.log();
-                    console.log();
-                    console.log();
-                    recurseDataTab(leaf_key,global,item[leaf_key],lis,out$param);
-                    console.log();
-                    console.log();
-                    console.log();
+                } else {
+                    var lis = new Array();
+                    recurseDataTab(leaf_key, global, item[leaf_key], lis, out$param);
                     out$param1.push(<li key={i} data-index={i}>
-                        <a href="#" className="auto" onClick={dataTabCb}>
+                        <a onClick={dataTabCb} href="#" className="auto">
                             <i className=" text"></i>
                             <i className=" text-active"></i>
                             <i className=" text-xs"></i>
                             {item.name}
                         </a>
-                        <ul className="nav dk text-sm" >
+                        <ul style={{display:"none"}} className="nav dk text-sm">
                             {lis}
                         </ul>
                     </li>);
@@ -87,11 +82,10 @@ var Tab=React.createClass({
             });
         }
     },
-    recurse:function(leaf_key,global,in$param,out$param,fieldFlag){
-        if(in$param!==undefined&&in$param!==null)
-        {
-            in$param.map(function(item,i) {
-                if(item[leaf_key]==null||item[leaf_key]==undefined)//已选叶结点
+    recurse        : function (leaf_key, global, in$param, out$param, fieldFlag) {
+        if (in$param !== undefined && in$param !== null) {
+            in$param.map(function (item, i) {
+                if (item[leaf_key] == null || item[leaf_key] == undefined)//已选叶结点
                 {
                     out$param.push(
                         <div key={global.index++}>
@@ -99,13 +93,13 @@ var Tab=React.createClass({
                                 <Image link={source.link}
                                        src={source.src}
                                        type={source.type}
-                                       checkCb={check}/> :<Image link={source.link}
-                                                                 src={source.src}/>}
+                                       checkCb={check}/> : <Image link={source.link}
+                                                                  src={source.src}/>}
                         </div>);
-                    if(item[fieldFlag]==true||item[fieldFlag]=="true")
+                    if (item[fieldFlag] == true || item[fieldFlag] == "true")
                         this.state[fieldFlag].push(global.index++);
-                }else{
-                    this.recurse(leaf_key,global,item[leaf_key],out$param);
+                } else {
+                    this.recurse(leaf_key, global, item[leaf_key], out$param);
                 }
             });
         }
@@ -115,8 +109,8 @@ var Tab=React.createClass({
         var $target=$(target);
         var index = $target.attr("data-index");
         var $dataTabs=$(this.refs["dataTabs"]);
-        var dataTabs=$dataTabs.children("div");
-        for(var i=0;i<dataTabs.length;i++){
+        var dataTabs = $dataTabs.children("div");
+        for (var i = 0; i < dataTabs.length; i++) {
 
             var $dataTab=$(dataTabs[i]);
             if(i==index) {
@@ -127,79 +121,54 @@ var Tab=React.createClass({
         }
         this.setState({selected: index});
     },
-    dataTabCb:function(evt){
-        var target=evt.target;
-        var $target=$(target);
-        var leaf=$target.attr("data-leaf");
-        if(leaf!=undefined&&leaf!=null&&(leaf==true||leaf=="true"))//叶结点的tab
+    dataTabCb      : function (evt) {
+        var target = evt.target;
+        var $target = $(target);
+        var leaf = $target.attr("data-leaf");
+        if (leaf != undefined && leaf != null && (leaf == true || leaf == "true"))//叶结点的tab
         {
             var index = parseInt($target.attr("data-index"));
-            var vice=$(this.refs["dataTabs"]).children("div")[this.state.selected];
-            var components=$(vice).children(".comp").children("div");
-            for(var i=0;i<components.length;i++)
-            {
-                var component=components[i];
-                var $comp=$(component);
-                if(i==index)
-                {
+            var vice = $(this.refs["dataTabs"]).children("div")[this.state.selected];
+            var components = $(vice).children(".comp").children("div");
+            for (var i = 0; i < components.length; i++) {
+                var component = components[i];
+                var $comp = $(component);
+                if (i == index) {
                     continue;
                 }
-                else
-                {
-                    $comp.css("display","none");
+                else {
+                    $comp.css("display", "none");
                 }
             }
-            var component=components[index];
-            var $comp=$(component);
+            var component = components[index];
+            var $comp = $(component);
             $comp.slideDown();
-        }else{//非叶结点tab
-            var $ul=$target.parent("li").children("ul");
+        } else {//非叶结点tab
+            var $ul = $target.parent("li").children("ul");
             $ul.slideDown();
         }
 
     },
-    secondTabCb:function(evt){//TODO:zyy
-        var target=evt.target;
-        var $target=$(target);
-        var index = $target.attr("data-index");
-        var $dataTabs=$(this.refs["dataTabs"]);
-        var second=$dataTabs.children("div")[this.state.selected];
-        var $secondDataTabs=$(second).find(".second_data_tab");
-        var datas=$secondDataTabs.children("div");
-        for(var i=0;i<datas.length;i++){
-            var $dataTab=$(datas[i]);
-            if(i==index) {
-                $dataTab.slideDown();
-            }else{
-                $dataTab.css("display", "none");
-            }
-        }
-        this.setState({secondSelected:index});
-
-    },//TODO:zyy
-    getInitialState:function(){
-        return ({selected: -1,secondSelected:-1});
+    getInitialState: function () {
+        return ({selected: -1, secondSelected: -1});
     },
     render:function(){
         var tabs=new Array();
         var dataTabs = new Array();
         var tabCb=this.tabCb;
         var state=this.state;
-        var secondTabCb=this.secondTabCb;
-        var recurseDataTab=this.recurseDataTab;
-        if(this.props.data!==undefined&&this.props.data!==null)
-        {
-            var props=this.props;
-            this.props.data.map(function(first,i){
-                var dataTab=new Object();
+        var recurseDataTab = this.recurseDataTab;
+        if (this.props.data !== undefined && this.props.data !== null) {
+            var props = this.props;
+            this.props.data.map(function (first, i) {
+                var dataTab = new Object();
                 //一级tab
                 tabs.push(
                     <li className={state.selected==i?"active":""} onClick={tabCb} key={i} data-index={i}>
                         {first.name}
                     </li>);
                 //TODO:wjj
-                if(first.comp!==undefined&&first.comp!==null)
-                {
+                if (first.comp !== undefined && first.comp !== null) {
                     var comp = first.comp;
                     var entity = null;
                     switch (comp.name) {
@@ -231,23 +200,22 @@ var Tab=React.createClass({
                             {entity}
                         </div>
                     );
-                }else{
-                    var global=new Object();
-                    global.index=0;
-                    var out$param1=new Object();
-                    out$param1.tab=new Array();
-                    recurseDataTab("sub",global,first.sub,out$param1.tab,dataTab);
+                } else {
+                    var global = new Object();
+                    global.index = 0;
+                    var out$param1 = new Object();
+                    out$param1.tab = new Array();
+                    recurseDataTab("sub", global, first.sub, out$param1.tab, dataTab);
                     dataTabs.push(
-                        <div key={i} style={{display:"none",width:"100%"}}>
+                        <div key={i} style={{display:"none",width:"100%",height:"700px"}}>
                             <div className="bg-dark bk nav-xs" style={{backgroundColor:"rgb(77, 93, 110)"}}>
                                 <div className="nav-primary">
                                     <ul className="nav" data-ride="collapse">
-
                                         {out$param1.tab}
                                     </ul>
                                 </div>
                             </div>
-                            <div className="comp">
+                            <div className="comp" style={{width:"100%"}}>
                                 {dataTab.comp}
                             </div>
                         </div>
@@ -257,17 +225,19 @@ var Tab=React.createClass({
             });
         }
 
-
-        return(<div className="Tab">
-            <div className="tab" >
-                <ul style={{marginRight:"20%"}}>
-                    {tabs}
-                </ul>
-            </div>
-            <div ref="dataTabs" className="data-tab">
-                {dataTabs}
-            </div>
-        </div>)
+        var style = {};
+        if (this.props.height !== undefined && this.props.height !== null)
+            style = Object.assign(style, {height: this.props.height});
+        return (<div className="Tab" style={style}>
+            <div className="tab">
+                <ul style={{marginRight:"0%"}}>
+                              {tabs}
+                          </ul>
+                    </div>
+            <div ref="dataTabs" className="data-tab" style={{height:"100%"}}>
+                        {dataTabs}
+                    </div>
+               </div>)
     }
 });
 export default Tab;

@@ -17,10 +17,68 @@ ul, li, ol {
     list-style: none;
 }
 
+/**
+*   customMenu part
+*/
+.keyNavigation {
+    width: 100%;
+    min-width: 1263px;
+    height: 180px;
+    background: linear-gradient(to right bottom, rgba(172,218,244,0), rgba(0,0,0,0)),
+                    url(../../../build/images/headline.jpg) no-repeat center;
+}
+
+.keyNavigation .top {
+    width: 1024px;
+    height: 78px;
+    margin:0 auto;
+    text-align: center;
+}
+
+.keyNavigation .top .block{
+    display: inline-block;
+    text-align: center;
+    padding-top: 10px;
+    color: #ccc;
+    vertical-align: top;
+}
+
+.keyNavigation .top .block {
+    display: inline-block;
+    text-align: center;
+    padding-top: 10px;
+    color: #ccc;
+    vertical-align: top;
+}
+
+.keyNavigation .top .block .verticalBar{
+    display: inline-block;
+    height: 60px;
+    width: 1px;
+    border-left: 1px #0066b3 solid;
+    margin-left: 25px;
+}
+
+.keyNavigation .top .block .briefInformation{
+    display: block;
+}
+
+.keyNavigation .top .block .briefInformation ul {
+    color: #333;
+    text-indent: 20px;
+    line-height: 2;
+}
 
 
-
-
+.keyNavigation .bottom {
+    width: 1024px;
+    height: 100px;
+    margin: 0 auto;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid rgba(200,200,200,0.5);
+    background: rgba(36, 139, 230, 0.1);
+}
 /**
 *   assessment part
 */
