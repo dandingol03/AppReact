@@ -76,7 +76,7 @@ var Home =React.createClass({
             filterField : filterField
                                 }
         }
-    ]} height="400px"/>
+    ]} height="400px" width="980px"/>
              {this.props.children}
          </div>
      )
