@@ -148,7 +148,7 @@ var PanelTable=React.createClass({
 
         return (
             <div className="row">
-                <div className="col-sm-12 col-md-12">
+                <div className="col-sm-12 col-md-12" style={{paddingLeft:"0px",paddingRight:"0px",paddingTop:"30px"}}>
                     <Panel
                         data={this.state.comps}
                         bean={this.props.bean}

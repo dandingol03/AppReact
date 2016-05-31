@@ -196,7 +196,7 @@ var Tab=React.createClass({
                             break;
                     }
                     dataTabs.push(
-                        <div key={i} style={{display:"none",width:"100%",paddingLeft:"20px",paddingRight:"20px"}}>
+                        <div key={i} style={{display:"none",width:"100%",paddingLeft:"0px",paddingRight:"0px"}}>
                             {entity}
                         </div>
                     );
@@ -228,6 +228,8 @@ var Tab=React.createClass({
         var style = {};
         if (this.props.height !== undefined && this.props.height !== null)
             style = Object.assign(style, {height: this.props.height});
+        if (this.props.width !== undefined && this.props.width !== null)
+            style = Object.assign(style, {width: this.props.width});
         return (<div className="Tab" style={style}>
             <div className="tab">
                 <ul style={{marginRight:"0%"}}>
