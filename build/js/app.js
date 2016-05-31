@@ -13,6 +13,6 @@ window.App.getLoadModel = function () {
 window.App.load = function () {
     $("#loading").fakeLoader({prolong: true});
 }
-window.App.unLoad = function () {
+window.App.unload = function () {
     $("#loading").fadeOut();
 }
