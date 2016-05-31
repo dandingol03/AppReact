@@ -49,10 +49,13 @@ var Tab=React.createClass({
                     }
                     if(out$param.comp==undefined||out$param.comp==null)
                         out$param.comp=new Array();
-                    out$param.comp.push( <div key={global.index} data-index={parseInt(global.index)} style={{display:"none",width:"100%"}}>
+                    out$param.comp.push( <div key={global.index} data-index={parseInt(global.index)}
+                                              style={{display:"none",width:"100%"}}>
                         {entity}
                     </div>);
 
+
+                    //mark:clasName="auto"
                     out$param1.push(<li key={i} >
                         <a href="#" className="auto" onClick={dataTabCb}  data-index={global.index++} data-leaf={true}>
                             <i className="fa fa-angle-right text-xs"></i>
