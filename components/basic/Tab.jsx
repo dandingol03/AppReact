@@ -45,6 +45,7 @@ var Tab=React.createClass({
                             entity = <div></div>
                             break;
                     }
+
                     if (out$param.comp == undefined || out$param.comp == null)
                         out$param.comp = new Array();
                     out$param.comp.push(<div key={global.index} data-index={parseInt(global.index)}
@@ -59,6 +60,7 @@ var Tab=React.createClass({
                                 <i className="fa fa-angle-right text-xs"></i>
                                 {item.name}
                             </a>
+
 
                     </li>);
                 } else {

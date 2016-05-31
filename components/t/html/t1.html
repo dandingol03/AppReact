@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link href="../../../libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../../build/bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
         #btn_add{
             background-image:url("../../../icon/add_0.png");
@@ -11,13 +11,34 @@
             height:16px;
             width:16px;
         }
+
+        div ul li{
+            list-style: none;
+            display: block;
+            width:100px;
+            background: #0f0f0f;
+            margin:0 0 5px 0;
+            color:#ffffff;
+        }
     </style>
     <script type="text/javascript" src="../../../build/bootstrap/js/jquery-latest.js"></script>
-    <script type="text/javascript" src="../../../libs/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../../build/bootstrap/js/bootstrap.js"></script>
     <script>
-        function checkCb(target){
+        function checkCb(target)
+        {
             console.log("checked=" + target.checked);
-            console.log();
+        }
+
+        function menu_click(target){
+            var $target=$(target);
+            var display=$target.next("ul").css("display");
+            if(display=="none")
+            {
+                $target.next("ul").css("display","block");
+            }else
+            {
+                $target.next("ul").css("display","none");
+            }
         }
     </script>
     <script>
@@ -72,7 +93,6 @@
 
             var string1="<de>c</de>";
             var re1=/<(.*)>.*<\/(.*)>/;
-
 
         });
 
@@ -146,10 +166,49 @@
     <a href=""/>
 </div>
 
-<div id="speacial_div" leaf>
+<div>
     <span>check me</span>
     <input type="checkbox" onchange="checkCb(this)"/>
 </div>
 <span>dwdwdw</span><input type="checkbox" />
+<div style="height: 300px;">
+    <div style="float:left;height:100%">c</div>
+    <div style="float:left;height:100%;">a</div>
+</div>
+<div id="tab">
+    <ul>
+        <li style="list-style:none;position:relative">
+            <span onclick="menu_click(this)">培养管理2016</span>
+            <ul style="position: absolute;left:100%;top:0%;display:none">
+                <li>
+                    <span>选课与上课</span>
+                    <ul style="position: absolute;left:100%;top: 0%;display:none">
+                        <li >
+                             <span>上课地点查看</span>
+                        </li>
+                        <li >
+                            上课地点查看
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    课程查询
+                </li>
+            </ul>
+        </li>
+        <li>
+            dwd
+        </li>
+        <li>
+            dwd
+        </li>
+        <li>
+            dwd
+        </li>
+        <li>
+            dwd
+        </li>
+    </ul>
+</div>
 </body>
 </html>
