@@ -54,6 +54,16 @@ var Task = React.createClass({
 
         return ({data$initialed: data$initialed, data: data, auto: auto, timeSpan: timeSpan});
     },
+    componentWillReceiveProps(props)
+    {
+        var ob = new Object();
+        if (props.data !== undefined && props.data !== null) {
+            ob.data = props.data;
+            ob.data$initialed = true;
+        }
+
+        this.setState(ob);
+    },
     render         : function () {
 
         if (this.state.data$initialed !== true && (this.props.data == null || this.props.data == undefined)) {

@@ -4,6 +4,7 @@ import News from '../modules/News.jsx';
 import PasswordModify from '../password/PasswordModify.jsx';
 import Tab from '../../../../../components/basic/Tab.jsx';
 import NEWS from '../data/news.json';
+import '../../../../../css/serviceHobby/basic/home.css';
 var Home =React.createClass({
 
     render:function(){
@@ -38,16 +39,68 @@ var Home =React.createClass({
      return (
          <div style={{marginTop:"120px"}}>
              <PasswordModify/>
-             <News data={NEWS}/>
+
+
+             <div className="vcc-index_title_box vcc-index_title_box_1">
+                 <div className="vcc-index_title">
+                     <span href="#" className="vcc-index_title_a">个人信息</span>
+
+                     <div className="vcc-index_title_box2">个人信息小助手 方便快速管理查看个人信息</div>
+                 </div>
+             </div>
+
+
              <Tab data={[
         {
             "name":"查看课表" ,comp: {
-                name        : "PanelTable",
-            autoComplete: true,
-            query       : query,
-            bean        : bean,
-            filterField : filterField
-                            }
+                name        : "Task",
+            data:[
+            [
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"}
+            ]
+            ,
+
+            [
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"}
+            ]
+            ,
+
+
+            [
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"}
+            ]
+            ,
+            [
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"}
+            ]
+            ,
+            [
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"}
+            ]
+            ,
+            [
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"}
+            ]
+            ,
+            [
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"},
+                {name: "生理健康", rowSpan: "2"}
+            ]
+        ]
+                    }
         },
         {
             "name":"学生表现" ,comp: {
@@ -76,7 +129,9 @@ var Home =React.createClass({
             filterField : filterField
                                 }
         }
-    ]} height="400px" width="980px"/>
+    ]} width="1024px"/>
+
+
              {this.props.children}
          </div>
      )

@@ -194,7 +194,7 @@ var CustomMenu = React.createClass({
             var customButton = <div className="menu_custom" key={-1}>
                 <div className="functionalAreas">
                     <a href="javascript:void(0)" onClick={this.customCb}>
-                        <img src="./images/function1.png"/>
+                        <i className="fa fa-cogs icon-switcher" style={{background:"transparent"}}></i>
                     </a>
                 </div>
             </div>

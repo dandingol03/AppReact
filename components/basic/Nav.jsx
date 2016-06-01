@@ -84,7 +84,16 @@ var Nav=React.createClass({
                 });
 
             var obj2=$(ref).find(sel2);
-            $(obj2).hover(function(){divcreate=true;hidecur();},function(){id=$(obj2).index(this);divcreate=false;hidecur();});
+            $(obj2).hover(function () {
+                    divcreate = true;
+                    hidecur();
+                },
+                function () {
+                    id = $(obj2).index(this);
+                    divcreate = false;
+                    hidecur();
+                });
+
             function hidecur(){
                 clearTimeout(timer);
                 if(index!=id){$(obj2).eq(index).stop(true,true).delay(50).fadeOut("fast", function(){});	}
@@ -204,9 +213,10 @@ var Nav=React.createClass({
                         lis.push(
                             <li className="" style={{marginLeft: "-2.57143px"}} key={i}>
                                 <a href="javascript:void(0)" className="nav_a" >{first.label}</a>
-                                <div className="mnavL" style={{display: "none"}}>
+
+                                <div className="mnavL" style={{display: "none",height:"150px"}}>
                                     <div className="mnavL_info">
-                                        <div className="mnavL_left_LL fl clearfix">
+                                        <div className="mnavL_left_LL fl clearfix" style={{position:"relative"}}>
                                             {tz_2}
                                         </div>
                                     </div>
@@ -245,7 +255,7 @@ var Nav=React.createClass({
                         });
 
                         mnavL_left=
-                            <div className="mnavL_left_LL fl clearfix">
+                            <div className="mnavL_left_LL fl clearfix" style={{top:"0px"}}>
                                 <div className="tz_2" style={{marginLeft:"20px"}}>
                                     <table className="cell" width="100%">
                                         <tbody>
@@ -259,7 +269,8 @@ var Nav=React.createClass({
                         lis.push(
                             <li className="" style={{marginLeft: "-2.57143px"}} key={i}>
                                 <a href="javascript:void(0)" className="nav_a" >{first.label}</a>
-                                <div className="mnavL" style={{display: "none"}}>
+
+                                <div className="mnavL" style={{display: "none",height:"60px"}}>
                                     <div className="mnavL_info">
                                         {mnavL_left}
                                     </div>

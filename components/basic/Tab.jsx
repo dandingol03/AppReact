@@ -5,7 +5,7 @@ import PanelTable from '../compounds/panelTable/PanelTable.jsx';
 import Panel from '../../components/panel/Panel.jsx';
 import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
-
+import Task from '../../components/basic/Task.jsx';
 
 
 
@@ -40,6 +40,12 @@ var Tab=React.createClass({
                             entity = <EmbedTable
                                 data={comp.data}
                                 embedCols={comp.embedCols}/>
+                            break;
+                        case "Task":
+                            entity = <Task
+                                data={comp.data}
+                                width="980px"
+                                />
                             break;
                         default:
                             entity = <div></div>
@@ -190,6 +196,12 @@ var Tab=React.createClass({
                                 data={comp.data}
                                 embedCols={comp.embedCols}
                                 checkCb={props.checkCb}/>
+                            break;
+                        case "Task":
+                            entity = <Task
+                                data={comp.data}
+                                width="980px"
+                                />
                             break;
                         default:
                             entity = <div></div>
