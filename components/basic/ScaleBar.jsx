@@ -180,7 +180,7 @@ var ScaleBar =React.createClass({
                     var background="url('"+item.img+"') no-repeat 10px 30px";
                     var sus_li_style={background:background};
                     suspends.push(<li className="sus_li" key={i} style={sus_li_style}>{item.label}</li>);
-                    showNavs.push(<li className="sus_li sus" key={i} style={sus_li_style}>{item.label}</li>);
+                    showNavs.push(<li className={"sus_li sus"+" "+i} key={i} style={sus_li_style}>{item.label}</li>);
 
                     showContents.push(
                         <div  className="susp_r" style={{display: "block"}} key={i}>

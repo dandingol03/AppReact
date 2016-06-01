@@ -149,6 +149,7 @@
 }
 
 .mnavL_left_LL {
+    position: static !important;
     width: 100%;
     font-size: 12px;
     min-height: 310px;
@@ -164,6 +165,17 @@
 .mnavL .cell .tz_td_cell {
     width: 100px;
     overflow: hidden;
+}
+
+.mnavL .cell .tz_td_cell a {
+    text-decoration: none;
+}
+
+.mnavL .cell .tz_td_cell a:hover,
+.mnavL .cell .tz_td_cell a:focus {
+    color: #fff;
+    padding: 5px;
+    background-color: #1693f1
 }
 
 table.cell

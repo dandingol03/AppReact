@@ -13,7 +13,7 @@ var Image = React.createClass({
 
         var image = null;
         if (this.props.src !== undefined && this.props.src !== null) {
-            image = <img src={this.props.src} style={{marginTop:"20px"}}/>
+            image = <img src={this.props.src} style={{marginTop:"10px"}}/>
         }
 
         var icon = null;
@@ -45,7 +45,7 @@ var Image = React.createClass({
             </Link>
         }
         return (
-            <div style={{position:"relative"}}>
+            <div style={{position:"relative"}} className="image">
                 {icon}
                 {link}
             </div>)

@@ -9,6 +9,7 @@ import '../../css/components/basic/customMenu.css';
  * 1.downLimit,订制菜单数的最小下限
  * 2.upLimit,订制菜单数的最大上限
  * 3.recurse,递归循环,同时生成已选和未选2棵树
+ * 4.customButton按钮关闭后,数据不再次刷新的原因
  */
 
 var CustomMenu = React.createClass({
@@ -70,33 +71,36 @@ var CustomMenu = React.createClass({
                         <div key={global.index++}>
                             {state.customizing == true ?
                                 <Image link={item.link}
-                                       src={item.src}
+                                       src="./images/function4.png"
+                                       id={item.id}
                                        type={item.type}
                                        onChange={checkCb}
                                     /> : <Image link={item.link}
-                                                src={item.src}/>}
+                                                src="./images/function4.png"/>}
+                            <span
+                                style={{position:"absolute",bottom:"2px",color:"#fff",marginLeft:"-20px"}}>{item.name}</span>
                         </div>);
                 }
                 else {
-                    recurseSelectedMenu(leaf_key, global, item, out$param);
+                    recurseSelectedMenu(leaf_key, global, item[leaf_key], out$param);
                 }
             });
         }
     },
     unselectedCb       : function (ob) {//已选中菜单的增加点击行为
-        if (ob.id !== undefined && ob.id !== null) {
+        if (ob !== undefined && ob !== null) {
             var state = this.state;
-            if (!isNaN(index) && checked !== undefined && checked !== null) {
-                if (checked == true) {
-                    state.menu[ob.id] = true;
+            if (!isNaN(ob.index) && ob.checked !== undefined && ob.checked !== null) {
+                if (ob.checked == true) {
+                    state.menu[ob.index] = true;
                 } else {
-                    delete state.menu[ob.id];
+                    delete state.menu[ob.index];
                 }
             }
         }
 
     },
-    customCb           : function (evt) {//处理定制菜单的增加和减少
+    customCb           : function (evt) {//从服务器拉回菜单
         var customModal = this.refs["custom_modal"];
         var $customModal = $(customModal);
         var display = $customModal.css("display");
@@ -105,28 +109,44 @@ var CustomMenu = React.createClass({
             $customModal.modal("show");
         }
         else {
-            if (this.props.query !== undefined && this.props.query !== null) {
-                var params = this.props.query.params;
-                if (this.state.selected.length >= 1) {
-                    params.selected = JSON.stringify(this.state.selected);
-                }
-                ProxyQ.queryHandle(
-                    null,
-                    this.props.query.url,
-                    params,
-                    'json',
-                    function (response) {
-                        var ob = new Object();
-                        ob.data$initialed = true;
-                        ob.customizing = false;
-                        ob.data = response.data;
-                        this.setState(ob);
-                    }.bind(this)
-                );
-            }
+
             $customModal.modal("hide");
         }
 
+    },
+    applyCb            : function (evt) {//定制按钮的提交
+        var customModal = this.refs["custom_modal"];
+        var $customModal = $(customModal);
+        if (this.props.apply !== undefined && this.props.apply !== null) {
+            var params = this.props.apply.params;
+            if (this.state.menu == undefined && this.state.menu == null) {
+                $customModal.modal("hide");
+                return;
+            }
+            var menus = new Array();
+            for (var index in this.state.menu) {
+                menus.push(parseInt(index));
+            }
+            params.menu = JSON.stringify(menus);
+            ProxyQ.queryHandle(
+                null,
+                this.props.apply.url,
+                params,
+                'json',
+                function (response) {
+                    $customModal.modal("hide");
+                    this.fetch();
+                }.bind(this)
+            );
+        }
+        else
+            $customModal.modal("hide");
+    },
+    cancelCb           : function () {
+        var customModal = this.refs["custom_modal"];
+        var $customModal = $(customModal);
+        $customModal.modal("hide");
+        this.fetch();
     },
     fetch          : function () {
         ProxyQ.queryHandle(
@@ -191,13 +211,16 @@ var CustomMenu = React.createClass({
             var selectedMenus = null;
             var unselectedMenus = new Object();
             unselectedMenus.arr = null;
-            var customButton = <div className="menu_custom" key={-1}>
-                <div className="functionalAreas">
-                    <a href="javascript:void(0)" onClick={this.customCb}>
-                        <i className="fa fa-cogs icon-switcher" style={{background:"transparent"}}></i>
-                    </a>
+            var customButton =
+                <div key={-1}>
+                    <div className="menu_custom">
+                        <div className="functionalAreas">
+                            <a href="javascript:void(0)" onClick={this.customCb}>
+                                <i className="fa fa-cogs icon-switcher" style={{background:"transparent"}}></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
             if (this.state.data$initialed !== true) {
                 if (this.props.auto == true || this.props.auto == "true")
@@ -223,13 +246,16 @@ var CustomMenu = React.createClass({
                 var selectedCount = state.selected !== undefined && state.selected !== null ? state.selected.length : 0;
                 return <div className="customMenu">
                     <div className="bottom">
-                        {customButton}
-                        {selectedMenus}
+                        <div>
+                            {customButton}
+                            <div style={{paddingLeft:"100px"}}>{selectedMenus}</div>
+                        </div>
                         <div className="modal fade" ref="custom_modal" style={{display:"none"}}>
                             <div className="modal-dialog" style={{width:"980px"}}>
                                 <div className="modal-content">
                                     <div className="modal-header">
-                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" className="close" data-dismiss="modal"
+                                                onClick={this.cancelCb}>
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         <h4 className="modal-title" style={{textAlign:"left"}}>
@@ -249,7 +275,8 @@ var CustomMenu = React.createClass({
                                     <div className="modal-footer" style={{borderTop:"0px"}}>
                                         <button type="button" className="btn btn-default" data-dismiss="modal">取消
                                         </button>
-                                        <button type="button" className="btn btn-primary">提交更改</button>
+                                        <button type="button" className="btn btn-primary" onClick={this.applyCb}>提交更改
+                                        </button>
                                     </div>
                                 </div>
                             </div>

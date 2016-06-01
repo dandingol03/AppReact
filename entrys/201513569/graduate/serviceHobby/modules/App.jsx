@@ -66,8 +66,16 @@ var App =React.createClass({
                                                 params: {
                                                     reactPageName  : "serviceReactPage",
                                                     reactActionName: "getAuthMenus"
-                                                }
-                                            }}/>
+                                                    }
+                                                }}
+                                    apply={{
+                                                url:"/bsuims/reactPageDataRequest.do",
+                                                  params: {
+                                                    reactPageName  : "serviceReactPage",
+                                                    reactActionName: "updateCustomMenu"
+                                                    }
+                                                }}
+                            />
                     </div>
                 </div>
 

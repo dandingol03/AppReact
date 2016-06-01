@@ -167,7 +167,10 @@ var EmbedTable=React.createClass({
                                         var source = eval('(' + ids[0] + ')');
                                         var check = function (ob) {
                                             if (props.checkCb !== undefined && props.checkCb !== null) {
-                                                props.checkCb(source.id);
+                                                if (ob == true)
+                                                    props.checkCb({index: source.id, checked: true});
+                                                else
+                                                    props.checkCb({index: source.id, checked: false});
                                             }
                                         }
                                         sub$tds.push(
