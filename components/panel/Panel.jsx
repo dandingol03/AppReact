@@ -27,6 +27,7 @@ var ProxyQ=require('../proxy/ProxyQ');
  * 7.bean,通过后台的数据来初始化组件,全字段均不由本地提供
  * 8.子组件的级联刷新,由父组件的form表单提交完成数据更新
  * 9.panel开始支持多数据源
+ * 10.Radio组件重写
  */
 
 var Panel=React.createClass({
@@ -176,17 +177,12 @@ var Panel=React.createClass({
 
     },
     shouldComponentUpdate: function(nextProps, nextState) {
-        console.log();
-        console.log();
-        console.log();
-        console.log();
-        console.log();
         return nextProps.data!==this.props.data||nextState.data!==this.state.data;
 
     },
     getInitialState:function(){
 
-        //为组件类型保留关键字
+        //为组件类型保留关键字,以下为扩展的字段组件
         var reserved={
             "query":true,
             "input":true,
@@ -214,9 +210,7 @@ var Panel=React.createClass({
         return ({reserved:reserved,bean:bean,shield:false,data:data,query:query});
     },
     render:function(){
-        console.log();
-        console.log();
-        console.log();
+
 
         if(this.state.data!==undefined&&this.state.data!==null&&Object.prototype.toString.call(this.state.data)=='[object Array]')
         {
@@ -280,13 +274,37 @@ var Panel=React.createClass({
 
                     if(name!==undefined&&name!==null)
                     {
-                        if(coms.length>1)
-                        {   if(coms[1]!==null&&coms[1]!=undefined&&coms[1]!=='download') {
-                            label = (<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
-                                {name}
-                            </td>);
-                        }
-                        }else{
+                        if(coms.length>1) {
+                            if (coms[1] !== null && coms[1] != undefined && coms[1] !== 'download') {
+                                label = (<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
+                                    {name}
+                                </td>);
+                            }
+                        } else {//针对非扩展字段进行行末的col补齐
+                            var reg = /\<(.*?)\>/;
+                            var re = reg.exec(name);
+                            if (re !== null && re !== undefined && re[1] !== undefined && re[1] !== null) {
+                                var customReg = /<(.*):['|"](.*)['|"]>(.*)<\/.*>/;
+                                var customRe = null;
+                                customRe = customReg.exec(name);
+                                if (customRe !== undefined && customRe !== null && customRe.length >= 2) {
+                                    switch (customRe[1]) {
+                                        case 'align':
+                                            label = (<td key={td$index++} style={{textAlign:customRe[2]}}
+                                                         colSpan={j==row.length-1?max$cols-j:1}>
+                                                {customRe[3]}
+                                            </td>);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else {
+                                    label = (<td key={td$index++} colSpan={j==row.length-1?max$cols-j:1}
+                                                 dangerouslySetInnerHTML={{__html:name}}>
+                                    </td>);
+                                }
+                            }
+                            else
                             label=(<td key={td$index++} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
                                 {name}
                             </td>);
@@ -339,9 +357,9 @@ var Panel=React.createClass({
                                 break;
                             case 'input':
                                 var ctrlName;
-                                if(coms[0].indexOf('->')!==-1&&coms[0].split('->').length>=2)
+                                if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2)
                                 {
-                                    ctrlName=coms[0].split('->')[0];
+                                    ctrlName = coms[0].split('=>')[0];
                                 }else{
                                     ctrlName=coms[0];
                                 }
@@ -432,10 +450,6 @@ var Panel=React.createClass({
 
                                 break;
                             case 'textarea':
-                                console.log();
-                                console.log();
-                                console.log();
-                                console.log();
                                 if(state.bean!==undefined&&state.bean!==null&&coms[2]!==null)
                                 {
                                     ctrl = <textarea rows={4} name={coms[0]} style={{width:"100%"}}
@@ -447,7 +461,10 @@ var Panel=React.createClass({
                             case 'radio':
                                 if(coms[2]!==undefined&&coms[2]!==null)
                                 {
-                                    ctrl=<Radio ctrlName={coms[0]} data={coms[2]}/>
+                                    if (coms[2].split("=>").length >= 2)
+                                        ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={coms[2]}/>
+                                    else
+                                        ctrl = <Radio ctrlName={coms[0]} data={coms[2]}/>
                                 }else{
                                     ctrl=<Radio ctrlName={coms[0]}/>
                                 }
