@@ -317,4 +317,4 @@ var Nav=React.createClass({
     }
 });
 
-export default Nav;
+module.exports = Nav;

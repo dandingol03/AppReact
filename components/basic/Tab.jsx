@@ -254,4 +254,4 @@ var Tab=React.createClass({
                </div>)
     }
 });
-export default Tab;
+module.exports = Tab;

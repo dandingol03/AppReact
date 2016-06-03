@@ -7,12 +7,27 @@
   {
     "label": "修改密码",
     "img": "./images/ico/y3.png",
-    "content": ""
+    "type": "password",
+    "content": {
+      "title": "修改密码",
+      "action": "/ReactJPChatter/react/commitPassword.do"
+    }
   },
   {
     "label": "问卷调查",
     "img": "./images/ico/y_55.png",
-    "content": ""
+    "type": "Panel",
+    "content": {
+      "bean": {
+        "url": "/bsuims/reactPageDataRequest.do",
+        "params": {
+          "reactActionName": "getStudentQuestionnaireInitPanel",
+          "reactPageName": "questionnairePage"
+        }
+      },
+      "auto": true,
+      "autoComplete": true
+    }
   },
   {
     "label": "使用手册",

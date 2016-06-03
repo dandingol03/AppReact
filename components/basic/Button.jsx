@@ -1,5 +1,9 @@
 
 import React from 'react';
+import {render} from 'react-dom';
+import { Link } from 'react-router'
+import '../../css/components/basic/button.css';
+
 
 var ButtonElement=React.createClass({
         /**
@@ -18,8 +22,10 @@ var ButtonElement=React.createClass({
 
         },
         render:function(){
-                return (<div>
+                return (<div className="button">
                         i just don't care
                         </div>)
         }
 })
+
+module.exports = ButtonElement

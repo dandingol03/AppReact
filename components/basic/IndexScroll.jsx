@@ -284,4 +284,4 @@ var IndexScroll=React.createClass({
 
     }
 });
-export default IndexScroll;
+module.exports = IndexScroll;

@@ -83,33 +83,50 @@ var Panel=React.createClass({
         if(target!==undefined&&target!==null)
         {
             var form=document.getElementsByName('PanelForm')[0];
+            var params = new Object();
+            //记载必填项组件的字段
+            var required = new Object();
+            for (var i = 0; i < form.getElementsByTagName("input").length; i++) {
+                var item = form.getElementsByTagName("input")[i];
+                //针对单选
+                if (item.type == 'radio') {
+                    if (item.checked == true)
+                        params[item.name] = item.value;
+
+                } else {
+                    params[item.name] = item.value;
+                }
+                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                    required[item.name] = item.name;
+                }
+            }
             if(this.props.clickHandle!==undefined&&this.props.clickHandle!==null)
             {
-                var params=new Object();
-                for(var i=0;i<form.getElementsByTagName("input").length;i++)
-                {
-                    var item=form.getElementsByTagName("input")[i];
-                    //针对单选
-                    if(item.type=='radio')
-                    {
-                        if(item.checked==true)
-                        params[item.name]=item.value;
-                    }else{
-                        params[item.name]=item.value;
-                    }
-                }
                 this.props.clickHandle(params);
             }else{//如果本组件为最顶层组件
 
                 if(this.state.query!==null&&this.state.query!==undefined)
                 {
-                    var ddw;
-                    ddw=this.state.query.params.reactPageName;
-                    var dw;
-                    dw=this.state.query.params.reactActionName;
-                    form.action=form.action+"?"+"reactPageName="+ddw+"&"+"reactActionName="+dw+"";
+                    for (var field in required) {
+                        if (params[field] == undefined || params[field] == null) {
+                            alert("您有输入项未填写完整");
+                            return;
+                        }
+                    }
+
+                    params = Object.assign(this.state.query.params, params);
+                    ProxyQ.queryHandle(
+                        null,
+                        this.state.query.url,
+                        params,
+                        null,
+                        function (response) {
+
+                        }.bind(this)
+                    );
+
                 }
-                form.submit();
+
             }
 
         }
@@ -285,7 +302,7 @@ var Panel=React.createClass({
                             var re = reg.exec(name);
                             if (re !== null && re !== undefined && re[1] !== undefined && re[1] !== null) {
                                 var customReg = /<(.*):['|"](.*)['|"]>(.*)<\/.*>/;
-                                var customRe = null;
+                                var customRe;
                                 customRe = customReg.exec(name);
                                 if (customRe !== undefined && customRe !== null && customRe.length >= 2) {
                                     switch (customRe[1]) {
@@ -461,8 +478,20 @@ var Panel=React.createClass({
                             case 'radio':
                                 if(coms[2]!==undefined&&coms[2]!==null)
                                 {
-                                    if (coms[2].split("=>").length >= 2)
-                                        ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={coms[2]}/>
+                                    if (coms[0].split("=>").length >= 2) {
+                                        var ob;
+                                        try {
+                                            ob = eval(coms[2]);
+                                        } catch (e) {
+                                            ob = eval('(' + coms[2] + ')');
+                                        }
+                                        console.log();
+                                        if (Object.prototype.toString.call(ob) == '[object Array]')
+                                            ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob}/>
+                                        else
+                                            ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob.data}
+                                                          required={ob.required}/>
+                                    }
                                     else
                                         ctrl = <Radio ctrlName={coms[0]} data={coms[2]}/>
                                 }else{
@@ -521,7 +550,8 @@ var Panel=React.createClass({
 
             }
             return(
-                <form name="PanelForm" className="form panel" action={this.props.query!==undefined&&this.props.query!==null?this.props.query.url:""}
+                <form name="PanelForm" className="form panel"
+                      action={this.state.query!==undefined&&this.state.query!==null?"serviceHall"+this.state.query.url:""}
                       method="post" style={{backgroundColor: "#edf7ff",boxShadow:"none"}}>
                     <div className="row">
                         <div className="col-sm-12">
