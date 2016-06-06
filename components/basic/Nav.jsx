@@ -246,7 +246,7 @@ var Nav=React.createClass({
                                         <tbody>
                                         <tr>
                                             <td className="mtt_td1">
-                                                <Link to="/password/modify" onClick={linkCb}>{second.label}</Link>
+                                                <Link to="/gradms/bsuims/serviceHobbyLogin.do/password/modify" onClick={linkCb}>{second.label}</Link>
                                             </td>
                                         </tr>
                                         </tbody>

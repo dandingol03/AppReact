@@ -974,11 +974,13 @@ var OrdinaryTable =React.createClass({
                                             case 'input':
                                                 if(row[field]!==undefined&&row[field]!==null){
                                                     var ids;
-                                                    ids=row[field];
+                                                    ids=row[field]
                                                     tds.push(<td key={k++}>
                                                         <input  type="text" value={ids==null||ids==undefined?null:ids}  data-index={i} onChange={inputCb}/>
                                                             </td>)
-                                                        }
+                                                }else{
+                                                    tds.push(<td key={k++}></td>);
+                                                }
                                                 break;
                                             default:
                                                     //text/html内容检查<re>c</re>
@@ -1138,12 +1140,22 @@ var OrdinaryTable =React.createClass({
 
 
                     var title=null;
-                    if(this.props.title!==undefined&&this.props.title!==null)
-                        title=<thead>
-                        <tr>
-                            <th colSpan={colSpan}>{this.props.title}</th>
-                        </tr>
-                        </thead>
+                    if(this.props.title!==undefined&&this.props.title!==null) {
+                        var name=this.props.title;
+                        var reg=/\<(.*?)\s*\S*>(.*?)<\/(.*?)>/;
+                        var re=reg.exec(name);
+                        var re = reg.exec(name);
+                        if(re!==undefined&&re!==null)
+                        {
+                            title = <span dangerouslySetInnerHTML={{__html:name}}/>;
+                        }else {
+                            title = <thead>
+                            <tr>
+                                <td colSpan={colSpan} style={{float:"center"}}>{this.props.title.content}</td>
+                            </tr>
+                            </thead>
+                        }
+                    }
                     tables.push(
                         <table className="table table-bordered center" key={0}>
                             {title}

@@ -86,6 +86,20 @@ var Panel=React.createClass({
             var params = new Object();
             //记载必填项组件的字段
             var required = new Object();
+            for (var i = 0; i < form.getElementsByTagName("textarea").length; i++) {
+                var item = form.getElementsByTagName("textarea")[i];
+                //针对单选
+                if (item.type == 'radio') {
+                    if (item.checked == true)
+                        params[item.name] = item.value;
+
+                } else {
+                    params[item.name] = item.value;
+                }
+                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                    required[item.name] = item.name;
+                }
+            }
             for (var i = 0; i < form.getElementsByTagName("input").length; i++) {
                 var item = form.getElementsByTagName("input")[i];
                 //针对单选
@@ -293,7 +307,7 @@ var Panel=React.createClass({
                     {
                         if(coms.length>1) {
                             if (coms[1] !== null && coms[1] != undefined && coms[1] !== 'download') {
-                                label = (<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
+                                label = (<td key={td$index++} style={{textAlign:"center"}} colSpan={1}>
                                     {name}
                                 </td>);
                             }
@@ -322,7 +336,7 @@ var Panel=React.createClass({
                                 }
                             }
                             else
-                            label=(<td key={td$index++} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
+                            label=(<td key={td$index++} style={{textAlign:"center",padding:"2px"}} colSpan={j==row.length-1?max$cols-j:1}>
                                 {name}
                             </td>);
                         }
@@ -360,15 +374,15 @@ var Panel=React.createClass({
                             case 'query':
                                 if(state.bean!==null&&state.bean!==undefined) {
                                     if (Object.prototype.toString.call(coms[0].split("=>")) == '[object Array]' && coms[0].split("=>").length >= 2) {
-                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
+                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"20%"}}>
                                             {coms[0].split("=>")[1]}</button>;
                                     }
                                     else
-                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
+                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"10%"}}>
                                         {coms[0]}</button>;
                                 }
                                 else
-                                    ctrl=<button type='submit' onClick={clickHandle} style={{width:"100%"}}>{dict[coms[0]].name}</button>;
+                                    ctrl=<button type='submit' onClick={clickHandle} style={{width:"20%"}}>{dict[coms[0]].name}</button>;
                                 //当最后一个为query组件时,取消之前的label td
                                 label=null;
                                 break;
@@ -512,7 +526,7 @@ var Panel=React.createClass({
                         }
                     }
                     if(ctrl!==undefined&&ctrl!==null)
-                        ctrl$comp= <td key={td$index++} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
+                        ctrl$comp= <td key={td$index++} style={{textAlign:"center"}} colSpan={j==row.length-1?max$cols-j:1} >
                                     {ctrl}
                                 </td>;
                     if(autoComplete==true)
@@ -545,14 +559,14 @@ var Panel=React.createClass({
             {
                 title=
                     <tr>
-                        <th colSpan={max$cols}>{this.props.title}</th>
+                        <th colSpan={max$cols}>{this.props.title.content}</th>
                     </tr>
 
             }
             return(
                 <form name="PanelForm" className="form panel"
-                      action={this.state.query!==undefined&&this.state.query!==null?"serviceHall"+this.state.query.url:""}
-                      method="post" style={{backgroundColor: "#edf7ff",boxShadow:"none"}}>
+                      action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
+                      method="post" style={{boxShadow:"none", padding:"40px"}}>
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel" style={{border:"none"}}>
