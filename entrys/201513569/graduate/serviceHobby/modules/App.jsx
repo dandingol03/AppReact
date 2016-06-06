@@ -17,14 +17,15 @@ var App =React.createClass({
     app$init:function(){
 
     },
+
     render:function(){
 
         return (
-            /**
-             * header box part
-             */
+        /**
+         * header box part
+         */
             <div>
-                <Nav logo="./images/school_logo.png" data={MENU}/>
+                <Nav logo="/gradms/serviceHobby/images/school_logo.png" data={MENU}/>
 
                 <div className="keyNavigation">
                     <div className="top">
@@ -79,18 +80,25 @@ var App =React.createClass({
                     </div>
                 </div>
 
-                <HighLight type="Panel"
-                           bean={{
-                                                url:'/bsuims/reactPageDataRequest.do',
-                                                params: {
-                                                    reactActionName: "addApplyInfoInitPanelUseReact",
-                                                    reactPageName  : "gradGreenWayPage"
-                                                }
-                                            }}
+                <HighLight type="OrdinaryTable"
+                           title={<span  style={{ fontSize: "14px",color:" #6EA0FF",fontWeight:"bold",textAlign:"center"}}>个人信息状态</span>}
                            query={{ url:'/bsuims/reactPageDataRequest.do',
-                                reactActionName:"",
-                                reactPageName:""}}
-                           title="绿色通道申请" auto={true}/>
+                                   params: {
+                                      reactActionName: "registerInformationReact",
+                                      reactPageName  : "registerRulePage"
+                                            }
+                                 }}
+                           filterField={{
+                               "stuName":true,
+		                       "stuNum":true,
+		                       "feeStatus":true,
+		                       "baseInfoFillStatus":true,
+		                       "moralityFillStatus":true,
+		                       "greenwayStatus":true,
+		                       "trafiicFillStatus":true,
+                               "studyStateStr":true
+                             }}
+                    />
 
                 <IndexScroll data={Scrolls}/>
 
