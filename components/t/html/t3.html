@@ -46,6 +46,15 @@
             }
 
         }
+
+        function radio_change(target) {
+            console.log();
+            console.log();
+            console.log();
+            console.log();
+            var $target = $(target);
+            console.log("target checked=====" + $target.attr("checked"));
+        }
     </script>
     <script>
         $(document).ready(function(){
@@ -121,5 +130,10 @@
         </li>
     </ul>
 </div>
+<hr/>
+
+<input type="radio" value=1 id="radio1" name="question1" onchange="radio_change(this)"/>
+<input type="radio" value=2 id="radio2" name="question1" onchange="radio_change(this)"/>
+
 </body>
 </html>

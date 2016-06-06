@@ -38,8 +38,6 @@ var Home =React.createClass({
 
      return (
          <div style={{marginTop:"120px"}}>
-             <PasswordModify/>
-
 
              <div className="vcc-index_title_box vcc-index_title_box_1">
                  <div className="vcc-index_title">

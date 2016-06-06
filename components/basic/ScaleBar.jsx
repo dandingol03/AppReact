@@ -101,6 +101,11 @@ var ScaleBar =React.createClass({
             $(obj2).eq(id).show();
         });
     },
+    closeCb: function () {
+        var ref = this.refs.sidebar;
+
+
+    },
     fetch:function(){
         this.queryHandle(
             null,
@@ -221,6 +226,9 @@ var ScaleBar =React.createClass({
                             </ul>
                         </div>
                         {showContents}
+                        <div style={{position:"absolute","paddingTop":"20px","right":"80px"}}>
+                            <input type="button" className="btn_close" value="close"></input>
+                        </div>
                     </div>
             }
 

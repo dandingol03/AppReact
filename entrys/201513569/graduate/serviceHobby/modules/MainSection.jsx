@@ -49,12 +49,20 @@ var MainSection = React.createClass({
                 });
             }
             breadcrumb=
-                <div className="breadcrumb">
+                <div className="breadcrumb" style={{backgroundColor:"#edf7ff"}}>
                     {spans}
+                </div>
+            breadcrumb =
+                <div className="crumb_box">
+                    <div className="crumb_title">
+                        <span className="crumb_title_content">{spans}</span>
+
+                        <div className="crumb_detail">密码修改业务</div>
+                    </div>
                 </div>
         }
         return (
-            <div style={{margin: "300px auto 60px auto",width:"100%"}}>
+            <div style={{margin: "100px auto 0 auto",width:"100%",backgroundColor:"#edf7ff"}}>
                 {breadcrumb}
                 <div ref="mainSection" style={{display:"none"}}>
                     {ctrl}
