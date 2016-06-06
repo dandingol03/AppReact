@@ -121,4 +121,4 @@ var Password=React.createClass({
     }
 })
 
-export default Password
+module.exports = Password

@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/components/basic/scaleBar/scaleBar.css';
+import Panel from '../panel/Panel.jsx';
 
 var TodoActions = require('../../components/flux/actions/TodoActions');
 
@@ -30,7 +31,6 @@ var ScaleBar =React.createClass({
             div_w=(screen_w-960)/2+960;
         }else{
             div_w=960;
-
         }
         var category=this.refs[ref];
         var $category=$(category);
@@ -182,9 +182,26 @@ var ScaleBar =React.createClass({
                     suspends.push(<li className="sus_li" key={i} style={sus_li_style}>{item.label}</li>);
                     showNavs.push(<li className={"sus_li sus"+" "+i} key={i} style={sus_li_style}>{item.label}</li>);
 
+                    //TODO:add component match,first check component type
+                    var ctrl = null;
+                    switch (item.type) {
+                        case 'Panel':
+                            ctrl = <Panel bean={item.content.bean}
+                                          auto={item.content.auto}
+                                          autoComplete={item.content.autoComplete}>
+                            </Panel>
+                            break;
+                        case 'password':
+                            var Password = require('../../components/compounds/password/PasswordElement.jsx');
+                            ctrl = <Password title={item.content.title} action={item.content.action}/>
+                            break;
+                        default:
+                            ctrl = item.content;
+                            break;
+                    }
                     showContents.push(
-                        <div  className="susp_r" style={{display: "block"}} key={i}>
-                            {item.content}
+                        <div className="susp_r" style={{display: "block",paddingLeft:"10%",paddingTop:"20px"}} key={i}>
+                            {ctrl}
                         </div>
                     );
 
@@ -264,4 +281,4 @@ var ScaleBar =React.createClass({
     }
 });
 
-export default ScaleBar;
+module.exports = ScaleBar;
