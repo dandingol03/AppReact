@@ -17,17 +17,7 @@
     "label": "问卷调查",
     "img": "./images/ico/y_55.png",
     "type": "Panel",
-    "content": {
-      "bean": {
-        "url": "/bsuims/reactPageDataRequest.do",
-        "params": {
-          "reactActionName": "getStudentQuestionnaireInitPanel",
-          "reactPageName": "questionnairePage"
-        }
-      },
-      "auto": true,
-      "autoComplete": true
-    }
+    "content":""
   },
   {
     "label": "使用手册",

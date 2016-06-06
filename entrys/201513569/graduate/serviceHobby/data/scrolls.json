@@ -1,6 +1,6 @@
 [
   {
-    "title":"帐户查询","viceTitle":"快速查询各类帐户信息","bottom":"马上查询",
+    "title":"申请绿色通道","viceTitle":"","bottom":"马上申请",
     "down": {
       "title":"请选择帐户类型",
       "labels": [
@@ -15,7 +15,7 @@
   },
 
   {
-    "title":"业务查询","viceTitle":"信用卡,贷款快速申请","bottom":"马上申请",
+    "title":"申请宿舍","viceTitle":"","bottom":"马上申请",
     "down": {
       "title":"请选择在线申请业务类型",
       "labels": [
@@ -28,7 +28,7 @@
   },
 
   {
-    "title":"网点业务预约","viceTitle":"在线填单取号,网点办理","bottom":"马上预约",
+    "title":"申请免修英语","viceTitle":"","bottom":"马上申请",
     "down": {
       "title":"请选择业务类型",
       "labels": [
@@ -42,26 +42,12 @@
   },
 
   {
-    "title":"电话银行菜单定制","viceTitle":"彰显个性 定制电话菜单","bottom":"马上定制",
+    "title":"申请导师","viceTitle":"","bottom":"马上申请",
     "down": {
       "title":"请点击选择定制菜单类",
       "labels": [
         {"name":"choice_radio_5","title":"电话银行菜单定制"},
         {"name":"choice_radio_5","title":"信用卡热线菜单定制"}
-      ]
-    }
-  },
-
-  {
-    "title":"电子银行开通","viceTitle":"金融生活 e路随行","bottom":"马上开通",
-    "down": {
-      "title":"请选择需开通的渠道或服务",
-      "labels": [
-        {"name":"choice_radio_6","title":"e账户"},
-        {"name":"choice_radio_6","title":"个人网上银行"},
-        {"name":"choice_radio_6","title":"手机银行"},
-        {"name":"choice_radio_6","title":"消息服务定制"},
-        {"name":"choice_radio_6","title":"账号支付"}
       ]
     }
   }

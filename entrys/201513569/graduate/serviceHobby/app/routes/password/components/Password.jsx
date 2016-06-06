@@ -29,7 +29,13 @@ var Controller = React.createClass({
                 var k = 0;
                 paths.map(function (item, i) {
                     if (i == 0)
+                    {
                         spans.push(<span className="separator" key={k++}></span>);
+                        if(i==paths.length-1)
+                        {
+                            spans.push(<span className="path-segment" key={k++}>{item}</span>);
+                        }
+                    }
                     else {
                         spans.push(<span className="path-segment" key={k++}>{item}</span>);
                         if (i !== paths.length - 1)
