@@ -1138,10 +1138,11 @@ var OrdinaryTable =React.createClass({
 
 
                     var title=null;
+
                     if(this.props.title!==undefined&&this.props.title!==null)
                         title=<thead>
                         <tr>
-                            <th colSpan={colSpan}>{this.props.title}</th>
+                            <th colSpan={colSpan} >{this.props.title}</th>
                         </tr>
                         </thead>
                     tables.push(

@@ -37,8 +37,7 @@ var Home =React.createClass({
 
 
      return (
-         <div style={{marginTop:"120px"}}>
-             <PasswordModify/>
+         <div  className="total" style={{marginTop:"120px"}}>
 
 
              <div className="vcc-index_title_box vcc-index_title_box_1">

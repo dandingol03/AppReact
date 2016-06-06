@@ -297,7 +297,7 @@ var Nav=React.createClass({
                         <div className="center">
                             <ul className="link">
                                 <li><a href="###">刷新</a></li>
-                                <em className="global-top-item global-top-seperator">|</em>
+                                <strong style={{padding:"0 4px",color: "#ffffff",float: "left",padding: "0 7px",height: "30px",opacity: "0.5"}}>|</strong>
                                 <li><a href="###">退出</a></li>
                             </ul>
                         </div>
@@ -307,8 +307,8 @@ var Nav=React.createClass({
                             {logo}
                             {nav}
                         </div>
-
                     </div>
+                    <div className="topbg"></div>
                 </div>);
         }
     },

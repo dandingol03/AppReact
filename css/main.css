@@ -12,7 +12,7 @@ body {
     margin: 0;
     font-family: lucida, verdana, arial, sans-serif;
     font-size:12px;
-    background-image: url(../icon/body.gif);
+    /*background-image: url(../icon/body.gif);*/
     text-align: center;
 }
 .table.table-bordered.center.table{

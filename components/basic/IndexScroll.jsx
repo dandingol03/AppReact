@@ -259,12 +259,7 @@ var IndexScroll=React.createClass({
             }
             return (
                 <div className="index_scroll" style={{zIndex:"9",marginTop:"20px"}} ref="index_scroll">
-                    <div className="index_scroll_left">
-                        <a href="javascript:void(0)" ></a>
-                    </div>
-                    <div className="index_scroll_right index_scroll_right_a_hover">
-                        <a href="javascript:void(0)" ></a>
-                    </div>
+
                     <div className="index_scroll_box" style={{height: "120px"}} >
                         <div className="index_scroll_main">
                             <ul>
@@ -279,9 +274,9 @@ var IndexScroll=React.createClass({
 
     },
     componentDidMount:function(){
-        this.clickBox("index_scroll",".index_scroll_bottom",".index_scroll_down","index_scroll_bottom_up");
+        /*this.clickBox("index_scroll",".index_scroll_bottom",".index_scroll_down","index_scroll_bottom_up");
         this.index_scroll_02("index_scroll",'.index_scroll_main','.index_scroll_right','.index_scroll_left','243','.index_scroll_li');
-
+*/
     }
 });
 export default IndexScroll;
