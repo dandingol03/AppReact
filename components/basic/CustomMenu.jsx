@@ -22,7 +22,7 @@ var CustomMenu = React.createClass({
                     recurseUnSelected(leaf_key, item[leaf_key], out$param);
                 }
                 else {//叶结点
-                    var leaf = "{link:'',src:'" + item.src + "',type:'check',icon:'add',name:'" + item.name + "'," +
+                    var leaf = "{link:'',src:'" + "/images/function4.png" + "',type:'check',icon:'add',name:'" + item.name + "'," +
                         "id:'" + (item.id !== undefined && item.id !== null ? item.id : -1) + "'}|image";
                     out$param.push({menu: leaf});
                 }
@@ -52,37 +52,62 @@ var CustomMenu = React.createClass({
         });
 
     },
-    recurseSelectedMenu: function (leaf_key, global, in$param, out$param) {
+    countLeaf          : function (leaf_key, in$param, out$param) {
+        var countLeaf = this.countLeaf;
+        in$param.map(function (node, i) {
+            if (node[leaf_key] == undefined || node[leaf_key] == null) {
+                out$param.count++;
+            } else {
+                countLeaf(leaf_key, node[leaf_key], out$param);
+            }
+        });
+    },
+    recurseSelectedMenu: function (leaf_key, global, in$param, out$param, selectEnable) {
         if (in$param !== undefined && in$param !== null) {
             var state = this.state;
             var recurseSelectedMenu = this.recurseSelectedMenu;
             in$param.map(function (item, i) {
                 if (item[leaf_key] == undefined || item[leaf_key] == null) {
                     //增加已选中菜单的回调事件
-                    var checkCb = function (evt) {
-                        var target = evt.target;
-                        if (target.checked == true || target.checked == "true") {
+                    var checkCb = function (ob) {
+                        if (ob == true || ob == "true") {
+                            console.log();
+                            console.log();
+                            console.log();
+                            console.log();
                             state.menu[item.id] = false;
                         } else {
                             delete state.menu[item.id];
                         }
                     };
-                    out$param.push(
-                        <div key={global.index++}>
-                            {state.customizing == true ?
-                                <Image link={item.link}
-                                       src="./images/function4.png"
-                                       id={item.id}
-                                       type={item.type}
-                                       onChange={checkCb}
-                                    /> : <Image link={item.link}
-                                                src="./images/function4.png"/>}
+                    if (selectEnable == true) {
+                        out$param.push(
+                            <div key={global.index++}
+                                 style={{position:"relative",paddingBottom:"15px",display:"inline-block",marginLeft:"30px"}}>
+                                {state.customizing == true ?
+                                    <Image link={item.link}
+                                           src="/images/function4.png"
+                                           id={item.id}
+                                           type="check"
+                                           checkCb={checkCb}
+                                        /> : <Image link={item.link}
+                                                    src="/images/function4.png"/>}
                             <span
-                                style={{position:"absolute",bottom:"2px",color:"#fff",marginLeft:"-20px"}}>{item.name}</span>
-                        </div>);
+                                style={{position:"absolute",color:"#fff",marginLeft:"-40px"}}>{item.name}</span>
+                            </div>);
+                    } else {
+                        out$param.push(
+                            <div key={global.index++}
+                                 style={{position:"relative",paddingBottom:"15px",display:"inline-block",marginLeft:"30px"}}>
+                                <Image link={item.link}
+                                       src="/images/function4.png"/>
+                            <span
+                                style={{position:"absolute",color:"#fff",marginLeft:"-40px"}}>{item.name}</span>
+                            </div>);
+                    }
                 }
                 else {
-                    recurseSelectedMenu(leaf_key, global, item[leaf_key], out$param);
+                    recurseSelectedMenu(leaf_key, global, item[leaf_key], out$param, selectEnable);
                 }
             });
         }
@@ -91,7 +116,7 @@ var CustomMenu = React.createClass({
         if (ob !== undefined && ob !== null) {
             var state = this.state;
             if (!isNaN(ob.index) && ob.checked !== undefined && ob.checked !== null) {
-                if (ob.checked == true) {
+                if (ob.selected == true) {
                     state.menu[ob.index] = true;
                 } else {
                     delete state.menu[ob.index];
@@ -125,7 +150,7 @@ var CustomMenu = React.createClass({
             }
             var menus = new Array();
             for (var index in this.state.menu) {
-                menus.push(parseInt(index));
+                menus.push({id: parseInt(index), selected: this.state.menu[index]});
             }
             params.menu = JSON.stringify(menus);
             ProxyQ.queryHandle(
@@ -210,6 +235,7 @@ var CustomMenu = React.createClass({
         } else {
             var selectedMenus = null;
             var unselectedMenus = new Object();
+            var candidateMenus = null;
             unselectedMenus.arr = null;
             var customButton =
                 <div key={-1}>
@@ -233,7 +259,9 @@ var CustomMenu = React.createClass({
                 //搜集已选中菜单
                 if (state.selected !== undefined && state.selected !== null && Object.prototype.toString.call(state.selected) == '[object Array]' && state.selected.length > 0) {
                     selectedMenus = new Array();
-                    this.recurseSelectedMenu("sub", global, state.selected, selectedMenus);
+                    this.recurseSelectedMenu("sub", global, state.selected, selectedMenus, false);
+                    candidateMenus = new Array();
+                    this.recurseSelectedMenu("sub", global, state.selected, candidateMenus, true);
                 }
                 if (state.customizing == true) {
                     unselectedMenus.arr = new Array();
@@ -243,12 +271,16 @@ var CustomMenu = React.createClass({
                     }
                 }
 
-                var selectedCount = state.selected !== undefined && state.selected !== null ? state.selected.length : 0;
+                var countOb = new Object();
+                countOb.count = 0;
+                if (state.selected !== undefined && state.selected !== null) {
+                    this.countLeaf("sub", state.selected, countOb);
+                }
                 return <div className="customMenu">
                     <div className="bottom">
                         <div>
                             {customButton}
-                            <div style={{paddingLeft:"100px"}}>{selectedMenus}</div>
+                            <div style={{paddingLeft:"100px"}} className="selected">{selectedMenus}</div>
                         </div>
                         <div className="modal fade" ref="custom_modal" style={{display:"none"}}>
                             <div className="modal-dialog" style={{width:"980px"}}>
@@ -261,11 +293,11 @@ var CustomMenu = React.createClass({
                                         <h4 className="modal-title" style={{textAlign:"left"}}>
                                             定制常用功能
                                         </h4>
-                                        <h5 style={{textAlign:"right",marginRight:"7%"}}>您已选择了{selectedCount}个功能</h5>
+                                        <h5 style={{textAlign:"right",marginRight:"7%"}}>您已选择了{countOb.count}个功能</h5>
                                     </div>
                                     <div className="modal-body" style={{padding:"15px"}}>
                                         <div className="uncandidate box">
-                                            {selectedMenus}
+                                            {candidateMenus}
                                         </div>
                                         <Tab
                                             data={unselectedMenus.arr}

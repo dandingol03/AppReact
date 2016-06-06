@@ -27,6 +27,7 @@ var App =React.createClass({
             <div>
                 <Nav logo="/gradms/serviceHobby/images/school_logo.png" data={MENU}/>
 
+
                 <div className="keyNavigation">
                     <div className="top">
                         <div className="block left">
