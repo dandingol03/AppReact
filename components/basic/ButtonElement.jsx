@@ -10,7 +10,7 @@ import TodoStore from '../_event/TodoStore.js';
  * @example
  *
  * <ButtonElement cb={this.cb} />;
- * <dw/>
+ * <dwjj/>
  *
  *
  *
