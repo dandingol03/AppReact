@@ -168,9 +168,9 @@ var EmbedTable=React.createClass({
                                         var check = function (ob) {
                                             if (props.checkCb !== undefined && props.checkCb !== null) {
                                                 if (ob == true)
-                                                    props.checkCb({index: source.id, selected: true});
+                                                    props.checkCb({index: source.id, checked: true});
                                                 else
-                                                    props.checkCb({index: source.id, selected: false});
+                                                    props.checkCb({index: source.id, checked: false});
                                             }
                                         }
                                         sub$tds.push(
