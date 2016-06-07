@@ -76,7 +76,7 @@ var CustomMenu = React.createClass({
                                        type={item.type}
                                        onChange={checkCb}
                                     /> : <Image link={item.link}
-                                                src="./images/function4.png"/>}
+                                                src=""/>}
                             <span
                                 style={{position:"absolute",bottom:"2px",color:"#fff",marginLeft:"-20px"}}>{item.name}</span>
                         </div>);
