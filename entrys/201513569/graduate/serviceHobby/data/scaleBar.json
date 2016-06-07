@@ -1,12 +1,12 @@
 [
   {
     "label": "联系方式",
-    "img": "/gradms/serviceHobby/images/ico/y1.png",
+    "img": "./images/ico/y1.png",
     "content": ""
   },
   {
     "label": "修改密码",
-    "img": "/gradms/serviceHobby/images/ico/y3.png",
+    "img": "./images/ico/y3.png",
     "type": "password",
     "content": {
       "title": "修改密码",
@@ -15,7 +15,7 @@
   },
   {
     "label": "问卷调查",
-    "img": "/gradms/serviceHobby/images/ico/y_55.png",
+    "img": "./images/ico/y_55.png",
     "type": "Panel",
     "content": {
       "bean": {
@@ -31,7 +31,7 @@
   },
   {
     "label": "使用手册",
-    "img": "/gradms/serviceHobby/images/ico/y4.png",
+    "img": "./images/ico/y4.png",
     "content": ""
   }
 ]
