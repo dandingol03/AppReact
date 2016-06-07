@@ -5,6 +5,10 @@ import PanelTable from '../compounds/panelTable/PanelTable.jsx';
 import OrdinaryTable from '../forms/OrdinaryTable.jsx';
 import '../../css/components/basic/highLight.css';
 
+
+/**
+ * dw
+ */
 var HighLight = React.createClass({
 
     render           : function () {
