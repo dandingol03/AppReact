@@ -1,7 +1,6 @@
 import React from "react";
 import TodoStore from '../_event/TodoStore.js';
 
-
 /**
  *
  *
@@ -11,6 +10,10 @@ import TodoStore from '../_event/TodoStore.js';
  * @example
  *
  * <ButtonElement cb={this.cb} />;
+ * <dw/>
+ *
+ *
+ *
  *
  * @see {@link http://www.w3school.com.cn/json/|u can learn more about JSONObject if u click this}
  */
@@ -18,7 +21,6 @@ import TodoStore from '../_event/TodoStore.js';
 var ButtonElement=React.createClass({
             feedbackCb:function(ob)
             {
-
                 this.state.feedback.params[ob.id]=ob.content;
                 var count=0;
                 for(var item in this.state.feedback.params)
