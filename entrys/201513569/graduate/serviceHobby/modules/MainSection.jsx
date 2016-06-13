@@ -3,37 +3,36 @@ import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
 import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
-var  SyncActions = require('../../../../../components/flux/actions/SyncActions');
+var SyncActions = require('../../../../../components/flux/actions/SyncActions');
 
 
 var MainSection = React.createClass({
-    syncHandle:function(ob){
+    syncHandle     : function (ob) {
         //TODO:create new ob or update...
-        var route=this.state.route[0];
+        var route = this.state.route[0];
         var label;
-        switch(route)
+        switch (route)
         {
             case "/password/modify":
-                label="密码修改";
+                label = "密码修改";
                 break;
             case "/allCourseQuery":
-                label="成绩查询";
+                label = "成绩查询";
                 break;
             default:
-                label="";
+                label = "";
                 break;
         }
-        if(ob.completed)
-        {
+        if (ob.completed) {
             SyncActions.cleanRoute(route);
         }
         else
-            SyncActions.updateData(route,ob.required,label);
+            SyncActions.updateData(route, ob.required, label);
     },
-    getInitialState:function(){
-        var route=new Array();
-            route.push(undefined);
-      return({route:route});
+    getInitialState: function () {
+        var route = new Array();
+        route.push(undefined);
+        return ({route: route});
     },
     render:function(){
         var path=this.props.route.path;
@@ -41,9 +40,9 @@ var MainSection = React.createClass({
         var breadcrumb;
         if(path!==undefined&&path!==null)
         {
-            var route=this.state.route;
-            if(route.length!=1)
-                route.splice(0,1);
+            var route = this.state.route;
+            if (route.length != 1)
+                route.splice(0, 1);
             route.push(path);
             switch(path)
             {
@@ -51,7 +50,7 @@ var MainSection = React.createClass({
                     ctrl=<PasswordModify/>
                     break;
                 case "/allCourseQuery":
-                    ctrl=<AllCourseQuery syncHandle={this.syncHandle} route={path}></AllCourseQuery>
+                    ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}></AllCourseQuery>
                     break;
                 default:
                     break;

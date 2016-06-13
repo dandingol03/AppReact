@@ -4,19 +4,18 @@ import '../../css/components/basic/scaleBar/scaleBar.css';
 import Panel from '../panel/Panel.jsx';
 import Attention from '../basic/Attention.jsx';
 var Password = require('../../components/compounds/password/PasswordElement.jsx');
-var SyncStore=require('../../components/flux/stores/SyncStore');
+var SyncStore = require('../../components/flux/stores/SyncStore');
 
 /**
  * 1.通过ScaleBar.jsx控件直接往Attention组件注入未完成业务
  */
 
 var ScaleBar =React.createClass({
-    _onChange:function(){
-        var stores=SyncStore.getAll();
-        for(var id in stores)
-        {
-            console.log("id="+stores[id].route);
-            console.log("data="+stores[id].data);
+    _onChange           : function () {
+        var stores = SyncStore.getAll();
+        for (var id in stores) {
+            console.log("id=" + stores[id].route);
+            console.log("data=" + stores[id].data);
         }
         this.setState({_todos: stores});
     },
@@ -175,7 +174,7 @@ var ScaleBar =React.createClass({
             auto=this.props.auto;
 
 
-        return ({data:data,data$initialed:data$initialed,auto:auto,_todos:null});
+        return ({data: data, data$initialed: data$initialed, auto: auto, _todos: null});
     },
     render:function(){
         if(this.state.data$initialed!==true&&(this.props.data==null||this.props.data==undefined))
@@ -193,19 +192,19 @@ var ScaleBar =React.createClass({
                 var suspends=new Array();
                 var showNavs=new Array();
                 var showContents=new Array();
-                var state=this.state;
-                state.data.map(function(item,i) {
+                var state = this.state;
+                state.data.map(function (item, i) {
 
                     var background="url('"+item.img+"') no-repeat 10px 30px";
                     var sus_li_style={background:background};
                     suspends.push(<li className="sus_li" key={i} style={sus_li_style}>
-                        {item.label!="业务提醒"?null:<span style={{color:"#f00"}}>{i}</span>}
+                        {item.label != "业务提醒" ? null : <span style={{color:"#f00"}}>{i}</span>}
                         <span style={{marginLeft:"20px"}}>{item.label}</span>
                     </li>);
 
                     showNavs.push(
                         <li className={"sus_li sus"+" "+i} key={i} style={sus_li_style}>
-                            {item.label!="业务提醒"?null:<span style={{color:"#f00"}}>{i}</span>}
+                            {item.label != "业务提醒" ? null : <span style={{color:"#f00"}}>{i}</span>}
                             <span style={{marginLeft:"20px"}}>{item.label}</span>
                         </li>);
 
@@ -222,10 +221,10 @@ var ScaleBar =React.createClass({
                             ctrl = <Password title={item.content.title} action={item.content.action}/>
                             break;
                         case 'Attention':
-                            var _todos=null;
-                            if(state._todos!==undefined&&state._todos!==null)
-                                _todos=state._todos;
-                            ctrl=<Attention {...item.content} data={_todos}/>
+                            var _todos = null;
+                            if (state._todos !== undefined && state._todos !== null)
+                                _todos = state._todos;
+                            ctrl = <Attention {...item.content} data={_todos}/>
                             break;
                         default:
                             ctrl = item.content;
@@ -239,7 +238,7 @@ var ScaleBar =React.createClass({
 
                 });
 
-                susp_nav=<div className="suspend susp_nav" id="suspend" style={{width:"60px", display:"block"}}>
+                susp_nav = <div className="suspend susp_nav" id="suspend" style={{width:"60px", display:"block"}}>
                             <ul>
                                 {suspends}
                             </ul>
@@ -254,7 +253,7 @@ var ScaleBar =React.createClass({
                         </div>
                         {showContents}
                         <div style={{position:"absolute",bottom:"20px",right:"80px"}}>
-                            <button  className="btn_close btn-danger" style={{width:"200px",border:"0px"}}> 关闭</button>
+                            <button className="btn_close btn-danger" style={{width:"200px",border:"0px"}}> 关闭</button>
                         </div>
                     </div>
             }
@@ -314,7 +313,7 @@ var ScaleBar =React.createClass({
 
         this.clickhide3("sidebar",".btn_close","#fadee",".susp_show","#suspend")
     },
-    componentWillUnmount:function(){
+    componentWillUnmount: function () {
         //remove event changeListener
         SyncStore.removeChangeListener(this._onChange);
     }
