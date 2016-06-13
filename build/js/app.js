@@ -4,6 +4,8 @@
 
 window.App=new Object();
 
+window.App._instances = new Object();
+
 window.App.getModel=function(){
     return "debug";
 }
@@ -15,4 +17,30 @@ window.App.load = function () {
 }
 window.App.unload = function () {
     $("#loading").fadeOut();
+}
+window.App.getDeployPath = function () {
+    return "/ReactJPChatter/serviceHobby/";
+}
+window.App.swing = function (ob) {
+    var $ob;
+    if (Object.prototype.toString.call(ob) == '[object String]')
+        $ob = $(ob);
+    $ob.addClass('animated swing');
+    $ob.on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function () {
+            $ob.removeClass('animated swing');
+            App._instances[$ob.selector] = setTimeout("App.swing('" + ob + "')", 1000);
+        });
+}
+window.App.unSwing = function (ob) {
+    var $ob;
+    if (Object.prototype.toString.call(ob) == '[object String]')
+        $ob = $(ob);
+    if ($ob !== undefined && $ob !== null) {
+        if (App._instances[ob] !== undefined && App._instances[ob] !== null) {
+            clearTimeout(App._instances[ob]);
+            delete App._instances[ob];
+        }
+    }
+
 }
