@@ -30,7 +30,7 @@ var App = React.createClass({
          * header box part
          */
             <div>
-                <Nav logo="./images/school_logo.png" data={MENU}/>
+                <Nav logo="images/school_logo.png" data={MENU}/>
 
                 <div className="keyNavigation">
                     <div className="top">

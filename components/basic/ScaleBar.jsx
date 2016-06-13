@@ -197,7 +197,7 @@ var ScaleBar =React.createClass({
                 var state = this.state;
                 state.data.map(function (item, i) {
 
-                    var background = "url('" + App.getDeployPath() + item.img + "') no-repeat 10px 30px";
+                    var background = "url('" + App.getResourceDeployPrefix() + item.img + "') no-repeat 10px 30px";
                     var sus_li_style={background:background};
                     suspends.push(<li className="sus_li" key={i} style={sus_li_style}>
                         {item.label != "业务提醒" ? null : <span style={{color:"#f00"}}>{i}</span>}
