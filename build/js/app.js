@@ -21,6 +21,9 @@ window.App.unload = function () {
 window.App.getDeployPath = function () {
     return "/ReactJPChatter/serviceHobby/";
 }
+window.App.getAppRoute = function () {
+    return "/ReactJPChatter/serviceHobby/index.html";
+}
 window.App.swing = function (ob) {
     var $ob;
     if (Object.prototype.toString.call(ob) == '[object String]')
