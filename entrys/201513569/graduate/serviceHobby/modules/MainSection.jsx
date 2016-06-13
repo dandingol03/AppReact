@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
-import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
+import AllCourseQuery from './../allCourseQuery/allCourseQueryMain.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
 var SyncActions = require('../../../../../components/flux/actions/SyncActions');
 
