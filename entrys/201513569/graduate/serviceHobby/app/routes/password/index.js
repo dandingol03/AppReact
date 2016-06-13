@@ -3,10 +3,18 @@
  */
 
 module.exports = {
-    path: 'password/:operation',
+    path: 'password',
+    getChildRoutes(location, cb) {
+        require.ensure([], (require) => {
+            cb(null, [
+                require('./routes/PasswordModify'),
+                require('./routes/Assignment')
+            ])
+        })
+    },
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            cb(null, require('./components/Controller'))
+            cb(null, require('./components/Password'))
         })
     }
 }

@@ -63,6 +63,18 @@ var ProxyQ = {
             return "";
 
     },
+    es6Props:function(fields,ob){
+        var filter=new Object();
+        var other=new Object();
+        fields.map(function(field,i) {
+           if(ob[field]!==undefined&&ob[field]!==null)
+                filter[field]=ob[field];
+            else
+                other[field]=ob[field];
+        });
+        return ({filter:filter,other:other});
+
+    },
     queryHandle: function (type, url, params, dataType, callback) {
         var proxyUrl = url;
         if(App.getModel()=="debug")

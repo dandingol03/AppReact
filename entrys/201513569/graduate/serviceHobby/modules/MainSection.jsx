@@ -1,18 +1,39 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
+import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
-var  TodoStore = require('../../../../../components/flux/stores/TodoStore');
+var  SyncActions = require('../../../../../components/flux/actions/SyncActions');
+
 
 var MainSection = React.createClass({
-    _onChange: function() {
-        var stores= TodoStore.getAll();
-        for(var id in stores)
+    syncHandle:function(ob){
+        //TODO:create new ob or update...
+        var route=this.state.route[0];
+        var label;
+        switch(route)
         {
-            console.log("id="+stores[id].id);
-            console.log("text="+stores[id].text);
-            console.log();
+            case "/password/modify":
+                label="密码修改";
+                break;
+            case "/allCourseQuery":
+                label="成绩查询";
+                break;
+            default:
+                label="";
+                break;
         }
+        if(ob.completed)
+        {
+            SyncActions.cleanRoute(route);
+        }
+        else
+            SyncActions.updateData(route,ob.required,label);
+    },
+    getInitialState:function(){
+        var route=new Array();
+            route.push(undefined);
+      return({route:route});
     },
     render:function(){
         var path=this.props.route.path;
@@ -20,10 +41,17 @@ var MainSection = React.createClass({
         var breadcrumb;
         if(path!==undefined&&path!==null)
         {
+            var route=this.state.route;
+            if(route.length!=1)
+                route.splice(0,1);
+            route.push(path);
             switch(path)
             {
                 case "/password/modify":
                     ctrl=<PasswordModify/>
+                    break;
+                case "/allCourseQuery":
+                    ctrl=<AllCourseQuery syncHandle={this.syncHandle} route={path}></AllCourseQuery>
                     break;
                 default:
                     break;
@@ -48,10 +76,6 @@ var MainSection = React.createClass({
 
                 });
             }
-            breadcrumb=
-                <div className="breadcrumb" style={{backgroundColor:"#edf7ff"}}>
-                    {spans}
-                </div>
             breadcrumb =
                 <div className="crumb_box">
                     <div className="crumb_title">
@@ -62,9 +86,9 @@ var MainSection = React.createClass({
                 </div>
         }
         return (
-            <div style={{margin: "100px auto 0 auto",width:"100%",backgroundColor:"#edf7ff"}}>
+            <div style={{margin: "100px auto 0 auto",paddingBottom:"200px",width:"100%",backgroundColor:"#edf7ff"}}>
                 {breadcrumb}
-                <div ref="mainSection" style={{display:"none"}}>
+                <div ref="mainSection" style={{display:"none",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
                     {ctrl}
                 </div>
             </div>
@@ -76,8 +100,8 @@ var MainSection = React.createClass({
         //TodoStore.addChangeListener(this._onChange);
         $(this.refs["mainSection"]).slideDown(300);
     },
-
     componentWillUnmount: function() {
+        //TODO:emit change
         $(this.refs["mainSection"]).slideUp(300);
         //TodoStore.removeChangeListener(this._onChange);
     }

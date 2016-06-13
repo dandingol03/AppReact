@@ -7,6 +7,9 @@ import Radio from '../../components/basic/Radio.jsx';
 import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
 var ProxyQ=require('../proxy/ProxyQ');
+var SyncStore=require('../flux/stores/SyncStore');
+
+
 
 /**
  *
@@ -86,6 +89,13 @@ var Panel=React.createClass({
             var params = new Object();
             //记载必填项组件的字段
             var required = new Object();
+            for (var i = 0; i < form.getElementsByTagName("textarea").length; i++) {
+                var item = form.getElementsByTagName("textarea")[i];
+                params[item.name] = item.value;
+                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                    required[item.name] = item.name;
+                }
+            }
             for (var i = 0; i < form.getElementsByTagName("input").length; i++) {
                 var item = form.getElementsByTagName("input")[i];
                 //针对单选
@@ -102,6 +112,7 @@ var Panel=React.createClass({
             }
             if(this.props.clickHandle!==undefined&&this.props.clickHandle!==null)
             {
+                this.props.syncHandle({completed:true});
                 this.props.clickHandle(params);
             }else{//如果本组件为最顶层组件
 
@@ -113,8 +124,8 @@ var Panel=React.createClass({
                             return;
                         }
                     }
-
                     params = Object.assign(this.state.query.params, params);
+                    this.props.syncHandle({completed:true});
                     ProxyQ.queryHandle(
                         null,
                         this.state.query.url,
@@ -232,6 +243,14 @@ var Panel=React.createClass({
         if(this.state.data!==undefined&&this.state.data!==null&&Object.prototype.toString.call(this.state.data)=='[object Array]')
         {
 
+            //获取之前应用数据
+            var _todos;
+            if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null)
+            {
+                _todos=SyncStore.getInContext(this.props.route);
+            }
+
+
             //保存最大列宽,每行的单元格数组的label和控件各自放一个td
             var max$cols=1;
                 this.state.data.map(function(item,i) {
@@ -293,7 +312,7 @@ var Panel=React.createClass({
                     {
                         if(coms.length>1) {
                             if (coms[1] !== null && coms[1] != undefined && coms[1] !== 'download') {
-                                label = (<td key={td$index++} style={{textAlign:"left"}} colSpan={1}>
+                                label = (<td key={td$index++} style={{textAlign:"center"}} colSpan={1}>
                                     {name}
                                 </td>);
                             }
@@ -322,7 +341,7 @@ var Panel=React.createClass({
                                 }
                             }
                             else
-                            label=(<td key={td$index++} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
+                            label=(<td key={td$index++} style={{textAlign:"center",padding:"2px"}} colSpan={j==row.length-1?max$cols-j:1}>
                                 {name}
                             </td>);
                         }
@@ -360,15 +379,15 @@ var Panel=React.createClass({
                             case 'query':
                                 if(state.bean!==null&&state.bean!==undefined) {
                                     if (Object.prototype.toString.call(coms[0].split("=>")) == '[object Array]' && coms[0].split("=>").length >= 2) {
-                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
+                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"20%"}}>
                                             {coms[0].split("=>")[1]}</button>;
                                     }
                                     else
-                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"100%"}}>
+                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"10%"}}>
                                         {coms[0]}</button>;
                                 }
                                 else
-                                    ctrl=<button type='submit' onClick={clickHandle} style={{width:"100%"}}>{dict[coms[0]].name}</button>;
+                                    ctrl=<button type='submit' onClick={clickHandle} style={{width:"20%"}}>{dict[coms[0]].name}</button>;
                                 //当最后一个为query组件时,取消之前的label td
                                 label=null;
                                 break;
@@ -384,19 +403,32 @@ var Panel=React.createClass({
                                 {
                                     if(coms[2]!==null&&coms[2]!==undefined)
                                     {
-                                        //input组件扩展至第3个字段
-                                        switch(coms[2])
+                                        var data=null;
+                                        if(_todos!==undefined&&_todos!==null&&_todos[ctrlName]!==undefined&&_todos[ctrlName]!==null)
+                                            data=_todos[ctrlName];
+                                        console.log();
+                                        console.log();
+                                        console.log();
+                                        console.log();
+                                        try{
+                                            var ob=eval('('+coms[2]+')');
+                                            ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
+                                        }catch(e)
                                         {
-                                            case 'false':
-                                                ctrl=<input type='text' name={ctrlName} disabled={true}/>
-                                                break;
-                                            case 'true':
-                                                ctrl=<input type='text' name={ctrlName} />
-                                                break;
-                                            default:
-                                                ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
-                                                break;
+                                            switch(coms[2])
+                                            {
+                                                case 'false':
+                                                    ctrl=<input type='text' name={ctrlName} disabled={true}/>
+                                                    break;
+                                                case 'true':
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={data}/>
+                                                    break;
+                                                default:
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
+                                                    break;
+                                            }
                                         }
+
                                     }
                                 }
                                 else
@@ -512,7 +544,7 @@ var Panel=React.createClass({
                         }
                     }
                     if(ctrl!==undefined&&ctrl!==null)
-                        ctrl$comp= <td key={td$index++} style={{textAlign:"left"}} colSpan={j==row.length-1?max$cols-j:1}>
+                        ctrl$comp= <td key={td$index++} style={{textAlign:"center"}} colSpan={j==row.length-1?max$cols-j:1} >
                                     {ctrl}
                                 </td>;
                     if(autoComplete==true)
@@ -545,14 +577,14 @@ var Panel=React.createClass({
             {
                 title=
                     <tr>
-                        <th colSpan={max$cols}>{this.props.title}</th>
+                        <th colSpan={max$cols}>{this.props.title.content}</th>
                     </tr>
 
             }
             return(
                 <form name="PanelForm" className="form panel"
-                      action={this.state.query!==undefined&&this.state.query!==null?"serviceHall"+this.state.query.url:""}
-                      method="post" style={{backgroundColor: "#edf7ff",boxShadow:"none"}}>
+                      action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
+                      method="post" style={{boxShadow:"none", padding:"40px"}}>
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel" style={{border:"none"}}>
@@ -579,6 +611,35 @@ var Panel=React.createClass({
                         <table></table>
                     </div>
                 </div>);
+        }
+    },
+    componentWillUnmount:function(){//对象失效
+        if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null)
+        {
+            //collect required fields
+            var form=document.getElementsByName('PanelForm')[0];
+            var required = new Object();
+            for (var i = 0; i < form.getElementsByTagName("textarea").length; i++) {
+                var item = form.getElementsByTagName("textarea")[i];
+                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                    if(item.value!==undefined&&item.value!==null&&item.value!="")
+                        required[item.name] = item.value;
+                }
+            }
+            for (var i = 0; i < form.getElementsByTagName("input").length; i++) {
+                var item = form.getElementsByTagName("input")[i];
+                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                    if(item.value!==undefined&&item.value!==null&&item.value!="")
+                        required[item.name] = item.value;
+                }
+            }
+
+            if(required!==undefined&&required!==null)
+            {
+                this.props.syncHandle({completed:false,required:required});
+            }
+            else
+                this.props.syncHandle({completed:true});
         }
     }
 });

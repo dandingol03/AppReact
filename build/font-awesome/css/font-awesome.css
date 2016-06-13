@@ -1907,3 +1907,15 @@ a .icon-flip-vertical:before {
 .fa-gears:before, .fa-cogs:before {
     content: "\f085";
 }
+
+.fa-tasks:before {
+    content: "\f0ae";
+}
+
+.fa-envelope:before {
+    content: "\f0e0";
+}
+
+.fa-bell:before {
+    content: "\f0f3";
+}

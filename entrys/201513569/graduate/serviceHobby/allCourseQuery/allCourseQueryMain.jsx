@@ -9,7 +9,7 @@ function Boot()
     render(<Panel
             title="query school courses"
             bean={{
-                url:"/gradms/bsuims/reactPageDataRequest.do",
+                url:"/bsuims/reactPageDataRequest.do",
                 params:{
                 reactActionName:"allCourseQueryInit",
                 reactPageName:"newCultivateAllCourseQueryPage"

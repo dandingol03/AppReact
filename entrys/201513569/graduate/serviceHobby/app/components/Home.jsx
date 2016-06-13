@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-var News = require('.//News.jsx');
+var News = require('./News.jsx');
 var Tab = require('../../../../../../components/basic/Tab.jsx');
 var NEWS = require('../../data/news.json');
 import '../../../../../../css/serviceHobby/basic/home.css';
@@ -37,6 +37,8 @@ var Home = React.createClass({
 
         return (
             <div style={{marginTop:"120px"}}>
+
+                <News data={NEWS}/>
 
                 <div className="vcc-index_title_box vcc-index_title_box_1">
                     <div className="vcc-index_title">

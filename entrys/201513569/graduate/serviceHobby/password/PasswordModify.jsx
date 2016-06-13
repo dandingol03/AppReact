@@ -6,7 +6,7 @@ var PasswordModify=React.createClass({
     render:function(){
 
         var title="修改密码";
-        var action="/ReactJPChatter/react/commitPassword.do";
+        var action="/serviceHall/react/commitPassword.do";
 
         return(
             <Password title={title} action={action}/>

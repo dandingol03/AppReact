@@ -14,6 +14,7 @@ render((
         <Route path="/" component={App}>
             <IndexRoute component={Home}/>
             <Route path="/password/modify" component={MainSection} />
+            <Route path="/allCourseQuery" component={MainSection}/>
         </Route>
     </Router>
 ), document.getElementById('root'))

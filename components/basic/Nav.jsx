@@ -246,7 +246,7 @@ var Nav=React.createClass({
                                         <tbody>
                                         <tr>
                                             <td className="mtt_td1">
-                                                <Link to="/password/modify" onClick={linkCb}>{second.label}</Link>
+                                                <Link to={second.route!==undefined&&second.route!==null?second.route:"/password/modify"} onClick={linkCb}>{second.label}</Link>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -296,6 +296,7 @@ var Nav=React.createClass({
                     <div id="navigation">
                         <div className="center">
                             <ul className="link">
+                                <li><a href="" className="fa fa-bell-o"></a></li>
                                 <li><a href="###">刷新</a></li>
                                 <em className="global-top-item global-top-seperator">|</em>
                                 <li><a href="###">退出</a></li>

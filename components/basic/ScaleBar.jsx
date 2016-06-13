@@ -2,10 +2,24 @@ import React from 'react';
 import {render} from 'react-dom';
 import '../../css/components/basic/scaleBar/scaleBar.css';
 import Panel from '../panel/Panel.jsx';
+import Attention from '../basic/Attention.jsx';
+var Password = require('../../components/compounds/password/PasswordElement.jsx');
+var SyncStore=require('../../components/flux/stores/SyncStore');
 
-var TodoActions = require('../../components/flux/actions/TodoActions');
+/**
+ * 1.通过ScaleBar.jsx控件直接往Attention组件注入未完成业务
+ */
 
 var ScaleBar =React.createClass({
+    _onChange:function(){
+        var stores=SyncStore.getAll();
+        for(var id in stores)
+        {
+            console.log("id="+stores[id].route);
+            console.log("data="+stores[id].data);
+        }
+        this.setState({_todos: stores});
+    },
     clickhide3:function(ref,sel1,sel2,sel3,sel4)
     {
         var category=this.refs[ref];
@@ -45,8 +59,7 @@ var ScaleBar =React.createClass({
             console.log();
             console.log();
             console.log();
-            var text="click 3";
-            TodoActions.create(text);
+
 
 
             //cl=='hover'
@@ -162,7 +175,7 @@ var ScaleBar =React.createClass({
             auto=this.props.auto;
 
 
-        return ({data:data,data$initialed:data$initialed,auto:auto});
+        return ({data:data,data$initialed:data$initialed,auto:auto,_todos:null});
     },
     render:function(){
         if(this.state.data$initialed!==true&&(this.props.data==null||this.props.data==undefined))
@@ -180,12 +193,21 @@ var ScaleBar =React.createClass({
                 var suspends=new Array();
                 var showNavs=new Array();
                 var showContents=new Array();
-                this.state.data.map(function(item,i) {
+                var state=this.state;
+                state.data.map(function(item,i) {
 
                     var background="url('"+item.img+"') no-repeat 10px 30px";
                     var sus_li_style={background:background};
-                    suspends.push(<li className="sus_li" key={i} style={sus_li_style}>{item.label}</li>);
-                    showNavs.push(<li className={"sus_li sus"+" "+i} key={i} style={sus_li_style}>{item.label}</li>);
+                    suspends.push(<li className="sus_li" key={i} style={sus_li_style}>
+                        {item.label!="业务提醒"?null:<span style={{color:"#f00"}}>{i}</span>}
+                        <span style={{marginLeft:"20px"}}>{item.label}</span>
+                    </li>);
+
+                    showNavs.push(
+                        <li className={"sus_li sus"+" "+i} key={i} style={sus_li_style}>
+                            {item.label!="业务提醒"?null:<span style={{color:"#f00"}}>{i}</span>}
+                            <span style={{marginLeft:"20px"}}>{item.label}</span>
+                        </li>);
 
                     //TODO:add component match,first check component type
                     var ctrl = null;
@@ -197,8 +219,13 @@ var ScaleBar =React.createClass({
                             </Panel>
                             break;
                         case 'password':
-                            var Password = require('../../components/compounds/password/PasswordElement.jsx');
                             ctrl = <Password title={item.content.title} action={item.content.action}/>
+                            break;
+                        case 'Attention':
+                            var _todos=null;
+                            if(state._todos!==undefined&&state._todos!==null)
+                                _todos=state._todos;
+                            ctrl=<Attention {...item.content} data={_todos}/>
                             break;
                         default:
                             ctrl = item.content;
@@ -212,7 +239,7 @@ var ScaleBar =React.createClass({
 
                 });
 
-                susp_nav=<div className="suspend susp_nav" id="suspend" style={{width:"40px", display:"block"}}>
+                susp_nav=<div className="suspend susp_nav" id="suspend" style={{width:"60px", display:"block"}}>
                             <ul>
                                 {suspends}
                             </ul>
@@ -226,8 +253,8 @@ var ScaleBar =React.createClass({
                             </ul>
                         </div>
                         {showContents}
-                        <div style={{position:"absolute","paddingTop":"20px","right":"80px"}}>
-                            <input type="button" className="btn_close" value="close"></input>
+                        <div style={{position:"absolute",bottom:"20px",right:"80px"}}>
+                            <button  className="btn_close btn-danger" style={{width:"200px",border:"0px"}}> 关闭</button>
                         </div>
                     </div>
             }
@@ -246,8 +273,8 @@ var ScaleBar =React.createClass({
     },
     componentDidMount:function(){
 
-
-
+        //add event changeListener
+        SyncStore.addChangeListener(this._onChange);
 
         var category=this.refs.sidebar;
         var $category=$(category);
@@ -274,11 +301,11 @@ var ScaleBar =React.createClass({
 
         $(suspend).mouseover(function() {
             $(this).stop();
-            $(this).animate({width: "120px"}, 400);
+            $(this).animate({width: "140px"}, 400);
         });
         $(suspend).mouseout(function(){
             $(this).stop();
-            $(this).animate({width: "40px"}, 400);
+            $(this).animate({width: "60px"}, 400);
         });
 
         this.clickshow6("sidebar",".susp_nav>ul>li",".susp_show .susp_l li.sus",".susp_show .susp_r","#fadee","#suspend",".susp_show","hover");
@@ -286,6 +313,10 @@ var ScaleBar =React.createClass({
         this.clickshow7("sidebar",".susp_show .susp_l li.sus",".susp_show .susp_r","hover");
 
         this.clickhide3("sidebar",".btn_close","#fadee",".susp_show","#suspend")
+    },
+    componentWillUnmount:function(){
+        //remove event changeListener
+        SyncStore.removeChangeListener(this._onChange);
     }
 });
 

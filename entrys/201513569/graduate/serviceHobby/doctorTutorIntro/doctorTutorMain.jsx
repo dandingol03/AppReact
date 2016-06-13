@@ -23,7 +23,7 @@ function Boot(){
     var side={
         field:"collegeDoctorTutorList",title:null,
         query:{
-            url:"/gradms/bsuims/reactPageDataRequest.do",
+            url:"/bsuims/reactPageDataRequest.do",
             params:{
                 reactPageName:'infoIntroManagePage',
                 reactActionName:'doQueryDoctorTutorUseReact'
@@ -34,7 +34,7 @@ function Boot(){
         <OrdinaryTable
             title={title}
             query={{
-                url:"/gradms/bsuims/reactPageDataRequest.do",
+                url:"/bsuims/reactPageDataRequest.do",
                 params:
                 {
                     reactPageName:'infoIntroManagePage',
