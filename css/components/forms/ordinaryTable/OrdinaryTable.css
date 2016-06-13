@@ -10,13 +10,13 @@
 }
 .col-sm-12.col-md-12{
 
-    padding: 50px;
+    padding: 10px;
 }
 .table.table{
     background-color: transparent;
 }
 div#root{
-    background-image:url(../../../../icon/body.gif);
+   /* background-image:url(../../../../icon/body.gif);*/
 }
 
 

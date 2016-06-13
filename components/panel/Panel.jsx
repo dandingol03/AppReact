@@ -7,6 +7,9 @@ import Radio from '../../components/basic/Radio.jsx';
 import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
 var ProxyQ=require('../proxy/ProxyQ');
+var SyncStore=require('../flux/stores/SyncStore');
+
+
 
 /**
  *
@@ -88,14 +91,7 @@ var Panel=React.createClass({
             var required = new Object();
             for (var i = 0; i < form.getElementsByTagName("textarea").length; i++) {
                 var item = form.getElementsByTagName("textarea")[i];
-                //针对单选
-                if (item.type == 'radio') {
-                    if (item.checked == true)
-                        params[item.name] = item.value;
-
-                } else {
-                    params[item.name] = item.value;
-                }
+                params[item.name] = item.value;
                 if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
                     required[item.name] = item.name;
                 }
@@ -116,6 +112,7 @@ var Panel=React.createClass({
             }
             if(this.props.clickHandle!==undefined&&this.props.clickHandle!==null)
             {
+                this.props.syncHandle({completed:true});
                 this.props.clickHandle(params);
             }else{//如果本组件为最顶层组件
 
@@ -127,8 +124,8 @@ var Panel=React.createClass({
                             return;
                         }
                     }
-
                     params = Object.assign(this.state.query.params, params);
+                    this.props.syncHandle({completed:true});
                     ProxyQ.queryHandle(
                         null,
                         this.state.query.url,
@@ -245,6 +242,14 @@ var Panel=React.createClass({
 
         if(this.state.data!==undefined&&this.state.data!==null&&Object.prototype.toString.call(this.state.data)=='[object Array]')
         {
+
+            //获取之前应用数据
+            var _todos;
+            if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null)
+            {
+                _todos=SyncStore.getInContext(this.props.route);
+            }
+
 
             //保存最大列宽,每行的单元格数组的label和控件各自放一个td
             var max$cols=1;
@@ -398,19 +403,32 @@ var Panel=React.createClass({
                                 {
                                     if(coms[2]!==null&&coms[2]!==undefined)
                                     {
-                                        //input组件扩展至第3个字段
-                                        switch(coms[2])
+                                        var data=null;
+                                        if(_todos!==undefined&&_todos!==null&&_todos[ctrlName]!==undefined&&_todos[ctrlName]!==null)
+                                            data=_todos[ctrlName];
+                                        console.log();
+                                        console.log();
+                                        console.log();
+                                        console.log();
+                                        try{
+                                            var ob=eval('('+coms[2]+')');
+                                            ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
+                                        }catch(e)
                                         {
-                                            case 'false':
-                                                ctrl=<input type='text' name={ctrlName} disabled={true}/>
-                                                break;
-                                            case 'true':
-                                                ctrl=<input type='text' name={ctrlName} />
-                                                break;
-                                            default:
-                                                ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
-                                                break;
+                                            switch(coms[2])
+                                            {
+                                                case 'false':
+                                                    ctrl=<input type='text' name={ctrlName} disabled={true}/>
+                                                    break;
+                                                case 'true':
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={data}/>
+                                                    break;
+                                                default:
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
+                                                    break;
+                                            }
                                         }
+
                                     }
                                 }
                                 else
@@ -593,6 +611,35 @@ var Panel=React.createClass({
                         <table></table>
                     </div>
                 </div>);
+        }
+    },
+    componentWillUnmount:function(){//对象失效
+        if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null)
+        {
+            //collect required fields
+            var form=document.getElementsByName('PanelForm')[0];
+            var required = new Object();
+            for (var i = 0; i < form.getElementsByTagName("textarea").length; i++) {
+                var item = form.getElementsByTagName("textarea")[i];
+                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                    if(item.value!==undefined&&item.value!==null&&item.value!="")
+                        required[item.name] = item.value;
+                }
+            }
+            for (var i = 0; i < form.getElementsByTagName("input").length; i++) {
+                var item = form.getElementsByTagName("input")[i];
+                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                    if(item.value!==undefined&&item.value!==null&&item.value!="")
+                        required[item.name] = item.value;
+                }
+            }
+
+            if(required!==undefined&&required!==null)
+            {
+                this.props.syncHandle({completed:false,required:required});
+            }
+            else
+                this.props.syncHandle({completed:true});
         }
     }
 });

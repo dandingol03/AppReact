@@ -726,7 +726,7 @@ var OrdinaryTable =React.createClass({
                             <EmbedTable title={item.title}
                                         data={{arr:arr}}
                                         subQuery={{
-                                            url:"/gradms/bsuims/reactPageDataRequest.do",
+                                            url:"/bsuims/reactPageDataRequest.do",
                                             params:{
                                                 reactPageName:'cultivateTutorPage',
                                                 reactActionName:"personIntroductionShow"
@@ -1143,19 +1143,23 @@ var OrdinaryTable =React.createClass({
                     var title=null;
                     if(this.props.title!==undefined&&this.props.title!==null) {
                         var name=this.props.title;
-                        var reg=/\<(.*?)\s*\S*>(.*?)<\/(.*?)>/;
+                        var reg=/<(.*?)>(.*?)<\/(.*?)>/;
                         var re=reg.exec(name);
                         var re = reg.exec(name);
+                        var content=null;
                         if(re!==undefined&&re!==null)
                         {
-                            title = <span dangerouslySetInnerHTML={{__html:name}}/>;
+                            content = <span dangerouslySetInnerHTML={{__html:name}}/>;
                         }else {
-                            title = <thead>
-                            <tr>
-                                <td colSpan={colSpan} style={{float:"center"}}>{this.props.title.content}</td>
-                            </tr>
-                            </thead>
+                            content = this.props.title.content;
                         }
+
+                         title=       <thead>
+                                            <tr>
+                                                <td colSpan={colSpan} style={{float:"center"}}>{content}</td>
+                                            </tr>
+                                      </thead>
+
                     }
                     tables.push(
                         <table className="table table-bordered center" key={0}>
@@ -1312,7 +1316,7 @@ var OrdinaryTable =React.createClass({
 
         }
 
-
     }
+
 });
 export default OrdinaryTable;

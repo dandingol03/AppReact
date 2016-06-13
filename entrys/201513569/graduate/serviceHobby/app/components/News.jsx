@@ -86,7 +86,7 @@ var News = React.createClass({
             }
 
             return (
-                <div className="section clearfix" ref="news" style={{display:"none"}}>
+                <div className="section clearfix News" ref="news" style={{display:"none"}}>
                     <div className="w_720 lfloat">
                         <ul className="list">
                             {news}

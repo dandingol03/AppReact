@@ -15,7 +15,7 @@ tbody>tr.un-render:hover{
 }
 tbody>tr:hover>td.un-render{
     background-color:transparent;
-    background-image:url("../../../../icon/body.gif");
+    /*background-image:url("../../../../icon/body.gif");*/
 }
 tbody>tr:nth-child(1):not>td.un-render{
     background-color:transparent;
@@ -57,5 +57,5 @@ tbody{
     background-color:transparent;
 }
 body{
-    background-image:url("../../../../icon/body.gif");
+    /*background-image:url("../../../../icon/body.gif");*/
 }

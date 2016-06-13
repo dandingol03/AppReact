@@ -25,7 +25,7 @@ var Image = React.createClass({
                     icon = <Icon type={ids[1]}/>
                     break;
                 case 'check':
-                    icon = <input type="checkbox" style={{position:"absolute",marginLeft:"-20px",bottom:"0px"}}
+                    icon = <input type="checkbox" style={{position:"absolute",left:"0px",bottom:"0px"}}
                                   onChange={this.checkCb}/>
                     break;
                 default:

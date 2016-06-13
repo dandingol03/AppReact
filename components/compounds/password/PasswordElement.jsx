@@ -9,6 +9,7 @@ import '../../../css/components/compounds/password/PasswordElement.css';
 var Password=React.createClass({
     commitCb:function(evt){
         //validate newPwd
+        var valueBinding=this.state.valueBinding;
         if(valueBinding["enterNewPwd"]!==valueBinding["enterRepeatNewPwd"])
         {
             alert("两次输入的密码有误,请重新输入");

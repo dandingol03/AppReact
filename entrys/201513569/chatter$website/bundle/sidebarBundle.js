@@ -18046,7 +18046,7 @@
 	      case topLevelTypes.topVolumeChange:
 	      case topLevelTypes.topWaiting:
 	        // HTML Events
-	        // @see http://www.w3.org/TR/html5/index.html#events-0
+	        // @see http://www.w3.org/TR/html5/index.jsp#events-0
 	        EventConstructor = SyntheticEvent;
 	        break;
 	      case topLevelTypes.topKeyPress:

@@ -2,7 +2,7 @@
   {
     "label":"个人信息管理","sub":[
                                 {"label":"修改密码","query":""},
-                                {"label":"政策文件","query":""},
+                                {"label":"政策文件","query":"","route":"/allCourseQuery"},
                                 {"label":"通知浏览","query":""},
     {
       "label": "学术规范承诺书",

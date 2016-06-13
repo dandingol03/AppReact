@@ -26,7 +26,7 @@ var App =React.createClass({
          * header box part
          */
             <div>
-                <Nav logo="/gradms/serviceHobby/images/school_logo.png" data={MENU}/>
+                <Nav logo="/images/school_logo.png" data={MENU}/>
 
 
                 <div className="keyNavigation">
@@ -83,7 +83,7 @@ var App =React.createClass({
                 </div>
 
                 <HighLight type="OrdinaryTable"
-                           title={<span  style={{ fontSize: "14px",color:" #6EA0FF",fontWeight:"bold",textAlign:"center"}}>个人信息状态</span>}
+                           title='<span  style="font-size: 14px;color: #6EA0FF;font-weight:bold;text-align:center">个人信息状态</span>'
                            query={{ url:'/bsuims/reactPageDataRequest.do',
                                    params: {
                                       reactActionName: "registerInformationReact",
