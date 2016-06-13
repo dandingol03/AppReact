@@ -244,7 +244,7 @@ var Tab=React.createClass({
             style = Object.assign(style, {width: this.props.width});
         return (<div className="Tab" style={style}>
             <div className="tab">
-                <ul style={{marginRight:"10%"}}>
+                <ul style={{marginRight:"0%"}}>
                               {tabs}
                           </ul>
                     </div>

@@ -5,10 +5,10 @@
 .index_scroll
 {
     width: 980px;
-    padding-top: 40px;
-    margin: 0 auto 60px auto;
+    padding-top: 20px;
+    margin: 0 auto 40px auto;
     position: relative;
-    height: 104px;
+    height: 64px;
 
 }
 

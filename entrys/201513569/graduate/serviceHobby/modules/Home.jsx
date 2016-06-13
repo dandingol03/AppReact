@@ -37,7 +37,8 @@ var Home =React.createClass({
 
 
      return (
-         <div style={{marginTop:"120px"}}>
+         <div  className="total" style={{marginTop:"120px"}}>
+
 
              <News data={NEWS}/>
 
