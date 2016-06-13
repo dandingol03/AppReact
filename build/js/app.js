@@ -18,7 +18,7 @@ window.App.load = function () {
 window.App.unload = function () {
     $("#loading").fadeOut();
 }
-window.App.getDeployPath = function () {
+window.App.getResourceDeployPrefix = function () {
     return "/ReactJPChatter/serviceHobby/";
 }
 window.App.getAppRoute = function () {
