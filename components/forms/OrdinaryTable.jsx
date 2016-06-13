@@ -562,6 +562,7 @@ var OrdinaryTable =React.createClass({
     queryHandle:function(type,url,params,dataType,callback){
         $.ajax({
             type: type!==undefined&&type!==null?type:'POST',
+            type: type!==undefined&&type!==null?type:'POST',
             url: url,
             dataType: dataType!==undefined&&dataType!==null?dataType:'json',
             data: params,

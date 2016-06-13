@@ -72,12 +72,10 @@ var HighLight = React.createClass({
         return (
             <div className="highLight"  ref="highLight">
                 <div className="newStudentHeader">
-                    <div className="newStudentmenu on">
-                        <div className="newStudentbtn on">
+                    <div className="menu on">
                             <i></i>
                             <i></i>
                             <i></i>
-                        </div>
                     </div>
                 </div>
                 <div className="newStudentNav">

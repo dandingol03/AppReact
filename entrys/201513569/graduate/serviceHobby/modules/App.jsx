@@ -7,6 +7,7 @@ import News from '../modules/News.jsx';
 import CustomMenu from '../../../../../components/basic/CustomMenu.jsx';
 import HighLight from '../../../../../components/basic/HighLight.jsx';
 import Footer from '../../../../../components/basic/Footer.jsx';
+
 import '../../../../../css/serviceHobby/basic/app.css';
 import MENU from '../data/menus.json';
 import Scales from '../data/scaleBar.json';

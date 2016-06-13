@@ -3,10 +3,10 @@
 }
 .table.table-bordered.panel
 {
-    background-color: #edf7ff;
+    background-color: transparent;
 }
 .table.table-bordered.panel> thead:first-child > tr:first-child > th{
-    border:1px solid #6EA0FF;
+ border: 1px solid #ddd;
 }
 
 .table.table-bordered.center.panel thead:first-child tr th {
@@ -19,8 +19,8 @@
 
 .table.table-bordered.center.panel td
 {
-    align:left;
-    border:1px solid #6EA0FF;
+    align:center;
+
 }
 .table.table-bordered.center.panel td span{
 margin-right:5%;

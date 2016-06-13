@@ -13,9 +13,13 @@ Boot()
 function Boot()
 {
     var filterField= {
-        "oper":true,
-        "status":true,
-        "input":true
+        "huji":true,
+        "dk":true,
+        "book":true,
+        "xyk":true,
+        "ts":true,
+        "zzgx":true,
+        "xsz":true
     }
 
     var query={
@@ -34,6 +38,7 @@ function Boot()
             query={query}
             autoFetch={true}
             title={title}
+            filterField={filterField}
             />
         <Panel
 

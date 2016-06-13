@@ -296,9 +296,10 @@ var Nav=React.createClass({
                     <div id="navigation">
                         <div className="center">
                             <ul className="link">
+                                <li ><i className="fa fa-bell-o" id="fa-bell-o"></i></li>
                                 <li><a href="###">刷新</a></li>
                                 <em className="global-top-item global-top-seperator">|</em>
-                                <li><a href="###">退出</a></li>
+                                <li><a href="###" >退出</a></li>
                             </ul>
                         </div>
                     </div>
@@ -313,6 +314,17 @@ var Nav=React.createClass({
         }
     },
     componentDidMount:function(){
+        //TODO:
+        window.swing=function(){
+            $('.fa-bell-o').addClass('animated swing');
+            $('.fa-bell-o').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+            function(){
+                $('.fa-bell-o').removeClass('animated swing');
+                window.timeoutInstance=setTimeout("swing()",1000);
+            });
+
+        };
+        window.timeoutInstance= setTimeout("swing()",3000);
         this.menushow("ul","li",".mnavL","hover");
     }
 });
