@@ -7,7 +7,11 @@ import News from '../modules/News.jsx';
 import CustomMenu from '../../../../../components/basic/CustomMenu.jsx';
 import HighLight from '../../../../../components/basic/HighLight.jsx';
 import Footer from '../../../../../components/basic/Footer.jsx';
+<<<<<<< HEAD
 
+=======
+import '../../../../../less/serviceHobby/basic/root.less';
+>>>>>>> 53824a39fdcc23b0df52f9d1e004050fbec2e7d7
 import '../../../../../css/serviceHobby/basic/app.css';
 import MENU from '../data/menus.json';
 import Scales from '../data/scaleBar.json';
@@ -26,7 +30,7 @@ var App =React.createClass({
          * header box part
          */
             <div>
-                <Nav logo="/images/school_logo.png" data={MENU}/>
+                <Nav logo="images/school_logo.png" data={MENU}/>
 
 
                 <div className="keyNavigation">

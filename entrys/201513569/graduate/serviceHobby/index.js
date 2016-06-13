@@ -11,10 +11,10 @@ import MainSection from './modules/MainSection.jsx';
 
 render((
     <Router history={browserHistory}>
-        <Route path="/" component={App}>
+        <Route path={window.App.getAppRoute()} component={App}>
             <IndexRoute component={Home}/>
-            <Route path="/password/modify" component={MainSection} />
-            <Route path="/allCourseQuery" component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/password/modify"} component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/allCourseQuery"} component={MainSection}/>
         </Route>
     </Router>
 ), document.getElementById('root'))

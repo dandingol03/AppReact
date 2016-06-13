@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import { Link } from 'react-router'
 import '../../css/components/basic/nav/nav.css';
-
+var SyncStore = require('../../components/flux/stores/SyncStore');
 
 /**
  * 1.
@@ -12,6 +12,25 @@ import '../../css/components/basic/nav/nav.css';
  */
 
 var Nav=React.createClass({
+    _onChange           : function () {
+        var stores = SyncStore.getAll();
+        var fieldCount = 0;
+        for (var field in stores) {
+            fieldCount++;
+        }
+        if (fieldCount >= 1) {
+            //TODO:swing the bell
+            App.swing("#bell");
+        } else {
+            App.unSwing("#bell");
+        }
+        //for (var id in stores) {
+        //    console.log("id=" + stores[id].route);
+        //    console.log("data=" + stores[id].data);
+        //}
+
+
+    },
     linkCb:function(evt){
         //var target=evt.target;
         //evt.preventDefault();
@@ -298,14 +317,11 @@ var Nav=React.createClass({
                     <div id="navigation">
                         <div className="center">
                             <ul className="link">
-<<<<<<< HEAD
-                                <li ><i className="fa fa-bell-o" id="fa-bell-o"></i></li>
-=======
-                                <li><a href="" className="fa fa-bell-o"></a></li>
->>>>>>> b5877dc4b700d8078b8dfea299251aba172d7701
-                                <li><a href="###">刷新</a></li>
+                                <li><a id="bell" href="javascript:void(0)" className="fa fa-bell-o"
+                                       style={{marginTop:"10px"}}></a></li>
+                                <li><a href="javascript:void(0)">刷新</a></li>
                                 <em className="global-top-item global-top-seperator">|</em>
-                                <li><a href="###" >退出</a></li>
+                                <li><a href="javascript:void(0)">退出</a></li>
                             </ul>
                         </div>
                     </div>
@@ -320,18 +336,11 @@ var Nav=React.createClass({
         }
     },
     componentDidMount:function(){
-        //TODO:
-        window.swing=function(){
-            $('.fa-bell-o').addClass('animated swing');
-            $('.fa-bell-o').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-            function(){
-                $('.fa-bell-o').removeClass('animated swing');
-                window.timeoutInstance=setTimeout("swing()",1000);
-            });
-
-        };
-        window.timeoutInstance= setTimeout("swing()",3000);
+        SyncStore.addChangeListener(this._onChange);
         this.menushow("ul","li",".mnavL","hover");
+    },
+    componentWillUnmount: function () {
+        SyncStore.removeChangeListener(this._onChange);
     }
 });
 

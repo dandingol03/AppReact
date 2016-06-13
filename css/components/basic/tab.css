@@ -6,9 +6,6 @@
 .tab{
     margin-left: auto;
     margin-right: auto;
-    /*margin-bottom: 21px;*/
-    font-size: 18px;
-    border-bottom: 2px solid #efefef;
     width: 972px;
     position: relative;
     overflow: hidden;
@@ -34,8 +31,7 @@
     border-bottom: 4px solid #0066b3;
 }
 
-.Tab {
-
+.tab .data-tab {
 }
 ul {
     list-style-type: none;
