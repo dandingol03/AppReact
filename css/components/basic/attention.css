@@ -1,6 +1,7 @@
 ul.popular-in {
     padding-top: 2em;
 }
+
 ul {
     padding: 0;
     margin: 0;
@@ -19,10 +20,11 @@ ul.popular-in li a {
     font-size: 1.3em;
 }
 
-ul.popular-in li a:hover{
-    color:#aa381e;
-    cursor:pointer;
+ul.popular-in li a:hover {
+    color: #aa381e;
+    cursor: pointer;
 }
+
 ul.popular-in li a i {
     width: 18px;
     height: 18px;
@@ -32,7 +34,8 @@ ul.popular-in li a i {
     margin-right: 0.5em;
 }
 
-@media (max-width: 1024px){
+@media (max-width: 1024px) {
     ul.popular-in li a {
         font-size: 1em;
-    }}
+    }
+}
