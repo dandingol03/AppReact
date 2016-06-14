@@ -31,19 +31,17 @@
 }
 
 .suspend ul li.sus_li1 {
-    background: url('/build/images/serviceHobby/ico/y1.png') no-repeat 10px 30px;
+
     border-bottom: 1px #ddd solid;
 }
 
 .suspend ul li.sus_li3{
-    background:url(/build/images/serviceHobby/ico/y3.png) no-repeat 10px 30px;border-bottom:1px #ccc solid;
+  border-bottom:1px #ccc solid;
 }
 .suspend ul li.sus_li4{
-    background:url(/build/images/serviceHobby/ico/y_55.png) no-repeat 10px 30px;border-bottom:1px #ccc solid;
+   border-bottom:1px #ccc solid;
 }
-.suspend ul li.sus_li5{
-    background:url(/build/images/serviceHobby/ico/y4.png) no-repeat 10px 30px;
-}
+
 
 
 
