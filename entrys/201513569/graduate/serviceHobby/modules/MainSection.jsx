@@ -1,7 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
-import AllCourseQuery from './../allCourseQuery/allCourseQueryMain.jsx';
+import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
+import News from './News.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
 var SyncActions = require('../../../../../components/flux/actions/SyncActions');
 
@@ -18,6 +19,9 @@ var MainSection = React.createClass({
                 break;
             case "/allCourseQuery":
                 label = "成绩查询";
+                break;
+            case "/news":
+                label = "查看新闻";
                 break;
             default:
                 label = "";
@@ -38,6 +42,7 @@ var MainSection = React.createClass({
         var path=this.props.route.path;
         var ctrl;
         var breadcrumb;
+        var label;
         if(path!==undefined&&path!==null)
         {
             var route = this.state.route;
@@ -46,11 +51,24 @@ var MainSection = React.createClass({
             route.push(path);
             switch(path)
             {
-                case "/password/modify":
+                case App.getAppRoute() + "/password/modify":
                     ctrl=<PasswordModify/>
+                    label = "密码改业务";
                     break;
-                case "/allCourseQuery":
+                case App.getAppRoute() + "/allCourseQuery":
                     ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}></AllCourseQuery>
+                    label = "成绩查询业务";
+                    break;
+                case App.getAppRoute() + "/news":
+                    ctrl = <News query={{
+                                             url:"/bsuims/reactPageDataRequest.do",
+                                            params:{
+                                                reactPageName:"groupNewsReactPage",
+                                                reactActionName:"listTypeNewsUseReact"
+                                            }
+                                         }}
+                                 auto={true}/>;
+                    label = "新闻查询业务";
                     break;
                 default:
                     break;
@@ -80,14 +98,15 @@ var MainSection = React.createClass({
                     <div className="crumb_title">
                         <span className="crumb_title_content">{spans}</span>
 
-                        <div className="crumb_detail">密码修改业务</div>
+                        <div className="crumb_detail">{label}</div>
                     </div>
                 </div>
         }
         return (
             <div style={{margin: "100px auto 0 auto",paddingBottom:"200px",width:"100%",backgroundColor:"#edf7ff"}}>
                 {breadcrumb}
-                <div ref="mainSection" style={{display:"none",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
+                <div ref="mainSection" className="mainSection"
+                     style={{display:"none",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
                     {ctrl}
                 </div>
             </div>

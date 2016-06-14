@@ -1268,10 +1268,7 @@ var OrdinaryTable =React.createClass({
                         </Hide>
 
                 }
-            }else{
-
-
-
+            } else {
             }
 
 

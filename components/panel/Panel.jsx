@@ -291,8 +291,9 @@ var Panel=React.createClass({
                     var ctrl;
                     var ctrl$comp;
                     //查询字典,匹配label字段
-                    var name;
-                    var so=dict[coms[0]];
+                    var name = null;
+                    if (dict[coms[0]] !== undefined && dict[coms[0]] !== null)
+                        name = dict[coms[0]].name;
                     if(state.bean!==undefined&&state.bean!==null)
                     {
                         if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2)
@@ -302,10 +303,15 @@ var Panel=React.createClass({
                         else
                             name=coms[0];
                     }
-                    else
+                    if (name == null)
                     {
-                        if(so!==undefined&&so!==null)
-                        name=so.name;
+                        if (coms[0] !== undefined && coms[0] !== null) {
+                            if (coms[0].indexOf('=>') != -1 && coms[0].split('=>').length >= 2)
+                                name = coms[0].split('=>')[1];
+                            else
+                                name = coms[0];
+                        }
+
                     }
 
                     if(name!==undefined&&name!==null)
@@ -476,26 +482,24 @@ var Panel=React.createClass({
                                 ctrl=<Download href={coms[2]} title={coms[0]} />
                                 break;
                             case 'span':
-                                if(state.bean!==undefined&&state.bean!==null)
+                                var content = null;
+                                if (coms[2] !== undefined && coms[2] !== null)
                                 {
-                                    if(coms[2]!==null&&coms[2]!==undefined)
+                                    var reg = /\<(.*?)\>/;
+                                    var re = reg.exec(coms[2]);
+                                    if (re !== null && re !== undefined)
                                     {
+                                        ctrl = <div style={{textAlign:"left"}}
+                                                    dangerouslySetInnerHTML={{__html:coms[2]}}>
+                                        </div>
+                                    }
+                                    else {
                                         ctrl=<Span auto={false} data={coms[2]}/>
                                     }
-                                    else
-                                        ctrl=<Span auto={false}/>
                                 }else{
-                                    var url=dict[coms[0]].url;
-                                    var alias=dict[coms[0]].alias;
-                                    var query={url:url,
-                                        params: {
-                                            dictName: alias,
-                                            reactPageName:"gradGreenWayPage",
-                                            reactActionName:"getDictionaryValue"
-                                        }
-                                    };
-                                    ctrl=<Span query={query} auto={true}/>
+                                    ctrl = <Span auto={false}/>
                                 }
+
 
                                 break;
                             case 'textarea':
@@ -581,10 +585,15 @@ var Panel=React.createClass({
                     </tr>
 
             }
+
+
+            //not regulated css
+            var padding = this.props.padding;
             return(
                 <form name="PanelForm" className={highLight==true?"form panel highLight":gradient==true?"form panel gradient":"form panel"}
                       action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
-                      method="post" style={{boxShadow:"none", padding:"40px"}}>
+                      method="post"
+                      style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"40px"}}>
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel" style={{border:"none"}}>
@@ -644,4 +653,4 @@ var Panel=React.createClass({
         }
     }
 });
-export default Panel;
+module.exports = Panel;

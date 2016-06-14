@@ -39,9 +39,6 @@ var Home =React.createClass({
      return (
          <div  className="total" style={{marginTop:"120px"}}>
 
-
-             <News data={NEWS}/>
-
              <div className="vcc-index_title_box vcc-index_title_box_1">
                  <div className="vcc-index_title">
                      <span href="#" className="vcc-index_title_a">个人信息</span>

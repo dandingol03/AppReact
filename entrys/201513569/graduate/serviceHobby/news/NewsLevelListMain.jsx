@@ -19,7 +19,7 @@ function Boot(){
     };
 
     var query={
-        url:"/serviceHall/bsuims/reactPageDataRequest.do",
+        url: "/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:"groupNewsReactPage",
             reactActionName:"listTypeNewsUseReact"
