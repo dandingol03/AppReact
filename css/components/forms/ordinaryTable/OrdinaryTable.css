@@ -3,7 +3,15 @@
     text-align:center;
 
 }
-
+.ordinaryTable .highLight.center td {
+    box-sizing: border-box;
+    background-color: #edf7ff;
+    text-align:center;
+}
+.ordinaryTable.gradient.center td{
+    background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0));
+     text-align:center;
+}
 .folding{
     float:right;
     margin-right: 20px;

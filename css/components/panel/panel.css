@@ -37,3 +37,11 @@ margin-right:5%;
 .form.panel{
     background-color: transparent;
 }
+
+.form.panel .highLight {
+    box-sizing: border-box;
+    background-color: #edf7ff;
+}
+.form.panel.gradient{
+    background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))
+}

@@ -19,10 +19,10 @@ window.App.unload = function () {
     $("#loading").fadeOut();
 }
 window.App.getResourceDeployPrefix = function () {
-    return "/ReactJPChatter/serviceHobby/";
+    return "";
 }
 window.App.getAppRoute = function () {
-    return "/ReactJPChatter/serviceHobby/index.html";
+    return "";
 }
 window.App.swing = function (ob) {
     var $ob;

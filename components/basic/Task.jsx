@@ -79,21 +79,23 @@ var Task = React.createClass({
             var trs = new Array();
             var fills = new Array();
             //初始化每天的任务位移
+            var highLight=this.props.highLight;
+            var gradient=this.props.gradient;
             for (var i = 0; i < 7; i++)
                 fills.push({"data-index": 0, "row-offset": 1});
             //塞入课程,每次遍历单个row
             for (var i = 0; i < 12; i++) {
                 var tds = new Array();
                 if (i == 0) {
-                    tds.push(<td key={-1}>节/周</td>);
-                    tds.push(<td key={0}>一</td>);
-                    tds.push(<td key={1}>二</td>);
-                    tds.push(<td key={2}>三</td>);
-                    tds.push(<td key={3}>四</td>);
-                    tds.push(<td key={4}>五</td>);
-                    tds.push(<td key={5}>六</td>);
-                    tds.push(<td key={6}>日</td>);
-                    trs.push(<tr key={i}>{tds}</tr>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={-1}>节/周</td>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={0}>一</td>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={1}>二</td>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={2}>三</td>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={3}>四</td>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={4}>五</td>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={5}>六</td>);
+                    tds.push(<td className={highLight==true?"highLight":gradient==true?"gradient":""} key={6}>日</td>);
+                    trs.push(<tr className={highLight==true?"highLight":gradient==true?"gradient":""} key={i}>{tds}</tr>);
                     continue;
                 }
                 tds.push(<td key={-1}>{i}</td>);
@@ -103,7 +105,7 @@ var Task = React.createClass({
                     {
                         if (i >= fills[j]["row-offset"]) {
                             var task = day[fills[j]["data-index"]++];
-                            tds.push(<td key={j} rowSpan={task.rowSpan} className="center">{task.name}</td>);
+                            tds.push(<td key={j} rowSpan={task.rowSpan} className={highLight==true?"center highLight":gradient==true?"center gradient":"center"}>{task.name}</td>);
                             fills[j]["row-offset"] = parseInt(fills[j]["row-offset"]) + parseInt(task.rowSpan);
                         } else {
                         }

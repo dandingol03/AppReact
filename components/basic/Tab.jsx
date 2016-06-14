@@ -201,6 +201,8 @@ var Tab=React.createClass({
                             entity = <Task
                                 data={comp.data}
                                 width="980px"
+                                highLight={props.highLight}
+                                gradient={props.gradient}
                                 />
                             break;
                         default:
@@ -242,7 +244,10 @@ var Tab=React.createClass({
             style = Object.assign(style, {height: this.props.height});
         if (this.props.width !== undefined && this.props.width !== null)
             style = Object.assign(style, {width: this.props.width});
-        return (<div className="Tab" style={style}>
+        var highLight=this.props.highLight;
+        var gradient=this.props.gradient;
+        //<div className={{this.props.hightlight==true?"Tab hightlist":this.props.gradient==true?"Tab gradient":"Tab"}}>
+        return (<div className={highLight==true?"Tab highLight":gradient==true?"Tab gradient":"Tab"} style={style}>
             <div className="tab">
                 <ul style={{marginRight:"10%"}}>
                               {tabs}

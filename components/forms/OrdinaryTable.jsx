@@ -1301,9 +1301,11 @@ var OrdinaryTable =React.createClass({
                         <div ref="contentDiv">{tables}</div>
                     </div>
                 );
-
+            var highLight=this.props.highLight;
+            var gradient=this.props.gradient;
             return (
-                <div  className="ordinaryTable"  style={{margin:"0px"}}>
+
+                <div className={highLight==true?"ordinaryTable highLight":gradient==true?"ordinaryTable gradient":"ordinaryTable"} style={{margin:"0px"}}>
                     <div className="row">
                         {sideDist}
                         {mainDist}

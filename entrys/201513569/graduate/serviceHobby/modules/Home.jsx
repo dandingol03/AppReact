@@ -130,7 +130,7 @@ var Home =React.createClass({
             filterField : filterField
                                 }
         }
-    ]} width="1024px"/>
+    ]} width="1024px"  gradient={true}/>
 
 
              {this.props.children}

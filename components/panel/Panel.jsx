@@ -582,7 +582,7 @@ var Panel=React.createClass({
 
             }
             return(
-                <form name="PanelForm" className="form panel"
+                <form name="PanelForm" className={highLight==true?"form panel highLight":gradient==true?"form panel gradient":"form panel"}
                       action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
                       method="post" style={{boxShadow:"none", padding:"40px"}}>
                     <div className="row">
@@ -604,9 +604,10 @@ var Panel=React.createClass({
             if(this.props.auto==true)
                 this.fetch();
 
-
+            var highLight=this.props.highLight;
+            var gradient=this.props.gradient;
             return(
-                <div className="row">
+                <div className={"row"}>
                     <div className="col-sm-12">
                         <table></table>
                     </div>

@@ -13,3 +13,6 @@
 .task tbody tr td.center {
     text-align: center;
 }
+.task tbody tr td.highLight.center {
+    border: 1px solid #337ab7;
+}
