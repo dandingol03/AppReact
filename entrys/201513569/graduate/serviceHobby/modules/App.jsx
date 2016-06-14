@@ -1,9 +1,9 @@
 import React from 'react';
 import {render} from 'react-dom';
+import { Link } from 'react-router'
 import Nav from '../../../../../components/basic/Nav.jsx';
 import IndexScroll from '../../../../../components/basic/IndexScroll.jsx';
 import ScaleBar from '../../../../../components/basic/ScaleBar.jsx';
-import News from '../modules/News.jsx';
 import CustomMenu from '../../../../../components/basic/CustomMenu.jsx';
 import HighLight from '../../../../../components/basic/HighLight.jsx';
 import Footer from '../../../../../components/basic/Footer.jsx';
@@ -45,9 +45,9 @@ var App =React.createClass({
                         <div className="block center">
                             <div className="briefInformation">
                                 <ul>
-                                    <li>您有N条公告信息 <a href="#">更多》</a></li>
+                                    <li>您有N条公告信息 <Link to="/news">更多》</Link></li>
                                     <li> &nbsp;&nbsp;2016年6月1日放假的通知...</li>
-                                    <li>您有7条未读信息 <a href="#">更多》</a></li>
+                                    <li>您有7条未读信息 <Link to="/news">更多》</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -62,23 +62,6 @@ var App =React.createClass({
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <div >
-                        <CustomMenu auto={true} query={{
-                                                url   : "/bsuims/reactPageDataRequest.do",
-                                                params: {
-                                                    reactPageName  : "serviceReactPage",
-                                                    reactActionName: "getAuthMenus"
-                                                    }
-                                                }}
-                                    apply={{
-                                                url:"/bsuims/reactPageDataRequest.do",
-                                                  params: {
-                                                    reactPageName  : "serviceReactPage",
-                                                    reactActionName: "updateCustomMenu"
-                                                    }
-                                                }}
-                            />
                     </div>
                 </div>
 

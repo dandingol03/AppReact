@@ -8,10 +8,7 @@ import '../../css/components/basic/hide.css';
  */
 
 var Hide=React.createClass({
-    transitinStatus:function(){
 
-        this.setState({status:!this.state.status});
-    },
     getInitialState:function(){
 
         var status=true;

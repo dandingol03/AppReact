@@ -25,8 +25,7 @@ var HighLight = React.createClass({
                     component =
                         <div>
                             <div >
-                                <br/>
-                                <table>
+                                <table className="content">
                                     <tbody>
                                     <tr>
                                         <td className="head" style={{textAlign:"center"}}>
@@ -35,7 +34,7 @@ var HighLight = React.createClass({
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td >
+                                        <td colSpan={7} className="main" height={25} style={{borderTop:"none"}}>
                                             &nbsp;2015级研究生：
                                             <br/>&nbsp;&nbsp;&nbsp;你好！
                                             <br/>&nbsp;&nbsp;&nbsp;为方便你的入学报到与注册，请于来校报到注册前，在迎新系统中完成下列信息填写：
