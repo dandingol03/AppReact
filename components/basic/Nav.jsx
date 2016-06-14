@@ -8,7 +8,7 @@ var SyncStore = require('../../components/flux/stores/SyncStore');
  * 1.
  * 1>,二级菜单做成堆叠式的表格
  * 2>,三级菜单做成多行式布局
- *
+ * 3>,
  */
 
 var Nav=React.createClass({
