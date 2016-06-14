@@ -562,6 +562,7 @@ var OrdinaryTable =React.createClass({
     queryHandle:function(type,url,params,dataType,callback){
         $.ajax({
             type: type!==undefined&&type!==null?type:'POST',
+            type: type!==undefined&&type!==null?type:'POST',
             url: url,
             dataType: dataType!==undefined&&dataType!==null?dataType:'json',
             data: params,
@@ -1297,9 +1298,11 @@ var OrdinaryTable =React.createClass({
                         <div ref="contentDiv">{tables}</div>
                     </div>
                 );
-
+            var highLight=this.props.highLight;
+            var gradient=this.props.gradient;
             return (
-                <div  className="ordinaryTable"  style={{margin:"0px"}}>
+
+                <div className={highLight==true?"ordinaryTable highLight":gradient==true?"ordinaryTable gradient":"ordinaryTable"} style={{margin:"0px"}}>
                     <div className="row">
                         {sideDist}
                         {mainDist}

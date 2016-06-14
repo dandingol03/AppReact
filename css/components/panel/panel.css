@@ -8,10 +8,10 @@
 }
 .table.table-bordered.panel
 {
-    background-color: #edf7ff;
+    background-color: transparent;
 }
 .table.table-bordered.panel> thead:first-child > tr:first-child > th{
-    border:1px solid #6EA0FF;
+ border: 1px solid #ddd;
 }
 
 .table.table-bordered.center.panel thead:first-child tr th {
@@ -24,8 +24,8 @@
 
 .table.table-bordered.center.panel td
 {
-    align:left;
-    border:1px solid #6EA0FF;
+    align:center;
+
 }
 .table.table-bordered.center.panel td span{
 margin-right:5%;
@@ -36,4 +36,12 @@ margin-right:5%;
 }
 .form.panel{
     background-color: transparent;
+}
+
+.form.panel .highLight {
+    box-sizing: border-box;
+    background-color: #edf7ff;
+}
+.form.panel.gradient{
+    background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))
 }
