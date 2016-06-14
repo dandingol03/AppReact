@@ -9,7 +9,7 @@ var PasswordModify=React.createClass({
         var action="/serviceHall/react/commitPassword.do";
 
         return(
-            <Password title={title} action={action}/>
+            <Password title={title} action={action} highLight={true}/>
            );
     }
 });

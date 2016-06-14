@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 var Panel = require('../../../../../components/panel/Panel.jsx');
+var Li = require('../../../../../components/basic/Li.jsx');
 import Hide from '../../../../../components/basic/Hide.jsx';
 import '../../../../../css/serviceHobby/basic/news.css';
 var ProxyQ = require('../../../../../components/proxy/ProxyQ');
@@ -14,9 +15,6 @@ var News=React.createClass({
     clickCb        : function (evt) {
         var target = evt.target;
         var index = $(target).attr("data-index");
-        console.log();
-        console.log();
-        console.log();
         if (index !== undefined && index !== null) {
             var info = this.state.contentMapping[index];
             if (info !== undefined && info !== null) {
@@ -34,6 +32,27 @@ var News=React.createClass({
                 $(this.refs.contentDiv).slideUp();
             }
         }
+    },
+    queryCb        : function (evt) {
+        var target = evt.target;
+        var query = $(target).attr("data-query");
+        if (Object.prototype.toString.call(query) == '[object String]')
+            query = eval('(' + query + ')');
+        console.log("query=======");
+        for (var field in query) {
+            console.log(field + ":" + query[field]);
+        }
+        var comp = $(target).attr("data-comp");
+        if (query !== undefined && query !== null) {
+            var ob = new Object();
+            ob.comp = comp;
+            //TODO:change the structor of ob
+            ob.query = query;
+            ob.auto = true;
+            this.setState({hiddenInfo: ob});
+            $(this.refs.contentDiv).slideUp();
+        }
+
     },
     fetch:function(){
         ProxyQ.queryHandle(
@@ -88,9 +107,25 @@ var News=React.createClass({
                 var k = 0;
                 var state = this.state;
                 var clickCb = this.clickCb;
+                var queryCb = this.queryCb;
                 this.state.data.map(function (item, i) {
                     var groupNews = item;
-                    uls.push(<li key={k++} className="main"><span>{groupNews.newsTypeName}</span></li>);
+
+                    if (item.query !== undefined && item.query !== null) {
+
+                        //console.log("item query=======");
+                        //for(var field in item.query)
+                        //{
+                        //    console.log(field+":"+item.query[field]);
+                        //}
+                        uls.push(<li key={k++} className="main">
+                            <span>{groupNews.newsTypeName}</span>
+                            <span onClick={queryCb} className="more" data-query={JSON.stringify(item.query)}
+                                  data-comp={item.comp!==undefined&&item.comp!==null?item.comp:null}>more</span>
+                        </li>);
+                    }
+                    else
+                        uls.push(<li key={k++} className="main"><span>{groupNews.newsTypeName}</span></li>);
                     if (groupNews.newsList !== undefined && groupNews.newsList !== null) {
                         groupNews.newsList.map(function (news, j) {
                             var content = news.content;
@@ -124,6 +159,16 @@ var News=React.createClass({
                                 autoComplete={true}
                                 data={this.state.hiddenInfo.data}
                                 returnCb={this.returnCb}
+                                />;
+                            break;
+                        case 'Li':
+                            console.log("li===");
+                            hide$c = <Li
+                                auto={true}
+                                query={this.state.hiddenInfo.query}
+                                returnCb={this.returnCb}
+                                pagination={true}
+
                                 />;
                             break;
                         default:

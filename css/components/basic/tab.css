@@ -7,8 +7,14 @@
     background-color: #edf7ff;
 }
 .Tab.gradient{
-    background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))
+    /*background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0));*/
 }
+
+.Tab.gradient .data-tab table td {
+    border: 1px solid #eee;
+}
+
+
 
 .tab{
     margin-left: auto;
@@ -35,6 +41,7 @@
     height: 38px;
     line-height: 38px;
     list-style:none;
+    font-size: 16px;
 }
 .tab ul li.active{
     border-bottom: 4px solid #0066b3;

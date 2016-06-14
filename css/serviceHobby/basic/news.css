@@ -40,6 +40,12 @@ ul.list {
     font-weight: bold;
 }
 
+.list li.main span.more {
+    float: right;
+    margin-right: 20%;
+    cursor: pointer;
+}
+
 .list li.vice {
     line-height: 30px;
     height: 30px;

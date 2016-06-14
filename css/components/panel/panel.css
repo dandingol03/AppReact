@@ -38,10 +38,21 @@ margin-right:5%;
     background-color: transparent;
 }
 
-.form.panel .highLight {
+.form.panel.highLight {
     box-sizing: border-box;
     background-color: #edf7ff;
 }
+
+.form.panel.highLight table tr td {
+    border: 1px solid #6EA0FF;
+}
+
+.form.panel.highLight table.table-bordered.panel thead tr:first-child td,
+.form.panel.highLight table.table-bordered.panel thead tr:first-child th {
+    border: 1px solid #6EA0FF;
+}
+
+
 .form.panel.gradient{
     background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))
 }
