@@ -39,13 +39,7 @@ var Home =React.createClass({
      return (
          <div  className="total" style={{marginTop:"120px"}}>
 
-             <div className="vcc-index_title_box vcc-index_title_box_1">
-                 <div className="vcc-index_title">
-                     <span href="#" className="vcc-index_title_a">个人信息</span>
 
-                     <div className="vcc-index_title_box2">个人信息小助手 方便快速管理查看个人信息</div>
-                 </div>
-             </div>
 
 
              <Tab data={[
