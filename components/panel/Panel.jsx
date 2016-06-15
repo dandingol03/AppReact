@@ -586,12 +586,14 @@ var Panel=React.createClass({
             {
                 title=
                     <tr>
-                        <th colSpan={max$cols}>{this.props.title.content}</th>
+                        <th colSpan={max$cols}>{this.props.title}</th>
                     </tr>
 
             }
 
 
+            var highLight = this.props.highLight;
+            var gradient = this.props.gradient;
             //not regulated css
             var padding = this.props.padding;
             return(
@@ -618,8 +620,6 @@ var Panel=React.createClass({
             if(this.props.auto==true)
                 this.fetch();
 
-            var highLight=this.props.highLight;
-            var gradient=this.props.gradient;
             return(
                 <div className={"row"}>
                     <div className="col-sm-12">

@@ -15,6 +15,7 @@ render((
             <IndexRoute component={Home}/>
             <Route path={window.App.getAppRoute()+"/password/modify"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/allCourseQuery"} component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/news"} component={MainSection}/>
         </Route>
     </Router>
 ), document.getElementById('root'))

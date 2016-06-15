@@ -101,8 +101,13 @@ var Password=React.createClass({
             <button className="btn btn-default"  onClick={this.commitCb}>提交</button>
             <button className="btn btn-default"  type="reset">重置</button>
         </td></tr>)
+        var hightLight = this.props.highLight;
+        var gradient = this.props.gradient;
     return (
-        <form name="passwordForm" className="form" method="post" action={this.props.action} style={{margin:"20px",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
+        <form name="passwordForm"
+              className={"form password "+(hightLight!==undefined&&hightLight!==null?"highLight":gradient!==undefined&&gradient!==null?"gradient":"")}
+              method="post" action={this.props.action}
+              style={{margin:"20px",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
             <div className="row">
                 <div className="col-lg-12">
                         <table className="table table-bordered center">

@@ -56,6 +56,7 @@ var HighLight = React.createClass({
                                 </table>
                             </div>
                             <OrdinaryTable
+                                highLight={true}
                                 title={this.props.title}
                                 query={this.props.query}
                                 autoFetch={true}
