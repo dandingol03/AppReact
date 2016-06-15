@@ -89,6 +89,18 @@ ul, li, ol {
     font-family: "微软雅黑","黑体","宋体";
 }
 
+.topbg {
+    background: url(../../../build/images/shadow.png) repeat-x left top;
+    height: 40px;
+    position: absolute;
+    top: 101px;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+}
+
+
+
 .w_170 {
     width: 170px;
     overflow: hidden;

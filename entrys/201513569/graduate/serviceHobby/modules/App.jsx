@@ -27,7 +27,7 @@ var App =React.createClass({
          */
             <div>
                 <Nav logo={Deploy.getResourceDeployPrefix()+"/images/school_logo.png"} data={MENU}/>
-
+                <div className="topbg"></div>
 
                 <div className="keyNavigation">
                     <div className="top">
