@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
-import AllCourseQuery from './../allCourseQuery/allCourseQueryMain.jsx';
+import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
 import News from './News.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
 var SyncActions = require('../../../../../components/flux/actions/SyncActions');
@@ -56,7 +56,8 @@ var MainSection = React.createClass({
                     label = "密码改业务";
                     break;
                 case App.getAppRoute() + "/allCourseQuery":
-                    ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}></AllCourseQuery>
+                    ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}>
+                            </AllCourseQuery>
                     label = "成绩查询业务";
                     break;
                 case App.getAppRoute() + "/news":
@@ -124,4 +125,4 @@ var MainSection = React.createClass({
         //TodoStore.removeChangeListener(this._onChange);
     }
 });
-export default MainSection;
+module.exports= MainSection;
