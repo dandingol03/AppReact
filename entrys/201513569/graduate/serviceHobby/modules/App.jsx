@@ -26,7 +26,7 @@ var App =React.createClass({
          * header box part
          */
             <div>
-                <Nav logo="images/school_logo.png" data={MENU}/>
+                <Nav logo={Deploy.getResourceDeployPrefix()+"/images/school_logo.png"} data={MENU}/>
 
 
                 <div className="keyNavigation">

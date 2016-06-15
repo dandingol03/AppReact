@@ -269,7 +269,7 @@ var Nav=React.createClass({
                                         <tr>
                                             <td className="mtt_td1">
                                                 <Link
-                                                    to={second.route!==undefined&&second.route!==null?second.route:"/password/modify"}
+                                                    to={App.getAppRoute()+(second.route!==undefined&&second.route!==null?second.route:"/password/modify")}
                                                     onClick={linkCb}>{second.label}</Link>
                                             </td>
                                         </tr>

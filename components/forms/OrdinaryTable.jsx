@@ -1270,15 +1270,6 @@ var OrdinaryTable =React.createClass({
                 }
             } else {
             }
-
-
-
-
-
-
-
-
-
             var mainDist;
             if(sideDist!==undefined&&sideDist!==null)
                 mainDist=(
@@ -1302,7 +1293,7 @@ var OrdinaryTable =React.createClass({
             var gradient=this.props.gradient;
             return (
 
-                <div className={highLight==true?"ordinaryTable highLight":gradient==true?"ordinaryTable gradient":"ordinaryTable"} style={{margin:"0px"}}>
+                <div className={highLight==true?"ordinaryTable highLight":gradient==true?"ordinaryTable gradient":"ordinaryTable"} style={{margin:"50px"}}>
                     <div className="row">
                         {sideDist}
                         {mainDist}

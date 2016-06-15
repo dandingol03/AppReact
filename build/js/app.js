@@ -4,6 +4,8 @@
 
 window.App=new Object();
 
+window.Deploy=new Object();
+
 window.App._instances = new Object();
 
 window.App.getModel=function(){
@@ -18,11 +20,16 @@ window.App.load = function () {
 window.App.unload = function () {
     $("#loading").fadeOut();
 }
+
+window.Deploy.getResourceDeployPrefix = function () {
+    return "/gradms/serviceLobby";
+}
+
 window.App.getResourceDeployPrefix = function () {
-    return "";
+    return "/gradms/serviceLobby";
 }
 window.App.getAppRoute = function () {
-    return "";
+    return "/gradms/bsuims/serviceHobbyLogin.do";
 }
 window.App.swing = function (ob) {
     var $ob;
