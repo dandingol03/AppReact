@@ -26,7 +26,7 @@ var App =React.createClass({
          * header box part
          */
             <div>
-                <Nav logo={Deploy.getResourceDeployPrefix()+"/images/school_logo.png"} data={MENU}/>
+                <Nav logo={Deploy.getResourceDeployPrefix()+"images/school_logo.png"} data={MENU}/>
                 <div className="topbg"></div>
 
                 <div className="keyNavigation">
@@ -45,9 +45,8 @@ var App =React.createClass({
                         <div className="block center">
                             <div className="briefInformation">
                                 <ul>
-                                    <li>您有N条公告信息 <Link to="/news">更多》</Link></li>
-                                    <li> &nbsp;&nbsp;2016年6月1日放假的通知...</li>
-                                    <li>您有7条未读信息 <Link to="/news">更多》</Link></li>
+                                    <li>您有n条公告 <Link to="/news">更多》</Link></li>
+                                    <li>您有m条通知 <Link to="/news">更多》</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -63,7 +62,46 @@ var App =React.createClass({
                             </div>
                         </div>
                     </div>
+                    <div className="bottom">
+                        <div className="commonFunction">
+                            <div className="block one">
+                                <div className="functionalAreas">
+                                    <a href="#" onclick="LinkClickFunction(this)">
+                                        <img src="images/function1.png" alt="功能1"></img>
+                                    </a>
+                                    <span className="functionSpan">申请绿色通道</span>
+                                </div>
+                            </div>
+                            <div className="block two">
+                                <div className="functionalAreas">
+                                    <a href="#" onclick="LinkClickFunction(this)">
+                                        <img src="images/function2.png" alt="功能1"></img>
+                                    </a>
+                                    <span className="functionSpan">申请宿舍</span>
+                                </div>
+                            </div>
+                            <div className="block three">
+                                <div className="functionalAreas">
+                                    <a href="#" onclick="LinkClickFunction(this)">
+                                        <img src="images/function3.png" alt="功能1"></img>
+                                    </a>
+                                    <span className="functionSpan">申请导师</span>
+                                </div>
+                            </div>
+                            <div className="block four">
+                                <div className="functionalAreas">
+                                    <a href="#" onclick="LinkClickFunction(this)">
+                                        <img src="images/function4.png" alt="功能1"></img>
+                                    </a>
+                                    <span className="functionSpan">申请免修英语</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+
 
                 <HighLight type="OrdinaryTable"
                            title='<span  style="font-size: 14px;color: #6EA0FF;font-weight:bold;text-align:center">个人信息状态</span>'
@@ -84,8 +122,6 @@ var App =React.createClass({
                                "studyStateStr":true
                              }}
                     />
-
-                <IndexScroll data={Scrolls}/>
 
                 <ScaleBar data={Scales}/>
                 {this.props.children}

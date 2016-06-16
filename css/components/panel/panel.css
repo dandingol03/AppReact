@@ -1,6 +1,6 @@
 .table {
     margin-bottom: 0px;
-    margin-top: 6px;
+    margin-top: 20px;
     text-align: left;
     font-size: 12px;
     line-height: 24px;
@@ -10,8 +10,9 @@
 {
     background-color: transparent;
 }
+/*修改记录，边框原值#ddd*/
 .table.table-bordered.panel> thead:first-child > tr:first-child > th{
- border: 1px solid #ddd;
+ border: 1px solid #0066b3 ;
 }
 
 .table.table-bordered.center.panel thead:first-child tr th {
