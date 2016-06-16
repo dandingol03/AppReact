@@ -1,6 +1,7 @@
 .highLight {
     box-sizing: border-box;
     background-color: #edf7ff;
+    /*background: linear-gradient(to bottom, rgb(237, 247, 255) ,rgb(255, 255, 255));*/
 }
 
 .highLight .left .component {

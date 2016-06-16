@@ -22,14 +22,14 @@ window.App.unload = function () {
 }
 
 window.Deploy.getResourceDeployPrefix = function () {
-    return "/gradms/serviceLobby";
+    return "/";
 }
 
 window.App.getResourceDeployPrefix = function () {
-    return "/gradms/serviceLobby";
+    return "/";
 }
 window.App.getAppRoute = function () {
-    return "/gradms/bsuims/serviceHobbyLogin.do";
+    return "/";
 }
 window.App.swing = function (ob) {
     var $ob;
