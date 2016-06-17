@@ -57,7 +57,7 @@ var MainSection = React.createClass({
                     break;
                 case App.getAppRoute() + "/allCourseQuery":
                     ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}>
-                            </AllCourseQuery>
+                    </AllCourseQuery>
                     label = "成绩查询业务";
                     break;
                 case App.getAppRoute() + "/news":
@@ -129,4 +129,4 @@ var MainSection = React.createClass({
         //TodoStore.removeChangeListener(this._onChange);
     }
 });
-module.exports= MainSection;
+module.exports = MainSection;

@@ -37,7 +37,7 @@ var Home =React.createClass({
 
 
      return (
-         <div  className="total" style={{minHeight:"650px",marginTop:"0px",paddingBottom:"30px"}}>
+         <div className="total" style={{minHeight:"650px",marginTop:"0px",paddingBottom:"30px"}}>
 
              <div className="vcc-index_title_box vcc-index_title_box_1">
                  <div className="vcc-index_title">
