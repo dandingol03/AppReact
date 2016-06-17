@@ -37,13 +37,11 @@ var Home =React.createClass({
 
 
      return (
-         <div  className="total" style={{marginTop:"120px"}}>
+         <div  className="total" style={{minHeight:"650px",marginTop:"0px",paddingBottom:"30px"}}>
 
              <div className="vcc-index_title_box vcc-index_title_box_1">
                  <div className="vcc-index_title">
                      <span href="#" className="vcc-index_title_a">个人信息</span>
-
-                     <div className="vcc-index_title_box2">个人信息小助手 方便快速管理查看个人信息</div>
                  </div>
              </div>
 
@@ -54,48 +52,48 @@ var Home =React.createClass({
                 name        : "Task",
             data:[
             [
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"}
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"}
             ]
             ,
 
             [
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"}
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"}
             ]
             ,
 
 
             [
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"}
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"}
             ]
             ,
             [
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"}
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"}
             ]
             ,
             [
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"}
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"}
             ]
             ,
             [
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"}
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"}
             ]
             ,
             [
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"},
-                {name: "生理健康", rowSpan: "2"}
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"},
+                {name: "生理健康", rowSpan: "1"}
             ]
         ]
                     }

@@ -8,7 +8,7 @@ var SyncStore = require('../../components/flux/stores/SyncStore');
  * 1.
  * 1>,二级菜单做成堆叠式的表格
  * 2>,三级菜单做成多行式布局
- *
+ * 3>,
  */
 
 var Nav=React.createClass({
@@ -24,6 +24,9 @@ var Nav=React.createClass({
         } else {
             App.unSwing("#bell");
         }
+        this.setState({fieldCount:fieldCount});
+
+
         //for (var id in stores) {
         //    console.log("id=" + stores[id].route);
         //    console.log("data=" + stores[id].data);
@@ -140,8 +143,8 @@ var Nav=React.createClass({
         var auto;
         if(this.props.auto===true||this.props.auto==="true")
             auto=true;
-
-        return ({data:data,data$initialed:data$initialed,auto:auto});
+        var fieldCount=0;
+        return ({data:data,data$initialed:data$initialed,auto:auto,fieldCount:fieldCount});
     },
     render:function(){
         if(this.state.data$initialed!==true&&(this.props.data==null||this.props.data==undefined))
@@ -266,7 +269,7 @@ var Nav=React.createClass({
                                         <tr>
                                             <td className="mtt_td1">
                                                 <Link
-                                                    to={second.route!==undefined&&second.route!==null?second.route:"/password/modify"}
+                                                    to={App.getAppRoute()+(second.route!==undefined&&second.route!==null?second.route:"/password/modify")}
                                                     onClick={linkCb}>{second.label}</Link>
                                             </td>
                                         </tr>
@@ -318,7 +321,9 @@ var Nav=React.createClass({
                         <div className="center">
                             <ul className="link">
                                 <li><a id="bell" href="javascript:void(0)" className="fa fa-bell-o"
-                                       style={{marginTop:"10px"}}></a></li>
+                                       style={{marginTop:"10px"}}><span style={{color:"#f00", paddingLeft:"3px"}}>{this.state.fieldCount}</span></a>
+
+                                </li>
                                 <li><a href="javascript:void(0)">刷新</a></li>
                                 <em className="global-top-item global-top-seperator">|</em>
                                 <li><a href="javascript:void(0)">退出</a></li>

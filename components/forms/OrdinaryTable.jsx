@@ -1270,15 +1270,6 @@ var OrdinaryTable =React.createClass({
                 }
             } else {
             }
-
-
-
-
-
-
-
-
-
             var mainDist;
             if(sideDist!==undefined&&sideDist!==null)
                 mainDist=(

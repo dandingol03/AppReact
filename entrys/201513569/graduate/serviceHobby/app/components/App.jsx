@@ -66,23 +66,43 @@ var App = React.createClass({
                             </div>
                         </div>
                     </div>
-                    <div >
-                        <CustomMenu auto={true} query={{
-                                                url   : "/bsuims/reactPageDataRequest.do",
-                                                params: {
-                                                    reactPageName  : "serviceReactPage",
-                                                    reactActionName: "getAuthMenus"
-                                                    }
-                                                }}
-                                    apply={{
-                                                url:"/bsuims/reactPageDataRequest.do",
-                                                  params: {
-                                                    reactPageName  : "serviceReactPage",
-                                                    reactActionName: "updateCustomMenu"
-                                                    }
-                                                }}
-                            />
+                    <div className="bottom">
+                        <div className="commonFunction">
+                            <div className="block one">
+                                <div className="functionalAreas">
+                                    <a href="#" onclick="LinkClickFunction(this)">
+                                        <img src="images/function1.png" alt="功能1"></img>
+                                     </a>
+                                    <span className="functionSpan">申请绿色通道</span>
+                                </div>
+                            </div>
+                            <div className="block two">
+                                    <div className="functionalAreas">
+                                        <a href="#" onclick="LinkClickFunction(this)">
+                                            <img src="images/function2.png" alt="功能1"></img>
+                                        </a>
+                                        <span className="functionSpan">申请宿舍</span>
+                                    </div>
+                            </div>
+                            <div className="block three">
+                                    <div className="functionalAreas">
+                                        <a href="#" onclick="LinkClickFunction(this)">
+                                                <img src="images/function3.png" alt="功能1"></img>
+                                        </a>
+                                        <span className="functionSpan">申请导师</span>
+                                    </div>
+                            </div>
+                            <div className="block four">
+                                    <div className="functionalAreas">
+                                         <a href="#" onclick="LinkClickFunction(this)">
+                                                    <img src="images/function4.png" alt="功能1"></img>
+                                         </a>
+                                        <span className="functionSpan">申请免修英语</span>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
                 <HighLight type="Panel"

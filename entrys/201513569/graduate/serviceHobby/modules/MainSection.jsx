@@ -56,7 +56,8 @@ var MainSection = React.createClass({
                     label = "密码改业务";
                     break;
                 case App.getAppRoute() + "/allCourseQuery":
-                    ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}></AllCourseQuery>
+                    ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}>
+                            </AllCourseQuery>
                     label = "成绩查询业务";
                     break;
                 case App.getAppRoute() + "/news":
@@ -102,9 +103,13 @@ var MainSection = React.createClass({
                     </div>
                 </div>
         }
+
+        //remove breadcrumb by zyy,yeah i am so native
+
+
+
         return (
             <div style={{margin: "100px auto 0 auto",paddingBottom:"200px",width:"100%",backgroundColor:"#edf7ff"}}>
-                {breadcrumb}
                 <div ref="mainSection" className="mainSection"
                      style={{display:"none",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
                     {ctrl}
@@ -124,4 +129,4 @@ var MainSection = React.createClass({
         //TodoStore.removeChangeListener(this._onChange);
     }
 });
-export default MainSection;
+module.exports= MainSection;

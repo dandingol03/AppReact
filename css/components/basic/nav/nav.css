@@ -114,12 +114,13 @@
 .nav ul li {
     float: left;
     font-size: 18px;
+    font-family: "Microsoft Yahei",Arial, Helvetica, sans-serif,"ºÚÌå";
     display: inline-block;
     color: #666;
 }
 
 .nav ul li a.nav_a {
-    color: #333;
+    color: #111;
     cursor: default;
     padding: 0 14px;
     padding-bottom: 10px;

@@ -1,11 +1,12 @@
+/*背景的更改过程
+background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))url(../img/headline.jpg) no-repeat center;
+background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0));*/
 .total{
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))
-    /* url(../img/headline.jpg) no-repeat center*/;
+    background: url(../../../build/images/total.png) no-repeat center;
 }
 .vcc-index_title_box {
     overflow: hidden;
-    margin-top: 60px;
 }
 
 .vcc-index_title_box_1 {
@@ -26,8 +27,10 @@
 .vcc-index_title_a {
     display: block;
     float: left;
+    font-size: 28px;
+    font-weight: 500;
     padding-right: 11px;
-    border-left: 10px solid #c1c1c1;
+    border-left: 10px solid #0066b3;/*原值：#c1c1c1*/
     padding-left: 10px;
     color: #333;
 }

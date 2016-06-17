@@ -23,13 +23,13 @@ module.exports = {
         hot:true,
         proxy:{
             '/serviceHall/*.do':{
-                    target: 'http://localhost:8090/',
-                    secure: false
+                target: 'http://localhost:8090/',
+                secure: false
             }
         }
     },
     plugins: [
-       new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ],module: {
 
         loaders: [
