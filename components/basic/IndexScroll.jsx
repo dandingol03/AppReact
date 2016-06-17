@@ -238,7 +238,8 @@ var IndexScroll=React.createClass({
                         <li className="index_scroll_li" key={i}>
                             <div className="index_scroll_top">
                                 <div className="index_scroll_icon">
-                                    <img src={App.getResourceDeployPrefix()+"/images/upload/20151210_1449718015/20151210112849011770.png"}
+                                    <img
+                                        src={App.getResourceDeployPrefix()+"/images/upload/20151210_1449718015/20151210112849011770.png"}
                                          style={{width:"55px", height:"55px"}}/>
                                 </div>
                                 <div className="index_scroll_text">

@@ -24,7 +24,7 @@ var Nav=React.createClass({
         } else {
             App.unSwing("#bell");
         }
-        this.setState({fieldCount:fieldCount});
+        this.setState({fieldCount: fieldCount});
 
 
         //for (var id in stores) {
@@ -143,8 +143,8 @@ var Nav=React.createClass({
         var auto;
         if(this.props.auto===true||this.props.auto==="true")
             auto=true;
-        var fieldCount=0;
-        return ({data:data,data$initialed:data$initialed,auto:auto,fieldCount:fieldCount});
+        var fieldCount = 0;
+        return ({data: data, data$initialed: data$initialed, auto: auto, fieldCount: fieldCount});
     },
     render:function(){
         if(this.state.data$initialed!==true&&(this.props.data==null||this.props.data==undefined))
@@ -321,7 +321,8 @@ var Nav=React.createClass({
                         <div className="center">
                             <ul className="link">
                                 <li><a id="bell" href="javascript:void(0)" className="fa fa-bell-o"
-                                       style={{marginTop:"10px"}}><span style={{color:"#f00", paddingLeft:"3px"}}>{this.state.fieldCount}</span></a>
+                                       style={{marginTop:"10px"}}><span
+                                    style={{color:"#f00", paddingLeft:"3px"}}>{this.state.fieldCount}</span></a>
 
                                 </li>
                                 <li><a href="javascript:void(0)">刷新</a></li>
