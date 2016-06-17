@@ -112,15 +112,13 @@ var Panel=React.createClass({
             }
             if(this.props.clickHandle!==undefined&&this.props.clickHandle!==null)
             {
-                if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null){
-                    this.props.syncHandle({completed:true});
+                if (this.props.syncHandle !== undefined && this.props.syncHandle !== null) {
+                    this.props.syncHandle({completed: true});
                 }
                 this.props.clickHandle(params);
             }
-            else{//如果本组件为最顶层组件
-                if(target.getAttribute('data-query')!==undefined&&target.getAttribute('data-query')!==null){
-
-                }else if(this.state.query!==null&&this.state.query!==undefined)
+            else {//如果本组件为最顶层组件
+                if(this.state.query!==null&&this.state.query!==undefined)
                 {
                     for (var field in required) {
                         if (params[field] == undefined || params[field] == null) {
@@ -129,8 +127,8 @@ var Panel=React.createClass({
                         }
                     }
                     params = Object.assign(this.state.query.params, params);
-                    if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null){
-                        this.props.syncHandle({completed:true});
+                    if (this.props.syncHandle !== undefined && this.props.syncHandle !== null) {
+                        this.props.syncHandle({completed: true});
                     }
                     ProxyQ.queryHandle(
                         null,

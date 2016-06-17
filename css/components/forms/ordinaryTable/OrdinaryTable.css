@@ -6,7 +6,7 @@
 
 .ordinaryTable.highLight td {
     box-sizing: border-box;
-    background-color: #edf7ff;
+    /*background-color: #edf7ff;*/
     text-align:center;
     border: 1px solid #6EA0FF;
 }

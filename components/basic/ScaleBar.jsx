@@ -199,11 +199,12 @@ var ScaleBar =React.createClass({
 
                     var background = "url('" + App.getResourceDeployPrefix() + item.img + "') no-repeat 10px 30px";
                     var sus_li_style={background:background};
-                    suspends.push(<li key={i}  style={sus_li_style} className={item.label != "业务提醒" ? "sus_li" :"fa fa-bell-o fa-3x"}>
+                    suspends.push(<li key={i} style={sus_li_style}
+                                      className={item.label != "业务提醒" ? "sus_li" :"fa fa-bell-o fa-3x"}>
                         <span style={{marginLeft:"20px"}}>{item.label}</span>
                     </li>);
-                    var sus="sus_li sus"+" "+i;
-                    var sus_li_sus={sus:sus};
+                    var sus = "sus_li sus" + " " + i;
+                    var sus_li_sus = {sus: sus};
                     showNavs.push(
                         <li className={item.label != "业务提醒" ? sus :"fa fa-bell-o fa-3x"} key={i} style={sus_li_style}>
                             <span style={{marginLeft:"20px"}}>{item.label}</span>

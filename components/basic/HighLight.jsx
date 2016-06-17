@@ -76,15 +76,15 @@ var HighLight = React.createClass({
 
 
         return (
-            <div className="highLight"  style={{height:"620px",position:"relative"}} ref="highLight">
+            <div className="highLight" style={{height:"620px",position:"relative"}} ref="highLight">
                 <div className="left"
-                     style={{left:"10%",width:"80%",position:"absolute",float:"left",backgroundColor: "#edf7ff",height: "100%",textAlign:"center"}}>
+                     style={{left:"10%",width:"80%",position:"absolute",float:"left",height: "100%",textAlign:"center"}}>
                     <div className="component">
                         {component}
                     </div>
 
                 </div>
-                <div className="right" style={{width:"10%",float:"right",backgroundColor: "#edf7ff",height:"100%"}}>
+                <div className="right" style={{width:"10%",float:"right",height:"100%"}}>
                     <div className="menu on">
                         <i></i>
                         <i></i>
@@ -96,7 +96,7 @@ var HighLight = React.createClass({
     componentDidMount: function () {
 
 
-        var $highLight=$(this.refs.highLight);
+        var $highLight = $(this.refs.highLight);
         $highLight.find(".menu").click(function () {
             $(this).toggleClass("on");
             $highLight.find(".component").fadeToggle();

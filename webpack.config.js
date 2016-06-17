@@ -27,13 +27,13 @@ module.exports = {
         hot:true,
         proxy:{
             '/gradms/*.do':{
-                    target: 'http://localhost:8080/',
-                    secure: false
+                target: 'http://localhost:8080/',
+                secure: false
             }
         }
     },
     plugins: [
-       new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ],module: {
 
         loaders: [

@@ -6,16 +6,75 @@
 
 body
 {
-    font-size: 12px;
+    font-size: 13px;
     /*font-family: "Microsoft Yahei",Arial, Helvetica, sans-serif,"黑体";*/
     color: #333;
     line-height: 2.0;
-    background: #fff;
+    background: #edf7ff;
 }
 
 ul, li, ol {
     list-style: none;
 }
+
+/*apply part*/
+/*bottom start  修改background: rgba(6, 85, 51, 0.1);*/
+.keyNavigation .bottom {
+    width: 624px;
+    height: 97px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid rgba(200, 200, 200, 0.5);
+    background: rgba(36, 139, 230, 0.1);
+
+}
+
+.commonFunction {
+    width: 624px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 5px;
+    color: #fff;
+}
+
+.keyNavigation .block .functionalAreas {
+    display: block;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+/*==============================添加的申请span标签的样式==================================*/
+.keyNavigation .block .functionalAreas .functionSpan {
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    /*font-weight:bold;*/
+    line-height: 20px;
+    color: #111;
+}
+
+/*================================================================*/
+.keyNavigation .block {
+    display: inline-block;
+    text-align: center;
+    padding-top: 6px;
+    color: #ccc;
+    vertical-align: top;
+}
+
+.keyNavigation .bottom ul {
+    color: #777;
+    text-indent: 20px;
+    line-height: 2;
+}
+
+/*bottom end*/
+
+
 
 /**
 *   customMenu part
@@ -23,7 +82,7 @@ ul, li, ol {
 .keyNavigation {
     width: 100%;
     min-width: 1263px;
-    height: 180px;
+    height: 220px;
     background: linear-gradient(to right bottom, rgba(172,218,244,0), rgba(0,0,0,0)),
                     url(../../../build/images/headline.jpg) no-repeat center;
 }
@@ -38,7 +97,7 @@ ul, li, ol {
 .keyNavigation .top .block{
     display: inline-block;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 20px;
     color: #ccc;
     vertical-align: top;
 }
@@ -46,7 +105,7 @@ ul, li, ol {
 .keyNavigation .top .block {
     display: inline-block;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 24px;
     color: #ccc;
     vertical-align: top;
 }
@@ -69,15 +128,17 @@ ul, li, ol {
     line-height: 2;
 }
 
-
+/*原来的背景色background: rgba(36, 139, 230, 0.1);*/
 .keyNavigation .bottom {
     width: 1024px;
-    height: 100px;
+    height: 97px;
     margin: 0 auto;
+    margin-top: 20px;
     text-align: center;
     color: #777;
     border-top: 1px solid rgba(200,200,200,0.5);
     background: rgba(36, 139, 230, 0.1);
+
 }
 /**
 *   assessment part

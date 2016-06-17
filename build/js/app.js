@@ -2,13 +2,13 @@
  * Created by outstudio on 16/4/22.
  */
 
-window.App=new Object();
+window.App = new Object();
 
-window.Deploy=new Object();
+window.Deploy = new Object();
 
 window.App._instances = new Object();
 
-window.App.getModel=function(){
+window.App.getModel = function () {
     return "debug";
 }
 window.App.getLoadModel = function () {
@@ -22,14 +22,14 @@ window.App.unload = function () {
 }
 
 window.Deploy.getResourceDeployPrefix = function () {
-    return "/gradms/serviceLobby";
+    return "";
 }
 
 window.App.getResourceDeployPrefix = function () {
-    return "/gradms/serviceLobby";
+    return "";
 }
 window.App.getAppRoute = function () {
-    return "/gradms/bsuims/serviceHobbyLogin.do";
+    return "";
 }
 window.App.swing = function (ob) {
     var $ob;
