@@ -118,8 +118,9 @@ var Panel=React.createClass({
                 this.props.clickHandle(params);
             }
             else{//如果本组件为最顶层组件
+                if(target.getAttribute('data-query')!==undefined&&target.getAttribute('data-query')!==null){
 
-                if(this.state.query!==null&&this.state.query!==undefined)
+                }else if(this.state.query!==null&&this.state.query!==undefined)
                 {
                     for (var field in required) {
                         if (params[field] == undefined || params[field] == null) {
@@ -323,7 +324,7 @@ var Panel=React.createClass({
                     {
                         if(coms.length>1) {
                             if (coms[1] !== null && coms[1] != undefined && coms[1] !== 'download') {
-                                label = (<td key={td$index++} style={{textAlign:"center"}} colSpan={1}>
+                                label = (<td key={td$index++} style={{textAlign:"right",width:"30%"}} colSpan={1}>
                                     {name}
                                 </td>);
                             }
@@ -393,9 +394,15 @@ var Panel=React.createClass({
                                         ctrl = <button type='submit' onClick={clickHandle} style={{width:"20%"}}>
                                             {coms[0].split("=>")[1]}</button>;
                                     }
-                                    else
-                                        ctrl = <button type='submit' onClick={clickHandle} style={{width:"10%"}}>
-                                        {coms[0]}</button>;
+                                    else {
+                                        if (Object.prototype.toString.call(coms[2].split("=>")) == '[object Array]' && coms[2].split("=>").length >= 2) {
+
+                                            ctrl = <button type='submit' onClick={clickHandle} style={{width:"50%"}}
+                                                           data-query={coms[2]}> {coms[0]}</button>;
+                                        }else{
+                                            ctrl = <button type='submit' onClick={clickHandle} style={{width:"50%"}}> {coms[0]}</button>;
+                                        }
+                                    }
                                 }
                                 else
                                     ctrl=<button type='submit' onClick={clickHandle} style={{width:"20%"}}>{dict[coms[0]].name}</button>;
@@ -519,7 +526,7 @@ var Panel=React.createClass({
                             case 'radio':
                                 if(coms[2]!==undefined&&coms[2]!==null)
                                 {
-                                    if (coms[0].split("=>").length >= 2) {
+                                    if (coms[2].split("=>").length >= 2) {
                                         var ob;
                                         try {
                                             ob = eval(coms[2]);

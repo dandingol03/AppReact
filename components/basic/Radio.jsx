@@ -12,7 +12,8 @@ import dict from '../../data/json/dictionary.json';
 var Radio=React.createClass({
     changeCb:function(evt){
         var target=evt.target;
-
+        var value=target.value;
+        console.log("value===="+value);
     },
     render:function(){
         var radios;
@@ -29,15 +30,14 @@ var Radio=React.createClass({
             arr.map(function (item, i) {
                 var ra;
                 if (item.checked == true || item.checked == "true")
-                    ra = <input type="radio" value={item.value} name={props.ctrlName} onChange={changeCb} checked
+                    ra = <input type="radio" value={item.value} name={props.ctrlName} defaultChecked
                                 data-required={props.required}/>
                 else
-                    ra = <input type="radio" value={item.value} name={props.ctrlName} onChange={changeCb}
+                    ra = <input type="radio" value={item.value} name={props.ctrlName}
                                 data-required={props.required}/>
                 radios.push(
                     <div style={{display:"inline"}} key={i}>
-                        <span style={{margin:"0px 20px"}}>{item.label}</span>
-                        {ra}
+                        {ra}<span style={{margin:"0px 5px"}}>{item.label}</span>
                     </div>
                 );
             });
