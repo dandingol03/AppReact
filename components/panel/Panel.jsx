@@ -64,6 +64,7 @@ var Panel=React.createClass({
         );
 
     },
+
     queryHandle:function(type,url,params,dataType,callback){
         $.ajax({
             type: type!==undefined&&type!==null?type:'POST',
@@ -85,6 +86,8 @@ var Panel=React.createClass({
         var target=evt.target;
         if(target!==undefined&&target!==null)
         {
+            var data$query=$(target).attr("data-query");
+            console.log("data-query===="+data$query);
             var form=document.getElementsByName('PanelForm')[0];
             var params = new Object();
             //记载必填项组件的字段
@@ -118,27 +121,46 @@ var Panel=React.createClass({
                 this.props.clickHandle(params);
             }
             else {//如果本组件为最顶层组件
-                if(this.state.query!==null&&this.state.query!==undefined)
-                {
-                    for (var field in required) {
-                        if (params[field] == undefined || params[field] == null) {
-                            alert("您有输入项未填写完整");
-                            return;
-                        }
-                    }
-                    params = Object.assign(this.state.query.params, params);
-                    if (this.props.syncHandle !== undefined && this.props.syncHandle !== null) {
-                        this.props.syncHandle({completed: true});
+
+
+                if(($(target).attr('data-query')!==null&&$(target).attr('data-query')!==undefined)||($(target).parent().attr('data-query')!==null&&$(target).parent().attr('data-query')!==undefined)){
+                    var params1=eval('('+$(target).attr('data-query')+')');
+                    if(params1==null||params1==undefined){
+                        params1=eval('('+$(target).parent().attr('data-query')+')');
                     }
                     ProxyQ.queryHandle(
                         null,
-                        this.state.query.url,
-                        params,
+                        params1.url,
+                        params1.params,
                         null,
                         function (response) {
 
                         }.bind(this)
                     );
+
+                }else {
+                    if (this.state.query !== null && this.state.query !== undefined) {
+                        for (var field in required) {
+                            if (params[field] == undefined || params[field] == null) {
+                                alert("您有输入项未填写完整");
+                                return;
+                            }
+                        }
+                        params = Object.assign(this.state.query.params, params);
+                        if (this.props.syncHandle !== undefined && this.props.syncHandle !== null) {
+                            this.props.syncHandle({completed: true});
+                        }
+                        ProxyQ.queryHandle(
+                            null,
+                            this.state.query.url,
+                            params,
+                            null,
+                            function (response) {
+
+                            }.bind(this)
+                        );
+
+                    }
 
                 }
 
@@ -322,7 +344,7 @@ var Panel=React.createClass({
                     {
                         if(coms.length>1) {
                             if (coms[1] !== null && coms[1] != undefined && coms[1] !== 'download') {
-                                label = (<td key={td$index++} style={{textAlign:"right",width:"30%"}} colSpan={1}>
+                                label = (<td key={td$index++} style={{textAlign:"right",width:"20%"}} colSpan={1}>
                                     {name}
                                 </td>);
                             }
@@ -393,13 +415,16 @@ var Panel=React.createClass({
                                             {coms[0].split("=>")[1]}</button>;
                                     }
                                     else {
-                                        if (Object.prototype.toString.call(coms[2].split("=>")) == '[object Array]' && coms[2].split("=>").length >= 2) {
+                                        if(coms[2]!==undefined&&coms[2]!==null)
+                                        {
 
-                                            ctrl = <button type='submit' onClick={clickHandle} style={{width:"50%"}}
-                                                           data-query={coms[2]}> {coms[0]}</button>;
-                                        }else{
-                                            ctrl = <button type='submit' onClick={clickHandle} style={{width:"50%"}}> {coms[0]}</button>;
+                                            ctrl = <button name='queryButton' type='submit' onClick={clickHandle} style={{width:"90%"}}
+                                                               data-query={coms[2]}> {coms[0]}</button>;
+
                                         }
+                                        else
+                                            ctrl = <button name='queryButton' type='submit' onClick={clickHandle} style={{width:"20%"}} > {coms[0]}</button>;
+
                                     }
                                 }
                                 else

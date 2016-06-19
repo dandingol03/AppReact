@@ -8,7 +8,7 @@ var Footer = React.createClass({
     render: function () {
         return (
             <div className="footer">
-                Copyright ? 山东大学软件学院 &nbsp;&nbsp; 支持邮箱 91680@sdu.edu.cn
+                Copyright  灞变笢澶у杞欢瀛﹂櫌 &nbsp;&nbsp; 鏀寔閭 91680@sdu.edu.cn
             </div>)
     }
 });

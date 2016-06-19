@@ -1161,7 +1161,7 @@ var OrdinaryTable =React.createClass({
 
                          title=       <thead>
                                             <tr>
-                                                <td colSpan={colSpan} style={{float:"center"}}>{content}</td>
+                                                <td colSpan={colSpan} style={{float:"center",fontWeight:"bold"}}>{content}</td>
                                             </tr>
                                       </thead>
 
