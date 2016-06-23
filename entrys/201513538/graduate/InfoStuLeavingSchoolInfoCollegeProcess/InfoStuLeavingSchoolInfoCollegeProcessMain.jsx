@@ -37,27 +37,14 @@ function Boot()
 
 
        <div>
-        <div style={{margin:"50px"}}>
-            <table style={{border:" 1px solid #6EA0FF",position:"relative",height:"120px",width:"100%" }}>
-                <thead>
-                <tr>
-                <th style={{border:" 1px solid #6EA0FF",textAlign:"center",height:"30px"}}>
-                    注意事项
-                </th>
-                    </tr>
-                    </thead>
-                <tbody>
-                <tr><td style={{paddingLeft:"10px"}}> 1.在校延期同学做特别处理，直接在校园卡自助圈存机上做操作,有效期至2017年7月10日。</td></tr>
-                <tr><td style={{paddingLeft:"10px"}}> 2.请先去图书馆注销读者信息，再来做校园卡操作。</td></tr>
-                </tbody>
-            </table>
-        </div>
+           <div style={{margin:"50px"}}>
         <OrdinaryTable
             query={query}
             autoFetch={true}
             title={title}
             filterField={filterField}
             />
+               </div>
         <Panel
            bean={query}
             auto={true}

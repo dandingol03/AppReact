@@ -13,7 +13,7 @@
 
 /*�޸ļ�¼���߿�ԭֵ#ddd*/
 .table.table-bordered.panel> thead:first-child > tr:first-child > th{
-    border: 1px solid #0066b3;
+    border: 1px solid #ddd;
 }
 
 .table.table-bordered.center.panel thead:first-child tr th {

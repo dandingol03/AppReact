@@ -5,6 +5,7 @@ import PasswordModify from '../password/PasswordModify.jsx';
 import Tab from '../../../../../components/basic/Tab.jsx';
 import NEWS from '../data/news.json';
 import '../../../../../css/serviceHobby/basic/home.css';
+import HighLight from '../../../../../components/basic/HighLight.jsx';
 var Home =React.createClass({
 
     render:function(){
@@ -38,6 +39,27 @@ var Home =React.createClass({
 
      return (
          <div className="total" style={{minHeight:"650px",marginTop:"0px",paddingBottom:"30px"}}>
+             <HighLight type="OrdinaryTable"
+                        title='<span  style="font-size: 14px;color: #6EA0FF;font-weight:bold;text-align:center">个人信息状态</span>'
+                        query={{ url:'/bsuims/reactPageDataRequest.do',
+                                   params: {
+                                      reactActionName: "registerInformationReact",
+                                      reactPageName  : "registerRulePage"
+                                            }
+                                 }}
+                        filterField={{
+                               "stuName":true,
+		                       "stuNum":true,
+		                       "feeStatus":true,
+		                       "baseInfoFillStatus":true,
+		                       "moralityFillStatus":true,
+		                       "greenwayStatus":true,
+		                       "trafiicFillStatus":true,
+                               "studyStateStr":true
+                             }}
+                 />
+
+
 
              <div className="vcc-index_title_box vcc-index_title_box_1">
                  <div className="vcc-index_title">

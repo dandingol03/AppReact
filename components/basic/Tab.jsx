@@ -156,7 +156,7 @@ var Tab=React.createClass({
 
     },
     getInitialState: function () {
-        return ({selected: -1, secondSelected: -1});
+        return ({selected: 0, secondSelected: -1});
     },
     render:function(){
         var tabs=new Array();
@@ -210,7 +210,7 @@ var Tab=React.createClass({
                             break;
                     }
                     dataTabs.push(
-                        <div key={i} style={{display:"none",width:"100%",paddingLeft:"0px",paddingRight:"0px"}}>
+                        <div key={i} style={{display:state.selected==i?"block":"none"}} claseName="balabala">
                             {entity}
                         </div>
                     );

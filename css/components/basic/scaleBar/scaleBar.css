@@ -120,7 +120,11 @@
     border-bottom: 1px #ccc solid;
     border-top-left-radius: 10px;
 }
-
+.susp_show .susp_l ul li.sus_li6 {
+    background: url('/build/images/serviceHobby/ico/bell.png') no-repeat 10px 30px;
+    border-bottom: 1px #ccc solid;
+    border-top-left-radius: 10px;
+}
 .susp_show ul li.sus_li.hover{
     background:#fff ;
     border-bottom:1px #ccc solid;
@@ -145,7 +149,10 @@
     background:#fff url(/build/images/serviceHobby/ico/y4.png) no-repeat 10px 30px;
     border-bottom-left-radius: 10px;-moz-border-bottom-left-radius: 10px; -webkit-border-bottom-left-radius:10px;
 }
-
+.susp_show ul li.sus_li6.hover{
+    background:#fff url(/build/images/serviceHobby/ico/bell.png) no-repeat 10px 30px;
+    border-bottom-left-radius: 10px;-moz-border-bottom-left-radius: 10px; -webkit-border-bottom-left-radius:10px;
+}
 
 
 .susp_show .susp_l ul {

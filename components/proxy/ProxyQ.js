@@ -123,9 +123,10 @@ var ProxyQ = {
                     $modal.find(".modal-body").html(content);
                     }else {
                     $modal.find(".modal-body").text(content);
+                    }
                     $modal.find(".modal-title").text(errType);
                     $modal.modal("show");
-                    }
+
                 }
 
                 if (callback !== undefined && callback !== null)

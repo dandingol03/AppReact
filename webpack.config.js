@@ -8,7 +8,7 @@ module.exports = {
     devtool: 'source-map',
     entry: [
         path.resolve(__dirname,
-            './entrys/201513538/graduate/InfoStuLeavingSchoolInfoCollegeProcess/InfoStuLeavingSchoolInfoCollegeProcessMain.jsx')
+            './entrys/201513569/graduate/serviceHobby/index.js')
 
     ],
     output: {
@@ -43,7 +43,6 @@ module.exports = {
                 loader: 'jsx-loader?harmony'
             },
             { test: /\.css$/, loader: "style!css" },
-            { test: /\.less$/, loader: "style!css!less" },
             {test:/\.json$/,loader:"json"},
             {
                 test: /\.jsx?$/,
