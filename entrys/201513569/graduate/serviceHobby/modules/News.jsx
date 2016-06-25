@@ -38,7 +38,6 @@ var News=React.createClass({
         var query = $(target).attr("data-query");
         if (Object.prototype.toString.call(query) == '[object String]')
             query = eval('(' + query + ')');
-        console.log("query=======");
         for (var field in query) {
             console.log(field + ":" + query[field]);
         }
@@ -112,12 +111,6 @@ var News=React.createClass({
                     var groupNews = item;
 
                     if (item.query !== undefined && item.query !== null) {
-
-                        //console.log("item query=======");
-                        //for(var field in item.query)
-                        //{
-                        //    console.log(field+":"+item.query[field]);
-                        //}
                         uls.push(<li key={k++} className="main">
                             <span>{groupNews.newsTypeName}</span>
                             <span onClick={queryCb} className="more" data-query={JSON.stringify(item.query)}
@@ -162,13 +155,11 @@ var News=React.createClass({
                                 />;
                             break;
                         case 'Li':
-                            console.log("li===");
                             hide$c = <Li
                                 auto={true}
                                 query={this.state.hiddenInfo.query}
                                 returnCb={this.returnCb}
                                 pagination={true}
-
                                 />;
                             break;
                         default:
@@ -192,6 +183,12 @@ var News=React.createClass({
                         <ul className="list">
                             {uls}
                         </ul>
+                    </div>
+                    <div ref="pagination">
+                        <li key={0} className="active">
+                            <a href="javascript:void(0);"
+                                >{2}</a>
+                        </li>
                     </div>
                 </div>
             );

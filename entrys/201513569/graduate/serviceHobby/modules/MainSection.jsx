@@ -84,14 +84,7 @@ var MainSection = React.createClass({
                     label = "新闻查询业务";
                     break;
                 case App.getAppRoute() + "/newCultivateAllCourseQueryPage":
-                    ctrl = <News query={{
-                                             url:"/bsuims/reactPageDataRequest.do",
-                                            params:{
-                                                reactPageName:"newCultivateAllCourseQueryPage",
-                                                reactActionName:"allCourseQueryInit"
-                                            }
-                                         }}
-                                 auto={true}/>;
+                    ctrl = <AllCourseQuery/>;
                     label = "课程查询业务";
                     break;
                 default:

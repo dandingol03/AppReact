@@ -138,3 +138,13 @@ ul.list {
     margin: 0 4px;
     background: #0066b3;
 }
+
+nav ul.pagination li a {
+    cursor: pointer;
+}
+
+nav ul.pagination li a:hover {
+    background: #0066b3;
+    color: #fff;
+    font-size: 1.4em;
+}

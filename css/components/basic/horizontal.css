@@ -1,0 +1,7 @@
+.horizontal .highLight.table.table-bordered thead tr th {
+    border: 1px solid #6EA0FF;
+}
+
+.horizontal .highLight.table-bordered tbody tr td {
+    border: 1px solid #6EA0FF;
+}

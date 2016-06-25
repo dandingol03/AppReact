@@ -20,7 +20,7 @@ render((
             <Route path={window.App.getAppRoute()+"/person/stuinfo_personBasicInfoUpdateInit.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/person/stuinfo_studentAllInfo.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/person/stuinfo_allRewPunInfo.do"} data={"?userType=TS"} component={MainSection}/>
-            <Route path={window.App.getAppRoute()+"/photomanage/showAllPhotoesForStu.do"} component={MainSection}/>'
+            <Route path={window.App.getAppRoute()+"/photomanage/showAllPhotoesForStu.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/register/register_information.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/health/healthyInfo_medical_history_add_init.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/greenway/grad/student_grad_greenway_add_applyinfoInit.do"} component={MainSection}/>

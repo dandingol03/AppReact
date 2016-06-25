@@ -64,23 +64,6 @@ var Panel=React.createClass({
         );
 
     },
-
-    queryHandle:function(type,url,params,dataType,callback){
-        $.ajax({
-            type: type!==undefined&&type!==null?type:'POST',
-            url: url,
-            dataType: dataType!==undefined&&dataType!==null?dataType:'json',
-            data: params,
-            cache: false,
-            success: function(response) {
-                if(callback!==undefined&&callback!==null)
-                    callback(response);
-            },
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        });
-    },
     clickHandle:function(evt){
         evt.preventDefault();
         var target=evt.target;
@@ -626,11 +609,12 @@ var Panel=React.createClass({
             var gradient = this.props.gradient;
             //not regulated css
             var padding = this.props.padding;
+            var paddingLeft = this.props.paddingLeft;
             return(
                 <form name="PanelForm" className={highLight==true?"form panel highLight":gradient==true?"form panel gradient":"form panel"}
                       action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
                       method="post"
-                      style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"40px"}}>
+                      style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"40px",paddingLeft:paddingLeft!==null&&paddingLeft!==undefined?paddingLeft:"40px"}}>
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel" style={{border:"none"}}>
