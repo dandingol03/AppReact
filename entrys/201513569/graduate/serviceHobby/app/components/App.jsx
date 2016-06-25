@@ -30,7 +30,7 @@ var App = React.createClass({
          * header box part
          */
             <div>
-                <Nav logo="images/school_logo.png" data={MENU}/>
+                <Nav logo={Deploy.getResourceDeployPrefix()+"/"+"images/school_logo.png"} data={MENU}/>
 
                 <div className="keyNavigation">
                     <div className="top">
@@ -71,7 +71,7 @@ var App = React.createClass({
                             <div className="block one">
                                 <div className="functionalAreas">
                                     <a href="#" onclick="LinkClickFunction(this)">
-                                        <img src="images/function1.png" alt="功能1"></img>
+                                        <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function1.png"} alt="功能1"></img>
                                      </a>
                                     <span className="functionSpan">申请绿色通道</span>
                                 </div>
@@ -79,7 +79,7 @@ var App = React.createClass({
                             <div className="block two">
                                     <div className="functionalAreas">
                                         <a href="#" onclick="LinkClickFunction(this)">
-                                            <img src="images/function2.png" alt="功能1"></img>
+                                            <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function2.png"} alt="功能1"></img>
                                         </a>
                                         <span className="functionSpan">申请宿舍</span>
                                     </div>
@@ -87,7 +87,7 @@ var App = React.createClass({
                             <div className="block three">
                                     <div className="functionalAreas">
                                         <a href="#" onclick="LinkClickFunction(this)">
-                                                <img src="images/function3.png" alt="功能1"></img>
+                                                <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function3.png"} alt="功能1"></img>
                                         </a>
                                         <span className="functionSpan">申请导师</span>
                                     </div>
@@ -95,7 +95,7 @@ var App = React.createClass({
                             <div className="block four">
                                     <div className="functionalAreas">
                                          <a href="#" onclick="LinkClickFunction(this)">
-                                                    <img src="images/function4.png" alt="功能1"></img>
+                                                    <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function1.png"} alt="功能1"></img>
                                          </a>
                                         <span className="functionSpan">申请免修英语</span>
                                     </div>

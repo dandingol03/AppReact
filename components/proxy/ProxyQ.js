@@ -99,7 +99,7 @@ var ProxyQ = {
                 var content;
                 var errType="";
                 var catched=false;
-                if((response.re!==undefined&&response.re!==null)&&(response.re==-1||response.re=="-1"))
+                if((response.re!==undefined&&response.re!==null)&&(response.re==-1||response.re=="-1"||response.re==2||response.re=="2"))
                 {  if(response.content!==undefined&&response.content!==null&&response.content!="") {
                     catched = true;
                     content = response.content;
@@ -119,10 +119,14 @@ var ProxyQ = {
                     }
                 }
                 if(catched==true)
-                {
+                {   if(response.re==2||response.re=="2"){
+                    $modal.find(".modal-body").html(content);
+                    }else {
                     $modal.find(".modal-body").text(content);
+                    }
                     $modal.find(".modal-title").text(errType);
                     $modal.modal("show");
+
                 }
 
                 if (callback !== undefined && callback !== null)

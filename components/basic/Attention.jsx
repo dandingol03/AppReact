@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-require('../../less/components/basic/attention.less');
+require('../../css/components/basic/attention.css');
+
 var SyncStore = require('../flux/stores/SyncStore');
 
 

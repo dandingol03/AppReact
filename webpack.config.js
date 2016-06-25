@@ -2,13 +2,17 @@ var path = require('path');
 var webpack = require('webpack');
 
 
+
+
 module.exports = {
     devtool: 'source-map',
     entry: [
-        path.resolve(__dirname, './entrys/201513569/graduate/serviceHobby/index.js')
+        path.resolve(__dirname,
+            './entrys/201513569/graduate/serviceHobby/index.js')
+
     ],
     output: {
-        path: path.resolve(__dirname, './build'),
+        path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
     },
     resolve: {
@@ -22,8 +26,8 @@ module.exports = {
         port:3000,
         hot:true,
         proxy:{
-            '/serviceHall/*.do':{
-                target: 'http://localhost:8090/',
+            '/gradms/*.do':{
+                target: 'http://localhost:8080/',
                 secure: false
             }
         }
@@ -39,7 +43,6 @@ module.exports = {
                 loader: 'jsx-loader?harmony'
             },
             { test: /\.css$/, loader: "style!css" },
-            { test: /\.less$/, loader: "style!css!less" },
             {test:/\.json$/,loader:"json"},
             {
                 test: /\.jsx?$/,

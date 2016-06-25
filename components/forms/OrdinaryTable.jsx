@@ -810,8 +810,11 @@ var OrdinaryTable =React.createClass({
                                             <input type="checkbox" data-index={-1} data-type="checkM" onChange={checkCb} />全选
                                         </td>);
                                         break;
-                                    default:
+                                    case state.filterField[0]:
                                         tr$fields.push(<td key={j++}>{transaltedField}</td>);
+                                        break;
+                                    default:
+                                        tr$fields.push(<td key={j++} >{transaltedField}</td>);
                                         break;
                                 }
                                 colSpan++;
@@ -851,6 +854,8 @@ var OrdinaryTable =React.createClass({
 
                                         switch(field)
                                         {
+                                            case state.filterField[0]:
+                                                tds.push(<td key={k++} >{content}</td>);
                                             case 'attachs':
                                                 //附件字段更改,attachid1=>xx1|attachid2=>xx2
                                                 var downloads=null;
@@ -1151,12 +1156,12 @@ var OrdinaryTable =React.createClass({
                         {
                             content = <span dangerouslySetInnerHTML={{__html:name}}/>;
                         }else {
-                            content = this.props.title.content;
+                            content = this.props.title;
                         }
 
                          title=       <thead>
                                             <tr>
-                                                <td colSpan={colSpan} style={{float:"center"}}>{content}</td>
+                                                <td colSpan={colSpan} style={{float:"center",fontWeight:"bold"}}>{content}</td>
                                             </tr>
                                       </thead>
 

@@ -8,6 +8,17 @@ var SyncActions = require('../../../../../components/flux/actions/SyncActions');
 
 
 var MainSection = React.createClass({
+    iframeLoad:function(evt)
+    {
+        var target=evt.target;
+        //$("#mainFrame").context.documentElement.scrollHeight
+        var height=null;
+        height=target.contentDocument.body.scrollHeight;
+        target.height=height;
+            //height=document.body.scrollHeight;
+
+
+    },
     syncHandle     : function (ob) {
         //TODO:create new ob or update...
         var route = this.state.route[0];
@@ -43,6 +54,7 @@ var MainSection = React.createClass({
         var ctrl;
         var breadcrumb;
         var label;
+        var data=this.props.route.data;
         if(path!==undefined&&path!==null)
         {
             var route = this.state.route;
@@ -71,7 +83,34 @@ var MainSection = React.createClass({
                                  auto={true}/>;
                     label = "新闻查询业务";
                     break;
+                case App.getAppRoute() + "/newCultivateAllCourseQueryPage":
+                    ctrl = <News query={{
+                                             url:"/bsuims/reactPageDataRequest.do",
+                                            params:{
+                                                reactPageName:"newCultivateAllCourseQueryPage",
+                                                reactActionName:"allCourseQueryInit"
+                                            }
+                                         }}
+                                 auto={true}/>;
+                    label = "课程查询业务";
+                    break;
                 default:
+                    var reg=/.*\.do.*[\.do|\.jsp].*/;
+
+                    var re=reg.exec(path);
+
+                    if(re!==undefined&&re!==null)
+                    {
+                        //TODO:iframe component render
+                        path=path.replace(App.getAppRoute(),"");
+                        ctrl=
+                            <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
+                                     frameBorder="0" scrolling="no" src={"/gradms"+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
+                                />
+
+                    }else{
+
+                    }
                     break;
             }
 
@@ -109,7 +148,7 @@ var MainSection = React.createClass({
 
 
         return (
-            <div style={{margin: "100px auto 0 auto",paddingBottom:"200px",width:"100%",backgroundColor:"#edf7ff"}}>
+            <div style={{margin: "0px auto 0 auto",paddingBottom:"200px",width:"100%"}} className="baba">
                 <div ref="mainSection" className="mainSection"
                      style={{display:"none",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
                     {ctrl}
