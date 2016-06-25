@@ -150,6 +150,7 @@ var Panel=React.createClass({
                         if (this.props.syncHandle !== undefined && this.props.syncHandle !== null) {
                             this.props.syncHandle({completed: true});
                         }
+                        console.log("query url ===="+this.state.query.url)
                         ProxyQ.queryHandle(
                             null,
                             this.state.query.url,
@@ -454,6 +455,8 @@ var Panel=React.createClass({
                                         try{
                                             var ob=eval('('+coms[2]+')');
                                             ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
+                                            consolo.log();
+                                            console.log();
                                         }catch(e)
                                         {
                                             switch(coms[2])
@@ -462,7 +465,7 @@ var Panel=React.createClass({
                                                     ctrl=<input type='text' name={ctrlName} disabled={true}/>
                                                     break;
                                                 case 'true':
-                                                    ctrl=<input type='text' name={ctrlName} defaultValue={data}/>
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={data} style={{width:"100%"}}/>
                                                     break;
                                                 default:
                                                     ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>

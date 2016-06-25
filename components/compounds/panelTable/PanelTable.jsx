@@ -48,8 +48,7 @@ var PanelTable=React.createClass({
                             size   : length
                         };
                     }
-
-                    this.setProps(ob);
+                    this.setState(ob);
                 }.bind(this)
             );
 
@@ -79,37 +78,51 @@ var PanelTable=React.createClass({
     getInitialState:function(){
 
         var comps;
+        var data;
         if(this.props.comps!==undefined&&this.props.comps!==null)
         {
             comps=this.props.comps;
         }
+        if(this.props.data!==undefined&&this.props.data!==null)
+        {
+            data=this.props.data;
+        }
+        var bean;
+        if(this.props.bean!==undefined&&this.props.bean!==null)
+            bean=this.props.bean;
 
-        return({comps:comps});
+        return({comps:comps,data:data,bean:bean});
     },
     renderPage : function () {
         var pagination = null;
         if (this.props.pagination == true) {
             pagination = <Pagination pageCb={this.pageCb}
-                                     perSize={this.props.pageInfo!==undefined&&this.props.pageInfo!==null?this.props.pageInfo.perSize:40}
-                                     size={this.props.data!==undefined&&this.props.data!==null?this.props.data.length:0}/>;
+                                     perSize={this.state.pageInfo!==undefined&&this.state.pageInfo!==null?this.state.pageInfo.perSize:40}
+                                     size={this.state.data!==undefined&&this.state.data!==null?this.state.data.length:0}/>;
         }
         return pagination;
     },
+    componentWillReceiveProps:function(props)
+    {
+        //TODO:
+        //this.setState(props);
+    },
     render:function(){
         var data;
+        //pagination本地配
         if(this.props.pagination==true)
         {
-            data=this.goGetPageData(this.props.data);
+            data=this.goGetPageData(this.state.data);
         }
         else
-            data=this.props.data;
+            data=this.state.data;
 
         return (
             <div className="row">
                 <div className="col-sm-12 col-md-12" style={{paddingLeft:"0px",paddingRight:"0px",paddingTop:"30px"}}>
                     <Panel
                         data={this.state.comps}
-                        bean={this.props.bean}
+                        bean={this.state.bean}
                         auto={true}
                         autoComplete={true}
                         query={this.props.query}
@@ -118,9 +131,9 @@ var PanelTable=React.createClass({
                     <OrdinaryTable
                         autoFetch={false}
                         data={data}
-                        tail={this.props.tail}
+                        tail={this.state.tail}
                         filterField={this.props.filterField}
-                        translation={this.props.translation}
+                        translation={this.state.translation}
                         />
                     {this.renderPage()}
                 </div>

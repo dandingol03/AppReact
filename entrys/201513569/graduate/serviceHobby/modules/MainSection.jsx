@@ -2,9 +2,11 @@ import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
 import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
+import DiminishMain from './dominish/diminishMainCompoundUnChecked.jsx';
 import News from './News.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
 var SyncActions = require('../../../../../components/flux/actions/SyncActions');
+var ProxyQ=require('../../../../../components/proxy/ProxyQ')
 
 
 var MainSection = React.createClass({
@@ -29,7 +31,7 @@ var MainSection = React.createClass({
                 label = "密码修改";
                 break;
             case "/allCourseQuery":
-                label = "成绩查询";
+                label = "课程查询";
                 break;
             case "/news":
                 label = "查看新闻";
@@ -84,16 +86,15 @@ var MainSection = React.createClass({
                     label = "新闻查询业务";
                     break;
                 case App.getAppRoute() + "/newCultivateAllCourseQueryPage":
-                    ctrl = <News query={{
-                                             url:"/bsuims/reactPageDataRequest.do",
-                                            params:{
-                                                reactPageName:"newCultivateAllCourseQueryPage",
-                                                reactActionName:"allCourseQueryInit"
-                                            }
-                                         }}
-                                 auto={true}/>;
+                    ctrl =<AllCourseQuery/>
                     label = "课程查询业务";
                     break;
+                case App.getAppRoute() + "/diminishMain":
+                    ctrl =<DiminishMain/>
+                    label = "制定培养计划";
+                    break;
+
+
                 default:
                     var reg=/.*\.do.*[\.do|\.jsp].*/;
 
@@ -105,7 +106,7 @@ var MainSection = React.createClass({
                         path=path.replace(App.getAppRoute(),"");
                         ctrl=
                             <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
-                                     frameBorder="0" scrolling="no" src={"/gradms"+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
+                                     frameBorder="0" scrolling="no" src={ProxyQ.getPrefix()+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
                                 />
 
                     }else{
