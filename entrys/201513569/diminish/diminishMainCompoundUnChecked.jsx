@@ -49,6 +49,7 @@ function cb(ob){
 function Boot()
 {
 
+
     function check$apply$1(ob){
         console.log("ob="+ob);
     }

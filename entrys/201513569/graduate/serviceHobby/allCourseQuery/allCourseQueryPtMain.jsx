@@ -29,6 +29,7 @@ function Boot()
 
 
     render(
+        <div style={{paddingLeft:"50px",paddingRight:"50px"}}>
         <PanelTable
             bean={{
                 url:"/bsuims/reactPageDataRequest.do",
@@ -37,10 +38,11 @@ function Boot()
                 reactPageName:"newCultivateAllCourseQueryPage"
                 }
             }}
-            autoComplete={true}
             query={query}
+            autoComplete={true}
             filterField={filterField}
             />
+            </div>
         , document.getElementById('root'))
 
 

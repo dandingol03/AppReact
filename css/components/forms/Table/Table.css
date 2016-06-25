@@ -27,7 +27,7 @@ tbody{
     border:1px solid #336699;
     font-family: lucida, verdana, arial, sans-serif;
     font-size:12px;
-    background-color:#ffffff;
+    background-color:transparent;
 }
 .table.table-bordered.center>tbody>tr>th{
     border:1px solid #336699;
