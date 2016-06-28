@@ -8,7 +8,7 @@ import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
 var ProxyQ=require('../proxy/ProxyQ');
 var SyncStore=require('../flux/stores/SyncStore');
-
+var SyncActions = require('../../components/flux/actions/SyncActions');
 
 
 /**
@@ -31,6 +31,7 @@ var SyncStore=require('../flux/stores/SyncStore');
  * 8.子组件的级联刷新,由父组件的form表单提交完成数据更新
  * 9.panel开始支持多数据源
  * 10.Radio组件重写
+ * 11.Flux组件的重用,sync...
  */
 
 var Panel=React.createClass({
@@ -617,7 +618,7 @@ var Panel=React.createClass({
                 <form name="PanelForm" className={highLight==true?"form panel highLight":gradient==true?"form panel gradient":"form panel"}
                       action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
                       method="post"
-                      style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"40px",paddingLeft:paddingLeft!==null&&paddingLeft!==undefined?paddingLeft:"40px"}}>
+                      style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"2px",paddingLeft:paddingLeft!==null&&paddingLeft!==undefined?paddingLeft:"40px"}}>
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel" style={{border:"none"}}>

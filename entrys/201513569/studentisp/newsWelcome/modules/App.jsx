@@ -17,7 +17,9 @@ var App = React.createClass({
     app$init: function () {
 
     },
-
+    openWin:function(target){
+        window.open('./sub.html');
+    },
     render           : function () {
 
         return (

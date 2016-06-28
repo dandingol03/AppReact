@@ -51,7 +51,7 @@ var HighLight = React.createClass({
                             break;
                         case "horizontal":
                             component =
-                                <div style={{display:"inline-block",width:comps[i].width,marginTop:"40px"}} key={i}>
+                                <div style={{display:"inline-block",width:comps[i].width,marginTop:"22px"}} key={i}>
                                     <Horizontal
                                         query={comps[i].query}
                                         auto={true}
@@ -155,9 +155,9 @@ var HighLight = React.createClass({
         }
 
         return (
-            <div className="highLight" style={{height:"620px",position:"relative"}} ref="highLight">
+            <div className="highLight" style={{height:"440px",position:"relative"}} ref="highLight">
                 <div className="left"
-                     style={{left:"10%",width:"80%",position:"absolute",float:"left",height: "100%",textAlign:"center"}}>
+                     style={{left:"11%",width:"80%",position:"absolute",float:"left",height: "100%",textAlign:"center"}}>
                     <div className="component">
                         {component}
                     </div>
