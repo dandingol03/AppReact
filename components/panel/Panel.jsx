@@ -511,9 +511,15 @@ var Panel=React.createClass({
                                     var re = reg.exec(coms[2]);
                                     if (re !== null && re !== undefined)
                                     {
-                                        ctrl = <div style={{textAlign:"left"}}
+                                        var field= coms[0].split("=>")[0];
+                                        if(props.scrolling==field)
+                                        ctrl = <div style={{textAlign:"left",height:"200px",overflow:"scroll",overflowX:"hidden"}}
                                                     dangerouslySetInnerHTML={{__html:coms[2]}}>
-                                        </div>
+                                               </div>
+                                        else
+                                            ctrl = <div style={{textAlign:"left"}}
+                                                        dangerouslySetInnerHTML={{__html:coms[2]}}>
+                                            </div>
                                     }
                                     else {
                                         ctrl=<Span auto={false} data={coms[2]}/>

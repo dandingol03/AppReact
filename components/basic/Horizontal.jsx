@@ -82,7 +82,7 @@ var Horizontal = React.createClass({
                 this.fetch();
 
             return (
-                <div className="row horizontal" style={this.getStyle()}>
+                <div className={"row horizontal"+(this.props.highLight==true?" highLight":"")} style={this.getStyle()}>
                     <div className="col-sm-12">
                         <table></table>
                     </div>

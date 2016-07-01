@@ -214,6 +214,9 @@ var News = React.createClass({
                                 autoComplete={true}
                                 data={this.state.hiddenInfo.data}
                                 returnCb={this.returnCb}
+                                scrolling="content"
+                                paddingLeft="0px"
+                                highLight={true}
                                 />;
                             break;
                         case 'Li':
@@ -239,29 +242,22 @@ var News = React.createClass({
 
 
             return (
-                <div className="section clearfix news" ref="news">
+                <div className={"section clearfix News"+(this.props.noBorder==true?" no-border":"")} ref="news">
                     <div ref="hideDiv">
                         {hide}
                     </div>
-                    <div ref="contentDiv">
-                        <ul className="list">
+                    <div ref="contentDiv" style={{position:"relative"}}>
+                        <div className="previous" style={{position:"absolute",top:"120px",left:"-60px",fontSize:"2em"}}>
+                            <span className="glyphicon glyphicon-chevron-left" aria-hidden="true" onClick={this.previousCb}></span>
+                        </div>
+                        <ul className="list" style={{float:"left",width:"100%"}}>
                             {uls}
                         </ul>
+                        <div  className="next" style={{position:"absolute",top:"120px",right:"-60px",fontSize:"2em"}}>
+                            <span className="glyphicon glyphicon-chevron-right" aria-hidden="true" onClick={this.nextCb}></span>
+                        </div>
                     </div>
-                    <nav>
-                        <ul className="pagination">
-                            <li>
-                                <a aria-label="Previous" onClick={this.previousCb}>
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a aria-label="Next" onClick={this.nextCb}>
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+
                 </div>
             );
 

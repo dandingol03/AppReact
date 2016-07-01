@@ -1,8 +1,19 @@
 [
   {
-    "label": "联系方式",
+    "label": "个人信息",
     "img": "/images/serviceHobby/ico/y1.png",
-    "content": ""
+    "type":"Horizontal",
+    "content": {
+      "auto":true,
+      "query":{
+        "url":"/bsuims/reactPageDataRequest.do",
+        "params": {
+          "reactActionName": "getStudentIspRegisterInfoReact",
+          "reactPageName": "registerRulePage"
+        }
+      },
+      "highLight":true
+    }
   },
   {
     "label": "修改密码",
