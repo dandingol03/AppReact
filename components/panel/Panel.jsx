@@ -8,7 +8,7 @@ import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
 var ProxyQ=require('../proxy/ProxyQ');
 var SyncStore=require('../flux/stores/SyncStore');
-
+var SyncActions = require('../../components/flux/actions/SyncActions');
 
 
 /**
@@ -31,6 +31,7 @@ var SyncStore=require('../flux/stores/SyncStore');
  * 8.子组件的级联刷新,由父组件的form表单提交完成数据更新
  * 9.panel开始支持多数据源
  * 10.Radio组件重写
+ * 11.Flux组件的重用,sync...
  */
 
 var Panel=React.createClass({
@@ -63,23 +64,6 @@ var Panel=React.createClass({
             }.bind(this)
         );
 
-    },
-
-    queryHandle:function(type,url,params,dataType,callback){
-        $.ajax({
-            type: type!==undefined&&type!==null?type:'POST',
-            url: url,
-            dataType: dataType!==undefined&&dataType!==null?dataType:'json',
-            data: params,
-            cache: false,
-            success: function(response) {
-                if(callback!==undefined&&callback!==null)
-                    callback(response);
-            },
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        });
     },
     clickHandle:function(evt){
         evt.preventDefault();
@@ -527,9 +511,15 @@ var Panel=React.createClass({
                                     var re = reg.exec(coms[2]);
                                     if (re !== null && re !== undefined)
                                     {
-                                        ctrl = <div style={{textAlign:"left"}}
+                                        var field= coms[0].split("=>")[0];
+                                        if(props.scrolling==field)
+                                        ctrl = <div style={{textAlign:"left",height:"200px",overflow:"scroll",overflowX:"hidden"}}
                                                     dangerouslySetInnerHTML={{__html:coms[2]}}>
-                                        </div>
+                                               </div>
+                                        else
+                                            ctrl = <div style={{textAlign:"left"}}
+                                                        dangerouslySetInnerHTML={{__html:coms[2]}}>
+                                            </div>
                                     }
                                     else {
                                         ctrl=<Span auto={false} data={coms[2]}/>
@@ -629,11 +619,12 @@ var Panel=React.createClass({
             var gradient = this.props.gradient;
             //not regulated css
             var padding = this.props.padding;
+            var paddingLeft = this.props.paddingLeft;
             return(
                 <form name="PanelForm" className={highLight==true?"form panel highLight":gradient==true?"form panel gradient":"form panel"}
                       action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
                       method="post"
-                      style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"40px"}}>
+                      style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"2px",paddingLeft:paddingLeft!==null&&paddingLeft!==undefined?paddingLeft:"40px"}}>
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel" style={{border:"none"}}>

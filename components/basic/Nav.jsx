@@ -12,6 +12,18 @@ var ProxyQ=require('../../components/proxy/ProxyQ');
  */
 
 var Nav=React.createClass({
+    logout: function () {
+        var path = "/serviceHall";
+        var model = "gradmsLoginPage";
+        var pre = "";
+        var str = path + "/bsuims/bsMainFrameLogout.do?contextName=" + model
+            + "&contextPath=" + path;
+        if (pre != null && pre != "")
+            str = str + "&paraItemName=" + pre;
+        this.location.href = str;
+
+
+    },
     _onChange           : function () {
         var stores = SyncStore.getAll();
         var fieldCount = 0;
@@ -340,9 +352,14 @@ var Nav=React.createClass({
                                 </li>
                                 <li><a href="javascript:void(0)">刷新</a></li>
                                 <em className="global-top-item global-top-seperator">|</em>
+<<<<<<< HEAD
                                 <li> <a
                                     href="javascript:void(0)"
                                     onClick={this.logOut}>退出</a>
+=======
+                                <li>
+                                    <a href="javascript:void(0);" onClick={this.logout}>退出</a>
+>>>>>>> b604542714404e8b48129a3af468ba16907a1cc6
                                 </li>
                             </ul>
                         </div>

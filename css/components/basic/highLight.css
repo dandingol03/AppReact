@@ -1,11 +1,12 @@
 .highLight {
     box-sizing: border-box;
     background-color: #edf7ff;
+    margin-top: 2px;
     /*background: linear-gradient(to bottom, rgb(237, 247, 255) ,rgb(255, 255, 255));*/
 }
 
 .highLight .left .component {
-    margin-top: 40px;
+    margin-top: 2px;
     width: 1024px;
     margin-left: auto;
     margin-right: auto;
@@ -92,3 +93,4 @@
 .highLight .component .content td.main {
     text-align: left;
 }
+

@@ -7,7 +7,62 @@ import '../../../../../css/serviceHobby/basic/news.css';
 var ProxyQ = require('../../../../../components/proxy/ProxyQ');
 
 
-var News=React.createClass({
+/**
+ * 1.nextCb需要去数据库中查是否还有剩余数据
+ */
+
+
+var News = React.createClass({
+    previousCb     : function (evt) {
+        if (this.state.pageNum != 1) {
+
+            var params = Object.assign(this.props.query.params, {pageNum: --this.state.pageNum});
+            ProxyQ.queryHandle(
+                null,
+                this.props.query.url,
+                params,
+                null,
+                function (response) {
+                    var data = null;
+                    var ob = new Object();
+                    if (response.data !== undefined && response.data !== null)
+                        data = response.data;
+                    if (data !== undefined && data !== null) {
+                        ob.data = data;
+                        this.setState(ob);
+                    }
+                    else {
+                    }
+                }.bind(this)
+            );
+        }
+
+    },
+    nextCb         : function (evt) {
+        console.log("pageNu=====" + this.state.pageNum);
+        var params = Object.assign(this.props.query.params, {pageNum: (parseInt(this.state.pageNum) + 1)});
+
+        ProxyQ.queryHandle(
+            null,
+            this.props.query.url,
+            params,
+            null,
+            function (response) {
+                var data = null;
+                var ob = new Object();
+                console.log("arr=====" + response.data);
+                if (response.data !== undefined && response.data !== null)
+                    data = response.data;
+                if (data !== undefined && data !== null) {
+                    ob.data = data;
+                    ob.pageNum = this.state.pageNum + 1;
+                    this.setState(ob);
+                }
+                else {
+                }
+            }.bind(this)
+        );
+    },
     returnCb       : function () {
         this.setState({hiddenInfo: null});
         $(this.refs.contentDiv).slideDown();
@@ -38,6 +93,7 @@ var News=React.createClass({
         var query = $(target).attr("data-query");
         if (Object.prototype.toString.call(query) == '[object String]')
             query = eval('(' + query + ')');
+        console.log("query=======");
         for (var field in query) {
             console.log(field + ":" + query[field]);
         }
@@ -53,44 +109,44 @@ var News=React.createClass({
         }
 
     },
-    fetch:function(){
+    fetch          : function () {
         ProxyQ.queryHandle(
             null,
             this.props.query.url,
             this.props.query.params,
             null,
-            function(response){
+            function (response) {
                 var data;
-                var ob=new Object();
-                if(Object.prototype.toString.call(response)!='[object Array]')
-                    if(response.data!==undefined&&response.data!==null)
-                        if(Object.prototype.toString.call(response.data)=='[object Array]')
-                            data=response.data;
+                var ob = new Object();
+                if (Object.prototype.toString.call(response) != '[object Array]')
+                    if (response.data !== undefined && response.data !== null)
+                        if (Object.prototype.toString.call(response.data) == '[object Array]')
+                            data = response.data;
                         else
-                            data=response;
-                ob.data$initialed=true;
-                if(data!==undefined&&data!==null)
-                    ob.data=data;
+                            data = response;
+                ob.data$initialed = true;
+                if (data !== undefined && data !== null)
+                    ob.data = data;
                 this.setState(ob);
             }.bind(this)
         )
 
     },
-    getInitialState:function(){
+    getInitialState: function () {
         var data$initialed;
 
         var data;
-        if(this.props.data!==undefined&&this.props.data!==null)
-        {
+        if (this.props.data !== undefined && this.props.data !== null) {
             data = this.props.data;
-            data$initialed=true;
+            data$initialed = true;
         }
 
         var auto;
-        if(this.props.auto===true||this.props.auto==="true")
-            auto=true;
+        if (this.props.auto === true || this.props.auto === "true")
+            auto = true;
         var contentMapping = new Object();
-        return ({data: data, data$initialed: data$initialed, auto: auto, contentMapping: contentMapping});
+
+        return ({data: data, data$initialed: data$initialed, auto: auto, contentMapping: contentMapping, pageNum: 1});
     },
     render         : function () {
         if (this.state.data$initialed !== true && (this.props.data == null || this.props.data == undefined)) {
@@ -111,6 +167,12 @@ var News=React.createClass({
                     var groupNews = item;
 
                     if (item.query !== undefined && item.query !== null) {
+
+                        //console.log("item query=======");
+                        //for(var field in item.query)
+                        //{
+                        //    console.log(field+":"+item.query[field]);
+                        //}
                         uls.push(<li key={k++} className="main">
                             <span>{groupNews.newsTypeName}</span>
                             <span onClick={queryCb} className="more" data-query={JSON.stringify(item.query)}
@@ -152,14 +214,19 @@ var News=React.createClass({
                                 autoComplete={true}
                                 data={this.state.hiddenInfo.data}
                                 returnCb={this.returnCb}
+                                scrolling="content"
+                                paddingLeft="0px"
+                                highLight={true}
                                 />;
                             break;
                         case 'Li':
+                            console.log("li===");
                             hide$c = <Li
                                 auto={true}
                                 query={this.state.hiddenInfo.query}
                                 returnCb={this.returnCb}
                                 pagination={true}
+
                                 />;
                             break;
                         default:
@@ -175,21 +242,22 @@ var News=React.createClass({
 
 
             return (
-                <div className="section clearfix news" ref="news">
+                <div className={"section clearfix News"+(this.props.noBorder==true?" no-border":"")} ref="news">
                     <div ref="hideDiv">
                         {hide}
                     </div>
-                    <div ref="contentDiv">
-                        <ul className="list">
+                    <div ref="contentDiv" style={{position:"relative"}}>
+                        <div className="previous" style={{position:"absolute",top:"120px",left:"-60px",fontSize:"2em"}}>
+                            <span className="glyphicon glyphicon-chevron-left" aria-hidden="true" onClick={this.previousCb}></span>
+                        </div>
+                        <ul className="list" style={{float:"left",width:"100%"}}>
                             {uls}
                         </ul>
+                        <div  className="next" style={{position:"absolute",top:"120px",right:"-60px",fontSize:"2em"}}>
+                            <span className="glyphicon glyphicon-chevron-right" aria-hidden="true" onClick={this.nextCb}></span>
+                        </div>
                     </div>
-                    <div ref="pagination">
-                        <li key={0} className="active">
-                            <a href="javascript:void(0);"
-                                >{2}</a>
-                        </li>
-                    </div>
+
                 </div>
             );
 

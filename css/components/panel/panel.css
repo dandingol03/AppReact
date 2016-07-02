@@ -11,7 +11,7 @@
     background-color: transparent;
 }
 
-/*�޸ļ�¼���߿�ԭֵ#ddd*/
+
 .table.table-bordered.panel> thead:first-child > tr:first-child > th{
     border: 1px solid #ddd;
 }
@@ -52,6 +52,7 @@ margin-right:5%;
 .form.panel.highLight table.table-bordered.panel thead tr:first-child td,
 .form.panel.highLight table.table-bordered.panel thead tr:first-child th {
     border: 1px solid #6EA0FF;
+    color: #6EA0FF;
 }
 
 

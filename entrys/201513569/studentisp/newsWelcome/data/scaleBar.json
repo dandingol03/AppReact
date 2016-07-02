@@ -1,0 +1,46 @@
+[
+  {
+    "label": "个人信息",
+    "img": "/images/serviceHobby/ico/y1.png",
+    "type":"Horizontal",
+    "content": {
+      "auto":true,
+      "query":{
+        "url":"/bsuims/reactPageDataRequest.do",
+        "params": {
+          "reactActionName": "getStudentIspRegisterInfoReact",
+          "reactPageName": "registerRulePage"
+        }
+      },
+      "highLight":true
+    }
+  },
+  {
+    "label": "修改密码",
+    "img": "/images/serviceHobby/ico/y3.png",
+    "type": "password",
+    "content": {
+      "title": "修改密码",
+      "action": "/ReactJPChatter/react/commitPassword.do"
+    }
+  },
+  {
+    "label": "问卷调查",
+    "img": "/images/serviceHobby/ico/y_55.png",
+    "type": "Panel",
+    "content": ""
+  },
+  {
+    "label": "使用手册",
+    "img": "/images/serviceHobby/ico/y4.png",
+    "content": ""
+  },
+  {
+    "label": "业务提醒",
+    "img": "/images/serviceHobby/ico/bell.png",
+    "type": "Attention",
+    "content": {
+      "todoS": true
+    }
+  }
+]

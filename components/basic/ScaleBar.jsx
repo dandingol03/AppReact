@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import '../../css/components/basic/scaleBar/scaleBar.css';
 import Panel from '../panel/Panel.jsx';
 import Attention from '../basic/Attention.jsx';
+import Horizontal from '../basic/Horizontal.jsx';
 var Password = require('../../components/compounds/password/PasswordElement.jsx');
 var SyncStore = require('../../components/flux/stores/SyncStore');
 
@@ -218,6 +219,12 @@ var ScaleBar =React.createClass({
                                           auto={item.content.auto}
                                           autoComplete={item.content.autoComplete}>
                             </Panel>
+                            break;
+                        case 'Horizontal':
+                            ctrl = <Horizontal query={item.content.query}
+                                          auto={item.content.auto}
+                                          highLight={item.content.highLight}>
+                            </Horizontal>
                             break;
                         case 'password':
                             ctrl = <Password title={item.content.title} action={item.content.action}/>

@@ -8,6 +8,9 @@ import ButtonElement from '../../../../../../components/basic/ButtonElement.jsx'
 import CoupleTableElement from '../../../../../../components/compounds/coupleTable/CoupleTableElement.jsx';
 import OrdinaryTable from '../../../../../../components/forms/OrdinaryTable.jsx'
 
+/**
+ * @author:zyy
+ */
 
 var DiminishMain=React.createClass({
     render:function(){
