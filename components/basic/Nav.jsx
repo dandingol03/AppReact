@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import { Link } from 'react-router'
 import '../../css/components/basic/nav/nav.css';
 var SyncStore = require('../../components/flux/stores/SyncStore');
-
+var ProxyQ=require('../../components/proxy/ProxyQ');
 /**
  * 1.
  * 1>,二级菜单做成堆叠式的表格
@@ -72,6 +72,19 @@ var Nav=React.createClass({
             }.bind(this)
         )
 
+    },
+    logOut:function(){
+        ProxyQ.queryHandle(
+            null,
+            "/bsuims/serviceHobbyLogout.do",
+            {
+            },
+            null,
+            function(response){
+                //这里需要统一规范后台返回的数据格式
+                console.log("log successfully!");
+            }.bind(this)
+        );
     },
     queryHandle:function(type,url,params,dataType,callback){
         $.ajax({
@@ -339,8 +352,14 @@ var Nav=React.createClass({
                                 </li>
                                 <li><a href="javascript:void(0)">刷新</a></li>
                                 <em className="global-top-item global-top-seperator">|</em>
+<<<<<<< HEAD
+                                <li> <a
+                                    href="javascript:void(0)"
+                                    onClick={this.logOut}>退出</a>
+=======
                                 <li>
                                     <a href="javascript:void(0);" onClick={this.logout}>退出</a>
+>>>>>>> b604542714404e8b48129a3af468ba16907a1cc6
                                 </li>
                             </ul>
                         </div>
