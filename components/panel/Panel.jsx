@@ -31,6 +31,11 @@ var SyncActions = require('../../components/flux/actions/SyncActions');
  * 8.子组件的级联刷新,由父组件的form表单提交完成数据更新
  * 9.panel开始支持多数据源
  * 10.Radio组件重写
+ *
+ *
+ *
+ *
+ *
  * 11.Flux组件的重用,sync...
  */
 
@@ -307,12 +312,17 @@ var Panel=React.createClass({
                         name = dict[coms[0]].name;
                     if(state.bean!==undefined&&state.bean!==null)
                     {
+                        var reg = /\<(.*?)\>/;
                         if (coms[0].indexOf('=>') !== -1 && coms[0].split('=>').length >= 2)
                         {
                             name = coms[0].split('=>')[1];
                         }
-                        else
+                        else {
                             name=coms[0];
+                        }
+                        if (reg.exec(name) !== null && reg.exec(name) !== undefined)
+                            name = <span dangerouslySetInnerHTML={{__html:name}}></span>
+
                     }
                     if (name == null)
                     {
@@ -463,6 +473,7 @@ var Panel=React.createClass({
                                     ctrl=<input type='text' name={ctrlName}/>
                                 break;
                             case 'select':
+                                //select组件的第4个字段:为eval调用
                                 if(state.bean!==undefined&&state.bean!==null)
                                 {
 
@@ -472,7 +483,15 @@ var Panel=React.createClass({
                                             var arr=eval(coms[2]);
                                             if(Object.prototype.toString.call(arr)=='[object Array]')
                                             {
-                                                ctrl=<Select auto={false} ctrlName={coms[0]} disabled={false} data={arr} selectCb={coms[3]!==undefined&&coms[3]!==null?selectHandle:null} data-query={coms[3]}/>
+                                                var command = null;
+                                                if (coms[3] !== undefined && coms[3] !== null)
+                                                    command = function (ob) {
+                                                        eval(coms[3]);
+                                                    }
+                                                ctrl =
+                                                    <Select auto={false} ctrlName={coms[0]} disabled={false} data={arr}
+                                                            selectCb={command!==null&&command!==undefined?selectHandle:null}
+                                                            data-query={coms[3]}/>
                                             }
                                             else{
                                                 ctrl= <Select auto={true} ctrlName={coms[0]} disabled={true}/>
@@ -549,11 +568,15 @@ var Panel=React.createClass({
                                         } catch (e) {
                                             ob = eval('(' + coms[2] + ')');
                                         }
-                                        console.log();
+
                                         if (Object.prototype.toString.call(ob) == '[object Array]')
-                                            ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob}/>
+                                            ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob}
+                                                          data-toggle={ob.tooltip!==undefined&&ob.tooltip!==null?"tooltip":null}
+                                                          title={ob.tooltip!==null&&ob.tooltip!==undefined?ob.tooltip.title:null}/>
                                         else
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob.data}
+                                                          data-toggle={ob.tooltip!==undefined&&ob.tooltip!==null?"tooltip":null}
+                                                          title={ob.tooltip!==null&&ob.tooltip!==undefined?ob.tooltip.title:null}
                                                           required={ob.required}/>
                                     }
                                     else

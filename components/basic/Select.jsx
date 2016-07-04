@@ -52,11 +52,9 @@ var Select=React.createClass({
         var target=evt.target;
         var hidden=this.refs.hidden_field;
         hidden.value=target.value;
-        console.log();
-        console.log();
         if(this.props.selectCb!==null&&this.props.selectCb!==undefined)
         {
-            this.props.selectCb(target);
+            this.props.selectCb(target.value);
         }
     },
     getInitialState:function(){
@@ -110,7 +108,7 @@ var Select=React.createClass({
      {
          var options=new Array();
          var selectCb=this.selectCb;
-         var selected=null
+         var selected = null;
 
          this.state.data.map(function(item,i) {
              if(item["selected"]!==undefined&&item["selected"]!==null)

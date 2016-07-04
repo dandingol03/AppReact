@@ -13,7 +13,6 @@ var Radio=React.createClass({
     changeCb:function(evt){
         var target=evt.target;
         var value=target.value;
-        console.log("value===="+value);
     },
     render:function(){
         var radios;
@@ -31,12 +30,12 @@ var Radio=React.createClass({
                 var ra;
                 if (item.checked == true || item.checked == "true")
                     ra = <input type="radio" value={item.value} name={props.ctrlName} defaultChecked
-                                data-required={props.required}/>
+                                data-required={props.required} data-toggle={item["data-toggle"]} title={item.title}/>
                 else
                     ra = <input type="radio" value={item.value} name={props.ctrlName}
-                                data-required={props.required}/>
+                                data-required={props.required} data-toggle={item["data-toggle"]} title={item.title}/>
                 radios.push(
-                    <div style={{display:"inline"}} key={i}>
+                    <div style={{display:"inline"}} key={i} ref="redio">
                         {ra}<span style={{margin:"0px 5px"}}>{item.label}</span>
                     </div>
                 );
@@ -47,6 +46,10 @@ var Radio=React.createClass({
                 {radios}
             </div>
         )
+    },
+    componentDidMount: function () {
+        var $radio = $(this.refs.radio);
+        $radio.find("[data-toggle='tooltip']").tooltip();
     }
 });
 export default Radio;
