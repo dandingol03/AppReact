@@ -1,6 +1,4 @@
 import config from '../../config.json';
-import Comps from '../../data/json/comps.json';
-
 
 var ProxyQ = {
     getProxyServer:function(){
