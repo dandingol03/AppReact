@@ -237,9 +237,9 @@ var Panel=React.createClass({
             "textarea":true,
             "radio":true,
             "return":true,
-            "download":true,
-            "upload":true,
-            "calendar":true
+            "download": true,
+            "upload"  : true,
+            "calendar": true
         }
 
         var bean;
@@ -563,13 +563,13 @@ var Panel=React.createClass({
                                     ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>
                                 break;
                             case 'calendar':
-                                if(coms[2]!==undefined&&coms[2]!==null){
+                                if (coms[2] !== undefined && coms[2] !== null) {
                                     ctrl = <Calendar ctrlName={coms[0]} data={coms[2]}
                                         />
                                 }
                                 break;
                             case 'upload':
-                                ctrl=<Upload ctrlName={coms[0].split("=>")[0]}/>;
+                                ctrl = <Upload ctrlName={coms[0].split("=>")[0]}/>;
                                 break;
                             case 'radio':
                                 if(coms[2]!==undefined&&coms[2]!==null)

@@ -9,8 +9,8 @@ function Boot()
     var query={
         url:"/bsuims/reactPageDataRequest.do",
         params:{
-            reactPageName:"StudentTrafficRuleStudentTrafficRulePage",
-            reactActionName:"trafficPlanInitReact"
+            reactPageName  : "StudentTrafficRuleStudentTrafficRulePage",
+            reactActionName: "trafficPlanInitReact"
         }
     }
     var PanelTitle="出行计划";
