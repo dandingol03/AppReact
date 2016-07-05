@@ -1,7 +1,9 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-
+/**
+ * upload
+ */
 var Upload = React.createClass({
     clickCb          : function () {
         var $file = $(this.refs.file);
@@ -42,7 +44,6 @@ var Upload = React.createClass({
                     $ctrl.val(e.target.result);
                 };
                 fr.readAsDataURL(source);
-
             }
         });
 
