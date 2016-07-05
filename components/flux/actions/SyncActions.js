@@ -39,7 +39,6 @@ var SyncActions = {
             type: SyncConstants.CLEAN_ALL
         });
     }
-
 };
 
 module.exports = SyncActions;
