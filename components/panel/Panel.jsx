@@ -6,6 +6,8 @@ import Download from '../../components/basic/Download.jsx';
 import Radio from '../../components/basic/Radio.jsx';
 import '../../css/components/panel/panel.css';
 import dict from '../../data/json/dictionary.json';
+import Upload from '../basic/Upload.jsx';
+import Calendar from '../basic/Calendar.jsx'
 var ProxyQ=require('../proxy/ProxyQ');
 var SyncStore=require('../flux/stores/SyncStore');
 var SyncActions = require('../../components/flux/actions/SyncActions');
@@ -235,7 +237,9 @@ var Panel=React.createClass({
             "textarea":true,
             "radio":true,
             "return":true,
-            "download":true
+            "download":true,
+            "upload":true,
+            "calendar":true
         }
 
         var bean;
@@ -558,6 +562,15 @@ var Panel=React.createClass({
                                 else
                                     ctrl=<textarea rows={4}  name={coms[0]} style={{width:"100%"}}/>
                                 break;
+                            case 'calendar':
+                                if(coms[2]!==undefined&&coms[2]!==null){
+                                    ctrl = <Calendar ctrlName={coms[0]} data={coms[2]}
+                                        />
+                                }
+                                break;
+                            case 'upload':
+                                ctrl=<Upload ctrlName={coms[0].split("=>")[0]}/>;
+                                break;
                             case 'radio':
                                 if(coms[2]!==undefined&&coms[2]!==null)
                                 {
@@ -571,12 +584,9 @@ var Panel=React.createClass({
 
                                         if (Object.prototype.toString.call(ob) == '[object Array]')
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob}
-                                                          data-toggle={ob.tooltip!==undefined&&ob.tooltip!==null?"tooltip":null}
-                                                          title={ob.tooltip!==null&&ob.tooltip!==undefined?ob.tooltip.title:null}/>
+                                                          />
                                         else
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob.data}
-                                                          data-toggle={ob.tooltip!==undefined&&ob.tooltip!==null?"tooltip":null}
-                                                          title={ob.tooltip!==null&&ob.tooltip!==undefined?ob.tooltip.title:null}
                                                           required={ob.required}/>
                                     }
                                     else
