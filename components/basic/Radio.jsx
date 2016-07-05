@@ -30,10 +30,14 @@ var Radio=React.createClass({
                 var ra;
                 if (item.checked == true || item.checked == "true")
                     ra = <input type="radio" value={item.value} name={props.ctrlName} defaultChecked
-                                data-required={props.required} data-toggle={item["data-toggle"]} title={item.title}/>
+                                data-required={props.required}
+                                data-toggle={item.tooltip!==undefined&&item.tooltip!==null?"tooltip":null}
+                                title={item.tooltip}/>
                 else
                     ra = <input type="radio" value={item.value} name={props.ctrlName}
-                                data-required={props.required} data-toggle={item["data-toggle"]} title={item.title}/>
+                                data-required={props.required}
+                                data-toggle={item.tooltip!==undefined&&item.tooltip!==null?"tooltip":null}
+                                title={item.tooltip}/>
                 radios.push(
                     <div style={{display:"inline"}} key={i} ref="redio">
                         {ra}<span style={{margin:"0px 5px"}}>{item.label}</span>

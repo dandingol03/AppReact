@@ -571,12 +571,9 @@ var Panel=React.createClass({
 
                                         if (Object.prototype.toString.call(ob) == '[object Array]')
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob}
-                                                          data-toggle={ob.tooltip!==undefined&&ob.tooltip!==null?"tooltip":null}
-                                                          title={ob.tooltip!==null&&ob.tooltip!==undefined?ob.tooltip.title:null}/>
+                                                          />
                                         else
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob.data}
-                                                          data-toggle={ob.tooltip!==undefined&&ob.tooltip!==null?"tooltip":null}
-                                                          title={ob.tooltip!==null&&ob.tooltip!==undefined?ob.tooltip.title:null}
                                                           required={ob.required}/>
                                     }
                                     else
