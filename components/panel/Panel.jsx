@@ -453,7 +453,7 @@ var Panel=React.createClass({
                                         try{
                                             var ob=eval('('+coms[2]+')');
                                             ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
-                                            consolo.log();
+                                            console.log();
                                             console.log();
                                         }catch(e)
                                         {
@@ -609,9 +609,18 @@ var Panel=React.createClass({
                         }
                     }
                     if(ctrl!==undefined&&ctrl!==null)
-                        ctrl$comp= <td key={td$index++} style={{textAlign:"center"}} colSpan={j==row.length-1?max$cols-j:1} >
-                                    {ctrl}
-                                </td>;
+                    {
+                        if(coms[1]=='upload')
+                        {
+                            ctrl$comp= <td key={td$index++} style={{textAlign:"center",minWidth:"300px"}} colSpan={j==row.length-1?max$cols-j:1} >
+                                {ctrl}
+                            </td>;
+                        }else{
+                            ctrl$comp= <td key={td$index++} style={{textAlign:"center"}} colSpan={j==row.length-1?max$cols-j:1} >
+                                {ctrl}
+                            </td>;
+                        }
+                    }
                     if(autoComplete==true)
                     {
                         tds.push(label);
