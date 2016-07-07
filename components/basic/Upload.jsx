@@ -16,12 +16,14 @@ var Upload = React.createClass({
         if (this.props.ctrlName !== undefined && this.props.ctrlName !== null) {
             return (
                 <div>
-                    <input type="file" style="display:none" ref="file"/>
+                    <input type="file" style={{display:"none"}} ref="file"/>
                     <input type="hidden" name={this.props.ctrlName} ref="ctrl"/>
 
                     <div className="input-append">
-                        <input className="input-large" type="text" style={{height:"30px"}} ref="pathPreview"/>
-                        <a className="btn" onClick={this.clickCb}>选择文件</a>
+                        <input className="input" type="text" ref="pathPreview"/>
+                        <a className="btn" onClick={this.clickCb}>
+                            <span style={{fontSize:"12px"}}>选择文件</span>
+                        </a>
                     </div>
                 </div>
             );

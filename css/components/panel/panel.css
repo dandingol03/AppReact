@@ -27,7 +27,7 @@
 .table.table-bordered.center.panel td
 {
     align:center;
-
+    vertical-align: inherit;
 }
 .table.table-bordered.center.panel td span{
 margin-right:5%;
