@@ -10,7 +10,7 @@ function Boot()
         url: '/bsuims/reactPageDataRequest.do',
         params: {
             reactActionName: "addApplyInfoInitPanelUseReact",
-            reactPageName  : "gradGreenWayPage"
+            reactPageName  : "bksGreenWayPage"
         }
     }
 
@@ -24,7 +24,7 @@ function Boot()
     render(
 
         <Panel
-            title="绿色通道申请"
+            title="填写个人贷款情况"
             autoComplete={true}
             auto={true}
             bean={bean}

@@ -15,7 +15,7 @@ var Calendar = React.createClass({
             return (
                 <div className="input-append date" data-date={this.state.data} ref="datetimepicker"
                      data-date-format="yyyy-mm-dd hh:ii">
-                    <input className="file" size="16" type="text" name={this.props.ctrlName}/>
+                    <input className="file" size="16" type="text" name={this.props.ctrlName} defaultValue={this.state.data} style={{width:"100%"}}/>
                     <span className="add-on">
                         <i className="icon-th"></i>
                     </span>
@@ -29,7 +29,7 @@ var Calendar = React.createClass({
     componentDidMount: function () {
         var $datetimepicker = $(this.refs.datetimepicker);
         $datetimepicker.datetimepicker('setStartDate', '2016-01-01');
-        $datetimepicker.datetimepicker('show').on('changeDate', function (ev) {
+        $datetimepicker.datetimepicker('').on('changeDate', function (ev) {
             $datetimepicker.children(".file")[0].value = ev.date;
             $datetimepicker.datetimepicker('hide');
         });
