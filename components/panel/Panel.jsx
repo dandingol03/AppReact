@@ -114,22 +114,26 @@ var Panel=React.createClass({
             else {//如果本组件为最顶层组件
 
 
-                if(($(target).attr('data-query')!==null&&$(target).attr('data-query')!==undefined)||($(target).parent().attr('data-query')!==null&&$(target).parent().attr('data-query')!==undefined)){
+                if(($(target).attr('data-query')!==null&&$(target).attr('data-query')!==undefined)||($(target).parent().attr('data-query')!==null&&$(target).parent().attr('data-query')!==undefined))
+                {
                     var params1=eval('('+$(target).attr('data-query')+')');
                     if(params1==null||params1==undefined){
                         params1=eval('('+$(target).parent().attr('data-query')+')');
                     }
+
                     ProxyQ.queryHandle(
                         null,
                         params1.url,
-                        params1.params,
+                        Object.assign(params1.params,params),
                         null,
                         function (response) {
 
                         }.bind(this)
                     );
 
-                }else {
+                }
+                else
+                {
                     if (this.state.query !== null && this.state.query !== undefined) {
                         for (var field in required) {
                             if (params[field] == undefined || params[field] == null) {

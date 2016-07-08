@@ -17,8 +17,8 @@ function Boot()
 
     var query={
         url: '/bsuims/reactPageDataRequest.do',
-        reactActionName:"",
-        reactPageName:""
+        reactActionName:"uploadResource",
+        reactPageName:"bksGreenWayPage"
     }
 
     render(
