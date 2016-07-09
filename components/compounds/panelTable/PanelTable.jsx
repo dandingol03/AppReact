@@ -1,6 +1,5 @@
 import React from 'react';
 import {render} from 'react-dom';
-import Download from '../../../components/basic/Download.jsx';
 import Panel from '../../panel/Panel.jsx';
 import OrdinaryTable from '../../forms/OrdinaryTable.jsx';
 import Pagination from '../../../components/basic/Pagination.jsx';
