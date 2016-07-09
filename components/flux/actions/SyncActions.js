@@ -38,6 +38,12 @@ var SyncActions = {
         AppDispatcher.dispatch({
             type: SyncConstants.CLEAN_ALL
         });
+    },
+
+    pronounce: function () {
+        AppDispatcher.dispatch({
+            type: SyncConstants.TO_ALLIANCE
+        });
     }
 };
 

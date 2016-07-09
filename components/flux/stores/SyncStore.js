@@ -10,7 +10,10 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
+var PRONOUNCE_EVENT='pronounce';
+
 var _todos = {};
+
 
 function create(ob) {
     if (ob.route !== undefined && ob.route !== null && ob.data !== undefined && ob.data !== null) {
@@ -98,7 +101,20 @@ var SyncStore = assign({}, EventEmitter.prototype, {
      */
     removeChangeListener: function (callback) {
         this.removeListener(CHANGE_EVENT, callback);
+    },
+
+    emitPronounce:function(){
+        this.emit(PRONOUNCE_EVENT);
+    },
+
+    addPronounceListener:function(callback){
+        this.on(PRONOUNCE_EVENT, callback);
+    },
+
+    removePronounceListener: function (callback) {
+        this.removeListener(PRONOUNCE_EVENT, callback);
     }
+
 });
 
 // Register callback to handle all updates
@@ -129,6 +145,9 @@ AppDispatcher.register(function (action) {
         case SyncConstants.CLEAN_ALL:
             cleanAll();
             SyncStore.emitChange();
+            break;
+        case SyncConstants.TO_ALLIANCE:
+            SyncStore.emitPronounce();
             break;
         default:
         // no op

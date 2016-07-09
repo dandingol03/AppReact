@@ -1,8 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import PanelTable from '../../../../../components/compounds/panelTable/PanelTable.jsx';
-var ProxyQ=require('../../../../../components/proxy/ProxyQ');
-Boot()
+Boot();
 
 function Boot()
 {
