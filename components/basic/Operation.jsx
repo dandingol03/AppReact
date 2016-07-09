@@ -6,13 +6,14 @@ var Operation = React.createClass({
     operationCb: function (evt) {
         var target = evt.target;
         var $target = $(target);
-        var index = $target.attr("data-index");
+        var index = this.props["data-index"];
+        console.log("index====" + index);
         var query = this.props.query;
         if (Object.prototype.toString.call(query) == "[object String]")
             query = eval('(' + query + ')');
         query.params = Object.assign(query.params, {index: index});
         if (this.props.operationCb !== undefined && this.props.operationCb !== null)
-            this.props.operationCb(this.props.query);
+            this.props.operationCb(query);
     },
     render     : function () {
         var operation = null;

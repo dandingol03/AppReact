@@ -9,6 +9,7 @@ import EmbedTable from '../../components/forms/EmbedTable.jsx';
 import Operation from '../../components/basic/Operation.jsx';
 import '../../css/components/forms/ordinaryTable/OrdinaryTable.css';
 var ProxyQ=require('../proxy/ProxyQ');
+var SyncActions=require('../flux/actions/SyncActions');
 
 /**
  *
@@ -413,8 +414,16 @@ var OrdinaryTable =React.createClass({
     operationCb: function (ob) {
         if (ob !== undefined && ob !== null) {
             ob.params.data = this.state.data[ob.params.index];
-            if (this.props.opCb !== undefined && this.props.opCb !== null)
-                this.props.opCb(ob);
+            ProxyQ.queryHandle(
+                null,
+                ob.url,
+                ob.params,
+                'json',
+                function(response){
+                    //pronounce
+                    SyncActions.pronounce();
+                }.bind(this)
+            )
         }
     },
 
@@ -966,7 +975,7 @@ var OrdinaryTable =React.createClass({
                                                     ids = row[field].split("|");
                                                     if (ids.length == 3) {
                                                         tds.push(<td key={k++}><Operation op={ids[0]} query={ids[2]}
-                                                                                          data-index={k++}
+                                                                                          data-index={i}
                                                                                           operationCb={operationCb}></Operation>
                                                         </td>);
                                                     }

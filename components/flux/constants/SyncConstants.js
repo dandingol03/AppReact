@@ -8,5 +8,6 @@ module.exports = keyMirror({
     TODO_DESTROY    : null,
     TODO_UPDATE_DATA: null,
     CLEAN_ROUTE     : null,
-    CLEAN_ALL       : null
+    CLEAN_ALL       : null,
+    TO_ALLIANCE:null
 });
