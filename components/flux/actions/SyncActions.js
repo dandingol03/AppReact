@@ -44,7 +44,22 @@ var SyncActions = {
         AppDispatcher.dispatch({
             type: SyncConstants.TO_ALLIANCE
         });
+    },
+
+    setFinish:function(route){
+        AppDispatcher.dispatch({
+            type: SyncConstants.TODO_FINISH,
+            route:route
+        });
+    },
+
+    devoteInBusiness:function(ob) {
+        AppDispatcher.dispatch({
+            type: SyncConstants.BUSY_IN_BUSINESS,
+            ob:ob
+        });
     }
+
 };
 
 module.exports = SyncActions;

@@ -25,12 +25,6 @@
     }
   },
   {
-    "label": "问卷调查",
-    "img": "/images/serviceHobby/ico/y_55.png",
-    "type": "Panel",
-    "content": ""
-  },
-  {
     "label": "使用手册",
     "img": "/images/serviceHobby/ico/y4.png",
     "content": ""
@@ -41,6 +35,25 @@
     "type": "Attention",
     "content": {
       "todoS": true
+    }
+  },
+  {
+    "label": "通知",
+    "img": "/images/serviceHobby/ico/news.png",
+    "type": "News",
+    "content":
+    {
+      "query":
+      {
+        "url":"/bsuims/reactPageDataRequest.do",
+        "params":
+        {
+          "reactPageName":"groupNewsReactPage",
+          "reactActionName":"listTypeNewsUseReact"
+        }
+      },
+      "width":"880px",
+      "marginTop":"0px"
     }
   }
 ]

@@ -9,5 +9,7 @@ module.exports = keyMirror({
     TODO_UPDATE_DATA: null,
     CLEAN_ROUTE     : null,
     CLEAN_ALL       : null,
-    TO_ALLIANCE:null
+    TO_ALLIANCE:null,
+    TODO_FINISH:null,
+    BUSY_IN_BUSINESS:null
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
 import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
+import GreenChannelApply from './greenChanel/greenChannelApplyMain.jsx';
 import News from './News.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
 var SyncActions = require('../../../../../components/flux/actions/SyncActions');
@@ -42,10 +43,11 @@ var MainSection = React.createClass({
         else
             SyncActions.updateData(route, ob.required, label);
     },
-    getInitialState     : function () {
-        var route = new Array();
-        route.push(undefined);
-        return ({route: route});
+    emitDevote:function(path){
+        console.log('path====' + path);
+    },
+    getInitialState:function(){
+      return ({route:[]});
     },
     render              : function () {
         var path = this.props.route.path;
@@ -53,7 +55,9 @@ var MainSection = React.createClass({
         var breadcrumb;
         var label;
         var data = this.props.route.data;
+        console.log('....'+this.props.route.path);
         if (path !== undefined && path !== null) {
+            this.emitDevote(path);
             var route = this.state.route;
             if (route.length != 1)
                 route.splice(0, 1);
@@ -80,11 +84,16 @@ var MainSection = React.createClass({
                     label = "新闻查询业务";
                     break;
                 case App.getAppRoute() + "/newCultivateAllCourseQueryPage":
-                    ctrl = ctrl = <AllCourseQuery/>;
+                    ctrl =  <AllCourseQuery/>;
                     label = "课程查询业务";
                     break;
+                case App.getAppRoute() + "/greenChannelApply":
+                    console.log('......')
+                    ctrl = <GreenChannelApply/>;
+                    label = "绿色通道";
+                    break;
                 default:
-                    var reg = /.*\.do.*[\.do|\.jsp].*/;
+                    var reg = /.*\.do.*[\.do|\.jsp]?.*/;
 
                     var re = reg.exec(path);
 
@@ -94,7 +103,7 @@ var MainSection = React.createClass({
                         ctrl =
                             <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
                                     frameBorder="0" scrolling="no"
-                                    src={"/gradms"+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
+                                    src={"/sduyingxin"+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
                                 />
 
                     } else {

@@ -5,7 +5,7 @@
 
 .suspend {
     width: 40px;
-    height: 386px;
+    height: auto;
     overflow: hidden;
     position: fixed;
     top: 140px;
@@ -60,7 +60,7 @@
 
 .susp_show {
     width: 0;
-    height: 384px;
+    height: auto;
     overflow: hidden;
     position: fixed;
     top: 140px;
@@ -154,16 +154,13 @@
     border-bottom-left-radius: 10px;-moz-border-bottom-left-radius: 10px; -webkit-border-bottom-left-radius:10px;
 }
 
-
 .susp_show .susp_l ul {
     list-style: none;
 }
 
-
-
 .susp_show .susp_r {
     width: 850px;
-    height: 320px;
+    height: auto;
     float: left;
     position: relative;
 }

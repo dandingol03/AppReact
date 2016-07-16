@@ -1,8 +1,3 @@
-/**
- * Created by outstudio on 16/6/8.
- */
-
-
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var SyncConstants = require('../constants/SyncConstants');
@@ -12,7 +7,23 @@ var CHANGE_EVENT = 'change';
 
 var PRONOUNCE_EVENT='pronounce';
 
+var FINISH_EVENT = 'finish';
+
+var DEVOTE_EVENT = 'devote';
+
 var _todos = {};
+
+var _finishes={};
+
+var _devote=false;
+
+
+
+
+/**
+ * @param _finishes,迎新已完成的业务
+ *
+ */
 
 
 function create(ob) {
@@ -48,6 +59,15 @@ function getAll() {
     return _todos;
 }
 
+function setFinish(ob)
+{
+    _finishes[ob.route]=true;
+}
+
+function setDevote(ob)
+{
+    _devote=ob;
+}
 
 function destroy(id) {
     delete _todos[id];
@@ -73,6 +93,18 @@ var SyncStore = assign({}, EventEmitter.prototype, {
 
     getAll: function () {
         return _todos;
+    },
+
+    getFinishes:function(){
+        return _finishes;
+    },
+
+    isDevote:function(){
+        return _devote;
+    },
+
+    getIsDevote:function(){
+
     },
 
     getInContext: function (route) {
@@ -113,6 +145,30 @@ var SyncStore = assign({}, EventEmitter.prototype, {
 
     removePronounceListener: function (callback) {
         this.removeListener(PRONOUNCE_EVENT, callback);
+    },
+
+    emitFinish:function(){
+        this.emit(FINISH_EVENT);
+    },
+
+    addFinishListener:function(callback) {
+        this.on(FINISH_EVENT, callback);
+    },
+
+    removeFinishListener:function(callback) {
+        this.removeListener(FINISH_EVENT, callback);
+    },
+
+    emitDevote:function(){
+      this.emit(DEVOTE_EVENT);
+    },
+
+    addDevoteListener:function(callback) {
+        this.on(DEVOTE_EVENT, callback);
+    },
+
+    removeDevoteListener:function(callback){
+        this.removeListener(DEVOTE_EVENT,callback);
     }
 
 });
@@ -148,6 +204,14 @@ AppDispatcher.register(function (action) {
             break;
         case SyncConstants.TO_ALLIANCE:
             SyncStore.emitPronounce();
+            break;
+        case SyncConstants.TODO_FINISH:
+            setFinish(action);
+            SyncStore.emitFinish();
+            break;
+        case SyncConstants.BUSY_IN_BUSINESS:
+            setDevote(action.ob);
+            SyncStore.emitDevote();
             break;
         default:
         // no op

@@ -5,6 +5,7 @@ import PanelTable from '../compounds/panelTable/PanelTable.jsx';
 import Panel from '../../components/panel/Panel.jsx';
 import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
+import Horizontal from '../../components/basic/Horizontal.jsx';
 import Task from '../../components/basic/Task.jsx';
 
 
@@ -31,10 +32,25 @@ var Tab=React.createClass({
                                 filterField={comp.filterField}/>
                             break;
                         case "Panel":
-                            entity = <Panel/>
+                            console.log('....');
+                            console.log('....');
+                            console.log('....');
+                            entity = <Panel
+                                bean={comp.bean}
+                                autoComplete={comp.autoComplete}
+                                auto={comp.auto}
+                                title={comp.title}
+                                />
                             break;
                         case "OrdinaryTable":
                             entity = <OrdinaryTable/>
+                            break;
+                        case "Horizontal":
+                            entity=<Horizontal
+                                query={comp.bean}
+                                auto={comp.auto}
+                                highLight={true}
+                                />
                             break;
                         case "EmbedTable":
                             entity = <EmbedTable
@@ -185,8 +201,25 @@ var Tab=React.createClass({
                                 query={comp.query}
                                 filterField={comp.filterField}/>
                             break;
+                        case "Horizontal":
+                            entity=<Horizontal
+                                query={comp.bean}
+                                auto={comp.auto}
+                                highLight={true}
+                                width={comp.width}
+                                title={comp.title}
+                                marginLeft={comp.marginLeft}
+                                paddingLeft={comp.paddingLeft}
+                                />
+                            break;
                         case "Panel":
-                            entity = <Panel/>
+                            entity = <Panel
+                                bean={comp.bean}
+                                autoComplete={comp.autoComplete}
+                                title={comp.title}
+                                auto={comp.auto}
+                                paddingLeft={comp.paddingLeft}
+                                />
                             break;
                         case "OrdinaryTable":
                             entity = <OrdinaryTable/>

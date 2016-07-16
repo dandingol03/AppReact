@@ -148,6 +148,15 @@ var News = React.createClass({
 
         return ({data: data, data$initialed: data$initialed, auto: auto, contentMapping: contentMapping, pageNum: 1});
     },
+    getStyle(){
+      var ob=new Object();
+        if(this.props.width!==undefined&&this.props.width!==null)
+            ob.width=this.props.width;
+        if(this.props.marginTop!==undefined&&this.props.marginTop!==null) {
+            ob.marginTop=this.props.marginTop;
+        }
+        return ob;
+    },
     render         : function () {
         if (this.state.data$initialed !== true && (this.props.data == null || this.props.data == undefined)) {
             if (this.state.auto == true)
@@ -242,7 +251,7 @@ var News = React.createClass({
 
 
             return (
-                <div className={"section clearfix News"+(this.props.noBorder==true?" no-border":"")} ref="news">
+                <div className={"section clearfix News"+(this.props.noBorder==true?" no-border":"")} style={this.getStyle()} ref="news">
                     <div ref="hideDiv">
                         {hide}
                     </div>

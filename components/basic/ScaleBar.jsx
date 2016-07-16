@@ -4,6 +4,7 @@ import '../../css/components/basic/scaleBar/scaleBar.css';
 import Panel from '../panel/Panel.jsx';
 import Attention from '../basic/Attention.jsx';
 import Horizontal from '../basic/Horizontal.jsx';
+var News=require('../../entrys/201513569/studentisp/newsWelcome/modules/News.jsx');
 var Password = require('../../components/compounds/password/PasswordElement.jsx');
 var SyncStore = require('../../components/flux/stores/SyncStore');
 
@@ -21,6 +22,54 @@ var ScaleBar =React.createClass({
 
 
         this.setState({_todos: stores});
+    },
+    _onDevote:function(){
+        let devoting=SyncStore.isDevote();
+        let notificationExist=false;
+        let notificationIndex=-1;
+        let k=0;
+        this.state.data.map(function(item,i) {
+            if(item.label=="通知")
+            {
+                notificationExist=true;
+                notificationIndex=i;
+            }
+        });
+        if(devoting)
+        {
+            if(!notificationExist)//如果不存在通知
+            {
+                let additional=
+                {
+                    "label": "通知",
+                    "img": "/images/serviceHobby/ico/bell.png",
+                    "type": "News",
+                    "content":
+                    {
+                        "query":
+                        {
+                            "url":"/bsuims/reactPageDataRequest.do",
+                            "params":
+                            {
+                                "reactPageName":"groupNewsReactPage",
+                                "reactActionName":"listTypeNewsUseReact"
+                            }
+                        },
+                        "width":"880px",
+                        "marginTop":"0px"
+                    }
+                }
+                var data=this.state.data.push(additional);
+                this.setState({data:data});
+            }
+        }else{
+            if(notificationExist)
+            {
+                var data=this.state.data;
+                data.splice(notificationIndex,1);
+                this.setState({data:data});
+            }
+        }
     },
     clickhide3:function(ref,sel1,sel2,sel3,sel4)
     {
@@ -61,8 +110,6 @@ var ScaleBar =React.createClass({
             console.log();
             console.log();
             console.log();
-
-
 
             //cl=='hover'
             id=$(obj1).index($(this));
@@ -179,6 +226,12 @@ var ScaleBar =React.createClass({
 
         return ({data: data, data$initialed: data$initialed, auto: auto, _todos: null});
     },
+    componentWillReceiveProps(props){
+      var ob;
+        if(this.props.data!==props.data)
+        ob.data=props.data;
+        this.setState(ob);
+    },
     render:function(){
         if(this.state.data$initialed!==true&&(this.props.data==null||this.props.data==undefined))
         {
@@ -199,13 +252,21 @@ var ScaleBar =React.createClass({
                 state.data.map(function (item, i) {
 
                     var background = "url('" + App.getResourceDeployPrefix() + item.img + "') no-repeat 10px 30px";
+                    /**
+                     * 外围悬浮菜单
+                     *
+                     */
                     var sus_li_style={background:background};
-                    suspends.push(<li key={i} style={sus_li_style}
+                    suspends.push(
+                        <li key={i} style={sus_li_style}
                                       className={"sus_li"}>
                         <span style={{marginLeft:"20px"}}>{item.label}</span>
                     </li>);
                     var sus = "sus_li sus" + " " + i;
                     var sus_li_sus = {sus: sus};
+                    /**
+                     * 悬浮展开菜单
+                     */
                     showNavs.push(
                         <li className={sus} key={i} style={sus_li_style}>
                             <span style={{marginLeft:"20px"}}>{item.label}</span>
@@ -234,6 +295,14 @@ var ScaleBar =React.createClass({
                             if (state._todos !== undefined && state._todos !== null)
                                 _todos = state._todos;
                             ctrl = <Attention {...item.content} data={_todos}/>
+                            break;
+                        case 'News':
+                            ctrl=<News
+                                    query={item.content.query}
+                                    auto={true}
+                                    width={item.content.width}
+                                    marginTop={item.content.marginTop}
+                                />;
                             break;
                         default:
                             ctrl = item.content;
@@ -283,6 +352,9 @@ var ScaleBar =React.createClass({
 
         //add event changeListener
         SyncStore.addChangeListener(this._onChange);
+        //add devote listner
+        SyncStore.addDevoteListener(this._onDevote);
+
 
         var category=this.refs.sidebar;
         var $category=$(category);
@@ -325,6 +397,7 @@ var ScaleBar =React.createClass({
     componentWillUnmount: function () {
         //remove event changeListener
         SyncStore.removeChangeListener(this._onChange);
+        SyncStore.removeDevoteListener(this._onDevote);
     }
 });
 

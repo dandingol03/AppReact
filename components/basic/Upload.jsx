@@ -20,7 +20,7 @@ var Upload = React.createClass({
                     <input type="hidden" name={this.props.ctrlName} ref="ctrl"/>
 
                     <div className="input-append">
-                        <input className="input" type="text" ref="pathPreview"/>
+                        <input className="input" name="filename" type="text" ref="pathPreview"/>
                         <a className="btn" onClick={this.clickCb}>
                             <span style={{fontSize:"12px"}}>选择文件</span>
                         </a>

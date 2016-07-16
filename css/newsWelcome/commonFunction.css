@@ -1,0 +1,32 @@
+.commonFunction {
+    width: 624px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 5px;
+    color: #fff;
+}
+
+.commonFunction .block {
+    display: inline-block;
+    text-align: center;
+    padding-top: 6px;
+    color: #ccc;
+    vertical-align: top;
+}
+
+.block .functionalAreas {
+    display: block;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+
+.block .functionalAreas .functionSpan {
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    /*font-weight:bold;*/
+    line-height: 20px;
+    color: #111;
+}

@@ -6,24 +6,36 @@ import Tab from '../../../../../components/basic/Tab.jsx';
 import NEWS from '../data/news.json';
 import '../../../../../css/serviceHobby/basic/home.css';
 import HighLight from '../../../../../components/basic/HighLight.jsx';
-import SMain from '../modules/SMain.jsx';
-
+var SyncActions = require('../../../../../components/flux/actions/SyncActions');
 var Home = React.createClass({
-
+    emitDevote:function(){
+        SyncActions.devoteInBusiness(false);
+    },
     render: function () {
-        var query = {
-
-            url   : "/bsuims/reactPageDataRequest.do",
-            params: {
-                reactPageName  : "degreeAnonymousThesisReviewResult",
-                reactActionName: "deegreeThesisReviewResultUseReact"
-            }
-        }
+        this.emitDevote();
         var bean = {
             url   : "/bsuims/reactPageDataRequest.do",
             params: {
                 reactPageName  : "degreeAnonymousThesisReviewResult",
                 reactActionName: "deegreeThesisReviewPanelUseReact"
+            }
+        }
+
+        var personBean={
+            auto:true,
+            url:"/bsuims/reactPageDataRequest.do",
+            params: {
+                reactPageName: "registerRulePage",
+                reactActionName: "getStudentIspRegisterInfoReact"
+            }
+            ,
+            highLight:true
+        }
+        var trafficquery={
+            url:"/bsuims/reactPageDataRequest.do",
+            params:{
+                reactPageName  : "StudentTrafficRuleStudentTrafficRulePage",
+                reactActionName: "trafficPlanInitReact"
             }
         }
         var filterField = {
@@ -41,86 +53,45 @@ var Home = React.createClass({
 
         return (
             <div className="Home">
-
-                <SMain/>
+                <div>
+                    <News query={{
+                                             url:"/bsuims/reactPageDataRequest.do",
+                                            params:{
+                                                reactPageName:"groupNewsReactPage",
+                                                reactActionName:"listTypeNewsUseReact"
+                                            }
+                                         }}
+                          auto={true}/>;
+                </div>
 
 
 
                 <div className="total" style={{minHeight:"650px",marginTop:"0px",paddingBottom:"30px"}}>
 
 
-
-
-
                     <Tab data={[
         {
-            "name":"出行计划" ,comp: {
-                name        : "Task",
-            data:[
-            [
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"}
-            ]
-            ,
-
-            [
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"}
-            ]
-            ,
-
-
-            [
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"}
-            ]
-            ,
-            [
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"}
-            ]
-            ,
-            [
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"}
-            ]
-            ,
-            [
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"}
-            ]
-            ,
-            [
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"},
-                {name: "生理健康", rowSpan: "1"}
-            ]
-        ]
-                    }
+          "name":"个人信息" ,
+          comp: {
+                name:"Horizontal",
+                auto:true,
+                autoComplete:true,
+                title:"个人信息",
+                bean:personBean,
+                width:"1024px",
+                paddingLeft:"0px"
+             }
         },
         {
-            "name":"校区介绍" ,comp: {
-            name        : "PanelTable",
-            autoComplete: true,
-            query       : query,
-            bean        : bean,
-            filterField : filterField
-                                }
-        },
-        {
-            "name":"周边环境" ,comp: {
-            name        : "PanelTable",
-            autoComplete: true,
-            query       : query,
-            bean        : bean,
-            filterField : filterField
-                                }
+            "name":"出行计划" ,
+            comp: {
+                name:"Panel",
+                auto:true,
+                autoComplete:true,
+                title:"出行计划",
+                bean:trafficquery,
+                paddingLeft:"2px"
+                  }
         }
     ]} width="1024px" gradient={true}/>
 

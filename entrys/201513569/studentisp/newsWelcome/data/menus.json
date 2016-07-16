@@ -59,7 +59,7 @@
       {
         "label": "绿色通道申请",
         "query": "",
-        "route": "/greenway/grad/student_grad_greenway_add_applyinfoInit.do"
+        "route": "/greenChannelApply"
       },
       {
         "label": "免修英语申请",

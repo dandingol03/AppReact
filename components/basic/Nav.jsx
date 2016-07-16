@@ -12,15 +12,15 @@ var ProxyQ=require('../../components/proxy/ProxyQ');
  */
 
 var Nav=React.createClass({
-    logout: function () {
-        var path = "/serviceHall";
+    logOut: function () {
+        var path = "/gradms";
         var model = "gradmsLoginPage";
         var pre = "";
         var str = path + "/bsuims/bsMainFrameLogout.do?contextName=" + model
             + "&contextPath=" + path;
         if (pre != null && pre != "")
             str = str + "&paraItemName=" + pre;
-        this.location.href = str;
+        window.location.href = str;
 
 
     },
@@ -73,7 +73,7 @@ var Nav=React.createClass({
         )
 
     },
-    logOut:function(){
+    _logOut:function(){
         ProxyQ.queryHandle(
             null,
             "/bsuims/serviceHobbyLogout.do",
@@ -162,8 +162,14 @@ var Nav=React.createClass({
         if(this.props.data!==undefined&&this.props.data!==null)
         {
             data = this.props.data;
-            data$initialed=true;
+                data$initialed=true;
         }
+        else
+        {
+            if(this.props.data$initialed!==undefined&&this.props.data$initialed!==null)
+                data$initialed=this.props.data$initialed;
+        }
+
 
         var auto;
         if(this.props.auto===true||this.props.auto==="true")

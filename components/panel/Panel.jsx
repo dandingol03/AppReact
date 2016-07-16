@@ -43,6 +43,9 @@ var SyncActions = require('../../components/flux/actions/SyncActions');
 
 var Panel=React.createClass({
     fetch:function(){
+        var url=this.props.bean.url;
+        var params=this.props.bean.params;
+        console.log('url====' + url);
         ProxyQ.queryHandle(
             null,
             this.props.bean.url,
@@ -90,7 +93,8 @@ var Panel=React.createClass({
                     required[item.name] = item.name;
                 }
             }
-            for (var i = 0; i < form.getElementsByTagName("input").length; i++) {
+            for (var i = 0; i < form.getElementsByTagName("input").length; i++)
+            {
                 var item = form.getElementsByTagName("input")[i];
                 //针对单选
                 if (item.type == 'radio') {
@@ -347,7 +351,7 @@ var Panel=React.createClass({
                     {
                         if(coms.length>1) {
                             if (coms[1] !== null && coms[1] != undefined && coms[1] !== 'download') {
-                                label = (<td key={td$index++} style={{textAlign:"right",width:"20%"}} colSpan={1}>
+                                label = (<td key={td$index++} style={{textAlign:"right",width:"20%",border:"1px solid #0066b3"}} colSpan={1}>
                                     {name}
                                 </td>);
                             }
@@ -361,7 +365,7 @@ var Panel=React.createClass({
                                 if (customRe !== undefined && customRe !== null && customRe.length >= 2) {
                                     switch (customRe[1]) {
                                         case 'align':
-                                            label = (<td key={td$index++} style={{textAlign:customRe[2]}}
+                                            label = (<td key={td$index++} style={{textAlign:customRe[2],border:"1px solid #0066b3"}}
                                                          colSpan={j==row.length-1?max$cols-j:1}>
                                                 {customRe[3]}
                                             </td>);
@@ -376,7 +380,7 @@ var Panel=React.createClass({
                                 }
                             }
                             else
-                            label=(<td key={td$index++} style={{textAlign:"center",padding:"2px"}} colSpan={j==row.length-1?max$cols-j:1}>
+                            label=(<td key={td$index++} style={{textAlign:"center",padding:"2px",border:"1px solid #0066b3"}} colSpan={j==row.length-1?max$cols-j:1}>
                                 {name}
                             </td>);
                         }
@@ -390,13 +394,13 @@ var Panel=React.createClass({
                             if(autoComplete==true)
                             {
                                 tds.push(
-                                    <td key={td$index++} style={{textAlign:"center"}} colSpan={j==row.length-1?max$cols-j:1}>
+                                    <td key={td$index++} style={{textAlign:"center",border:"1px solid #0066b3"}} colSpan={j==row.length-1?max$cols-j:1}>
                                         {ctrl}
                                     </td>);
 
                             }else{
                                 tds.push(
-                                    <td key={td$index++} style={{textAlign:"left"}}>
+                                    <td key={td$index++} style={{textAlign:"left",border:"1px solid #0066b3"}}>
                                         {ctrl}
                                     </td>);
                             }
@@ -617,11 +621,11 @@ var Panel=React.createClass({
                     {
                         if(coms[1]=='upload')
                         {
-                            ctrl$comp= <td key={td$index++} style={{textAlign:"center",minWidth:"300px"}} colSpan={j==row.length-1?max$cols-j:1} >
+                            ctrl$comp= <td key={td$index++} style={{textAlign:"center",minWidth:"300px",border:"1px solid #0066b3"}} colSpan={j==row.length-1?max$cols-j:1} >
                                 {ctrl}
                             </td>;
                         }else{
-                            ctrl$comp= <td key={td$index++} style={{textAlign:"center"}} colSpan={j==row.length-1?max$cols-j:1} >
+                            ctrl$comp= <td key={td$index++} style={{textAlign:"center",border:"1px solid #0066b3"}} colSpan={j==row.length-1?max$cols-j:1} >
                                 {ctrl}
                             </td>;
                         }
@@ -656,7 +660,7 @@ var Panel=React.createClass({
             {
                 title=
                     <tr>
-                        <th colSpan={max$cols}>{this.props.title}</th>
+                        <th colSpan={max$cols} style={{border:"1px solid #0066b3"}}>{this.props.title}</th>
                     </tr>
 
             }

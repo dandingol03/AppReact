@@ -15,6 +15,7 @@ render((
             <IndexRoute component={Home}/>
             <Route path={window.App.getAppRoute()+"/password/modify"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/allCourseQuery"} component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/greenChannelApply"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/news"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/groupnews/grouptypenews_list.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/person/stuinfo_personBasicInfoUpdateInit.do"}
@@ -23,7 +24,7 @@ render((
             <Route path={window.App.getAppRoute()+"/person/stuinfo_allRewPunInfo.do"} data={"?userType=TS"}
                    component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/photomanage/showAllPhotoesForStu.do"} component={MainSection}/>
-            <Route path={window.App.getAppRoute()+"/register/register_information.do"} component={MainSection}/>
+
             <Route path={window.App.getAppRoute()+"/health/healthyInfo_medical_history_add_init.do"}
                    component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/greenway/grad/student_grad_greenway_add_applyinfoInit.do"}

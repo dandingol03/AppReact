@@ -1,6 +1,12 @@
 /*�����ĸ��Ĺ���
 background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))url(../img/headline.jpg) no-repeat center;
 background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0));*/
+
+
+.Home{
+    margin-top:-100px;
+}
+
 .total{
     width: 100%;
     background: url(../../../build/images/total.png) no-repeat center;
