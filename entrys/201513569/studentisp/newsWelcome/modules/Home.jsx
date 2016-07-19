@@ -22,14 +22,12 @@ var Home = React.createClass({
         }
 
         var personBean={
-            auto:true,
+
             url:"/bsuims/reactPageDataRequest.do",
             params: {
-                reactPageName: "registerRulePage",
-                reactActionName: "getStudentIspRegisterInfoReact"
+                reactPageName: "freshmanWelcomeWorkbenchRulePage",
+                reactActionName: "getStudentRegisterInfoReact"
             }
-            ,
-            highLight:true
         }
         var trafficquery={
             url:"/bsuims/reactPageDataRequest.do",
@@ -67,34 +65,32 @@ var Home = React.createClass({
 
 
                 <div className="total" style={{minHeight:"650px",marginTop:"0px",paddingBottom:"30px"}}>
-
-
                     <Tab data={[
-        {
-          "name":"个人信息" ,
-          comp: {
-                name:"Horizontal",
-                auto:true,
-                autoComplete:true,
-                title:"个人信息",
-                bean:personBean,
-                width:"1024px",
-                paddingLeft:"0px"
-             }
-        },
-        {
-            "name":"出行计划" ,
-            comp: {
-                name:"Panel",
-                auto:true,
-                autoComplete:true,
-                title:"出行计划",
-                bean:trafficquery,
-                paddingLeft:"2px"
-                  }
-        }
-    ]} width="1024px" gradient={true}/>
-
+                {
+                  "name":"个人信息" ,
+                  comp: {
+                        name:"Panel",
+                        auto:true,
+                        autoComplete:true,
+                        title:"个人信息",
+                        bean:personBean,
+                        width:"1024px",
+                        paddingLeft:"0px",
+                        highLight:true,
+                     }
+                },
+                {
+                    "name":"出行计划" ,
+                    comp: {
+                        name:"Panel",
+                        auto:true,
+                        autoComplete:true,
+                        title:"出行计划",
+                        bean:trafficquery,
+                        paddingLeft:"2px"
+                          }
+                }
+                    ]} width="1024px" gradient={true}/>
 
                     {this.props.children}
                 </div>

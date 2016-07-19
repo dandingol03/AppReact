@@ -58,6 +58,12 @@ var SyncActions = {
             type: SyncConstants.BUSY_IN_BUSINESS,
             ob:ob
         });
+    },
+    updateRoute:function(ob){
+        AppDispatcher.dispatch({
+            type: SyncConstants.UPDATE_ROUTE,
+            ob:ob
+        });
     }
 
 };

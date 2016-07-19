@@ -1,12 +1,13 @@
 import React from 'react';
 import {render} from 'react-dom';
 import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
+
 import '../../../../../css/newsWelcome/commonFunction.css';
-
-
-var SyncStore = require('../../../../../components/flux/stores/SyncStore');
 var SyncActions= require('../../../../../components/flux/actions/SyncActions');
 
+var SyncStore = require('../../../../../components/flux/stores/SyncStore');
+var ProxyQ = require('../../../../../components/proxy/ProxyQ');
 
 var funcs=[
     {
@@ -44,57 +45,182 @@ var trans={
 
 
 var CommonFunction=React.createClass({
-    _onFinish:function(){
-        var finishes=SyncStore.getFinishes();
-        for(var route in finishes)
-        {
-            console.log("finish route====\r\n" + route);
-        }
-        this.setState({finishes:finishes});
+    handleSubmit(event) {
+
+        const path = `/repos/${userName}/${repo}`;
+        browserHistory.push(path)
     },
+    _checkFinish:function(){
+        var instance=this;
+        console.log('....');
+        ProxyQ.queryHandle(null,'/bsuims/reactPageDataRequest.do',
+            {
+                reactPageName:"freshmanWelcomeWorkbenchRulePage",
+                reactActionName:"getHomeWorkbenchInfoStateReact"
+            },
+            null,function(response){
+                let finishes=response.data;
+                if(finishes!==undefined&&finishes!==null)
+                {
+                    let finish_tri='';
+                    for(var item in finishes)
+                    {
+                        finish_tri+=item+':'+finishes[item]+'\n';
+                    }
+                    console.log('finishes=='+finish_tri);
+                }
+
+                this.setState({finishes: finishes});
+
+            }.bind(this));
+
+    },
+    _onFinish:function(data){
+        let finish=data.detail;
+        console.log('finish===' + finish);
+        let finishes=this.state.finishes;
+        if(finish!==undefined&&finish!==null) {
+            if(finishes==null||finishes==undefined)
+                finishes = {};
+            //avoid unnecessary repaint
+            if(finishes[finish.label]==true)
+            {
+                browserHistory.push(window.App.getAppRoute()+"/",{name:'wjj'});
+                return;
+            }
+            else
+            {
+                finishes[finish.label] = true;
+                this.setState({finishes: finishes});
+
+            }
+
+        }
+    },
+    clickCb:function(){
+        var slider=this.refs.slider;
+        var left=this.state.left;
+        $("#slider").animate({left:"-920px"});
+    },
+    clickCbRight:function(){
+        var slider=this.refs.slider;
+        $("#slider").animate({left:"920px"});
+    },
+    fetch:function(){
+        var url="/bsuims/reactPageDataRequest.do";
+        var params={
+            reactPageName:"freshmanWelcomeWorkbenchRulePage",
+            reactActionName:"getHomeWorkbenchInfoInitReact"
+        };
+        ProxyQ.queryHandle(
+            null,
+            url,
+            params,
+            null,
+            function(response){
+                //这里需要统一规范后台返回的数据格式
+                var ob=null;
+                if(response.data!==undefined&&response.data!==null&&response.data!="")
+                {
+                    if(ob==null)
+                        ob=new Object();
+                    ob.funcs=response.data;
+                    SyncActions.updateRoute(response.data);
+                }
+                else
+                    console.log("type of response is wrong");
+                if(response.finishes!==undefined&&response.finishes!==null)
+                ob.finishes=response.finishes;
+                if(ob!==null)
+                    this.setState(ob);
+
+            }.bind(this)
+        );
+
+    },
+
+
     getInitialState:function(){
-        return ({finishes: null});
+        return ({finishes: null,funcs:null,step:"120px",left:"0px"});
     },
     render:function(){
-
-        var menus=new Array();
-        var finishes=this.state.finishes;
-        funcs.map(function(func,i) {
-            var span=null;
-            if(finishes!==null&&finishes!==undefined) {
-                if(finishes[func.route]==true) {
-                    span=   <span style={{position: "absolute",marginLeft: "30px",top: "50px",fontSize:"1.6em"}}>
+        var funcs=this.state.funcs;
+        if(funcs==null||funcs==undefined){
+            if(this.props.auto==true)
+                this.fetch();
+            return <div></div>
+        }else{
+            funcs=this.state.funcs;
+            var menus=new Array();
+            var finishes=this.state.finishes;
+            funcs.map(function(func,i) {
+                var span=null;
+                if(finishes!==null&&finishes!==undefined) {
+                    if(finishes[func.label]==true) {
+                        span=   <span style={{position: "absolute",marginLeft: "30px",top: "50px",fontSize:"1.6em"}}>
                                 <i className="fa fa-check" style={{color:"#222"}}></i>
                             </span>
+                    }
                 }
-            }
-            menus.push(
-                <div className={"block "+trans[i]} key={i} style={{position:"relative"}}>
-                    {span}
-                    <div className="functionalAreas">
-                        <Link
-                            to={App.getAppRoute()+(func.route!==undefined&&func.route!==null?func.route:"")}>
-                            <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
-                                 alt="功能1"></img>
-                        </Link>
+                let route=func.route;
+                let outerLink=/^http:\/\//;
+                if(outerLink.exec(route))//外链
+                {
+                    menus.push(
+                    <div className={"block "+trans[i]} key={i} >
+                        {span}
+                        <div className="functionalAreas">
+                            <a
+                                href={func.route!==undefined&&func.route!==null?func.route:""} target="_blank">
+                                <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                     alt="功能1"></img>
+                            </a>
                         <span className="functionSpan">
                             {func.label}
                         </span>
-                    </div>
-                </div>);
-        });
+                        </div>
+                    </div>);
 
-        return(
-            <div className="commonFunction">
-                {menus}
-            </div>
-        );
+                }else {
+                    menus.push(
+                        <div className={"block "+trans[i]} key={i} >
+                            {span}
+                            <div className="functionalAreas">
+                                <Link
+                                    to={App.getAppRoute()+(func.route!==undefined&&func.route!==null?func.route:"")}>
+                                    <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                         alt="功能1"></img>
+                                </Link>
+                                <span className="functionSpan">
+                                    {func.label}
+                                </span>
+                            </div>
+                        </div>);
+                }
+            });
+
+            return(
+
+
+
+
+                    <div   style={{position:"absolute",width:"1150px",height:"120px"}}>
+                        {menus}
+                    </div>
+
+
+            );
+
+        }
+
     },
     componentDidMount:function(){
-        SyncStore.addFinishListener(this._onFinish)
+        var dom_node=$("#_mustdone")[0];
+        dom_node.addEventListener("_finish",this._onFinish);
     },
     componentWillMount:function(){
-        SyncStore.removeFinishListener(this._onFinish);
+        var dom_node=$("#_mustdone")[0];
+        dom_node.removeEventListener("_finish",this._onFinish);
     }
 });
 module.exports=CommonFunction;

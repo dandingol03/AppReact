@@ -4,6 +4,7 @@ import '../../css/components/basic/scaleBar/scaleBar.css';
 import Panel from '../panel/Panel.jsx';
 import Attention from '../basic/Attention.jsx';
 import Horizontal from '../basic/Horizontal.jsx';
+import IFrame from '../basic/IFame.jsx';
 var News=require('../../entrys/201513569/studentisp/newsWelcome/modules/News.jsx');
 var Password = require('../../components/compounds/password/PasswordElement.jsx');
 var SyncStore = require('../../components/flux/stores/SyncStore');
@@ -42,7 +43,7 @@ var ScaleBar =React.createClass({
                 let additional=
                 {
                     "label": "通知",
-                    "img": "/images/serviceHobby/ico/bell.png",
+                    "img": "/images/serviceHobby/ico/news.png",
                     "type": "News",
                     "content":
                     {
@@ -59,8 +60,8 @@ var ScaleBar =React.createClass({
                         "marginTop":"0px"
                     }
                 }
-                var data=this.state.data.push(additional);
-                this.setState({data:data});
+                this.state.data.push(additional);
+                this.setState({data:this.state.data});
             }
         }else{
             if(notificationExist)
@@ -304,6 +305,14 @@ var ScaleBar =React.createClass({
                                     marginTop={item.content.marginTop}
                                 />;
                             break;
+                        case 'IFrame':
+                            ctrl=<IFrame
+                                    src={item.content.src}
+                                    data={item.content.data}
+                                    width={item.content.width}
+                                    height={item.content.height}
+                                />
+                            break;
                         default:
                             ctrl = item.content;
                             break;
@@ -347,6 +356,13 @@ var ScaleBar =React.createClass({
 
 
         }
+    },
+    componentDidUpdate:function(){
+        this.clickshow6("sidebar",".susp_nav>ul>li",".susp_show .susp_l li.sus",".susp_show .susp_r","#fadee","#suspend",".susp_show","hover");
+
+        this.clickshow7("sidebar",".susp_show .susp_l li.sus",".susp_show .susp_r","hover");
+
+        this.clickhide3("sidebar",".btn_close","#fadee",".susp_show","#suspend");
     },
     componentDidMount:function(){
 

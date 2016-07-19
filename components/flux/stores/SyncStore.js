@@ -11,11 +11,15 @@ var FINISH_EVENT = 'finish';
 
 var DEVOTE_EVENT = 'devote';
 
+var ROUTE_UPDATE_EVENT='route_update';
+
 var _todos = {};
 
 var _finishes={};
 
 var _devote=false;
+
+var _mustdone={};
 
 
 
@@ -68,6 +72,10 @@ function setDevote(ob)
 {
     _devote=ob;
 }
+function updateRoute(ob){
+    _mustdone=ob;
+}
+
 
 function destroy(id) {
     delete _todos[id];
@@ -105,6 +113,10 @@ var SyncStore = assign({}, EventEmitter.prototype, {
 
     getIsDevote:function(){
 
+    },
+
+    getAllRoute:function(){
+        return _mustdone;
     },
 
     getInContext: function (route) {
@@ -170,7 +182,6 @@ var SyncStore = assign({}, EventEmitter.prototype, {
     removeDevoteListener:function(callback){
         this.removeListener(DEVOTE_EVENT,callback);
     }
-
 });
 
 // Register callback to handle all updates
@@ -212,6 +223,9 @@ AppDispatcher.register(function (action) {
         case SyncConstants.BUSY_IN_BUSINESS:
             setDevote(action.ob);
             SyncStore.emitDevote();
+            break;
+        case SyncConstants.UPDATE_ROUTE:
+            updateRoute(action.ob)
             break;
         default:
         // no op

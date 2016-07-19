@@ -54,3 +54,16 @@ window.App.unSwing = function (ob) {
     }
 
 }
+window.App.finish=function(ob) {
+    if(ob!==undefined&&ob!==null)
+    {
+        let ele = document.getElementById('_mustdone');
+        //fit to advance web-browser such as firefox,chrome
+        var event=document.createEvent('CustomEvent');
+        event.initCustomEvent('_finish',false,true,{label:ob.label,route:ob.route});
+        ele.dispatchEvent(event);
+
+    }
+};
+
+

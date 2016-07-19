@@ -44,7 +44,7 @@ var MainSection = React.createClass({
             SyncActions.updateData(route, ob.required, label);
     },
     emitDevote:function(path){
-        console.log('path====' + path);
+        SyncActions.devoteInBusiness(true);
     },
     getInitialState:function(){
       return ({route:[]});

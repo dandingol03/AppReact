@@ -11,14 +11,12 @@ import News from './News.jsx';
 import '../../../../../css/serviceHobby/basic/app.css';
 import MENU from '../data/menus.json';
 import Scales from '../data/scaleBar.json';
-
+var SyncActions= require('../../../../../components/flux/actions/SyncActions');
+var ProxyQ = require('../../../../../components/proxy/ProxyQ');
 
 var App = React.createClass({
     app$init: function () {
 
-    },
-    openWin:function(target){
-        window.open('./sub.html');
     },
     render           : function () {
 
@@ -38,7 +36,7 @@ var App = React.createClass({
                         </div>
                     </div>
                     <div className="bottom">
-                        <CommonFunction/>
+                        <CommonFunction auto={true}/>
                     </div>
                 </div>
 

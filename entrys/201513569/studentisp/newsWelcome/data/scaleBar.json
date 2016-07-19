@@ -2,14 +2,14 @@
   {
     "label": "个人信息",
     "img": "/images/serviceHobby/ico/y1.png",
-    "type":"Horizontal",
+    "type":"Panel",
     "content": {
       "auto":true,
-      "query":{
+      "bean":{
         "url":"/bsuims/reactPageDataRequest.do",
         "params": {
-          "reactActionName": "getStudentIspRegisterInfoReact",
-          "reactPageName": "registerRulePage"
+          "reactActionName": "getStudentRegisterInfoReact",
+          "reactPageName": "freshmanWelcomeWorkbenchRulePage"
         }
       },
       "highLight":true
@@ -27,7 +27,12 @@
   {
     "label": "使用手册",
     "img": "/images/serviceHobby/ico/y4.png",
-    "content": ""
+    "type":"IFrame",
+    "content":{
+      "src":"./DifficultSurvey.pdf",
+      "width":"1000px",
+      "height":"500px"
+    }
   },
   {
     "label": "业务提醒",
@@ -35,25 +40,6 @@
     "type": "Attention",
     "content": {
       "todoS": true
-    }
-  },
-  {
-    "label": "通知",
-    "img": "/images/serviceHobby/ico/news.png",
-    "type": "News",
-    "content":
-    {
-      "query":
-      {
-        "url":"/bsuims/reactPageDataRequest.do",
-        "params":
-        {
-          "reactPageName":"groupNewsReactPage",
-          "reactActionName":"listTypeNewsUseReact"
-        }
-      },
-      "width":"880px",
-      "marginTop":"0px"
     }
   }
 ]

@@ -40,6 +40,7 @@ var Tab=React.createClass({
                                 autoComplete={comp.autoComplete}
                                 auto={comp.auto}
                                 title={comp.title}
+
                                 />
                             break;
                         case "OrdinaryTable":
