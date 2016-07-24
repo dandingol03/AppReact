@@ -32,7 +32,7 @@ var App = React.createClass({
                 <div className="keyNavigation">
                     <div className="top">
                         <div className="block">
-                            <Brief data={['李四同学（201513557），早上好','软件学院']}/>
+                            <Brief data={['欢迎登陆山东大学电子迎新平台，请仔细阅读报道须知和各类通知,','并尽快选择下面的功能按要求完善相关信息和业务申请，有√标注的图标表示该业务已经完成。']}/>
                         </div>
                     </div>
                     <div className="bottom">

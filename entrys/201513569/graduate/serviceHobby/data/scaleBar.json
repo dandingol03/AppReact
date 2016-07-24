@@ -1,9 +1,5 @@
 [
-  {
-    "label": "联系方式",
-    "img": "/images/serviceHobby/ico/y1.png",
-    "content": ""
-  },
+
   {
     "label": "修改密码",
     "img": "/images/serviceHobby/ico/y3.png",
@@ -14,15 +10,28 @@
     }
   },
   {
-    "label": "问卷调查",
+    "label": "校区地图",
     "img": "/images/serviceHobby/ico/y_55.png",
-    "type": "Panel",
-    "content":""
+    "type": "Zoomer",
+    "content":
+    {
+      "auto":true,
+      "width":"900px",
+      "style":
+      {
+        "marginLeft":"-35px"
+      }
+    }
   },
   {
-    "label": "使用手册",
+    "label": "研究生手册",
     "img": "/images/serviceHobby/ico/y4.png",
-    "content": ""
+    "type":"IFrame",
+    "content":{
+      "src":"/downloads/fresh/yjssc2016.pdf",
+      "width":"1000px",
+      "height":"500px"
+    }
   },
   {
     "label": "业务提醒",

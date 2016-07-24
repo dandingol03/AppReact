@@ -4,6 +4,7 @@ import PasswordModify from '../password/PasswordModify.jsx';
 import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
 import GreenChannelApply from './greenChanel/greenChannelApplyMain.jsx';
 import News from './News.jsx';
+import TrafficPlan from './TrafficPlan/TrafficPlanMain.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
 var SyncActions = require('../../../../../components/flux/actions/SyncActions');
 
@@ -92,9 +93,12 @@ var MainSection = React.createClass({
                     ctrl = <GreenChannelApply/>;
                     label = "绿色通道";
                     break;
+                case App.getAppRoute() + "/trafficPlan":
+                    ctrl = <TrafficPlan/>;
+                    label = "出行计划";
+                    break;
                 default:
                     var reg = /.*\.do.*[\.do|\.jsp]?.*/;
-
                     var re = reg.exec(path);
 
                     if (re !== undefined && re !== null) {
@@ -103,7 +107,7 @@ var MainSection = React.createClass({
                         ctrl =
                             <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
                                     frameBorder="0" scrolling="no"
-                                    src={"/sduyingxin"+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
+                                    src={path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
                                 />
 
                     } else {

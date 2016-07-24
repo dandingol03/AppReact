@@ -76,7 +76,7 @@ var Home = React.createClass({
                         bean:personBean,
                         width:"1024px",
                         paddingLeft:"0px",
-                        highLight:true,
+                        highLight:false,
                      }
                 },
                 {
@@ -89,8 +89,54 @@ var Home = React.createClass({
                         bean:trafficquery,
                         paddingLeft:"2px"
                           }
-                }
-                    ]} width="1024px" gradient={true}/>
+                },
+                {
+                    "name":"地图",
+                    comp:{
+                        name:"Zoomer",
+                        data:'images/image-big.jpg',
+                        auto:true
+                         }
+                },
+                 {
+                    "name":"饮食",
+                    comp:{
+                        name:"IFrame",
+                        category:'01',
+                        width:"980px",
+                        auto:true
+                         }
+                 },
+                  {
+                    "name":"住宿",
+                    comp:{
+                        name:"IFrame",
+                        category:'02',
+                        width:"980px",
+                        auto:true
+                         }
+                 },
+                  {
+                    "name":"交通",
+                    comp:{
+                        name:"IFrame",
+                        category:'03',
+                        auto:true,
+                        width:"980px"
+                         }
+                 },
+                 {
+                    "name":"医疗",
+                    comp:{
+                        name:"IFrame",
+                        category:'04',
+                        auto:true,
+                        width:"980px"
+                         }
+                 }
+
+                ]}
+                         width="1024px" gradient={true}/>
 
                     {this.props.children}
                 </div>

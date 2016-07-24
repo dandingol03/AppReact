@@ -11,11 +11,12 @@ import MainSection from './modules/MainSection.jsx';
 
 render((
     <Router history={browserHistory}>
-        <Route path={window.App.getAppRoute()+"/"} component={App}>
+        <Route path={window.App.getAppRoute()} component={App}>
             <IndexRoute component={Home}/>
             <Route path={window.App.getAppRoute()+"/password/modify"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/allCourseQuery"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/greenChannelApply"} component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/trafficPlan"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/news"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/groupnews/grouptypenews_list.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/person/stuinfo_personBasicInfoUpdateInit.do"}
@@ -36,16 +37,17 @@ render((
                    component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/newCultivateAllCourseQueryPage"} component={MainSection}/>
             <Route path={window.App.getAppRoute+"/baseInfoManage/yxStudent_difficult_survey.do"} data={"?flag=newStu"} component={MainSection}/>
-            <Route path={window.App.getAppRoute+"/trafficplan/trafficPlanInit.do"} data={"?type=1&flag=newStu"} component={MainSection}/>
             <Route path={window.App.getAppRoute+"/baseInfoManage/yxStuBaseInfoUpdateInit.do"} data={"?flag=newStu"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/freshmanNavigation/freshman_entranceGuidanceInit.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/baseInfoManage/yxStuBaseInfoUpdateInit.do"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/baseInfoManage/yxStudent_difficult_survey.do"} data={"?flag=newStu"} component={MainSection}/>
-            <Route path={window.App.getAppRoute()+"/baseInfoManage/register_fee_Init.do"} component={MainSection}/>
-            <Route path={window.App.getAppRoute()+"/tranningCloth/student_training_cloth.do"} component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/baseInfoManage/register_fee_Init.do"} data={"?flag=newStu"} component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/tranningCloth/student_training_cloth.do"} data={"?flag=newStu"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/greenwaybks/student_greenway_add_applyinfoInit.do"} data={"?flag=newStu"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/health/healthyInfo_medical_history_add_init.do"} data={"?flag=newStu"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/tutor/studentApplyTutorInit.do"}component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/registration/registration_info.do"} data={"?type=1&flag=newStu"} component={MainSection}/>
+
         </Route>
     </Router>
 ), document.getElementById('root'))

@@ -4,7 +4,8 @@ import '../../css/components/basic/scaleBar/scaleBar.css';
 import Panel from '../panel/Panel.jsx';
 import Attention from '../basic/Attention.jsx';
 import Horizontal from '../basic/Horizontal.jsx';
-import IFrame from '../basic/IFame.jsx';
+import IFrame from '../basic/IFrame.jsx';
+import Zoomer from '../basic/Zoomer.jsx';
 var News=require('../../entrys/201513569/studentisp/newsWelcome/modules/News.jsx');
 var Password = require('../../components/compounds/password/PasswordElement.jsx');
 var SyncStore = require('../../components/flux/stores/SyncStore');
@@ -119,7 +120,14 @@ var ScaleBar =React.createClass({
             if($(obj2).eq(id).length>=1)
             {
                 $(obj2).eq(id).addClass(cl);
-                var background=$(obj2).eq(id).css("background");
+                var ob=$(obj2).eq(id)[0];
+                var background=null;
+                if($(ob).css('background')!=''&&$(ob).css('background')!=null)
+                    background=$(ob).css('background');
+                else if($(ob).css('background-image')!=''&&$(ob).css('background-image')!=null)
+                    background = $(ob).css('background-image');
+                else
+                {}
                 var re=/url.*\)/;
                 var img=re.exec(background)[0];
                 $(obj2).eq(id).css("background","#fff "+img+" no-repeat 10px 30px");
@@ -277,9 +285,11 @@ var ScaleBar =React.createClass({
                     var ctrl = null;
                     switch (item.type) {
                         case 'Panel':
+                            console.log('panel in scalebar');
                             ctrl = <Panel bean={item.content.bean}
                                           auto={item.content.auto}
-                                          autoComplete={item.content.autoComplete}>
+                                          autoComplete={true}
+                                          highLight={item.content.highLight}>
                             </Panel>
                             break;
                         case 'Horizontal':
@@ -313,6 +323,14 @@ var ScaleBar =React.createClass({
                                     height={item.content.height}
                                 />
                             break;
+                        case 'Zoomer':
+                            ctrl=<Zoomer
+                                    auto={item.content.auto}
+                                    width={item.content.width}
+                                    height={item.content.height}
+                                    style={item.content.style}
+                                />
+                            break;
                         default:
                             ctrl = item.content;
                             break;
@@ -339,8 +357,8 @@ var ScaleBar =React.createClass({
                             </ul>
                         </div>
                         {showContents}
-                        <div style={{position:"absolute",bottom:"20px",right:"80px"}}>
-                            <button className="btn_close btn-danger" style={{width:"200px",border:"0px"}}> 关闭</button>
+                        <div style={{position:"absolute",bottom:"20px",right:"20px"}}>
+                            <button className="btn_close btn-danger" style={{width:"140px",border:"0px"}}> 关闭</button>
                         </div>
                     </div>
             }

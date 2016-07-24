@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import '../../css/components/basic/nav/nav.css';
 var SyncStore = require('../../components/flux/stores/SyncStore');
 var ProxyQ=require('../../components/proxy/ProxyQ');
+var config=require('../../config.json');
 /**
  * 1.
  * 1>,二级菜单做成堆叠式的表格
@@ -13,9 +14,31 @@ var ProxyQ=require('../../components/proxy/ProxyQ');
 
 var Nav=React.createClass({
     logOut: function () {
-        var path = "/gradms";
-        var model = "gradmsLoginPage";
+
+        var path = null;
+        var model ='';
         var pre = "";
+        if(window.App.getModel()=="debug")
+        {
+            if(window.App.getAppRoute()=="")
+            {
+                console.log('......');
+                var proxy=config.devServer.proxy;
+                for (var field in proxy)
+                {
+                    var re = /\/(.*?)\//;
+                    path= re.exec(field)[1];
+                    break;
+                }
+            }
+            else if(window.App.getAppRoute().indexOf("/")!=-1)
+            {
+                var re = /^(\/.*?)\//;
+                path= re.exec(window.App.getAppRoute())[1];
+            }
+        }else{
+            path='';
+        }
         var str = path + "/bsuims/bsMainFrameLogout.do?contextName=" + model
             + "&contextPath=" + path;
         if (pre != null && pre != "")

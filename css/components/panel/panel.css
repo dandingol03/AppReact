@@ -56,6 +56,17 @@ margin-right:5%;
 }
 
 
+.form.panel.default table tr td {
+    border: 1px solid #0066b3;
+}
+
+.form.panel.default table.table-bordered.panel thead tr:first-child td,
+.form.panel.default table.table-bordered.panel thead tr:first-child th {
+    border: 1px solid #0066b3;
+    color: #0066b3;
+}
+
+
 .form.panel.gradient{
     background: linear-gradient(to top, rgba(0, 102, 179,0.5), rgba(196, 227, 248,0))
 }

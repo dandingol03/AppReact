@@ -11,6 +11,8 @@ import '../../../../../css/serviceHobby/basic/app.css';
 import MENU from '../data/menus.json';
 import Scales from '../data/scaleBar.json';
 import Scrolls from '../data/scrolls.json';
+import CommonFunction from './CommonFunction.jsx';
+import Brief from './Brief.jsx';
 
 
 var App =React.createClass({
@@ -31,76 +33,16 @@ var App =React.createClass({
 
                 <div className="keyNavigation">
                     <div className="top">
-                        <div className="block left">
-                            <div className="briefInformation">
-                                <ul>
-                                    <li>李四同学（201513557），早上好</li>
-                                    <li>软件学院</li>
-                                </ul>
-                            </div>
-                        </div>
                         <div className="block">
-                            <div className="verticalBar"></div>
-                        </div>
-                        <div className="block center">
-                            <div className="briefInformation">
-                                <ul>
-                                    <li>您有n条公告 <Link to="/news">更多》</Link></li>
-                                    <li>您有m条通知 <Link to="/news">更多》</Link></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="block">
-                            <div className="verticalBar"></div>
-                        </div>
-                        <div className="block right">
-                            <div className="briefInformation">
-                                <ul>
-                                    <li>登录次数：共100次</li>
-                                    <li>上次登录：2016/05/06 10:03:03</li>
-                                </ul>
-                            </div>
+                            <Brief data={['欢迎登陆山东大学数字迎新系统，请仔细阅读报道须知和各类通知,','并尽快选择下面的功能按要求完善相关信息和业务申请.']}/>
                         </div>
                     </div>
                     <div className="bottom">
-                        <div className="commonFunction">
-                            <div className="block one">
-                                <div className="functionalAreas">
-                                    <a href="#" onclick="LinkClickFunction(this)">
-                                        <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function1.png"} alt="功能1"></img>
-                                    </a>
-                                    <span className="functionSpan">申请绿色通道</span>
-                                </div>
-                            </div>
-                            <div className="block two">
-                                <div className="functionalAreas">
-                                    <a href="#" onclick="LinkClickFunction(this)">
-                                        <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function2.png"} alt="功能1"></img>
-                                    </a>
-                                    <span className="functionSpan">申请宿舍</span>
-                                </div>
-                            </div>
-                            <div className="block three">
-                                <div className="functionalAreas">
-                                    <a href="#" onclick="LinkClickFunction(this)">
-                                        <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function3.png"} alt="功能1"></img>
-                                    </a>
-                                    <span className="functionSpan">申请导师</span>
-                                </div>
-                            </div>
-                            <div className="block four">
-                                <div className="functionalAreas">
-                                    <a href="#" onclick="LinkClickFunction(this)">
-                                        <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function4.png"} alt="功能1"></img>
-                                    </a>
-                                    <span className="functionSpan">申请免修英语</span>
-                                </div>
-                            </div>
-                        </div>
+                        <CommonFunction auto={true}/>
                     </div>
                 </div>
-                                <ScaleBar data={Scales}/>
                 {this.props.children}
+                <ScaleBar data={Scales}/>
                 <Footer/>
             </div>
 

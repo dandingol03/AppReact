@@ -47,6 +47,13 @@
     <script type="text/javascript" src="pdf.js"></script>
     <script type="text/javascript" src="remodal/remodal.js"></script>
     <script type="text/javascript" src="zepto.js"></script>
+    <script type="text/javascript" src="image-zoomer/js/zoomsl-3.0.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          window.App.remodal.inst=$('[data-remodal-id="re-modal"]').remodal({
+          });
+      });
+    </script>
 </head>
 <body style="line-height: 2;height:100%">
 <div class="modal fade" id="root_modal" style="display:none">
@@ -66,6 +73,18 @@
         </div>
     </div>
 </div>
+
+<div data-remodal-id="re-modal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+    <div>
+        <h2 id="modal1Title">业务办理完成</h2>
+    </div>
+    <br>
+    <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+    <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+</div>
+
+
 <div id="loading"></div>
 <div id="_mustdone"></div>
 <div id="root" style="height:100%"></div>

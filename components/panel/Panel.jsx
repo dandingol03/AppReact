@@ -131,7 +131,9 @@ var Panel=React.createClass({
                         Object.assign(params1.params,params),
                         null,
                         function (response) {
-
+                            if(response.finish!==null&&response.finish!==undefined&&response.finish==true) {
+                                App.finish({label: response.label});
+                            }
                         }.bind(this)
                     );
 
@@ -156,7 +158,9 @@ var Panel=React.createClass({
                             params,
                             null,
                             function (response) {
-
+                                if(response.finish!==null&&response.finish!==undefined&&response.finish==true) {
+                                    App.finish({label: response.label});
+                                }
                             }.bind(this)
                         );
 
@@ -351,7 +355,7 @@ var Panel=React.createClass({
                     {
                         if(coms.length>1) {
                             if (coms[1] !== null && coms[1] != undefined && coms[1] !== 'download') {
-                                label = (<td key={td$index++} style={{textAlign:"right",width:"20%",border:"1px solid #0066b3"}} colSpan={1}>
+                                label = (<td key={td$index++} style={{textAlign:"right",width:"20%"}} colSpan={1}>
                                     {name}
                                 </td>);
                             }
@@ -460,9 +464,16 @@ var Panel=React.createClass({
                                         console.log();
                                         try{
                                             var ob=eval('('+coms[2]+')');
-                                            ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
-                                            console.log();
-                                            console.log();
+                                            if(Object.prototype.toString.call(ob)=='[object Object]')
+                                                ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
+                                            else
+                                            {
+                                                if(Object.prototype.toString.call(ob)=='[object String]'||
+                                                    Object.prototype.toString.call(ob)=='[object Number]')
+                                                ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>;
+                                                else
+                                                ctrl= <input type="text" name={ctrlName}/>
+                                            }
                                         }catch(e)
                                         {
                                             switch(coms[2])
@@ -482,7 +493,7 @@ var Panel=React.createClass({
                                     }
                                 }
                                 else
-                                    ctrl=<input type='text' name={ctrlName}/>
+                                    ctrl=<input type='text' name={ctrlName}/>;
                                 break;
                             case 'select':
                                 //select组件的第4个字段:为eval调用
@@ -625,7 +636,7 @@ var Panel=React.createClass({
                                 {ctrl}
                             </td>;
                         }else{
-                            ctrl$comp= <td key={td$index++} style={{textAlign:"center",border:"1px solid #0066b3"}} colSpan={j==row.length-1?max$cols-j:1} >
+                            ctrl$comp= <td key={td$index++} style={{textAlign:"center"}} colSpan={j==row.length-1?max$cols-j:1} >
                                 {ctrl}
                             </td>;
                         }
@@ -660,7 +671,7 @@ var Panel=React.createClass({
             {
                 title=
                     <tr>
-                        <th colSpan={max$cols} style={{border:"1px solid #0066b3"}}>{this.props.title}</th>
+                        <th colSpan={max$cols}>{this.props.title}</th>
                     </tr>
 
             }
@@ -672,7 +683,7 @@ var Panel=React.createClass({
             var padding = this.props.padding;
             var paddingLeft = this.props.paddingLeft;
             return(
-                <form name="PanelForm" className={highLight==true?"form panel highLight":gradient==true?"form panel gradient":"form panel"}
+                <form name="PanelForm" className={highLight==true?"form panel highLight":gradient==true?"form panel gradient":"form panel default"}
                       action={this.state.query!==undefined&&this.state.query!==null?+"/bsuims/"+this.state.query.url:""}
                       method="post"
                       style={{boxShadow:"none", padding:padding!==undefined&&padding!==null?padding:"2px",paddingLeft:paddingLeft!==null&&paddingLeft!==undefined?paddingLeft:"40px"}}>

@@ -9,28 +9,6 @@ var SyncActions= require('../../../../../components/flux/actions/SyncActions');
 var SyncStore = require('../../../../../components/flux/stores/SyncStore');
 var ProxyQ = require('../../../../../components/proxy/ProxyQ');
 
-var funcs=[
-    {
-        label:'入学须知',
-        route:window.App.getAppRoute()+"/freshmanNavigation/freshman_entranceGuidanceInit.do",
-        img:'function1.png'
-    },
-    {
-        label:'基本信息',
-        route:window.App.getAppRoute()+"/baseInfoManage/yxStuBaseInfoUpdateInit.do",
-        img:'function2.png'
-    },
-    {
-        label:'家庭情况',
-        route:"/sduyingxin"+"/baseInfoManage/yxStudent_difficult_survey.do?flag=newStu",
-        img:'function3.png'
-    },
-    {
-        label:'到校报到',
-        route:"/sduyingxin"+"/trafficplan/trafficPlanInit.do?type=1&flag=newStu",
-        img:'function4.png'
-    }
-];
 
 var trans={
     '0':'one',
@@ -82,17 +60,20 @@ var CommonFunction=React.createClass({
         if(finish!==undefined&&finish!==null) {
             if(finishes==null||finishes==undefined)
                 finishes = {};
-            //avoid unnecessary repaint
-            if(finishes[finish.label]==true)
+            if(finishes[finish.label]==true)//如果业务已经完成，则不需要提醒业务办理成功
             {
-                browserHistory.push(window.App.getAppRoute()+"/",{name:'wjj'});
+                browserHistory.push(window.App.getAppRoute()+"/");
                 return;
             }
             else
             {
                 finishes[finish.label] = true;
                 this.setState({finishes: finishes});
-
+                window.App.remodal.show();
+                let behide=function(){
+                    browserHistory.push(window.App.getAppRoute()+"/");
+                }
+                setTimeout(2000,behide);
             }
 
         }
@@ -200,10 +181,6 @@ var CommonFunction=React.createClass({
             });
 
             return(
-
-
-
-
                     <div   style={{position:"absolute",width:"1150px",height:"120px"}}>
                         {menus}
                     </div>

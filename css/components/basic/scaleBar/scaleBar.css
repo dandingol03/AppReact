@@ -116,7 +116,7 @@
 }
 
 .susp_show .susp_l ul li.sus_li5 {
-    background: url('/build/images/serviceHobby/ico/y4.png') no-repeat 10px 30px;
+    background: url('/build/images/serviceHobby/ico/') no-repeat 10px 30px;
     border-bottom: 1px #ccc solid;
     border-top-left-radius: 10px;
 }
@@ -146,7 +146,7 @@
     border-bottom:1px #ccc solid;
 }
 .susp_show ul li.sus_li5.hover{
-    background:#fff url(/build/images/serviceHobby/ico/y4.png) no-repeat 10px 30px;
+    background:#fff url(/build/images/serviceHobby/ico/) no-repeat 10px 30px;
     border-bottom-left-radius: 10px;-moz-border-bottom-left-radius: 10px; -webkit-border-bottom-left-radius:10px;
 }
 .susp_show ul li.sus_li6.hover{

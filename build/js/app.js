@@ -1,7 +1,7 @@
 /**
  * Created by outstudio on 16/4/22.
  */
-
+"use strict";
 window.App = new Object();
 
 window.Deploy = new Object();
@@ -57,13 +57,23 @@ window.App.unSwing = function (ob) {
 window.App.finish=function(ob) {
     if(ob!==undefined&&ob!==null)
     {
-        let ele = document.getElementById('_mustdone');
+        var ele = document.getElementById('_mustdone');
         //fit to advance web-browser such as firefox,chrome
         var event=document.createEvent('CustomEvent');
         event.initCustomEvent('_finish',false,true,{label:ob.label,route:ob.route});
         ele.dispatchEvent(event);
-
     }
 };
 
+window.App.remodal=new Object();
+window.App.remodal.inst=null;
+window.App.remodal.content=function(content){
+
+}
+window.App.remodal.show=function(){
+    window.App.remodal.inst.open();
+}
+window.App.remodal.hide=function(){
+    window.App.remodal.inst.close();
+}
 

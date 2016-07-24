@@ -5,6 +5,7 @@ import IndexScroll from '../../../../../../components/basic/IndexScroll.jsx';
 import ScaleBar from '../../../../../../components/basic/ScaleBar.jsx';
 var News = require('./News.jsx');
 import CustomMenu from '../../../../../../components/basic/CustomMenu.jsx';
+import CommonFunction from '../../modules/CommonFunction.jsx';
 import HighLight from '../../../../../../components/basic/HighLight.jsx';
 import Footer from '../../../../../../components/basic/Footer.jsx';
 import Home from './Home.jsx';
@@ -32,85 +33,24 @@ var App = React.createClass({
             <div>
                 <Nav logo={Deploy.getResourceDeployPrefix()+"/"+"images/school_logo.png"} data={MENU}/>
 
+                <div className="topbg"></div>
+
                 <div className="keyNavigation">
                     <div className="top">
-                        <div className="block left">
-                            <div className="briefInformation">
-                                <ul>
-                                    <li>李四同学（201513557），早上好</li>
-                                    <li>软件学院</li>
-                                </ul>
-                            </div>
-                        </div>
                         <div className="block">
-                            <div className="verticalBar"></div>
-                        </div>
-                        <div className="block center">
-                            <div className="briefInformation">
-                                <ul>
-                                    <li>您有N条公告信息 <a href="#">更多》</a></li>
-                                    <li> &nbsp;&nbsp;2016年6月1日放假的通知...</li>
-                                    <li>您有7条未读信息 <a href="#">更多》</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="block">
-                            <div className="verticalBar"></div>
-                        </div>
-                        <div className="block right">
-                            <div className="briefInformation">
-                                <ul>
-                                    <li>登录次数：共100次</li>
-                                    <li>上次登录：2016/05/06 10:03:03</li>
-                                </ul>
-                            </div>
+                            <Brief data={['欢迎登陆山东大学数字迎新系统，请仔细阅读报道须知和各类通知,','并尽快选择下面的功能按要求完善相关信息和业务申请，有√标注的图标表示该业务已经完成。']}/>
                         </div>
                     </div>
                     <div className="bottom">
-                        <div className="commonFunction">
-                            <div className="block one">
-                                <div className="functionalAreas">
-                                    <a href="#" onclick="LinkClickFunction(this)">
-                                        <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function1.png"} alt="功能1"></img>
-                                     </a>
-                                    <span className="functionSpan">申请绿色通道</span>
-                                </div>
-                            </div>
-                            <div className="block two">
-                                    <div className="functionalAreas">
-                                        <a href="#" onclick="LinkClickFunction(this)">
-                                            <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function2.png"} alt="功能1"></img>
-                                        </a>
-                                        <span className="functionSpan">申请宿舍</span>
-                                    </div>
-                            </div>
-                            <div className="block three">
-                                    <div className="functionalAreas">
-                                        <a href="#" onclick="LinkClickFunction(this)">
-                                                <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function3.png"} alt="功能1"></img>
-                                        </a>
-                                        <span className="functionSpan">申请导师</span>
-                                    </div>
-                            </div>
-                            <div className="block four">
-                                    <div className="functionalAreas">
-                                         <a href="#" onclick="LinkClickFunction(this)">
-                                                    <img src={Deploy.getResourceDeployPrefix()+"/"+"images/function1.png"} alt="功能1"></img>
-                                         </a>
-                                        <span className="functionSpan">申请免修英语</span>
-                                    </div>
-                            </div>
-                        </div>
+                        <CommonFunction auto={true}/>
                     </div>
-
                 </div>
-
                 <HighLight type="Panel"
                            bean={{
-                                                url:'/bsuims/reactPageDataRequest.do',
-                                                params: {
-                                                    reactActionName: "addApplyInfoInitPanelUseReact",
-                                                    reactPageName  : "gradGreenWayPage"
+                                       url:'/bsuims/reactPageDataRequest.do',
+                                        params: {
+                                            reactActionName: "addApplyInfoInitPanelUseReact",
+                                            reactPageName  : "gradGreenWayPage"
                                                 }
                                             }}
                            query={{ url:'/bsuims/reactPageDataRequest.do',

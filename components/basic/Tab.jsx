@@ -7,7 +7,8 @@ import OrdinaryTable from '../../components/forms/OrdinaryTable.jsx';
 import EmbedTable from '../../components/forms/EmbedTable.jsx';
 import Horizontal from '../../components/basic/Horizontal.jsx';
 import Task from '../../components/basic/Task.jsx';
-
+import Zoomer from '../../components/basic/Zoomer.jsx';
+import IFrame from '../../components/basic/IFrame.jsx';
 
 
 var Tab=React.createClass({
@@ -62,6 +63,12 @@ var Tab=React.createClass({
                             entity = <Task
                                 data={comp.data}
                                 width="980px"
+                                />
+                            break;
+                        case "Zoomer":
+                            console.log('zoomer');
+                            entity = <Zoomer
+                                src={comp.data}
                                 />
                             break;
                         default:
@@ -219,6 +226,7 @@ var Tab=React.createClass({
                                 autoComplete={comp.autoComplete}
                                 title={comp.title}
                                 auto={comp.auto}
+                                highLight={comp.highLight}
                                 paddingLeft={comp.paddingLeft}
                                 />
                             break;
@@ -238,6 +246,18 @@ var Tab=React.createClass({
                                 highLight={props.highLight}
                                 gradient={props.gradient}
                                 />
+                            break;
+                        case "Zoomer":
+                            entity = <Zoomer
+                                src={comp.data}
+                                auto={comp.auto}
+                                />
+                            break;
+                        case 'IFrame':
+                            entity=<IFrame src={comp.data}
+                                           category={comp.category}
+                                           width={comp.width}
+                                           auto={comp.auto}/>
                             break;
                         default:
                             entity = <div></div>

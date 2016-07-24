@@ -11,8 +11,7 @@
           "reactActionName": "getStudentRegisterInfoReact",
           "reactPageName": "freshmanWelcomeWorkbenchRulePage"
         }
-      },
-      "highLight":true
+      }
     }
   },
   {
@@ -29,17 +28,9 @@
     "img": "/images/serviceHobby/ico/y4.png",
     "type":"IFrame",
     "content":{
-      "src":"./DifficultSurvey.pdf",
+      "src":"/downloads/DifficultSurvey.pdf",
       "width":"1000px",
       "height":"500px"
-    }
-  },
-  {
-    "label": "业务提醒",
-    "img": "/images/serviceHobby/ico/bell.png",
-    "type": "Attention",
-    "content": {
-      "todoS": true
     }
   }
 ]
