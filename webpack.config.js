@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
     devtool: 'source-map',
     entry: [
-        path.resolve(__dirname, './entrys/201513569/graduate/serviceHobby/index.js')
+        path.resolve(__dirname, './entrys/201513569/graduate/serviceHobby/modules/dominish/diminishMainCompoundUnChecked.jsx')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
