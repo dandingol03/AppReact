@@ -68,7 +68,8 @@ window.App.finish=function(ob) {
 window.App.remodal=new Object();
 window.App.remodal.inst=null;
 window.App.remodal.content=function(content){
-
+    let remodal=$("[data-remodal-id='re-modal']");
+    $("#modal1Title").text(content);
 }
 window.App.remodal.show=function(){
     window.App.remodal.inst.open();

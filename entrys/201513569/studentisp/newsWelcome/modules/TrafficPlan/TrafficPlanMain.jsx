@@ -1,7 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Panel from '../../../../../../components/panel/Panel.jsx';
-var ProxyQ = require('../../../../../../components/proxy/ProxyQ');
 
 var TrafficPlan = React.createClass({
 
@@ -14,7 +13,7 @@ var TrafficPlan = React.createClass({
                 reactActionName: "trafficPlanInitReact"
             }
         }
-        var PanelTitle="出行计划";
+        var PanelTitle="来校行程";
         return(
         <div>
             <Panel

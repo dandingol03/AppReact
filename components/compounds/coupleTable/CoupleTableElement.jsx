@@ -67,8 +67,8 @@ var CoupleTableElement=React.createClass({
                         {
                             tags[parseInt(title$index)]["data-options"].title=title;
                         }
-                        //suck
-                        this.setProps({dataS: dataS,tags:tags,initialDataS:true});
+                        console.log('...');
+                        this.setState({dataS: dataS,tags:tags,initialDataS:true});
                     }
                 }.bind(this),
                 error: function(xhr, status, err) {
@@ -155,7 +155,7 @@ var CoupleTableElement=React.createClass({
     },
    render:function(){
 
-
+       console.log('...');
        var width="100%";
        var divRowStyle = {
            marginTop: 20
@@ -189,6 +189,7 @@ var CoupleTableElement=React.createClass({
        }
         else{
            this.initialDatas();
+           return <div className="coupleTableElement"></div>
        }
 
 

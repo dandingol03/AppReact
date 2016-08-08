@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Panel from '../panel/Panel.jsx';
 import OrdinaryTable from '../forms/OrdinaryTable.jsx';
 import Horizontal from '../basic/Horizontal.jsx';
+var config=require('../../config.json');
 import '../../css/components/basic/highLight.css';
 var ProxyQ=require('../proxy/ProxyQ');
 
@@ -93,11 +94,32 @@ var HighLight = React.createClass({
                     case "OrdinaryTable":
 
                         console.log('...');
-
+                        var proxyServer="";
+                        if(window.App.getModel()=="debug")
+                        {
+                            if(window.App.getAppRoute()=="")
+                            {
+                                console.log('......');
+                                var proxy=config.devServer.proxy;
+                                for (var field in proxy)
+                                {
+                                    var re = /\/(.*?)\//;
+                                    proxyServer= re.exec(field)[1];
+                                    break;
+                                }
+                            }
+                            else if(window.App.getAppRoute().indexOf("/")!=-1)
+                            {
+                                var re = /^(\/.*?)\//;
+                                proxyServer= re.exec(window.App.getAppRoute())[1];
+                            }
+                        }else{
+                            proxyServer='';
+                        }
                         component =
                             <div>
                                 <div >
-                                    <iframe src={"/register/register_information.do"}  style={{border:"0px"}} frameBorder="0" width="980px" height="620px"></iframe>
+                                    <iframe src={proxyServer+"/register/register_information.do"}  style={{border:"0px"}} frameBorder="0" width="980px" height="620px"></iframe>
                                 </div>
                             </div>
 

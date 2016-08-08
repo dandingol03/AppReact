@@ -84,7 +84,7 @@ ul, li, ol {
     min-width: 1263px;
     height: 220px;
     background: linear-gradient(to right bottom, rgba(172,218,244,0), rgba(0,0,0,0)),
-                    url(../../../build/images/headline.jpg) no-repeat center;
+                    no-repeat center;
 }
 
 .keyNavigation .top {
@@ -100,15 +100,13 @@ ul, li, ol {
     padding-top: 20px;
     color: #ccc;
     vertical-align: top;
+    font-size: 15px;
+    color: black;
+    font-family:Microsoft YaHei;
 }
 
-.keyNavigation .top .block {
-    display: inline-block;
-    text-align: center;
-    padding-top: 24px;
-    color: #ccc;
-    vertical-align: top;
-}
+
+
 
 .keyNavigation .top .block .verticalBar{
     display: inline-block;

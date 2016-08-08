@@ -17,18 +17,25 @@
   {
     "label": "修改密码",
     "img": "/images/serviceHobby/ico/y3.png",
-    "type": "password",
+    "type": "Panel",
     "content": {
-      "title": "修改密码",
-      "action": "/ReactJPChatter/react/commitPassword.do"
+      "title":"修改密码",
+      "auto": true,
+      "bean": {
+        "url": "/bsuims/reactPageDataRequest.do",
+        "params": {
+          "reactActionName": "changePasswordInitReact",
+          "reactPageName": "userPasswordManageRulePage"
+        }
+      }
     }
   },
   {
-    "label": "使用手册",
+    "label": "入学指南",
     "img": "/images/serviceHobby/ico/y4.png",
     "type":"IFrame",
     "content":{
-      "src":"/downloads/DifficultSurvey.pdf",
+      "src":"/downloads/ruxuezhinan.pdf",
       "width":"1000px",
       "height":"500px"
     }

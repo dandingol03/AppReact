@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
 import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
+import DiminishMain from './dominish/diminishMainCompoundUnChecked.jsx';
 import News from './News.jsx';
 var config=require('../../../../../config.json');
 import '../../../../../css/serviceHobby/basic/mainSection.css';
@@ -87,6 +88,10 @@ var MainSection = React.createClass({
                 case App.getAppRoute() + "/newCultivateAllCourseQueryPage":
                     ctrl = <AllCourseQuery/>;
                     label = "课程查询业务";
+                    break;
+                case App.getAppRoute() + "/diminishMain":
+                    ctrl = <DiminishMain/>;
+                    label = "制定培养计划";
                     break;
                 default:
                     var reg=/.*\.do.*[\.do|\.jsp]?.*/;

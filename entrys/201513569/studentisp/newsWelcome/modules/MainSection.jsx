@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
 import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
 import GreenChannelApply from './greenChanel/greenChannelApplyMain.jsx';
+var config=require('../../../../../config.json');
 import News from './News.jsx';
 import TrafficPlan from './TrafficPlan/TrafficPlanMain.jsx';
 import '../../../../../css/serviceHobby/basic/mainSection.css';
@@ -101,13 +102,39 @@ var MainSection = React.createClass({
                     var reg = /.*\.do.*[\.do|\.jsp]?.*/;
                     var re = reg.exec(path);
 
+                    var proxyServer="";
+                    if(window.App.getModel()=="debug")
+                    {
+                        if(window.App.getAppRoute()=="")
+                        {
+                            console.log('......');
+                            var proxy=config.devServer.proxy;
+                            for (var field in proxy)
+                            {
+                                var re = /^(\/.*?)\//;
+                                proxyServer= re.exec(field)[1];
+                                break;
+                            }
+                        }
+                        else if(window.App.getAppRoute().indexOf("/")!=-1)
+                        {
+                            var re = /^(\/.*?)\//;
+                            proxyServer= re.exec(window.App.getAppRoute())[1];
+                        }
+                    }else{
+                        proxyServer='';
+                    }
+
+
+
+
                     if (re !== undefined && re !== null) {
                         //TODO:iframe component render
                         path = path.replace(App.getAppRoute(), "");
                         ctrl =
                             <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
                                     frameBorder="0" scrolling="no"
-                                    src={path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
+                                    src={proxyServer+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
                                 />
 
                     } else {

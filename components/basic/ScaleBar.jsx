@@ -155,16 +155,27 @@ var ScaleBar =React.createClass({
         $(obj1).click(function() {
             id=$(obj1).index($(this));
             var re=/url.*\)/;
-            var background;
+            var background=null;
             var img;
 
             $(obj1).removeClass(cl);
-            background=$(obj1).css("background");
+            if($(obj1).css("background")!=''&&$(obj1).css('background')!==null)
+                background=$(obj1).css("background");
+            else if($(obj1).css("background-image")!=''&&$(obj1).css('background-image')!==null)
+                background = $(obj1).css('background-image');
+            else
+            {}
             img=re.exec(background)[0];
             $(obj1).css("background",""+img+" no-repeat 10px 30px");
 
 
-            background=$(obj1).eq(id).css("background");
+            if($(obj1).eq(id).css("background")!=''&&$(obj1).eq(id).css('background')!=null)
+                background=$(obj1).eq(id).css("background");
+            else if($(obj1).eq(id).css("background-image")!=''&&$(obj1).eq(id).css('background-image')!=null)
+            {
+                background=$(obj1).eq(id).css("background-image");
+            }
+            else{}
             img=re.exec(background)[0];
             $(obj1).eq(id).addClass(cl);
             $(obj1).eq(id).css("background","#fff "+img+" no-repeat 10px 30px");
@@ -289,7 +300,9 @@ var ScaleBar =React.createClass({
                             ctrl = <Panel bean={item.content.bean}
                                           auto={item.content.auto}
                                           autoComplete={true}
-                                          highLight={item.content.highLight}>
+                                          highLight={item.content.highLight}
+                                          title={item.content.title}
+                                >
                             </Panel>
                             break;
                         case 'Horizontal':
@@ -406,7 +419,13 @@ var ScaleBar =React.createClass({
             $(sidebar$li).removeClass("hover");
             var lis=$category.find(".susp_show .sus_li.sus");
             lis.map(function(i,li) {
-                var background=$(li).css("background");
+                var background=null;
+                if($(li).css('background')!=''&&$(li).css('background')!=null)
+                    background = $(li).css('background');
+                else if($(li).css('background-image')!=''&&$(li).css('background-image')!=null)
+                    background = $(li).css('background-image');
+                else
+                {}
                 var re=/url.*\)/;
                 var img=re.exec(background)[0];
                 $(li).css("background",""+img+" no-repeat 10px 30px");

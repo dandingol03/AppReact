@@ -54,7 +54,7 @@ var TdOpElement=React.createClass({
     ,
     render:function(){
         var op=this.state.op;
-        if(op.trend!==undefined&&op.trend!==null)
+        if(op!==undefined&&op!==null&&op.trend!==undefined&&op.trend!==null)
         {
             var img$src;
             if(op.trend=="add")

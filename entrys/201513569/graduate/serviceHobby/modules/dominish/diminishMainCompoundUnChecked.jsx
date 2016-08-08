@@ -14,6 +14,11 @@ import OrdinaryTable from '../../../../../../components/forms/OrdinaryTable.jsx'
 
 var DiminishMain=React.createClass({
     render:function(){
+
+        console.log('...');
+
+
+
         function cb(ob){
             console.log("ob=" + ob);
             if(ob!==undefined&&ob!==null)
@@ -68,7 +73,7 @@ var DiminishMain=React.createClass({
         var data2=[
         ];
         var data$options={
-            url:"../../gradms/bsuims/reactPageDataRequest.do",
+            url:"/gradms/bsuims/reactPageDataRequest.do",
             params:{
                 reactPageName:'newCultivatePlanPage',
                 reactActionName:'newPlanSelectCourse'
@@ -93,11 +98,11 @@ var DiminishMain=React.createClass({
         ];
         var containerStyle={textAlign:"center"};
         render(
-            <div>
+            <div className="diminishMain">
                 <CoupleTableElement tags={tags} data-options={data$options}/>
                 <OrdinaryTable />
             </div>
-            , document.getElementById('cultivatePlanJsx'))
+            , document.getElementById('root'))
 
 
     }

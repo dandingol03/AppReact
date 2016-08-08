@@ -82,32 +82,37 @@ var Panel=React.createClass({
         {
             var data$query=$(target).attr("data-query");
             console.log("data-query===="+data$query);
-            var form=document.getElementsByName('PanelForm')[0];
+            var l=document.getElementsByName('PanelForm').length;
+
             var params = new Object();
             //记载必填项组件的字段
             var required = new Object();
-            for (var i = 0; i < form.getElementsByTagName("textarea").length; i++) {
-                var item = form.getElementsByTagName("textarea")[i];
-                params[item.name] = item.value;
-                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
-                    required[item.name] = item.name;
-                }
-            }
-            for (var i = 0; i < form.getElementsByTagName("input").length; i++)
-            {
-                var item = form.getElementsByTagName("input")[i];
-                //针对单选
-                if (item.type == 'radio') {
-                    if (item.checked == true)
-                        params[item.name] = item.value;
-
-                } else {
+            for(var m=0;m<l;m++){
+                var form=document.getElementsByName('PanelForm')[m];
+                for (var i = 0; i < form.getElementsByTagName("textarea").length; i++) {
+                    var item = form.getElementsByTagName("textarea")[i];
                     params[item.name] = item.value;
+                    if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                        required[item.name] = item.name;
+                    }
                 }
-                if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
-                    required[item.name] = item.name;
+                for (var i = 0; i < form.getElementsByTagName("input").length; i++)
+                {
+                    var item = form.getElementsByTagName("input")[i];
+                    //针对单选
+                    if (item.type == 'radio') {
+                        if (item.checked == true)
+                            params[item.name] = item.value;
+
+                    } else {
+                        params[item.name] = item.value;
+                    }
+                    if (item.getAttribute("data-required") == true || item.getAttribute("data-required") == "true") {
+                        required[item.name] = item.name;
+                    }
                 }
             }
+
             if(this.props.clickHandle!==undefined&&this.props.clickHandle!==null)
             {
                 if (this.props.syncHandle !== undefined && this.props.syncHandle !== null) {
@@ -118,7 +123,7 @@ var Panel=React.createClass({
             else {//如果本组件为最顶层组件
 
 
-                if(($(target).attr('data-query')!==null&&$(target).attr('data-query')!==undefined)||($(target).parent().attr('data-query')!==null&&$(target).parent().attr('data-query')!==undefined))
+                if($(target).attr('data-query')!==null&&$(target).attr('data-query')!==undefined)
                 {
                     var params1=eval('('+$(target).attr('data-query')+')');
                     if(params1==null||params1==undefined){
@@ -464,13 +469,33 @@ var Panel=React.createClass({
                                         console.log();
                                         try{
                                             var ob=eval('('+coms[2]+')');
-                                            if(Object.prototype.toString.call(ob)=='[object Object]')
+                                            if(Object.prototype.toString.call(ob)=='[object Object]'){
                                                 ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
-                                            else
-                                            {
+                                            }
+                                            else if(Object.prototype.toString.call(ob)=='[object Array]'){
+                                                var  ctrl1s=new Array;
+                                                for(var i=0;i<ob.length; i++){
+                                                  var  ctrl1=<div>
+                                                        <span>{ob[i].label}</span>
+                                                        <input type='text' name={ob[i].label} defaultValue={ob[i].value}/>
+                                                        </div>;
+
+                                                ctrl1s.push(<div key={i}>{ctrl1}</div>);
+
+                                                }
+                                                ctrl=ctrl1s;
+                                            }
+                                            else{
                                                 if(Object.prototype.toString.call(ob)=='[object String]'||
                                                     Object.prototype.toString.call(ob)=='[object Number]')
-                                                ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>;
+                                                if(coms[3]!==null&&coms[3]!==undefined){
+                                                    ctrl=<div><input type='text' name={ctrlName} defaultValue={coms[2]}/>
+                                                        <font color="red">{coms[3]}</font>
+                                                        </div>;
+                                                }else{
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>;
+                                                }
+
                                                 else
                                                 ctrl= <input type="text" name={ctrlName}/>
                                             }
@@ -484,6 +509,18 @@ var Panel=React.createClass({
                                                 case 'true':
                                                     ctrl=<input type='text' name={ctrlName} defaultValue={data} style={{width:"100%"}}/>
                                                     break;
+                                                case 'password':
+                                                    ctrl=<div style={{textAlign:"left"}}>
+                                                        <input type='password' name={ctrlName}  style={{width:"50%"}}/>
+                                                        </div>
+                                                    break;
+                                                case 'passwordNew':
+                                                    ctrl=<div style={{textAlign:"left"}} >
+                                                        <input maxLength='20' type='password' name={ctrlName}  style={{width:"50%"}} />
+                                                        <font color="red">*(密码长度最大为20位)</font>
+                                                    </div>
+                                                    break;
+
                                                 default:
                                                     ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
                                                     break;
@@ -675,6 +712,7 @@ var Panel=React.createClass({
                     </tr>
 
             }
+
 
 
             var highLight = this.props.highLight;

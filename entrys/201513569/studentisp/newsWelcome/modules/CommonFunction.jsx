@@ -83,6 +83,7 @@ var CommonFunction=React.createClass({
         var left=this.state.left;
         $("#slider").animate({left:"-920px"});
     },
+
     clickCbRight:function(){
         var slider=this.refs.slider;
         $("#slider").animate({left:"920px"});
@@ -125,6 +126,7 @@ var CommonFunction=React.createClass({
         return ({finishes: null,funcs:null,step:"120px",left:"0px"});
     },
     render:function(){
+
         var funcs=this.state.funcs;
         if(funcs==null||funcs==undefined){
             if(this.props.auto==true)
@@ -147,20 +149,50 @@ var CommonFunction=React.createClass({
                 let outerLink=/^http:\/\//;
                 if(outerLink.exec(route))//外链
                 {
-                    menus.push(
-                    <div className={"block "+trans[i]} key={i} >
-                        {span}
-                        <div className="functionalAreas">
-                            <a
-                                href={func.route!==undefined&&func.route!==null?func.route:""} target="_blank">
-                                <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
-                                     alt="功能1"></img>
-                            </a>
+                    let date=new Date();
+                    if(date.getDate()>18&&date.getDate()<24){
+                        if(date.getHours()>8&&date.getHours()<18){
+                            menus.push(
+                            <div className={"block "+trans[i]} key={i} >
+                                {span}
+                                <div className="functionalAreas">
+                                    <a
+                                        href={func.route!==undefined&&func.route!==null?func.route:""} target="_blank" >
+                                        <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                             alt="功能1"></img>
+                                    </a>
+                                <span className="functionSpan">
+                                    {func.label}
+                                 </span>
+                                </div>
+                            </div>);
+                        }
+                    }
+                    else{
+
+                        var tip=function(){
+                            App.remodal.content("选床时间：2016年08月18日08：00 至 2016年08月24日18：00， 须在选房规定时段内才能选房，其它时间无法登录系统。");
+                            App.remodal.show();
+                        }
+                        menus.push(
+                            <div className={"block "+trans[i]} key={i} >
+                                {span}
+                                <div className="functionalAreas">
+                                    <a target="_blank" onClick={tip}>
+                                        <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                             alt="功能1"></img>
+                                    </a>
                         <span className="functionSpan">
                             {func.label}
                         </span>
-                        </div>
-                    </div>);
+                                </div>
+                            </div>);
+
+
+
+                    }
+
+
 
                 }else {
                     menus.push(
