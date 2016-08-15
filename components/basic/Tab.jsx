@@ -264,7 +264,7 @@ var Tab=React.createClass({
                             break;
                     }
                     dataTabs.push(
-                        <div key={i} style={{display:state.selected==i?"block":"none"}} claseName="balabala">
+                        <div key={i} style={{display:state.selected==i?"block":"none"}} >
                             {entity}
                         </div>
                     );

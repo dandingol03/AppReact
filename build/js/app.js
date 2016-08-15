@@ -78,3 +78,26 @@ window.App.remodal.hide=function(){
     window.App.remodal.inst.close();
 }
 
+window.App.addTable=function() {
+
+    var $ele = $(document.getElementById('field-re-modal-content'));
+    //fit to advance web-browser such as firefox,chrome
+    if($ele.val()!==null&&$ele.val()!==undefined&&$ele.val()!=='') {
+        var event = document.createEvent('CustomEvent');
+        event.initCustomEvent('_addTable', false, true, $ele.val());
+        $("[id='mapper_re_modal']")[0].dispatchEvent(event);
+    }
+
+}
+
+window.App.fieldRemodal=new Object();
+window.App.fieldRemodal.inst=null;
+window.App.fieldRemodal.content=function(content){
+    $("#field-re-modal-Title").text(content.label);
+}
+window.App.fieldRemodal.show=function(){
+    window.App.fieldRemodal.inst.open();
+}
+window.App.fieldRemodal.hide=function(){
+    window.App.fieldRemodal.inst.close();
+}

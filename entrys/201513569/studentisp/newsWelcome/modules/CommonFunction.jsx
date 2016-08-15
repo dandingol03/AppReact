@@ -62,18 +62,20 @@ var CommonFunction=React.createClass({
                 finishes = {};
             if(finishes[finish.label]==true)//如果业务已经完成，则不需要提醒业务办理成功
             {
-                browserHistory.push(window.App.getAppRoute()+"/");
+                this.setState({finishes: finishes});
+                App.remodal.content("业务办理完成");
+                window.App.remodal.show();
+                console.log('...');
+                //browserHistory.push(window.App.getAppRoute()+"/");
                 return;
             }
             else
             {
                 finishes[finish.label] = true;
                 this.setState({finishes: finishes});
+                App.remodal.content("业务办理完成");
                 window.App.remodal.show();
-                let behide=function(){
-                    browserHistory.push(window.App.getAppRoute()+"/");
-                }
-                setTimeout(2000,behide);
+
             }
 
         }
@@ -150,28 +152,44 @@ var CommonFunction=React.createClass({
                 if(outerLink.exec(route))//外链
                 {
                     let date=new Date();
-                    if(date.getDate()>18&&date.getDate()<24){
-                        if(date.getHours()>8&&date.getHours()<18){
-                            menus.push(
-                            <div className={"block "+trans[i]} key={i} >
-                                {span}
-                                <div className="functionalAreas">
-                                    <a
-                                        href={func.route!==undefined&&func.route!==null?func.route:""} target="_blank" >
-                                        <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
-                                             alt="功能1"></img>
-                                    </a>
+                    var flag=false;
+                    var month=date.getMonth()+1;
+                    if(month>=8&&month<=9){
+                        if((month==8&&date.getDate() > 15)||(month==9&&date.getDate() < 15)){
+                            flag=true;
+                        }
+                        else if(month==8&&date.getDate() == 15&&date.getHours()>=8){
+                            flag=true;
+                        }
+                        else if(month==9&&date.getDate() == 15&&date.getHours()<18){
+                            flag=true;
+                        }
+                        else{
+                            flag=false;
+                        }
+                    }
+
+                            if (flag) {
+                                menus.push(
+                                    <div className={"block "+trans[i]} key={i}>
+                                        {span}
+                                        <div className="functionalAreas">
+                                            <a
+                                                href={func.route!==undefined&&func.route!==null?func.route:""}
+                                                target="_blank">
+                                                <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                                     alt="功能1"></img>
+                                            </a>
                                 <span className="functionSpan">
                                     {func.label}
                                  </span>
-                                </div>
-                            </div>);
-                        }
-                    }
-                    else{
+                                        </div>
+                                    </div>);
+                            }
+                       else{
 
                         var tip=function(){
-                            App.remodal.content("选床时间：2016年08月18日08：00 至 2016年08月24日18：00， 须在选房规定时段内才能选房，其它时间无法登录系统。");
+                            App.remodal.content("选床时间：2016年08月15日8:00 至 2016年09月15日18：00， 须在选房规定时段内才能选房，其它时间无法登录系统。");
                             App.remodal.show();
                         }
                         menus.push(

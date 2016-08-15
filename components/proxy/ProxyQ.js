@@ -97,13 +97,16 @@ var ProxyQ = {
                 var content;
                 var errType="";
                 var catched=false;
-                if((response.re!==undefined&&response.re!==null)&&(response.re==-1||response.re=="-1"||response.re==2||response.re=="2"))
+                if((response.re!==undefined&&response.re!==null)&&(response.re==1||response.re=="1"||response.re==-1||response.re=="-1"||response.re==2||response.re=="2"))
                 {  if(response.content!==undefined&&response.content!==null&&response.content!="") {
                     catched = true;
                     content = response.content;
                 }
                 }else{
-                    if (response.arr == undefined && response.arr == null && response.data == undefined && response.data == null)
+                    console.log('...');
+                    if ((response.arr == undefined || response.arr == null)
+                        && (response.array==undefined||response.array==null)
+                        &&(response.data == undefined || response.data == null))
                     {
                         content="警告:   数据为空";
                         catched=true;

@@ -1,16 +1,28 @@
 import React from 'react';
 import {render} from 'react-dom';
-import Password from '../../../../../components/compounds/password/PasswordElement.jsx';
+import Panel from '../../../../../components/panel/Panel.jsx';
 var PasswordModify=React.createClass({
 
     render:function(){
 
-        var title="修改密码";
-        var action="/serviceHall/react/commitPassword.do";
+        var bean={
+            url:"/bsuims/reactPageDataRequest.do",
+            params:{
+                "reactActionName": "changePasswordInitReact",
+                "reactPageName": "userPasswordManageRulePage"
+            }
 
-        return(
-            <Password title={title} action={action} highLight={true}/>
-           );
+        }
+       return(
+           <Panel
+               title="修改密码"
+               autoComplete={true}
+               auto={true}
+               bean={bean}
+               />
+       );
+
+
     }
 });
 export default PasswordModify;

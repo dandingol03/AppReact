@@ -470,7 +470,15 @@ var Panel=React.createClass({
                                         try{
                                             var ob=eval('('+coms[2]+')');
                                             if(Object.prototype.toString.call(ob)=='[object Object]'){
-                                                ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data}/>
+                                                if(ob.remark!==undefined&&ob.remark!==undefined){
+                                                    ctrl=<div>
+                                                        <input type='text' name={ctrlName} data-required={ob.required} defaultValue={data!==undefined&&data!==null?data:ob.value}/>
+                                                        <span>{ob.remark}</span>
+                                                        </div>
+                                                        }
+                                                else{
+                                                    ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data!==undefined&&data!==null?data:ob.value}/>
+                                                }
                                             }
                                             else if(Object.prototype.toString.call(ob)=='[object Array]'){
                                                 var  ctrl1s=new Array;
@@ -487,15 +495,12 @@ var Panel=React.createClass({
                                             }
                                             else{
                                                 if(Object.prototype.toString.call(ob)=='[object String]'||
-                                                    Object.prototype.toString.call(ob)=='[object Number]')
-                                                if(coms[3]!==null&&coms[3]!==undefined){
-                                                    ctrl=<div><input type='text' name={ctrlName} defaultValue={coms[2]}/>
-                                                        <font color="red">{coms[3]}</font>
-                                                        </div>;
-                                                }else{
-                                                    ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>;
-                                                }
+                                                    Object.prototype.toString.call(ob)=='[object Number]'){
 
+                                                        ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>;
+
+
+                                                }
                                                 else
                                                 ctrl= <input type="text" name={ctrlName}/>
                                             }
@@ -504,7 +509,7 @@ var Panel=React.createClass({
                                             switch(coms[2])
                                             {
                                                 case 'false':
-                                                    ctrl=<input type='text' name={ctrlName} disabled={true}/>
+                                                    ctrl=<input type='text' name={ctrlName}  disabled={true}/>
                                                     break;
                                                 case 'true':
                                                     ctrl=<input type='text' name={ctrlName} defaultValue={data} style={{width:"100%"}}/>
@@ -522,9 +527,14 @@ var Panel=React.createClass({
                                                     break;
 
                                                 default:
-                                                    ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
+
+                                                        ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
+
+
                                                     break;
                                             }
+
+
                                         }
 
                                     }

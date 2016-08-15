@@ -11,7 +11,7 @@ import InputElement from '../basic/InputElement.jsx';
 import TodoStore from '../_event/TodoStore.js';
 import '../../css/components/forms/Table/Table.css';
 
-
+var ProxyQ = require('../proxy/ProxyQ');
 /**
  * Table,表格组件，请使用&lt;Table /&gt;进行实例化
  * @author danding001
@@ -143,6 +143,8 @@ var Table=React.createClass({
         {
 
             var task=ob.content;//教学任务
+            if(Object.prototype.toString.call(task)=='[object Array]')
+                task=task[0];
             var plan=this.props.data[ob["data-index"]];
             var reverge={plan:plan,task:task};
             var params=this.state.op.query.params;
@@ -151,8 +153,8 @@ var Table=React.createClass({
             //操作提交后台
             if(this.state.op.query!==undefined&&this.state.op.query!==null)
             {
-                this.queryHandle({url:this.state.op.query.url,
-                    params:params,callback:  this.props.initialDatas});
+                ProxyQ.queryHandle(null,this.state.op.query.url,
+                    params, null,this.props.initialDatas);
             }
 
         }
@@ -559,12 +561,26 @@ var Table=React.createClass({
             }
             //表头工具行
             var th$head;
-                th$head=( <tr>
+            var th$components=null;
+            if(components!==null&&components!==undefined)
+                th$components=
                     <th colSpan={1}
                         style={this.state.align}>
                         {components}
-                    </th>
-                </tr>);
+                    </th>;
+            let title=null;
+            if(this.props["data-options"].title!==undefined&&this.props["data-options"].title!==null)
+            {
+                title= <th colSpan={1}
+                           style={this.state.align}>
+                            {this.props["data-options"].title}
+                        </th>;
+            }
+                th$head=(
+                    <tr>
+                        {title}
+                        {th$components}
+                    </tr>);
 
 
             return(

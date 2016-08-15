@@ -13,7 +13,7 @@ render((
     <Router history={browserHistory}>
         <Route path={window.App.getAppRoute()} component={App}>
             <IndexRoute component={Home}/>
-            <Route path={window.App.getAppRoute()+"/password/modify"} component={MainSection}/>
+
             <Route path={window.App.getAppRoute()+"/allCourseQuery"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/greenChannelApply"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/trafficPlan"} component={MainSection}/>

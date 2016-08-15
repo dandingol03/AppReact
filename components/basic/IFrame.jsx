@@ -83,7 +83,7 @@ let IFrame=React.createClass({
                           width={this.getWidth()}
                           height={this.getHeight()}
                           frameBorder="no"
-                          style={this.getStyle()}></iframe>
+                          style={this.getStyle()} ></iframe>
        }
    }
 });

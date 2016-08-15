@@ -80,15 +80,13 @@ var Home = React.createClass({
                      }
                 },
                 {
-                    "name":"出行计划" ,
-                    comp: {
-                        name:"Panel",
-                        auto:true,
-                        autoComplete:true,
-                        title:"出行计划",
-                        bean:trafficquery,
-                        paddingLeft:"2px"
-                          }
+                    "name":"接站车次",
+                    comp:{
+                        name:"IFrame",
+                        category:'05',
+                        width:"980px",
+                        auto:true
+                         }
                 },
                 {
                     "name":"地图",

@@ -1,22 +1,8 @@
 [
-  {
-    "label": "个人信息",
-    "img": "/images/serviceHobby/ico/y1.png",
-    "type":"Panel",
-    "content": {
-      "auto":true,
-      "bean":{
-        "url":"/bsuims/reactPageDataRequest.do",
-        "params": {
-          "reactActionName": "getStudentRegisterInfoReact",
-          "reactPageName": "freshmanWelcomeWorkbenchRulePage"
-        }
-      }
-    }
-  },
+
   {
     "label": "修改密码",
-    "img": "/images/serviceHobby/ico/y3.png",
+    "img": "/images/serviceHobby/ico/changePassword.png",
     "type": "Panel",
     "content": {
       "title":"修改密码",
@@ -31,11 +17,37 @@
     }
   },
   {
+    "label": "联系方式",
+    "img": "/images/serviceHobby/ico/phone.png",
+    "type": "Panel",
+    "content": {
+      "title":"个人联系方式维护",
+      "auto": true,
+      "bean": {
+        "url": "/bsuims/reactPageDataRequest.do",
+        "params": {
+          "reactActionName": "personContactInfoUpdate",
+          "reactPageName": "freshmanWelcomeWorkbenchRulePage"
+        }
+      }
+    }
+  },
+  {
     "label": "入学指南",
-    "img": "/images/serviceHobby/ico/y4.png",
+    "img": "/images/serviceHobby/ico/inschool.png",
     "type":"IFrame",
     "content":{
-      "src":"/downloads/ruxuezhinan.pdf",
+      "src":"/serviceLobby/downloads/ruxuezhinan.pdf",
+      "width":"1000px",
+      "height":"500px"
+    }
+  },
+  {
+    "label": "操作指南",
+    "img": "/images/serviceHobby/ico/operation.png",
+    "type":"IFrame",
+    "content":{
+      "src":"/serviceLobby/downloads/caozuozhinan.pdf",
       "width":"1000px",
       "height":"500px"
     }

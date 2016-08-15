@@ -73,7 +73,7 @@ var DiminishMain=React.createClass({
         var data2=[
         ];
         var data$options={
-            url:"/gradms/bsuims/reactPageDataRequest.do",
+            url:"/bsuims/reactPageDataRequest.do",
             params:{
                 reactPageName:'newCultivatePlanPage',
                 reactActionName:'newPlanSelectCourse'
@@ -97,12 +97,11 @@ var DiminishMain=React.createClass({
             ,{"data-options":data$options$2}
         ];
         var containerStyle={textAlign:"center"};
-        render(
+        return(
             <div className="diminishMain">
                 <CoupleTableElement tags={tags} data-options={data$options}/>
                 <OrdinaryTable />
-            </div>
-            , document.getElementById('root'))
+            </div>);
 
 
     }

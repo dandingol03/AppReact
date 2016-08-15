@@ -1,7 +1,7 @@
 [
   {
     "label":"个人信息管理","sub":[
-                                {"label":"修改密码","query":""},
+                                {"label":"修改密码","query":"","route":"/changePassword.jsp"},
                                 {"label":"政策文件","query":"","route":"/comminfoservice/link/systemGuideLinkInfoViewInit.do"},
                                 {"label":"通知浏览","query":"","route":"/groupnews/grouptypenews_list.do"},
     {

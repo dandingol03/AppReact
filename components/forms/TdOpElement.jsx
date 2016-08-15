@@ -20,6 +20,7 @@ import ContractElement from '../contract/ContractElement.jsx';
  */
 var TdOpElement=React.createClass({
     checkHandle:function(){
+        console.log('...');
         if(this.props.op.data!==undefined&&this.props.op.data!==null&&this.props.op.data.length>1)
         {
             this.setState({contractStatus:true});
@@ -38,7 +39,10 @@ var TdOpElement=React.createClass({
             this.setState({contractStatus:false});
     },
     getInitialState:function(){
-        return {contractStatus:false};
+        var op=null;
+        if(this.props.op!==undefined&&this.props.op!==null)
+            op=this.props.op;
+        return {contractStatus:false,op:op};
     },
     componentWillReceiveProps:function(props) {
         var data;
@@ -58,9 +62,9 @@ var TdOpElement=React.createClass({
         {
             var img$src;
             if(op.trend=="add")
-               img$src="../bootstrap/img/icon/add_0.png";
+               img$src=window.App.getResourceDeployPrefix()+"/bootstrap/img/icon/add_0.png";
             else
-                img$src="../bootstrap/img/icon/delete_0.png";
+                img$src=window.App.getResourceDeployPrefix()+"/bootstrap/img/icon/delete_0.png";
             //契约组件初始化
             var contract;
             if(op.data!==undefined&&op.data!==null)

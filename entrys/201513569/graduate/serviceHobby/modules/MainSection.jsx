@@ -65,10 +65,7 @@ var MainSection = React.createClass({
             route.push(path);
             switch(path)
             {
-                case App.getAppRoute() + "/password/modify":
-                    ctrl=<PasswordModify/>
-                    label = "密码改业务";
-                    break;
+
                 case App.getAppRoute() + "/allCourseQuery":
                     ctrl = <AllCourseQuery syncHandle={this.syncHandle} route={path}>
                     </AllCourseQuery>

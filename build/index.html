@@ -48,9 +48,12 @@
     <script type="text/javascript" src="remodal/remodal.js"></script>
     <script type="text/javascript" src="zepto.js"></script>
     <script type="text/javascript" src="image-zoomer/js/zoomsl-3.0.min.js"></script>
+    <script type="text/javascript" src="jquery-media/jquery.media.js"></script>
     <script>
       $(document).ready(function(){
           window.App.remodal.inst=$('[data-remodal-id="re-modal"]').remodal({
+          });
+          window.App.fieldRemodal.inst=$('[data-remodal-id="field-re-modal"]').remodal({
           });
       });
     </script>
@@ -76,19 +79,30 @@
 
 <div data-remodal-id="re-modal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
     <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
     <div>
         <h2 id="modal1Title">业务办理完成</h2>
     </div>
-    <br>
     <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
     <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 </div>
 
 
+<div data-remodal-id="field-re-modal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="modal-content">
+         <span id="field-re-modal-Title">字段</span>
+         <input id="field-re-modal-content" type='text'/>
+    </div>
+    <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+    <button data-remodal-action="confirm" class="remodal-confirm" onClick={window.App.addTable()}>Add</button>
+</div>
+
 <div id="loading"></div>
 <div id="_mustdone"></div>
+<div id="mapper_re_modal"></div>
 <div id="root" style="height:100%"></div>
-
 <div id="list-render"></div>
 <script src="bundle.js"></script>
 

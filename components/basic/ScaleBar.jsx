@@ -329,12 +329,18 @@ var ScaleBar =React.createClass({
                                 />;
                             break;
                         case 'IFrame':
-                            ctrl=<IFrame
+                            let src=item.content.src;
+                            if(/(\.pdf)$/.exec(src)!==undefined&&/(\.pdf)$/.exec(src)!==null)
+                            {
+                                ctrl=<a className="media" href={src} ></a>;
+                            }else{
+                                ctrl=<IFrame
                                     src={item.content.src}
                                     data={item.content.data}
                                     width={item.content.width}
                                     height={item.content.height}
-                                />
+                                    />
+                            }
                             break;
                         case 'Zoomer':
                             ctrl=<Zoomer
@@ -396,6 +402,8 @@ var ScaleBar =React.createClass({
         this.clickhide3("sidebar",".btn_close","#fadee",".susp_show","#suspend");
     },
     componentDidMount:function(){
+        var category=this.refs.sidebar;
+        $(category).find('a.media').media({width: 800, height: 800});
 
         //add event changeListener
         SyncStore.addChangeListener(this._onChange);
@@ -403,7 +411,7 @@ var ScaleBar =React.createClass({
         SyncStore.addDevoteListener(this._onDevote);
 
 
-        var category=this.refs.sidebar;
+
         var $category=$(category);
         var fadee=$category.find("#fadee");
         var susp_show=$category.find(".susp_show");

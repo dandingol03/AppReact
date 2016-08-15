@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
 import '../../css/components/basic/nav/nav.css';
 var SyncStore = require('../../components/flux/stores/SyncStore');
 var ProxyQ=require('../../components/proxy/ProxyQ');
@@ -46,6 +47,9 @@ var Nav=React.createClass({
         window.location.href = str;
 
 
+    },
+    _home:function(){
+        browserHistory.push(window.App.getAppRoute()+"/");
     },
     _onChange           : function () {
         var stores = SyncStore.getAll();
@@ -259,7 +263,7 @@ var Nav=React.createClass({
                                             <tr>
                                                 <td className="mtt_td1">
                                                     <Link
-                                                        to={App.getAppRoute()+(third.route!==undefined&&third.route!==null?third.route:"/password/modify")}
+                                                        to={App.getAppRoute()+(third.route!==undefined&&third.route!==null?third.route:"/changePassword.jsp")}
                                                         onClick={linkCb}>{third.label}</Link>
                                                 </td>
                                             </tr>
@@ -376,16 +380,20 @@ var Nav=React.createClass({
                             <ul className="link">
                                 <li><a id="bell" href="javascript:void(0)" className="fa fa-bell-o"
                                        style={{marginTop:"10px"}}><span
-                                    style={{color:"#f00", paddingLeft:"3px"}}>{this.state.fieldCount}</span></a>
+                                    style={{color:"#f00", paddingLeft:"3px"}}>{this.state.fieldCount}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">刷新<img src={Deploy.getResourceDeployPrefix()+"/images/refresh.png"}/></a>
 
                                 </li>
-                                <li><a href="javascript:void(0)">刷新</a></li>
-                                <em className="global-top-item global-top-seperator">|</em>
-                                <li> <a
+                                <li>
+                                    <a
                                     href="javascript:void(0)"
-                                    onClick={this.logOut}>退出</a>
-
-
+                                    onClick={this.logOut}>退出<img src={Deploy.getResourceDeployPrefix()+"/images/logout.png"}/></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" onClick={this._home}>返回主页<img src={Deploy.getResourceDeployPrefix()+"/images/home.png"}/></a>
                                 </li>
                             </ul>
                         </div>

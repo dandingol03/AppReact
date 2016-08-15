@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../../forms/Table.jsx';
-
+var ProxyQ = require('../../proxy/ProxyQ');
 
 /**
  * CoupleTableElement,作为父组件包含2个table组件，使它们的沟通更加方便,构造函数请使用&lt;CoupleTableElement /&gt;
@@ -31,13 +31,12 @@ var CoupleTableElement=React.createClass({
             var url=this.state.data$options.url;
             var params=this.state.data$options.params;
 
-            $.ajax({
-                type: 'POST',
-                url: url,
-                dataType: 'json',
-                data: params,
-                cache: false,
-                success: function(ob) {
+            ProxyQ.queryHandle(
+                null,
+                url,
+                params,
+                 null,
+                function(ob) {
                     var data=ob.array;
                     var group=ob.group;
                     var op=ob.op;
@@ -71,10 +70,10 @@ var CoupleTableElement=React.createClass({
                         this.setState({dataS: dataS,tags:tags,initialDataS:true});
                     }
                 }.bind(this),
-                error: function(xhr, status, err) {
+                function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
-            });
+            );
         }
     },
     addHandle:function(ob){
@@ -167,6 +166,7 @@ var CoupleTableElement=React.createClass({
 
        if(this.state.initialDataS===true)
        {
+
            if(this.state.tags!==undefined&&this.state.tags!==null) {
                var notifyCb=this.notifyCb;
                var tags=this.state.tags;
@@ -175,6 +175,15 @@ var CoupleTableElement=React.createClass({
                var tables=this.state.dataS.map(function(item,i) {
                    //fetch data-options of each table
                    var data$options=tags[i]["data-options"];
+                   //上表可选课
+                   if(i==0)
+                   {
+                       data$options.title = "培养计划课程";
+                   }
+
+                   //下表可选课
+                   if(i==1)
+                       data$options.title = "培养方案课程";
                    //fetch data of each data
                    var data=item;
                    return (<Table tdBasic={true} multiEnable={1} key={i} index={i}

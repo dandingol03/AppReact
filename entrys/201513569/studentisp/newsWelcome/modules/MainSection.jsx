@@ -15,7 +15,7 @@ var MainSection = React.createClass({
         var target = evt.target;
         //$("#mainFrame").context.documentElement.scrollHeight
         var height = null;
-        height = target.contentDocument.body.scrollHeight;
+        height = target.contentDocument.body.scrollHeight+100;
         target.height = height;
         //height=document.body.scrollHeight;
 

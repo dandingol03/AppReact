@@ -75,7 +75,9 @@ var App = React.createClass({
                     <div className="topbg"></div>
 
                     <div className="keyNavigation"  style={{width:"100%",minWidth: "1263px", height: "220px",
-                    background:"linear-gradient(to right bottom, rgba(172,218,244,0), rgba(0,0,0,0)),url(/images/"+this.state.campusImg+")" }}>
+                    background:"linear-gradient(to right bottom, rgba(172,218,244,0), rgba(0,0,0,0)),url('"+Deploy.getResourceDeployPrefix()+"/images/"+this.state.campusImg+"')",
+                    backgroundPosition:"-200px 0px"
+                    }}>
                         <div className="top">
                             <div className="block">
                                 <ul>

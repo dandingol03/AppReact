@@ -1,0 +1,31 @@
+.mapper .header{
+    width:100%;
+    padding-top:10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.mapper .header .tools{
+    position:absolute;
+    right:20%;
+}
+
+.mapper ul {
+    list-style: none;
+}
+
+.mapper ul li{
+    float:left;
+    margin:10px;
+}
+
+.mapper ul li .minus{
+    margin: 10px;
+}
+
+.nav li{
+    border:1px solid #ddd;
+    border_bottom_color:transparent;
+    backgroundColor:#ffffff
+
+}

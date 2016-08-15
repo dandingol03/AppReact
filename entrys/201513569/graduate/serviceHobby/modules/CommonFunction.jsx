@@ -33,8 +33,8 @@ var CommonFunction=React.createClass({
         console.log('....');
         ProxyQ.queryHandle(null,'/bsuims/reactPageDataRequest.do',
             {
-                reactPageName:"freshmanWelcomeWorkbenchRulePage",
-                reactActionName:"getHomeWorkbenchInfoStateReact"
+                reactPageName:"registerRulePage",
+                reactActionName:"getStepInfoReact"
             },
             null,function(response){
                 let finishes=response.data;
@@ -198,6 +198,7 @@ var CommonFunction=React.createClass({
     componentWillMount:function(){
        // var dom_node=$("#_mustdone")[0];
        // dom_node.removeEventListener("_finish",this._onFinish);
+
     }
 });
 module.exports=CommonFunction;

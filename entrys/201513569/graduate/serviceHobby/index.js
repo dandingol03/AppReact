@@ -11,9 +11,9 @@ import MainSection from './modules/MainSection.jsx';
 
 render((
     <Router history={browserHistory}>
-        <Route path={window.App.getAppRoute()+'/'} component={App}>
+        <Route path={window.App.getAppRoute()} component={App}>
             <IndexRoute component={Home}/>
-            <Route path={window.App.getAppRoute()+"/password/modify"} component={MainSection}/>
+            <Route path={window.App.getAppRoute()+"/changePassword.jsp"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/allCourseQuery"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/news"} component={MainSection}/>
             <Route path={window.App.getAppRoute()+"/groupnews/grouptypenews_list.do"} component={MainSection}/>

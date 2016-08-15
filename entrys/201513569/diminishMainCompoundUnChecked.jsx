@@ -71,7 +71,7 @@ function Boot()
     var data2=[
     ];
     var data$options={
-        url:"../../gradms/bsuims/reactPageDataRequest.do",
+        url:"/gradms/bsuims/reactPageDataRequest.do",
         params:{
             reactPageName:'newCultivatePlanPage',
             reactActionName:'newPlanSelectCourse'
