@@ -147,7 +147,7 @@ var Panel=React.createClass({
                 {
                     if (this.state.query !== null && this.state.query !== undefined) {
                         for (var field in required) {
-                            if (params[field] == undefined || params[field] == null) {
+                            if (params[field] == undefined || params[field] == null||params[field]=='') {
                                 alert("您有输入项未填写完整");
                                 return;
                             }
@@ -485,7 +485,7 @@ var Panel=React.createClass({
                                                 for(var i=0;i<ob.length; i++){
                                                   var  ctrl1=<div>
                                                         <span>{ob[i].label}</span>
-                                                        <input type='text' name={ob[i].label} defaultValue={ob[i].value}/>
+                                                        <input type='text' name={ob[i].label} defaultValue={ob[i].value} data-required={ob[i].required}/>
                                                         </div>;
 
                                                 ctrl1s.push(<div key={i}>{ctrl1}</div>);
@@ -631,8 +631,9 @@ var Panel=React.createClass({
                             case 'calendar':
                                 if (coms[2] !== undefined && coms[2] !== null)
                                 {
-                                    ctrl = <Calendar ctrlName={coms[0]} data={coms[2]}
-                                        />
+
+                                        ctrl = <Calendar ctrlName={coms[0]} data={coms[2]}   />
+
                                 }
                                 break;
                             case 'upload':
@@ -656,8 +657,20 @@ var Panel=React.createClass({
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob.data}
                                                           required={ob.required}/>
                                     }
-                                    else
-                                        ctrl = <Radio ctrlName={coms[0]} data={coms[2]}/>
+                                    else{
+                                        if(coms[3]!==undefined&&coms[3]!==null){
+
+                                            ctrl =<div >
+                                                <Radio  style={{display:"inline"}} ctrlName={coms[0]} data={coms[2]}/><font color="red">{coms[3]}</font>
+                                            </div>
+                                        }
+
+                                        else{
+                                            ctrl =<Radio ctrlName={coms[0]} data={coms[2]}/>
+                                        }
+
+                                    }
+
                                 }else{
                                     ctrl=<Radio ctrlName={coms[0]}/>
                                 }
@@ -716,10 +729,8 @@ var Panel=React.createClass({
             var title;
             if(this.props.title!==undefined&&this.props.title!==null)
             {
-                title=
-                    <tr>
-                        <th colSpan={max$cols}>{this.props.title}</th>
-                    </tr>
+                title= <th colSpan={max$cols}>{this.props.title}</th>
+
 
             }
 
@@ -738,6 +749,7 @@ var Panel=React.createClass({
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered center panel" style={{border:"none"}}>
+
                                 <thead>
                                 {title}
                                 </thead>

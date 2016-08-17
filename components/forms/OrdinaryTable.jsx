@@ -772,9 +772,7 @@ var OrdinaryTable =React.createClass({
                         tables.push(
                             <table className="table table-bordered center ordinaryTable" key={i}>
                                 <thead>
-                                <tr>
                                     <th colSpan={colSpan}>{item.title}</th>
-                                </tr>
                                 </thead>
                                 <tbody  className="table table-bordered center ordinaryTable">
                                 <tr>{rowFields}</tr>
@@ -1128,7 +1126,7 @@ var OrdinaryTable =React.createClass({
                                         if(ids.length>=3)
                                         {
 
-                                            ctrl=<button  onClick={clickHandle} data-type="checkQuery" data-query={ids[2]}>{ids[0]}</button>;
+                                            ctrl=<button  onClick={clickHandle} data-type="checkQuery" data-query={ids[2]} data-backtype={ids[3]}>{ids[0]}</button>;
                                         }
                                         else
                                             ctrl=<button  onClick={clickHandle} data-type="checkQuery">{ids[0]}</button>;

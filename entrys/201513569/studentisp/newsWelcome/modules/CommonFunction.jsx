@@ -37,10 +37,10 @@ var CommonFunction=React.createClass({
                 reactActionName:"getHomeWorkbenchInfoStateReact"
             },
             null,function(response){
-                let finishes=response.data;
+                var finishes=response.data;
                 if(finishes!==undefined&&finishes!==null)
                 {
-                    let finish_tri='';
+                    var finish_tri='';
                     for(var item in finishes)
                     {
                         finish_tri+=item+':'+finishes[item]+'\n';
@@ -54,9 +54,9 @@ var CommonFunction=React.createClass({
 
     },
     _onFinish:function(data){
-        let finish=data.detail;
+        var finish=data.detail;
         console.log('finish===' + finish);
-        let finishes=this.state.finishes;
+        var finishes=this.state.finishes;
         if(finish!==undefined&&finish!==null) {
             if(finishes==null||finishes==undefined)
                 finishes = {};
@@ -130,6 +130,8 @@ var CommonFunction=React.createClass({
     render:function(){
 
         var funcs=this.state.funcs;
+
+
         if(funcs==null||funcs==undefined){
             if(this.props.auto==true)
                 this.fetch();
@@ -170,21 +172,52 @@ var CommonFunction=React.createClass({
                     }
 
                             if (flag) {
-                                menus.push(
-                                    <div className={"block "+trans[i]} key={i}>
-                                        {span}
-                                        <div className="functionalAreas">
-                                            <a
-                                                href={func.route!==undefined&&func.route!==null?func.route:""}
-                                                target="_blank">
-                                                <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
-                                                     alt="功能1"></img>
-                                            </a>
-                                <span className="functionSpan">
-                                    {func.label}
-                                 </span>
-                                        </div>
-                                    </div>);
+
+                               if(finishes["个人基本信息"]!==undefined&&finishes["个人基本信息"]!==null&&finishes["个人基本信息"]==true
+                                   &&finishes["家庭情况调查表"]!==undefined&&finishes["家庭情况调查表"]!==null&&finishes["家庭情况调查表"]==true
+                                   &&finishes["个人贷款情况"]!==undefined&&finishes["个人贷款情况"]!==null&&finishes["个人贷款情况"]==true
+                                   &&finishes["军训服装"]!==undefined&&finishes["军训服装"]!==null&&finishes["军训服装"]==true
+                                   &&finishes["来校行程"]!==undefined&&finishes["来校行程"]!==null&&finishes["来校行程"]==true
+                                   &&finishes["发展导师申请"]!==undefined&&finishes["发展导师申请"]!==null&&finishes["发展导师申请"]==true
+                               ){
+
+                                       menus.push(
+                                           <div className={"block "+trans[i]} key={i}>
+                                               {span}
+                                               <div className="functionalAreas">
+                                                   <a
+                                                       href={func.route!==undefined&&func.route!==null?func.route:""}
+                                                       target="_blank">
+                                                       <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                                            alt="功能1"></img>
+                                                   </a>
+                                                 <span className="functionSpan">
+                                                    {func.label}
+                                                 </span>
+                                               </div>
+                                           </div>);
+                               }
+                               else {
+                                       var tip=function(){
+                                           App.remodal.content("请先完成前面“个人基本信息”到“发展导师申请”所有需要填写的信息");
+                                           App.remodal.show();
+                                       }
+                                       menus.push(
+                                           <div className={"block "+trans[i]} key={i} >
+                                               {span}
+                                               <div className="functionalAreas">
+                                                   <a target="_blank" onClick={tip}>
+                                                       <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                                            alt="功能1"></img>
+                                                   </a>
+                                          <span className="functionSpan">
+                                              {func.label}
+                                            </span>
+                                               </div>
+                                           </div>);
+                                   }
+
+
                             }
                        else{
 

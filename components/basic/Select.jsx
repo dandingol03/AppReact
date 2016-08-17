@@ -54,7 +54,7 @@ var Select=React.createClass({
         hidden.value=target.value;
         if(this.props.selectCb!==null&&this.props.selectCb!==undefined)
         {
-            this.props.selectCb(target.value);
+            this.props.selectCb(target);
         }
     },
     getInitialState:function(){
@@ -82,11 +82,6 @@ var Select=React.createClass({
         }
         else
             data$initialed=false;
-
-
-
-
-
        return({selectedIndex:-1,auto:auto,data$initialed:data$initialed,data:data});
     },
     componentWillReceiveProps(props){
@@ -122,7 +117,7 @@ var Select=React.createClass({
          });
         return(
             <div style={{display:'inline'}}>
-                <input name={this.props.ctrlName} style={{display:"none"}} value={selected!==null&&selected!==undefined?selected:''} ref="hidden_field"/>
+                <input name={this.props.ctrlName} style={{display:"none"}} defaultValue={selected!==null&&selected!==undefined?selected:this.state.data[0].value} ref="hidden_field"/>
                 <select onChange={selectCb} style={{width:"100%"}} data-query={this.props["data-query"]!==null&&this.props["data-query"]!==undefined?this.props["data-query"]:null}>
                     {options}
                 </select>

@@ -12,9 +12,16 @@ function Boot()
 
    ];
 
+   var bean={
+       url:"/bsuims/reactPageDataRequest.do",
+        params:{
+        reactActionName:"selectAllTable",
+        reactPageName:"processTableRulePage"
+}
+   }
     render(
 
-        <Mapper  fields={fields}/>
+        <Mapper  fields={fields} bean={bean}/>
 
         , document.getElementById('root'))
 
