@@ -9,6 +9,25 @@
     left:-200px;
 }
 
+.common-function .candidate-panel{
+    display: none;
+}
+
+.common-function .down{
+    position: absolute;
+    right:10%;
+    bottom:20px;
+}
+
+.common-function .down span{
+    font-size: 2em;
+}
+
+.common-function .down span:hover{
+    color: #74a646;
+    cursor:pointer;
+}
+
 .commonFunction .block {
     display: inline-block;
     text-align: center;

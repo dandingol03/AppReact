@@ -22,7 +22,7 @@
   {
     "label":"报到注册","sub":[
                             {"label":"报到须知","query":"","route":"/register/register_information.do"},
-                            {"label":"病史填写","query":"","route":"/health/healthyInfo_medical_history_add_init.do"},
+                            {"label":"病史填写","query":"","route":"/healthyInfo/healthyInfo_medical_history_add_init.do"},
                             {"label":"绿色通道申请","query":"","route":"/greenway/grad/student_grad_greenway_add_applyinfoInit.do"},
                             {"label":"免修英语申请","query":"","route":"/exemption/exemptionEnglishApplyInit.do?inputType=1"},
                             {"label":"打印体检表","query":"","route":"/healthyInfo/healthyInfo_examine_form_download.do"}

@@ -4,13 +4,9 @@ import Mapper from '../../components/basic/Mapper.jsx';
 Boot()
 
 function Boot()
-{  var fields=[
-    {"label":"tableA"},
-    {"label":"tableB"},
-    {"label":"tableC"}
+{
 
 
-   ];
 
    var bean={
        url:"/bsuims/reactPageDataRequest.do",
@@ -21,7 +17,7 @@ function Boot()
    }
     render(
 
-        <Mapper  fields={fields} bean={bean}/>
+        <Mapper bean={bean}/>
 
         , document.getElementById('root'))
 

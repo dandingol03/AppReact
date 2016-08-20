@@ -137,6 +137,7 @@ var ProxyQ = {
                 if (App.getLoadModel() == "true") {
                     App.unload();
                 }
+                alert(err + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.error("error=" + err);
                 var $modal=$("#root_modal");
                 var content;

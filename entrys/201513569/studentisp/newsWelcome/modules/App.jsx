@@ -91,7 +91,7 @@ var App = React.createClass({
                             </div>
                         </div>
                         <div className="bottom">
-                            <CommonFunction auto={true}/>
+                            <CommonFunction auto={true} />
                         </div>
                     </div>
 

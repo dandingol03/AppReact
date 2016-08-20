@@ -3,12 +3,18 @@
     padding-top:10px;
     padding-bottom: 10px;
     position: relative;
+    padding-left: 50px;
 }
 
-.mapper .header .tools{
-    position:absolute;
-    right:20%;
+.mapper .header .tools span{
+   padding-left: 10px;
+
 }
+.mapper .header select{
+    padding-left: 10px;
+    margin-left: 20px;
+}
+
 
 .mapper ul {
     list-style: none;
@@ -16,11 +22,11 @@
 
 .mapper ul li{
     float:left;
-    margin:10px;
+    margin-left:20px;
 }
 
 .mapper ul li .minus{
-    margin: 10px;
+    margin-left: 5px;
 }
 
 .nav li{

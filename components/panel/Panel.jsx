@@ -96,9 +96,11 @@ var Panel=React.createClass({
                         required[item.name] = item.name;
                     }
                 }
+                var flag=true;
                 for (var i = 0; i < form.getElementsByTagName("input").length; i++)
                 {
                     var item = form.getElementsByTagName("input")[i];
+
                     //针对单选
                     if (item.type == 'radio') {
                         if (item.checked == true)
@@ -522,7 +524,7 @@ var Panel=React.createClass({
                                                 case 'passwordNew':
                                                     ctrl=<div style={{textAlign:"left"}} >
                                                         <input maxLength='20' type='password' name={ctrlName}  style={{width:"50%"}} />
-                                                        <font color="red">*(密码长度最大为20位)</font>
+                                                        <font color="red">*(密码长度 最小为8位，最大为20位)</font>
                                                     </div>
                                                     break;
 

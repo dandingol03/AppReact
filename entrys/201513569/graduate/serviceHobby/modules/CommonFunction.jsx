@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import { Link } from 'react-router'
 import { browserHistory } from 'react-router'
+import Ul from '../../../../../components/basic/Ul.jsx';
 
 import '../../../../../css/serviceHobby/commonFunction.css';
 var SyncActions= require('../../../../../components/flux/actions/SyncActions');
@@ -18,65 +19,25 @@ var trans={
     '4':'five',
     '5':'six',
     '6':'seven'
-}
+};
 
 
 
 var CommonFunction=React.createClass({
-    handleSubmit(event) {
-
-        const path = `/repos/${userName}/${repo}`;
-        browserHistory.push(path)
+    downCb:function(){
+        let candidate_panel=this.refs["candidate-panel"];
+        if($(candidate_panel).css("display")=="none")
+            $(candidate_panel).show();
+        else
+            $(candidate_panel).hide();
     },
-    _checkFinish:function(){
-        var instance=this;
-        console.log('....');
-        ProxyQ.queryHandle(null,'/bsuims/reactPageDataRequest.do',
-            {
-                reactPageName:"registerRulePage",
-                reactActionName:"getStepInfoReact"
-            },
-            null,function(response){
-                let finishes=response.data;
-                if(finishes!==undefined&&finishes!==null)
-                {
-                    let finish_tri='';
-                    for(var item in finishes)
-                    {
-                        finish_tri+=item+':'+finishes[item]+'\n';
-                    }
-                    console.log('finishes=='+finish_tri);
-                }
-
-                this.setState({finishes: finishes});
-
-            }.bind(this));
-
+    candidateCb:function(ob){
+        //TODO:process ob
+        this.fetch(ob);
     },
-    _onFinish:function(data){
-        let finish=data.detail;
-        console.log('finish===' + finish);
-        let finishes=this.state.finishes;
-        if(finish!==undefined&&finish!==null) {
-            if(finishes==null||finishes==undefined)
-                finishes = {};
-            if(finishes[finish.label]==true)//如果业务已经完成，则不需要提醒业务办理成功
-            {
-                browserHistory.push(window.App.getAppRoute()+"/");
-                return;
-            }
-            else
-            {
-                finishes[finish.label] = true;
-                this.setState({finishes: finishes});
-                window.App.remodal.show();
-                let behide=function(){
-                    browserHistory.push(window.App.getAppRoute()+"/");
-                }
-                setTimeout(2000,behide);
-            }
-
-        }
+    cancelCb:function(){
+        let candidate_panel=this.refs["candidate-panel"];
+        $(candidate_panel).hide();
     },
     clickCb:function(){
         var slider=this.refs.slider;
@@ -87,12 +48,15 @@ var CommonFunction=React.createClass({
         var slider=this.refs.slider;
         $("#slider").animate({left:"920px"});
     },
-    fetch:function(){
+    fetch:function(candidate){
         var url="/bsuims/reactPageDataRequest.do";
         var params={
             reactPageName:"registerRulePage",
             reactActionName:"getStepInfoReact"
         };
+        //将已选中的菜单加入
+        if(candidate!==undefined&&candidate!==null)
+            params.candidate = JSON.stringify(candidate);
         ProxyQ.queryHandle(
             null,
             url,
@@ -105,13 +69,16 @@ var CommonFunction=React.createClass({
                 {
                     if(ob==null)
                         ob=new Object();
-                    ob.funcs=response.data;
+                    //已选菜单
+                    ob.funcs=response.data[0];
+                    //未选菜单
+                    ob.candidate_funcs=response.data[1];
                     SyncActions.updateRoute(response.data);
                 }
                 else
                     console.log("type of response is wrong");
                 if(response.finishes!==undefined&&response.finishes!==null)
-                ob.finishes=response.finishes;
+                    ob.finishes=response.finishes;
                 if(ob!==null)
                     this.setState(ob);
 
@@ -122,8 +89,12 @@ var CommonFunction=React.createClass({
 
 
     getInitialState:function(){
-        return ({finishes: null,funcs:null,step:"120px",left:"0px"});
+        let candidate=null;
+        if(this.props.candidate!==undefined&&this.props.candidate!==null)
+            candidate=this.props.candidate;
+        return ({finishes: null,funcs:null,step:"120px",left:"0px",candidate:candidate,candidate_funcs:null});
     },
+
     render:function(){
         var funcs=this.state.funcs;
         if(funcs==null||funcs==undefined){
@@ -148,19 +119,19 @@ var CommonFunction=React.createClass({
                 if(outerLink.exec(route))//外链
                 {
                     menus.push(
-                    <div className={"block "+trans[i]} key={i} >
-                        {span}
-                        <div className="functionalAreas">
-                            <a
-                                href={func.route!==undefined&&func.route!==null?func.route:""} target="_blank">
-                                <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
-                                     alt="功能1"></img>
-                            </a>
-                        <span className="functionSpan">
-                            {func.label}
-                        </span>
-                        </div>
-                    </div>);
+                        <div className={"block "+trans[i]} key={i} >
+                            {span}
+                            <div className="functionalAreas">
+                                <a
+                                    href={func.route!==undefined&&func.route!==null?func.route:""} target="_blank">
+                                    <img src={Deploy.getResourceDeployPrefix()+"/images/"+func.img}
+                                         alt="功能1"></img>
+                                </a>
+                                <span className="functionSpan">
+                                    {func.label}
+                                </span>
+                            </div>
+                        </div>);
 
                 }else {
                     menus.push(
@@ -180,10 +151,30 @@ var CommonFunction=React.createClass({
                 }
             });
 
+            let candidate=null;
+            let down=null;
+            if(this.state.candidate==true)
+            {
+                var candidate_funcs=this.state.candidate_funcs;
+
+                candidate=
+                    <div className="candidate-panel" ref="candidate-panel">
+                        <Ul candidateCb={this.candidateCb}
+                            menus={candidate_funcs}
+                            cancelCb={this.cancelCb}/>
+                    </div>;
+
+                down=
+                    <div className="down">
+                        <span className="fa fa-angle-double-down" onClick={this.downCb}></span>
+                    </div>;
+            }
             return(
-                    <div   style={{position:"absolute",width:"1150px",height:"120px"}}>
-                        {menus}
-                    </div>
+                <div className="common-function"   style={{position:"absolute",width:"1150px",height:"100px"}}>
+                    {menus}
+                    {candidate}
+                    {down}
+                </div>
 
 
             );
@@ -192,13 +183,13 @@ var CommonFunction=React.createClass({
 
     },
     componentDidMount:function(){
-       // var dom_node=$("#_mustdone")[0];
-       // dom_node.addEventListener("_finish",this._onFinish);
+        // var dom_node=$("#_mustdone")[0];
+        // dom_node.addEventListener("_finish",this._onFinish);
     },
     componentWillMount:function(){
-       // var dom_node=$("#_mustdone")[0];
-       // dom_node.removeEventListener("_finish",this._onFinish);
-
+        // var dom_node=$("#_mustdone")[0];
+        // dom_node.removeEventListener("_finish",this._onFinish);
     }
 });
 module.exports=CommonFunction;
+
