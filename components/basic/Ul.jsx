@@ -8,6 +8,7 @@ var Ul=React.createClass({
     saveCb:function(){
         if(this.props.candidateCb!==undefined&&this.props.candidateCb!==null)
             this.props.candidateCb(this.state.candidate);
+
     },
     cancelCb:function(){
        if(this.props.cancelCb!==undefined&&this.props.cancelCb!==null)
@@ -21,9 +22,11 @@ var Ul=React.createClass({
         if(selected==true)//如果选中
         {
             candidate[menu.resId]=menu;
+
         }else{
             delete candidate[menu.resId];
         }
+        this.setState({candidate:candidate});
     },
     getInitialState:function(){
         let menus=null;
@@ -35,11 +38,10 @@ var Ul=React.createClass({
         return ({menus: menus,dragEnable:dragEnable,candidate:{}});
     },
     componentWillReceiveProps:function(props){
-        let ob={};
+        var menus={};
         if(this.state.menus!=props.menus)
-            ob.menus=props.menus;
-        ob.candidate={};
-        this.setState(ob);
+            menus=props.menus;
+        this.setState({menus: menus,candidate:{}});
     },
     render:function(){
         let ul=null;
@@ -47,6 +49,7 @@ var Ul=React.createClass({
         {
             let menus=[];
             let that=this;
+            var state=this.state;
             this.state.menus.map(function(menu,i) {
                 menus.push(
                     <li key={i}>
@@ -56,7 +59,7 @@ var Ul=React.createClass({
                                     {menu.label}
                                 </span>
                             <div className="menu-radio">
-                                <input type="checkbox" onChange={that.changeCb.bind(that,i)}/>
+                                <input type="checkbox"  checked={state.candidate[menu.resId]!==undefined&&state.candidate[menu.resId]!==null?true:false} onChange={that.changeCb.bind(that,i)}/>
                             </div>
                         </div>
                     </li>
