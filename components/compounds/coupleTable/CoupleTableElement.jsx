@@ -42,6 +42,7 @@ var CoupleTableElement=React.createClass({
                     var op=ob.op;
                     var title=ob.title;
                     var title$index=ob.title$index;
+                    var title$index1=ob.title$index1;
                     var tags=this.state.tags;
 
 
@@ -62,9 +63,10 @@ var CoupleTableElement=React.createClass({
                                 tags[item.index]["data-options"].op = item;
                             })
                         }
-                        if (title !== undefined && title !== null && !isNaN(parseInt(title$index)))
+                        if (title !== undefined && title !== null && !isNaN(parseInt(title$index)) && !isNaN(parseInt(title$index1)))
                         {
-                            tags[parseInt(title$index)]["data-options"].title=title;
+                            tags[parseInt(title$index)]["data-options"].title=title[title$index]; //培养计划的title
+                            tags[parseInt(title$index1)]["data-options"].title=title[title$index1]; //培养环节的title
                         }
                         console.log('...');
                         this.setState({dataS: dataS,tags:tags,initialDataS:true});
@@ -173,17 +175,14 @@ var CoupleTableElement=React.createClass({
 
                var initial$dataS=this.initialDatas;
                var tables=this.state.dataS.map(function(item,i) {
-                   //fetch data-options of each table
-                   var data$options=tags[i]["data-options"];
-                   //上表可选课
-                   if(i==0)
-                   {
-                       data$options.title = "培养计划课程";
-                   }
+                    //fetch data-options of each table
+                    var data$options=tags[i]["data-options"];
 
                    //下表可选课
-                   if(i==1)
+
+                   if(i==2)
                        data$options.title = "培养方案课程";
+
                    //fetch data of each data
                    var data=item;
                    return (<Table tdBasic={true} multiEnable={1} key={i} index={i}
@@ -207,6 +206,8 @@ var CoupleTableElement=React.createClass({
           <div className="container" style={containerStyle} >
               {tables}
           </div>
+
+
       </div>) ;
    }
 });

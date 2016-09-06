@@ -1,3 +1,6 @@
+/**
+ * Created by dell on 2016/8/29.
+ */
 import React from 'react';
 import {render} from 'react-dom';
 import Span from '../../components/basic/Span.jsx';
@@ -15,37 +18,37 @@ var SyncActions = require('../../components/flux/actions/SyncActions');
 
 /**
  *
- * æœ¬ç»„ä»¶éœ€è¦æ•°æ®åº“å­—å…¸ç±»ä½œä¸ºé…ç½®ç»„ä»¶çš„å±æ€§,æäº¤å‘ç”Ÿä¸ºè¡¨å•ï¼Œè·¯ç”±åŠŸèƒ½äº¤ç”±jspå®Œæˆ
- * 1.å®ç°ä¸€ä¸ªæœ¬åœ°æ–‡ä»¶çš„è¯»å–ä»¥åŠå±æ€§åŒ¹é…
- * 2.ç›®å‰åªæ”¯æŒ
- * 1).æ•°æ®æœ¬åœ°åŒ–,ä¸€ä¸ªlabelé…å¯¹ä¸€ä¸ªç»„ä»¶
- * 2).æ•°æ®æ‹‰å–,label|comp|data,ä¸‰ä¸ªå­—æ®µçš„é…ç½®åªé’ˆå¯¹selectç»„ä»¶,inputç»„ä»¶
- * 3).inputç»„ä»¶çš„è¯­ä¹‰åŒ–,åœ¨reactéœ€è¦ç‰¹åˆ«ç›‘å¬å€¼çš„æ”¹å˜
+ * ±¾×é¼şĞèÒªÊı¾İ¿â×ÖµäÀà×÷ÎªÅäÖÃ×é¼şµÄÊôĞÔ,Ìá½»·¢ÉúÎª±íµ¥£¬Â·ÓÉ¹¦ÄÜ½»ÓÉjspÍê³É
+ * 1.ÊµÏÖÒ»¸ö±¾µØÎÄ¼şµÄ¶ÁÈ¡ÒÔ¼°ÊôĞÔÆ¥Åä
+ * 2.Ä¿Ç°Ö»Ö§³Ö
+ * 1).Êı¾İ±¾µØ»¯,Ò»¸ölabelÅä¶ÔÒ»¸ö×é¼ş
+ * 2).Êı¾İÀ­È¡,label|comp|data,Èı¸ö×Ö¶ÎµÄÅäÖÃÖ»Õë¶Ôselect×é¼ş,input×é¼ş
+ * 3).input×é¼şµÄÓïÒå»¯,ÔÚreactĞèÒªÌØ±ğ¼àÌıÖµµÄ¸Ä±ä
  * [
  * {row:[{'college|query'},{'stuType|select'},{'major|select'}]},
  * {row:[{'grade|input'},{'query'}]}
  * ]
- * 3.queryç»„ä»¶å¯å•å­—æ®µå­˜åœ¨
+ * 3.query×é¼ş¿Éµ¥×Ö¶Î´æÔÚ
  * 4.
- * 5.æ ·å¼åŸºäºç ”ç©¶ç”Ÿ
- * 6.this.props.queryè®¾å®španelçš„æäº¤è·¯å¾„
- * 7.bean,é€šè¿‡åå°çš„æ•°æ®æ¥åˆå§‹åŒ–ç»„ä»¶,å…¨å­—æ®µå‡ä¸ç”±æœ¬åœ°æä¾›
- * 8.å­ç»„ä»¶çš„çº§è”åˆ·æ–°,ç”±çˆ¶ç»„ä»¶çš„formè¡¨å•æäº¤å®Œæˆæ•°æ®æ›´æ–°
- * 9.panelå¼€å§‹æ”¯æŒå¤šæ•°æ®æº
- * 10.Radioç»„ä»¶é‡å†™
+ * 5.ÑùÊ½»ùÓÚÑĞ¾¿Éú
+ * 6.this.props.queryÉè¶¨panelµÄÌá½»Â·¾¶
+ * 7.bean,Í¨¹ıºóÌ¨µÄÊı¾İÀ´³õÊ¼»¯×é¼ş,È«×Ö¶Î¾ù²»ÓÉ±¾µØÌá¹©
+ * 8.×Ó×é¼şµÄ¼¶ÁªË¢ĞÂ,ÓÉ¸¸×é¼şµÄform±íµ¥Ìá½»Íê³ÉÊı¾İ¸üĞÂ
+ * 9.panel¿ªÊ¼Ö§³Ö¶àÊı¾İÔ´
+ * 10.Radio×é¼şÖØĞ´
  *
  *
  *
  *
  *
- * 11.Fluxç»„ä»¶çš„é‡ç”¨,sync...
+ * 11.Flux×é¼şµÄÖØÓÃ,sync...
  */
 
-var Panel=React.createClass({
-    clickReturn:function(ob){
+var Panel_selectCourse=React.createClass({
+    returnCb:function(){
         if(this.props.clickReturn!==undefined&&this.props.clickReturn!==null)
         {
-            this.props.clickReturn(ob);
+            this.props.clickReturn("cultivate");
         }
     },
 
@@ -59,7 +62,7 @@ var Panel=React.createClass({
             this.props.bean.params,
             null,
             function(response){
-                //è¿™é‡Œéœ€è¦ç»Ÿä¸€è§„èŒƒåå°è¿”å›çš„æ•°æ®æ ¼å¼
+                //ÕâÀïĞèÒªÍ³Ò»¹æ·¶ºóÌ¨·µ»ØµÄÊı¾İ¸ñÊ½
                 var ob=null;
                 if(response.data!==undefined&&response.data!==null&&response.data!="")
                 {
@@ -92,7 +95,7 @@ var Panel=React.createClass({
             var l=document.getElementsByName('PanelForm').length;
 
             var params = new Object();
-            //è®°è½½å¿…å¡«é¡¹ç»„ä»¶çš„å­—æ®µ
+            //¼ÇÔØ±ØÌîÏî×é¼şµÄ×Ö¶Î
             var required = new Object();
             for(var m=0;m<l;m++){
                 var form=document.getElementsByName('PanelForm')[m];
@@ -108,7 +111,7 @@ var Panel=React.createClass({
                 {
                     var item = form.getElementsByTagName("input")[i];
 
-                    //é’ˆå¯¹å•é€‰
+                    //Õë¶Ôµ¥Ñ¡
                     if (item.type == 'radio') {
                         if (item.checked == true)
                             params[item.name] = item.value;
@@ -129,7 +132,7 @@ var Panel=React.createClass({
                 }
                 this.props.clickHandle(params);
             }
-            else {//å¦‚æœæœ¬ç»„ä»¶ä¸ºæœ€é¡¶å±‚ç»„ä»¶
+            else {//Èç¹û±¾×é¼şÎª×î¶¥²ã×é¼ş
 
 
                 if($(target).attr('data-query')!==null&&$(target).attr('data-query')!==undefined)
@@ -157,7 +160,7 @@ var Panel=React.createClass({
                     if (this.state.query !== null && this.state.query !== undefined) {
                         for (var field in required) {
                             if (params[field] == undefined || params[field] == null||params[field]=='') {
-                                alert("æ‚¨æœ‰è¾“å…¥é¡¹æœªå¡«å†™å®Œæ•´");
+                                alert("ÄúÓĞÊäÈëÏîÎ´ÌîĞ´ÍêÕû");
                                 return;
                             }
                         }
@@ -192,7 +195,7 @@ var Panel=React.createClass({
             var ob=target.getAttribute("data-query");
             if(ob!==undefined&&ob!==null)
             {
-                //é‡‡ç”¨ajaxçš„æ•°æ®æäº¤
+                //²ÉÓÃajaxµÄÊı¾İÌá½»
                 ob=eval('('+ob+')');
                 var form=document.getElementsByName('PanelForm')[0];
                 var $form=$(form);
@@ -209,7 +212,7 @@ var Panel=React.createClass({
                     params,
                     null,
                     function(response){
-                        //è¿™é‡Œéœ€è¦ç»Ÿä¸€è§„èŒƒåå°è¿”å›çš„æ•°æ®æ ¼å¼
+                        //ÕâÀïĞèÒªÍ³Ò»¹æ·¶ºóÌ¨·µ»ØµÄÊı¾İ¸ñÊ½
                         var ob=null;
                         if(response.data!==undefined&&response.data!==null&&response.data!="")
                         {
@@ -239,22 +242,14 @@ var Panel=React.createClass({
 
 
     },
-    returnCb:function(evt){
-        evt.preventDefault();
-        var target=evt.target;
-        if(target.getAttribute("data-return")!==undefined&&target.getAttribute("data-return")!==null)
-        {
-            this.props.returnCb();
-        }
 
-    },
     shouldComponentUpdate: function(nextProps, nextState) {
         return nextProps.data!==this.props.data||nextState.data!==this.state.data;
 
     },
     getInitialState:function(){
 
-        //ä¸ºç»„ä»¶ç±»å‹ä¿ç•™å…³é”®å­—,ä»¥ä¸‹ä¸ºæ‰©å±•çš„å­—æ®µç»„ä»¶
+        //Îª×é¼şÀàĞÍ±£Áô¹Ø¼ü×Ö,ÒÔÏÂÎªÀ©Õ¹µÄ×Ö¶Î×é¼ş
         var reserved={
             "query":true,
             "input":true,
@@ -289,7 +284,7 @@ var Panel=React.createClass({
         if(this.state.data!==undefined&&this.state.data!==null&&Object.prototype.toString.call(this.state.data)=='[object Array]')
         {
 
-            //è·å–ä¹‹å‰åº”ç”¨æ•°æ®
+            //»ñÈ¡Ö®Ç°Ó¦ÓÃÊı¾İ
             var _todos;
             if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null)
             {
@@ -297,9 +292,9 @@ var Panel=React.createClass({
             }
 
 
-            //ä¿å­˜æœ€å¤§åˆ—å®½,æ¯è¡Œçš„å•å…ƒæ ¼æ•°ç»„çš„labelå’Œæ§ä»¶å„è‡ªæ”¾ä¸€ä¸ªtd
+            //±£´æ×î´óÁĞ¿í,Ã¿ĞĞµÄµ¥Ôª¸ñÊı×éµÄlabelºÍ¿Ø¼ş¸÷×Ô·ÅÒ»¸ötd
             var max$cols=1;
-                this.state.data.map(function(item,i) {
+            this.state.data.map(function(item,i) {
                 if(item.row!==undefined&&item.row!==null&&Object.prototype.toString.call(item.row)=='[object Array]')
                 {
                     var cols=0;
@@ -318,7 +313,7 @@ var Panel=React.createClass({
 
             var reserved=this.state.reserved;
             var trs=new Array();
-            //è‡ªåŠ¨è¡¥é½tdå·®å€¼å±æ€§
+            //×Ô¶¯²¹Æëtd²îÖµÊôĞÔ
             var autoComplete=this.props.autoComplete;
 
             var clickHandle=this.clickHandle;
@@ -329,14 +324,14 @@ var Panel=React.createClass({
             state.data.map(function(item,i) {
                 var row=item.row;
                 var tds=new Array();
-                //ä¸€ä¸ªå­—ç¬¦ä¸²åºåˆ—,å¯è®¾ç½®3ä¸ªå­—æ®µ,label|comp|data
+                //Ò»¸ö×Ö·û´®ĞòÁĞ,¿ÉÉèÖÃ3¸ö×Ö¶Î,label|comp|data
                 var td$index=0;
                 row.map(function(com,j) {
                     var coms=com.split("|");
                     var label;
                     var ctrl;
                     var ctrl$comp;
-                    //æŸ¥è¯¢å­—å…¸,åŒ¹é…labelå­—æ®µ
+                    //²éÑ¯×Öµä,Æ¥Åälabel×Ö¶Î
                     var name = null;
                     if (dict[coms[0]] !== undefined && dict[coms[0]] !== null)
                         name = dict[coms[0]].name;
@@ -373,7 +368,7 @@ var Panel=React.createClass({
                                     {name}
                                 </td>);
                             }
-                        } else {//é’ˆå¯¹éæ‰©å±•å­—æ®µè¿›è¡Œè¡Œæœ«çš„colè¡¥é½
+                        } else {//Õë¶Ô·ÇÀ©Õ¹×Ö¶Î½øĞĞĞĞÄ©µÄcol²¹Æë
                             var reg = /\<(.*?)\>/;
                             var re = reg.exec(name);
                             if (re !== null && re !== undefined && re[1] !== undefined && re[1] !== null) {
@@ -398,17 +393,17 @@ var Panel=React.createClass({
                                 }
                             }
                             else
-                            label=(<td key={td$index++} style={{textAlign:"center",padding:"2px",border:"1px solid #0066b3"}} colSpan={j==row.length-1?max$cols-j:1}>
-                                {name}
-                            </td>);
+                                label=(<td key={td$index++} style={{textAlign:"center",padding:"2px",border:"1px solid #0066b3"}} colSpan={j==row.length-1?max$cols-j:1}>
+                                    {name}
+                                </td>);
                         }
 
                         //label=(<span>{dict[coms[0]].name}</span>);
-                    }else{//åŒ¹é…compå­—æ®µ
-                        //é»˜è®¤queryæ§ä»¶ä¸ºæœ€åä¸€ä¸ªå¯è®¾å­—æ®µ,åœ¨æ­¤è¿›è¡Œtdå¡«å……
+                    }else{//Æ¥Åäcomp×Ö¶Î
+                        //Ä¬ÈÏquery¿Ø¼şÎª×îºóÒ»¸ö¿ÉÉè×Ö¶Î,ÔÚ´Ë½øĞĞtdÌî³ä
                         if(coms[0]=='query')
                         {
-                            ctrl=<button className="query" onClick={clickHandle}>æŸ¥è¯¢</button>
+                            ctrl=<button className="query" onClick={clickHandle}>²éÑ¯</button>
                             if(autoComplete==true)
                             {
                                 tds.push(
@@ -430,7 +425,7 @@ var Panel=React.createClass({
 
                     if(reserved[coms[1]]!==undefined&&reserved[coms[1]]!==null)
                     {
-                        //åŠ å…¥æ‰€æœ‰å½“å‰èƒ½å¤Ÿæ”¯æŒçš„ç»„ä»¶åˆ†æ”¯
+                        //¼ÓÈëËùÓĞµ±Ç°ÄÜ¹»Ö§³ÖµÄ×é¼ş·ÖÖ§
                         switch(coms[1])
                         {
                             case 'query':
@@ -444,7 +439,7 @@ var Panel=React.createClass({
                                         {
 
                                             ctrl = <button name='queryButton' type='submit' onClick={clickHandle} style={{width:"90%"}}
-                                                               data-query={coms[2]}> {coms[0]}</button>;
+                                                           data-query={coms[2]}> {coms[0]}</button>;
 
                                         }
                                         else
@@ -454,7 +449,7 @@ var Panel=React.createClass({
                                 }
                                 else
                                     ctrl=<button type='submit' onClick={clickHandle} style={{width:"20%"}}>{dict[coms[0]].name}</button>;
-                                //å½“æœ€åä¸€ä¸ªä¸ºqueryç»„ä»¶æ—¶,å–æ¶ˆä¹‹å‰çš„label td
+                                //µ±×îºóÒ»¸öÎªquery×é¼şÊ±,È¡ÏûÖ®Ç°µÄlabel td
                                 label=null;
                                 break;
                             case 'input':
@@ -483,8 +478,8 @@ var Panel=React.createClass({
                                                     ctrl=<div>
                                                         <input type='text' name={ctrlName} data-required={ob.required} defaultValue={data!==undefined&&data!==null?data:ob.value}/>
                                                         <span>{ob.remark}</span>
-                                                        </div>
-                                                        }
+                                                    </div>
+                                                }
                                                 else{
                                                     ctrl=<input type='text' name={ctrlName} data-required={ob.required} defaultValue={data!==undefined&&data!==null?data:ob.value}/>
                                                 }
@@ -492,12 +487,12 @@ var Panel=React.createClass({
                                             else if(Object.prototype.toString.call(ob)=='[object Array]'){
                                                 var  ctrl1s=new Array;
                                                 for(var i=0;i<ob.length; i++){
-                                                  var  ctrl1=<div>
+                                                    var  ctrl1=<div>
                                                         <span>{ob[i].label}</span>
                                                         <input type='text' name={ob[i].label} defaultValue={ob[i].value} data-required={ob[i].required}/>
-                                                        </div>;
+                                                    </div>;
 
-                                                ctrl1s.push(<div key={i}>{ctrl1}</div>);
+                                                    ctrl1s.push(<div key={i}>{ctrl1}</div>);
 
                                                 }
                                                 ctrl=ctrl1s;
@@ -506,12 +501,12 @@ var Panel=React.createClass({
                                                 if(Object.prototype.toString.call(ob)=='[object String]'||
                                                     Object.prototype.toString.call(ob)=='[object Number]'){
 
-                                                        ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>;
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>;
 
 
                                                 }
                                                 else
-                                                ctrl= <input type="text" name={ctrlName} style={{textalign:"left"}}/>
+                                                    ctrl= <input type="text" name={ctrlName} style={{textalign:"left"}}/>
                                             }
                                         }catch(e)
                                         {
@@ -526,18 +521,18 @@ var Panel=React.createClass({
                                                 case 'password':
                                                     ctrl=<div style={{textAlign:"left"}}>
                                                         <input type='password' name={ctrlName}  style={{width:"50%"}}/>
-                                                        </div>
+                                                    </div>
                                                     break;
                                                 case 'passwordNew':
                                                     ctrl=<div style={{textAlign:"left"}} >
                                                         <input maxLength='20' type='password' name={ctrlName}  style={{width:"50%"}} />
-                                                        <font color="red">*(å¯†ç é•¿åº¦ æœ€å°ä¸º8ä½ï¼Œæœ€å¤§ä¸º20ä½)</font>
+                                                        <font color="red">*(ÃÜÂë³¤¶È ×îĞ¡Îª8Î»£¬×î´óÎª20Î»)</font>
                                                     </div>
                                                     break;
 
                                                 default:
 
-                                                        ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
+                                                    ctrl=<input type='text' name={ctrlName} defaultValue={coms[2]}/>
 
 
                                                     break;
@@ -552,7 +547,7 @@ var Panel=React.createClass({
                                     ctrl=<input type='text' name={ctrlName}/>;
                                 break;
                             case 'select':
-                                //selectç»„ä»¶çš„ç¬¬4ä¸ªå­—æ®µ:ä¸ºevalè°ƒç”¨
+                                //select×é¼şµÄµÚ4¸ö×Ö¶Î:Îªevalµ÷ÓÃ
                                 if(state.bean!==undefined&&state.bean!==null)
                                 {
 
@@ -611,9 +606,9 @@ var Panel=React.createClass({
                                     {
                                         var field= coms[0].split("=>")[0];
                                         if(props.scrolling==field)
-                                        ctrl = <div style={{textAlign:"left",height:"200px",overflow:"scroll",overflowX:"hidden"}}
-                                                    dangerouslySetInnerHTML={{__html:coms[2]}}>
-                                               </div>
+                                            ctrl = <div style={{textAlign:"left",height:"200px",overflow:"scroll",overflowX:"hidden"}}
+                                                        dangerouslySetInnerHTML={{__html:coms[2]}}>
+                                            </div>
                                         else
                                             ctrl = <div style={{textAlign:"left"}}
                                                         dangerouslySetInnerHTML={{__html:coms[2]}}>
@@ -641,7 +636,7 @@ var Panel=React.createClass({
                                 if (coms[2] !== undefined && coms[2] !== null)
                                 {
 
-                                        ctrl = <Calendar ctrlName={coms[0]} data={coms[2]}   />
+                                    ctrl = <Calendar ctrlName={coms[0]} data={coms[2]}   />
 
                                 }
                                 break;
@@ -661,7 +656,7 @@ var Panel=React.createClass({
 
                                         if (Object.prototype.toString.call(ob) == '[object Array]')
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob}
-                                                          />
+                                                />
                                         else
                                             ctrl = <Radio ctrlName={coms[0].split("=>")[0]} data={ob.data}
                                                           required={ob.required}/>
@@ -686,11 +681,11 @@ var Panel=React.createClass({
                                 break;
                             case 'return':
 
-                                    ctrl = <button  onClick={returnCb} style={{width:"20%"}} data-return={props.returnCb}>
-                                        {coms[0]}</button>;
+                                ctrl = <button  onClick={returnCb} style={{width:"20%"}} data-return={props.returnCb}>
+                                    {coms[0]}</button>;
 
 
-                                //å½“æœ€åä¸€ä¸ªä¸ºqueryç»„ä»¶æ—¶,å–æ¶ˆä¹‹å‰çš„label td
+                                //µ±×îºóÒ»¸öÎªquery×é¼şÊ±,È¡ÏûÖ®Ç°µÄlabel td
                                 label=null;
                                 break;
                             default:
@@ -790,7 +785,7 @@ var Panel=React.createClass({
                 </div>);
         }
     },
-    componentWillUnmount:function(){//å¯¹è±¡å¤±æ•ˆ
+    componentWillUnmount:function(){//¶ÔÏóÊ§Ğ§
         if(this.props.syncHandle!==undefined&&this.props.syncHandle!==null)
         {
             //collect required fields
@@ -820,4 +815,4 @@ var Panel=React.createClass({
         }
     }
 });
-module.exports = Panel;
+module.exports = Panel_selectCourse;

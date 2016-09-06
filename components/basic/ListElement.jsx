@@ -93,14 +93,14 @@ var ListElement=React.createClass({
               if(selected!==null&&selected!==undefined)
               {
                   if(selected==i)
-                      return (<LinkElement linkClass={"list-group-item active"} data-index={i} clickCb={linkCb} key={i}>
+                      return (<LinkElement linkClass={"list-group-item active"} data-index={i} linkCb={linkCb} key={i}>
                           {item}</LinkElement>);
                   else
-                      return (<LinkElement linkClass={"list-group-item"} data-index={i} clickCb={linkCb} key={i}>
+                      return (<LinkElement linkClass={"list-group-item"} data-index={i} linkCb={linkCb} key={i}>
                           {item}</LinkElement>);
               }
               else
-                  return (<LinkElement linkClass={"list-group-item"} data-index={i} clickCb={linkCb} key={i}>
+                  return (<LinkElement linkClass={"list-group-item"} data-index={i} linkCb={linkCb} key={i}>
                       {item}</LinkElement>);
           })  ;
         }

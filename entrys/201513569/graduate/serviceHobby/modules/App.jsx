@@ -38,7 +38,7 @@ var App =React.createClass({
                         </div>
                     </div>
                     <div className="bottom">
-                        <CommonFunction auto={true} candidate={true}/>
+                        <CommonFunction auto={true} candidate={false}/>
                     </div>
                 </div>
                 {this.props.children}

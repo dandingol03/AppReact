@@ -60,11 +60,11 @@ var TdOpElement=React.createClass({
         var op=this.state.op;
         if(op!==undefined&&op!==null&&op.trend!==undefined&&op.trend!==null)
         {
-            var img$src;
+            var text;
             if(op.trend=="add")
-               img$src=window.App.getResourceDeployPrefix()+"/bootstrap/img/icon/add_0.png";
+                text="添加";
             else
-                img$src=window.App.getResourceDeployPrefix()+"/bootstrap/img/icon/delete_0.png";
+                text="删除";
             //契约组件初始化
             var contract;
             if(op.data!==undefined&&op.data!==null)
@@ -76,7 +76,7 @@ var TdOpElement=React.createClass({
                 return (<td  rowSpan={1} colSpan={1}
                              width={this.props.width!==undefined&&this.props.width!==null?this.props.width:null}
                              className="microsoft-font" >
-                    <i><img src={img$src} onClick={this.checkHandle}/></i>
+                    <button type="button" onClick={this.checkHandle}>{text}</button>
                 </td>);
             }
             else{//显示Contract组件

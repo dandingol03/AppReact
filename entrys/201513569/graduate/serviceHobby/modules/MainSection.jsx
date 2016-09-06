@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import PasswordModify from '../password/PasswordModify.jsx';
 import AllCourseQuery from './allCourseQuery/allCourseQueryMain.jsx';
-import DiminishMain from './dominish/diminishMainCompoundUnChecked.jsx';
+import DiminishMain from 'studentSelfModifyCultivatePlan/diminishMainCompound.jsx';
 import News from './News.jsx';
 var config=require('../../../../../config.json');
 import '../../../../../css/serviceHobby/basic/mainSection.css';

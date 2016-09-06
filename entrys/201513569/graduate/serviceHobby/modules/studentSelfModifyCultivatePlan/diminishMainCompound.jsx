@@ -1,23 +1,35 @@
-
-
 import React from 'react';
 import {render} from 'react-dom';
 import Table from '../../../../../../components/forms/Table.jsx';
 import ListElement from '../../../../../../components/basic/ListElement.jsx';
 import ButtonElement from '../../../../../../components/basic/ButtonElement.jsx';
 import CoupleTableElement from '../../../../../../components/compounds/coupleTable/CoupleTableElement.jsx';
-import OrdinaryTable from '../../../../../../components/forms/OrdinaryTable.jsx'
+import OrdinaryTable from '../../../../../../components/forms/OrdinaryTable.jsx';
+import SelectPublicCourse from './selectPublicCourse.jsx';
+import SelectAcrossCourse from './selectAcrossCourse.jsx';
+import '../../../../../../css/serviceHobby/diminishMainCompound.css';
 
 /**
  * @author:zyy
  */
 
-var DiminishMain=React.createClass({
+var DiminishMainCompound=React.createClass({
+    onClickPublic:function(){
+        this.setState({buttonOption:"public"});
+    },
+    onClickAcross:function(){
+        this.setState({buttonOption:"across"});
+    },
+    getInitialState:function(){
+        return {buttonOption:"cultivate"}
+    },
+    clickReturn:function(ob){
+        return {buttonOption:ob}
+    },
+
     render:function(){
 
         console.log('...');
-
-
 
         function cb(ob){
             console.log("ob=" + ob);
@@ -60,18 +72,6 @@ var DiminishMain=React.createClass({
 
         }
 
-        var data1=[
-            {'name':'wjj','age':18,'sex':'man'},
-            {'name':'wang','age':22,'sex':'man'},
-            {'name':'bigBang','age':18,'sex':'man'},
-            {'name':'lalala','age':14,'sex':'man'},
-            {'name':'zyy','age':25,'sex':'woman'},
-            {'name':'bianfu','age':20,'sex':'woman'},
-            {'name':'baomu','age':18,'sex':'woman'},
-            {'name':'official','age':17,'sex':'woman'}
-        ]
-        var data2=[
-        ];
         var data$options={
             url:"/bsuims/reactPageDataRequest.do",
             params:{
@@ -89,25 +89,41 @@ var DiminishMain=React.createClass({
             subscribe:[{type:'fire',callback:cb}]
         }
 
+        var data$options$3={
+            subscribe:[{type:'fire',callback:cb}]
+        }
 
-        /*    var tags=[{"data":data1,"data-options":data$options$1}
-         ,{"data":data2,"data-options":data$options$2}];*/
         var tags=[
             {"data-options":data$options$1}
             ,{"data-options":data$options$2}
-        ];
-        var containerStyle={textAlign:"center"};
-        return(
-            <div className="diminishMain">
-                <CoupleTableElement tags={tags} data-options={data$options}/>
-                <OrdinaryTable />
-            </div>);
+            ,{"data-options":data$options$3} ];
 
+        var clickReturn=this.clickReturn;  //点击返回
+         //根据buttonOption的状态渲染不同的组件
+        if(this.state.buttonOption=="cultivate"){  //渲染培养计划和培养方案
+            return(
+                <div className="diminishMain">
+                    <CoupleTableElement tags={tags} data-options={data$options}/>
 
+                    <button type="button" className="public" onClick={this.onClickPublic}>添加公共选修课</button>
+                    <button type="button" className="across" onClick={this.onClickAcross}>跨学院选课</button>
+                </div>);
+        }
+        if(this.state.buttonOption=="public"){  //进入公选课
+            return(
+                <div className="selectPubMain">
+                    <SelectPublicCourse clickReturn={clickReturn} />
+                </div>);
+        }
+        if(this.state.buttonOption=="across"){  //进入跨专业选课
+            return(
+                <div className="selectAcross">
+                    <SelectAcrossCourse clickReturn={clickReturn} />
+                </div>);
+        }
     }
-
 });
-module.exports=DiminishMain;
+module.exports=DiminishMainCompound;
 
 
 
